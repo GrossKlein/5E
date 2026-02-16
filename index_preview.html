@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SyncPilot SE — An Investigative Dossier</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #FFF1E5; --claret: #990F3D; --oxford: #0D7680;
+  --wheat: #F2DFCE; --sky: #CCE6FF; --slate: #262A33;
+  --font-body: 'Source Serif 4', Georgia, serif;
+  --font-ui: 'Source Sans 3', 'Helvetica Neue', sans-serif;
+  --sp-2: 0.5rem; --sp-3: 0.75rem; --sp-4: 1rem;
+  --sp-6: 1.5rem; --sp-8: 2rem; --sp-12: 3rem;
+  --nav-height: 56px; --max-width: 1140px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body { font-family: var(--font-body); color: var(--slate); background: var(--paper); line-height: 1.65; }
+
+/* Nav */
+.site-nav { position: fixed; top:0; left:0; right:0; height: var(--nav-height); background: var(--slate); color: var(--paper); display: flex; align-items: center; padding: 0 var(--sp-6); z-index: 1000; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+.nav-title { font-family: var(--font-ui); font-size: .95rem; font-weight: 600; color: var(--paper); text-decoration: none; letter-spacing: .02em; }
+
+/* Hero */
+.index-hero { text-align: center; padding: calc(var(--nav-height) + var(--sp-12)) var(--sp-6) var(--sp-6); max-width: 740px; margin: 0 auto; }
+.subject-logo-text { font-family: var(--font-ui); font-size: 1.6rem; font-weight: 700; letter-spacing: .18em; color: rgba(38,42,51,0.45); margin-bottom: var(--sp-6); text-transform: uppercase; }
+.index-hero h1 { font-size: clamp(2rem, 5vw, 2.8rem); color: var(--claret); margin-bottom: var(--sp-3); letter-spacing: -.015em; font-weight: 700; line-height: 1.15; }
+.hero-rule { width: 56px; height: 3px; background: var(--claret); margin: 0 auto var(--sp-4); border: none; }
+.hero-subtitle { font-family: var(--font-ui); font-size: 1.05rem; color: rgba(38,42,51,.6); line-height: 1.55; max-width: 600px; margin: 0 auto; }
+
+/* About panel */
+.about-panel { max-width: 680px; margin: var(--sp-6) auto var(--sp-8); padding: var(--sp-4) var(--sp-6); background: rgba(204,230,255,.25); border-radius: 4px; font-family: var(--font-ui); font-size: .88rem; color: rgba(38,42,51,.72); line-height: 1.6; text-align: center; }
+
+/* Ornament */
+.ornament { text-align: center; margin: var(--sp-6) auto var(--sp-2); color: rgba(38,42,51,.15); font-size: 1.2rem; letter-spacing: .5em; }
+
+/* Section groups */
+.section-group { max-width: var(--max-width); margin: 0 auto; padding: 0 var(--sp-6); }
+.section-divider { font-family: var(--font-ui); font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--oxford); padding-bottom: var(--sp-2); border-bottom: 2px solid var(--oxford); margin-bottom: var(--sp-4); margin-top: var(--sp-8); }
+.section-divider:first-of-type { margin-top: 0; }
+
+/* Cards */
+.dossier-grid { display: grid; grid-template-columns: 1fr; gap: var(--sp-4); margin-bottom: var(--sp-6); }
+.dossier-grid--two { grid-template-columns: 1fr 1fr; }
+.dossier-card { display: block; background: var(--wheat); border-radius: 6px; padding: var(--sp-6); text-decoration: none; color: var(--slate); position: relative; border-left: 4px solid transparent; transition: box-shadow .2s, border-color .2s, transform .2s; }
+.dossier-card:hover { box-shadow: 0 6px 24px rgba(38,42,51,.1); transform: translateY(-2px); color: var(--slate); }
+.dossier-card--neutral  { border-left-color: var(--oxford); }
+.dossier-card--warning  { border-left-color: var(--claret); }
+.dossier-card--reference { border-left-color: rgba(38,42,51,.25); }
+.dossier-card:hover.dossier-card--neutral  { border-left-color: #0a9aa6; }
+.dossier-card:hover.dossier-card--warning  { border-left-color: #CC0033; }
+.dossier-card:hover.dossier-card--reference { border-left-color: rgba(38,42,51,.45); }
+
+.card-label { font-family: var(--font-ui); font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; margin-bottom: var(--sp-2); }
+.dossier-card--neutral  .card-label { color: var(--oxford); }
+.dossier-card--warning  .card-label { color: var(--claret); }
+.dossier-card--reference .card-label { color: rgba(38,42,51,.45); }
+
+.card-title { font-family: var(--font-body); font-size: 1.15rem; font-weight: 700; color: var(--slate); line-height: 1.25; margin-bottom: var(--sp-2); }
+.card-desc { font-family: var(--font-ui); font-size: .85rem; color: rgba(38,42,51,.6); line-height: 1.5; margin: 0; }
+.card-arrow { position: absolute; top: 50%; right: var(--sp-4); transform: translateY(-50%); font-family: var(--font-ui); font-size: 1.1rem; color: rgba(38,42,51,.2); transition: color .15s, transform .15s; }
+.dossier-card:hover .card-arrow { color: var(--claret); transform: translateY(-50%) translateX(3px); }
+
+/* Disclaimer */
+.index-disclaimer { max-width: var(--max-width); margin: var(--sp-8) auto 0; padding: var(--sp-4) var(--sp-6); font-family: var(--font-ui); font-size: .75rem; color: rgba(38,42,51,.4); text-align: center; line-height: 1.5; border-top: 1px solid var(--wheat); }
+
+/* Footer */
+.site-footer { background: var(--slate); color: rgba(255,241,229,.7); padding: var(--sp-8) var(--sp-6); margin-top: var(--sp-8); font-family: var(--font-ui); font-size: .78rem; line-height: 1.6; }
+.footer-inner { max-width: var(--max-width); margin: 0 auto; }
+.footer-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--sp-4); font-size: .72rem; color: rgba(255,241,229,.45); }
+
+@media (max-width: 768px) {
+  .dossier-grid--two { grid-template-columns: 1fr; }
+  .index-hero { padding-top: calc(var(--nav-height) + var(--sp-8)); }
+  .card-arrow { display: none; }
+  .footer-meta { flex-direction: column; }
+}
+@media (min-width: 769px) {
+  .dossier-card { padding-right: calc(var(--sp-6) + 28px); }
+}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a class="nav-title" href="index.html">SyncPilot — Investigative Dossier</a>
+</nav>
+
+<header class="index-hero">
+  <div class="subject-logo-text">SyncPilot</div>
+  <h1>An Investigative Dossier</h1>
+  <hr class="hero-rule">
+  <p class="hero-subtitle">
+    Opaque ownership. Insider pricing. Two criminal defendants among the shareholders.<br>
+    This is what due diligence turned up.
+  </p>
+</header>
+
+<div class="about-panel">
+  This dossier examines the corporate structure, capital transactions, and governance patterns of SyncPilot&nbsp;SE, a German software services company. It presents evidence-based investigations, with every factual claim citing a public filing or primary document.
+</div>
+
+<div class="ornament">· · ·</div>
+
+<main class="section-group">
+
+  <div class="section-divider">Part I — Corporate Profile</div>
+  <div class="dossier-grid">
+    <a href="profile.html" class="dossier-card dossier-card--neutral">
+      <div class="card-label">Profile</div>
+      <div class="card-title">The Company</div>
+      <p class="card-desc">Software services firm. €128M paper valuation. 31 beneficial owners across 6 jurisdictions. One man from Augsburg at the center.</p>
+      <span class="card-arrow">→</span>
+    </a>
+  </div>
+
+  <div class="section-divider">Part II — Evidence &amp; Analysis</div>
+  <div class="dossier-grid dossier-grid--two">
+    <a href="perseus.html" class="dossier-card dossier-card--warning">
+      <div class="card-label">Investigation</div>
+      <div class="card-title">The Perseus Affair</div>
+      <p class="card-desc">€18.96 per share. Then €1.00. Then €20.56. Same company. Same board. The buyers: two defendants from Germany's largest tax fraud case.</p>
+      <span class="card-arrow">→</span>
+    </a>
+    <a href="lvs.html" class="dossier-card dossier-card--warning">
+      <div class="card-label">Investigation</div>
+      <div class="card-title">The LVS Trap</div>
+      <p class="card-desc">A lawyer drafts a contract, delays notarization, collects €6.15M in four tranches, then claims it's void. The same lawyer bought shares at a 95% discount.</p>
+      <span class="card-arrow">→</span>
+    </a>
+  </div>
+
+  <div class="section-divider">Source Data</div>
+  <div class="dossier-grid">
+    <a href="evidence.html" class="dossier-card dossier-card--reference">
+      <div class="card-label">Reference</div>
+      <div class="card-title">The Evidence Room</div>
+      <p class="card-desc">All source data: capital events, UBO directory, entity map, payment ledger, client list, email timeline.</p>
+      <span class="card-arrow">→</span>
+    </a>
+  </div>
+
+</main>
+
+<div class="index-disclaimer">
+  This analysis represents investigative questions and pattern identification, not legal determinations of wrongdoing. Individuals are presumed innocent unless proven otherwise in a court of law.
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-meta">
+      <span>Last updated: February 2026</span>
+      <span>Cookie-free · No personal data collected</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

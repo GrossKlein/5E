@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SyncPilot SE — An Investigative Dossier</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* === INDEX-SPECIFIC OVERRIDES === */
+
+    /* Remove default body padding-top since we handle nav inline */
+    body {
+      padding-top: 0;
+    }
+
+    /* ---- Hero ---- */
+    .index-hero {
+      text-align: center;
+      padding: calc(var(--nav-height) + var(--sp-12)) var(--sp-6) var(--sp-6);
+      max-width: 740px;
+      margin: 0 auto;
+    }
+
+    .subject-logo {
+      display: inline-block;
+      max-width: 220px;
+      margin-bottom: var(--sp-6);
+      filter: grayscale(40%) opacity(0.7);
+      transition: filter 0.3s;
+    }
+    .subject-logo:hover {
+      filter: grayscale(0%) opacity(1);
+    }
+
+    .index-hero h1 {
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--heading-primary);
+      margin-bottom: var(--sp-3);
+      letter-spacing: -0.015em;
+    }
+
+    .hero-rule {
+      width: 56px;
+      height: 3px;
+      background: var(--claret);
+      margin: 0 auto var(--sp-4);
+      border: none;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-ui);
+      font-size: 1.05rem;
+      color: rgba(38,42,51,0.6);
+      line-height: 1.55;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ---- About panel ---- */
+    .about-panel {
+      max-width: 680px;
+      margin: var(--sp-6) auto var(--sp-8);
+      padding: var(--sp-4) var(--sp-6);
+      background: rgba(204,230,255,0.25);
+      border-radius: 4px;
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      color: rgba(38,42,51,0.72);
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* ---- Section dividers ---- */
+    .section-group {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--sp-6);
+    }
+
+    .section-divider {
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--oxford);
+      padding-bottom: var(--sp-2);
+      border-bottom: 2px solid var(--oxford);
+      margin-bottom: var(--sp-4);
+      margin-top: var(--sp-8);
+    }
+
+    .section-divider:first-of-type {
+      margin-top: 0;
+    }
+
+    /* ---- Dossier cards ---- */
+    .dossier-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-6);
+    }
+
+    .dossier-card {
+      display: block;
+      background: var(--card-bg);
+      border-radius: 6px;
+      padding: var(--sp-6);
+      text-decoration: none;
+      color: var(--text);
+      position: relative;
+      border-left: 4px solid transparent;
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .dossier-card:hover {
+      box-shadow: 0 6px 24px rgba(38,42,51,0.1);
+      transform: translateY(-2px);
+      color: var(--text);
+    }
+
+    /* Accent borders by type */
+    .dossier-card--neutral {
+      border-left-color: var(--oxford);
+    }
+    .dossier-card--warning {
+      border-left-color: var(--claret);
+    }
+    .dossier-card--reference {
+      border-left-color: rgba(38,42,51,0.25);
+    }
+
+    .dossier-card:hover.dossier-card--neutral  { border-left-color: var(--teal); }
+    .dossier-card:hover.dossier-card--warning  { border-left-color: #CC0033; }
+    .dossier-card:hover.dossier-card--reference { border-left-color: rgba(38,42,51,0.45); }
+
+    .card-label {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--sp-2);
+    }
+    .dossier-card--neutral  .card-label { color: var(--oxford); }
+    .dossier-card--warning  .card-label { color: var(--claret); }
+    .dossier-card--reference .card-label { color: rgba(38,42,51,0.45); }
+
+    .card-title {
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--slate);
+      line-height: 1.25;
+      margin-bottom: var(--sp-2);
+    }
+
+    .card-desc {
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      color: rgba(38,42,51,0.6);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .card-arrow {
+      position: absolute;
+      top: 50%;
+      right: var(--sp-4);
+      transform: translateY(-50%);
+      font-family: var(--font-ui);
+      font-size: 1.1rem;
+      color: rgba(38,42,51,0.2);
+      transition: color 0.15s, transform 0.15s;
+    }
+    .dossier-card:hover .card-arrow {
+      color: var(--claret);
+      transform: translateY(-50%) translateX(3px);
+    }
+
+    /* Two-column for the two warning cards */
+    .dossier-grid--two {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* ---- Ornament between about and cards ---- */
+    .ornament {
+      text-align: center;
+      margin: var(--sp-6) auto var(--sp-2);
+      color: rgba(38,42,51,0.15);
+      font-size: 1.2rem;
+      letter-spacing: 0.5em;
+      user-select: none;
+    }
+
+    /* ---- Disclaimer ---- */
+    .index-disclaimer {
+      max-width: var(--max-width);
+      margin: var(--sp-8) auto 0;
+      padding: var(--sp-4) var(--sp-6);
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      color: rgba(38,42,51,0.4);
+      text-align: center;
+      line-height: 1.5;
+      border-top: 1px solid var(--wheat);
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 768px) {
+      .dossier-grid--two {
+        grid-template-columns: 1fr;
+      }
+      .index-hero {
+        padding-top: calc(var(--nav-height) + var(--sp-8));
+      }
+      .subject-logo {
+        max-width: 170px;
+      }
+      .card-arrow {
+        display: none;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .dossier-card {
+        padding-right: calc(var(--sp-6) + 28px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ====== TOP NAV ====== -->
+  <nav class="site-nav">
+    <div class="nav-left">
+      <a class="nav-title" href="index.html">SyncPilot — Investigative Dossier</a>
+    </div>
+  </nav>
+
+  <!-- ====== HERO ====== -->
+  <header class="index-hero">
+    <img src="assets/SYNCPILOT_logo_1.png"
+         alt="SyncPilot — Subject of Investigation"
+         class="subject-logo">
+    <h1>An Investigative Dossier</h1>
+    <hr class="hero-rule">
+    <p class="hero-subtitle">
+      Opaque ownership. Insider pricing. Two criminal defendants among the shareholders.<br>
+      This is what due diligence turned up.
+    </p>
+  </header>
+
+  <!-- ====== ABOUT ====== -->
+  <div class="about-panel">
+    This dossier examines the corporate structure, capital transactions, and governance patterns of SyncPilot&nbsp;SE, a German software services company. It presents evidence-based investigations, with every factual claim citing a public filing or primary document.
+  </div>
+
+  <div class="ornament">· · ·</div>
+
+  <!-- ====== CARDS ====== -->
+  <main class="section-group">
+
+    <!-- Part I -->
+    <div class="section-divider">Part I — Corporate Profile</div>
+
+    <div class="dossier-grid">
+      <a href="profile.html" class="dossier-card dossier-card--neutral">
+        <div class="card-label">Profile</div>
+        <div class="card-title">The Company</div>
+        <p class="card-desc">
+          Software services firm. €128M paper valuation. 31 beneficial owners across 6 jurisdictions. One man from Augsburg at the center.
+        </p>
+        <span class="card-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- Part II -->
+    <div class="section-divider">Part II — Evidence &amp; Analysis</div>
+
+    <div class="dossier-grid dossier-grid--two">
+      <a href="perseus.html" class="dossier-card dossier-card--warning">
+        <div class="card-label">Investigation</div>
+        <div class="card-title">The Perseus Affair</div>
+        <p class="card-desc">
+          €18.96 per share. Then €1.00. Then €20.56. Same company. Same board. The buyers: two defendants from Germany's largest tax fraud case.
+        </p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <a href="lvs.html" class="dossier-card dossier-card--warning">
+        <div class="card-label">Investigation</div>
+        <div class="card-title">The LVS Trap</div>
+        <p class="card-desc">
+          A lawyer drafts a contract, delays notarization, collects €6.15M in four tranches, then claims it's void. The same lawyer bought shares at a 95% discount.
+        </p>
+        <span class="card-arrow">→</span>
+      </a>
+    </div>
+
+    <!-- Source Data -->
+    <div class="section-divider">Source Data</div>
+
+    <div class="dossier-grid">
+      <a href="evidence.html" class="dossier-card dossier-card--reference">
+        <div class="card-label">Reference</div>
+        <div class="card-title">The Evidence Room</div>
+        <p class="card-desc">
+          All source data: capital events, UBO directory, entity map, payment ledger, client list, email timeline.
+        </p>
+        <span class="card-arrow">→</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- ====== DISCLAIMER ====== -->
+  <div class="index-disclaimer">
+    This analysis represents investigative questions and pattern identification, not legal determinations of wrongdoing. Individuals are presumed innocent unless proven otherwise in a court of law.
+  </div>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-meta">
+        <span>Last updated: February 2026</span>
+        <span>Cookie-free · No personal data collected</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
