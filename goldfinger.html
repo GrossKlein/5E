@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Goldfinger Connection — SyncPilot SE</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* === GOLDFINGER PAGE STYLES === */
+
+    /* ---- Hook ---- */
+    .gf-hook {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--sp-8) var(--sp-4) var(--sp-4);
+      text-align: center;
+    }
+    .gf-hook-main {
+      font-family: var(--font-body);
+      font-size: clamp(1.2rem, 3vw, 1.65rem);
+      font-weight: 700;
+      color: var(--slate);
+      line-height: 1.35;
+      margin-bottom: var(--sp-4);
+    }
+    .gf-hook-main em {
+      color: #CC0033;
+      font-style: normal;
+    }
+    .gf-hook-sub {
+      font-family: var(--font-ui);
+      font-size: 0.92rem;
+      color: rgba(38,42,51,0.55);
+      line-height: 1.5;
+    }
+
+    /* ---- Profile cards ---- */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-6);
+      margin: var(--sp-6) 0;
+    }
+    .profile-card {
+      background: var(--card-bg);
+      border-radius: 6px;
+      padding: var(--sp-6);
+      border-top: 3px solid #CC0033;
+    }
+    .profile-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--slate);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--sp-4);
+      overflow: hidden;
+    }
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .profile-avatar-initials {
+      font-family: var(--font-ui);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--paper);
+      letter-spacing: 0.05em;
+    }
+    .profile-name {
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--slate);
+      margin-bottom: var(--sp-2);
+    }
+    .profile-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: var(--sp-4);
+    }
+    .badge-defendant {
+      background: rgba(204,0,51,0.08);
+      color: #CC0033;
+      border: 1px solid rgba(204,0,51,0.2);
+    }
+    .profile-meta-list {
+      list-style: none;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      color: rgba(38,42,51,0.7);
+    }
+    .profile-meta-list li {
+      padding: var(--sp-1) 0;
+      border-bottom: 1px solid rgba(242,223,206,0.5);
+    }
+    .profile-meta-list li:last-child { border-bottom: none; }
+    .profile-meta-list strong {
+      color: var(--slate);
+    }
+    .profile-photo-note {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      color: rgba(38,42,51,0.35);
+      margin-top: var(--sp-3);
+      font-style: italic;
+    }
+
+    @media (max-width: 640px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---- Source caveat (small footnote) ---- */
+    .source-caveat {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      color: rgba(38,42,51,0.4);
+      line-height: 1.5;
+      margin-top: var(--sp-2);
+      padding-left: var(--sp-4);
+      border-left: 2px solid rgba(38,42,51,0.1);
+    }
+
+    /* ---- Purchase timeline (4 nodes, time-proportional) ---- */
+    .purchase-timeline {
+      display: grid;
+      /* Proportional to calendar time: Dec→Mar 95d, Mar→May 58d, May→Jun 25d */
+      grid-template-columns: auto 95fr auto 58fr auto 25fr auto;
+      align-items: start;
+      margin: var(--sp-6) 0;
+      position: relative;
+    }
+    .purchase-timeline::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 40px;
+      right: 40px;
+      height: 2px;
+      background: var(--wheat);
+    }
+    .pt-spacer { /* empty grid cell for proportional gaps */ }
+    .pt-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 100px;
+      position: relative;
+    }
+    .pt-num {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(38,42,51,0.35);
+      margin-bottom: var(--sp-2);
+    }
+    .pt-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 3px solid var(--paper);
+      z-index: 2;
+    }
+    .pt-dot--ok {
+      background: #0A7D3F;
+      box-shadow: 0 0 0 2px #0A7D3F;
+    }
+    .pt-dot--anomaly {
+      background: #CC0033;
+      box-shadow: 0 0 0 2px #CC0033;
+    }
+    .pt-body {
+      margin-top: var(--sp-3);
+      text-align: center;
+      font-family: var(--font-ui);
+      line-height: 1.35;
+    }
+    .pt-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--slate);
+    }
+    .pt-node--anomaly .pt-price { color: #CC0033; }
+    .pt-date {
+      font-size: 0.72rem;
+      color: rgba(38,42,51,0.45);
+      margin-top: 2px;
+    }
+    .pt-detail {
+      font-size: 0.72rem;
+      color: rgba(38,42,51,0.4);
+      margin-top: 2px;
+    }
+    .pt-status {
+      font-size: 0.68rem;
+      font-weight: 700;
+      margin-top: var(--sp-2);
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+    .pt-status--ok {
+      background: rgba(10,125,63,0.08);
+      color: #0A7D3F;
+    }
+    .pt-status--anomaly {
+      background: rgba(204,0,51,0.08);
+      color: #CC0033;
+    }
+
+    /* Context node (non-Perseus, for reference) */
+    .pt-node--context .pt-price { color: rgba(38,42,51,0.5); font-size: 0.95rem; }
+    .pt-node--context .pt-detail { color: rgba(38,42,51,0.3); }
+    .pt-dot--context {
+      background: var(--oxford);
+      box-shadow: 0 0 0 2px var(--oxford);
+      width: 12px;
+      height: 12px;
+    }
+
+    @media (max-width: 700px) {
+      .purchase-timeline {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--sp-4);
+      }
+      .purchase-timeline::before {
+        top: 0; bottom: 0;
+        left: 50%; right: auto;
+        width: 2px; height: auto;
+      }
+      .pt-spacer { display: none; }
+      .pt-node { min-width: auto; }
+    }
+
+    /* ---- Disputed price comparison ---- */
+    .dispute-grid {
+      display: grid;
+      grid-template-columns: 180px 1fr 1fr;
+      margin: var(--sp-6) 0;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(242,223,206,0.6);
+    }
+    .dispute-header {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: var(--sp-3) var(--sp-4);
+    }
+    .dispute-header--label {
+      background: rgba(38,42,51,0.05);
+      color: rgba(38,42,51,0.45);
+    }
+    .dispute-header--filing {
+      background: rgba(204,0,51,0.06);
+      color: #CC0033;
+      text-align: center;
+    }
+    .dispute-header--attorney {
+      background: rgba(255,136,51,0.08);
+      color: var(--mango);
+      text-align: center;
+    }
+    .dispute-cell {
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      padding: var(--sp-2) var(--sp-4);
+      border-bottom: 1px solid rgba(242,223,206,0.5);
+    }
+    .dispute-cell--label {
+      font-weight: 600;
+      color: var(--slate);
+      background: rgba(38,42,51,0.02);
+    }
+    .dispute-cell--filing {
+      text-align: center;
+      color: #CC0033;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    .dispute-cell--attorney {
+      text-align: center;
+      color: var(--slate);
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 540px) {
+      .dispute-grid {
+        grid-template-columns: 120px 1fr 1fr;
+        font-size: 0.78rem;
+      }
+      .dispute-cell { padding: var(--sp-2) var(--sp-2); font-size: 0.78rem; }
+    }
+
+    /* ---- CTA (reused from perseus) ---- */
+    .cta-next {
+      display: block;
+      text-align: center;
+      padding: var(--sp-6) var(--sp-4);
+      margin: var(--sp-8) 0 var(--sp-4);
+      background: rgba(204,0,51,0.04);
+      border: 1px solid rgba(204,0,51,0.15);
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .cta-next:hover {
+      background: rgba(204,0,51,0.08);
+      border-color: rgba(204,0,51,0.3);
+    }
+    .cta-next-label {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(38,42,51,0.4);
+    }
+    .cta-next-title {
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #CC0033;
+      margin-top: var(--sp-1);
+    }
+
+    /* ---- Section scroll offset ---- */
+    [id] { scroll-margin-top: calc(var(--nav-height) + var(--sp-4)); }
+  </style>
+</head>
+
+<body>
+
+  <!-- ====== TOP NAV ====== -->
+  <nav class="site-nav">
+    <div class="nav-left">
+      <button class="hamburger" id="menuToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <a class="nav-title" href="index.html">SyncPilot — Investigative Dossier</a>
+    </div>
+  </nav>
+
+  <!-- ====== SIDE MENU ====== -->
+  <aside class="side-menu" id="sideMenu">
+    <a href="index.html" class="menu-link">Dossier Home</a>
+    <div class="menu-group-label">Chapters</div>
+    <a href="profile.html" class="menu-link"><span class="ch-num">1.</span>The Company</a>
+    <a href="perseus.html" class="menu-link"><span class="ch-num">2.</span>The 95% Discount</a>
+    <a href="goldfinger.html" class="menu-link active"><span class="ch-num">3.</span>The Goldfinger Connection</a>
+    <a href="lvs.html" class="menu-link"><span class="ch-num">4.</span>The LVS Trap</a>
+    <a href="evidence.html" class="menu-link"><span class="ch-num">5.</span>The Evidence Room</a>
+  </aside>
+  <div class="side-menu-overlay" id="menuOverlay"></div>
+
+  <!-- ====== HOOK ====== -->
+  <div class="gf-hook">
+    <p class="gf-hook-main">
+      The entity that received the 95% discount is owned by two Munich lawyers.<br>
+      Both were defendants in <em>one of Germany's largest tax fraud prosecutions</em>.
+    </p>
+    <p class="gf-hook-sub">
+      This is who bought SyncPilot shares at €1.00 when everyone else paid €18–21.
+    </p>
+  </div>
+
+  <hr style="max-width:720px; margin:0 auto;">
+
+  <!-- ====== CONTENT ====== -->
+  <article class="content-area">
+
+    <div style="margin-bottom: var(--sp-4);">
+      <a href="perseus.html" style="font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600; text-decoration: none;">← Ch. 2: The 95% Discount</a>
+    </div>
+
+    <!-- ======================= -->
+    <!-- SECTION 2: THE BUYERS   -->
+    <!-- ======================= -->
+    <h2 id="buyers">Who Owns H.G. Perseus?</h2>
+
+    <div class="profile-grid">
+
+      <!-- Martin Hunstein -->
+      <div class="profile-card">
+        <div class="profile-avatar" id="avatarMH">
+          <span class="profile-avatar-initials">MH</span>
+        </div>
+        <div class="profile-name">Martin Hunstein</div>
+        <div class="profile-badges">
+          <span class="badge badge-md">Managing Director</span>
+          <span class="badge badge-dir">GHR Partner</span>
+          <span class="badge badge-defendant">Defendant — Charges Dropped</span>
+        </div>
+        <ul class="profile-meta-list">
+          <li><strong>Born:</strong> 10 June 1971, Munich</li>
+          <li><strong>Role at Perseus:</strong> Managing Director, 50% shareholder of H.G. Perseus GmbH StBG</li>
+          <li><strong>Law firm:</strong> Partner at GHR Goerg Hunstein Rechtsanwälte Steuerberater, Munich</li>
+          <li><strong>UBO stake in SyncPilot:</strong> 3.51% (195,844 shares)</li>
+          <li><strong>Via:</strong> Perseus Innovations GmbH + ZKP Innovations Holding GmbH</li>
+          <li><strong>Criminal history:</strong> Defendant in the "Goldfinger" tax fraud prosecution. Charges dropped 2020.</li>
+        </ul>
+        <div class="profile-photo-note">Photo: placeholder. Original image not yet sourced.</div>
+      </div>
+
+      <!-- Diethard Erik Goerg -->
+      <div class="profile-card">
+        <div class="profile-avatar" id="avatarDEG">
+          <span class="profile-avatar-initials">DEG</span>
+        </div>
+        <div class="profile-name">Diethard Erik Goerg</div>
+        <div class="profile-badges">
+          <span class="badge badge-sh">Co-Owner</span>
+          <span class="badge badge-dir">GHR Partner</span>
+          <span class="badge badge-defendant">Defendant — Charges Dropped</span>
+        </div>
+        <ul class="profile-meta-list">
+          <li><strong>Residence:</strong> Munich</li>
+          <li><strong>Role at Perseus:</strong> Co-owner of H.G. Perseus GmbH StBG</li>
+          <li><strong>Law firm:</strong> Partner at GHR Goerg Hunstein Rechtsanwälte Steuerberater, Munich</li>
+          <li><strong>UBO stake in SyncPilot:</strong> 3.51% (195,844 shares)</li>
+          <li><strong>Via:</strong> Perseus Innovations GmbH + ZKP Innovations Holding GmbH</li>
+          <li><strong>Criminal history:</strong> Defendant in the "Goldfinger" tax fraud prosecution. Charges dropped 2020.</li>
+        </ul>
+        <div class="profile-photo-note">Photo: placeholder. Original image not yet sourced.</div>
+      </div>
+
+    </div>
+
+    <!-- ======================= -->
+    <!-- SECTION 3: THE CASE     -->
+    <!-- ======================= -->
+    <h2 id="goldfinger">The Goldfinger Case</h2>
+
+    <p>The "Goldfinger" scheme exploited precious metals trades to generate fictitious tax losses, artificially reducing taxable income. German prosecutors described it as one of the country's largest tax fraud cases. Both Hunstein and Goerg were charged as defendants. Both saw their charges dropped in 2020. No conviction resulted.</p>
+
+    <div class="source-caveat">
+      Source: German press reporting. Charges dropped per court records, 2020. No source document in this dossier independently verifies the "largest" characterisation.
+    </div>
+
+    <!-- ======================= -->
+    <!-- SECTION 4: 3 PURCHASES  -->
+    <!-- ======================= -->
+    <h2 id="purchases">The Purchase Pattern</h2>
+
+    <div class="purchase-timeline">
+      <!-- Node 1: Dec 2022 — Perseus @ market -->
+      <div class="pt-node">
+        <div class="pt-num">Perseus — Buy 1</div>
+        <div class="pt-dot pt-dot--ok"></div>
+        <div class="pt-body">
+          <div class="pt-price">€18.96</div>
+          <div class="pt-date">9 Dec 2022</div>
+          <div class="pt-detail">158,208 shares · €3,000,004</div>
+          <div class="pt-status pt-status--ok">Market price ✓</div>
+        </div>
+      </div>
+
+      <div class="pt-spacer"></div><!-- 95 days gap -->
+
+      <!-- Node 2: Mar 2023 — Perseus @ discount -->
+      <div class="pt-node pt-node--anomaly">
+        <div class="pt-num">Perseus — Buy 2</div>
+        <div class="pt-dot pt-dot--anomaly"></div>
+        <div class="pt-body">
+          <div class="pt-price">€1.00</div>
+          <div class="pt-date">14 Mar 2023</div>
+          <div class="pt-detail">127,885 shares · €127,885</div>
+          <div class="pt-status pt-status--anomaly">95% discount ⚠</div>
+        </div>
+      </div>
+
+      <div class="pt-spacer"></div><!-- 58 days gap -->
+
+      <!-- Node 3: May 2023 — Tiven @ market (context) -->
+      <div class="pt-node pt-node--context">
+        <div class="pt-num">Tiven GmbH</div>
+        <div class="pt-dot pt-dot--context"></div>
+        <div class="pt-body">
+          <div class="pt-price">€20.56</div>
+          <div class="pt-date">11 May 2023</div>
+          <div class="pt-detail">48,632 shares · €999,874</div>
+          <div class="pt-status pt-status--ok">Market price ✓</div>
+        </div>
+      </div>
+
+      <div class="pt-spacer"></div><!-- 25 days gap -->
+
+      <!-- Node 4: Jun 2023 — Perseus @ market -->
+      <div class="pt-node">
+        <div class="pt-num">Perseus — Buy 3</div>
+        <div class="pt-dot pt-dot--ok"></div>
+        <div class="pt-body">
+          <div class="pt-price">€20.56</div>
+          <div class="pt-date">5 Jun 2023</div>
+          <div class="pt-detail">16,211 shares · €333,298</div>
+          <div class="pt-status pt-status--ok">Market price ✓</div>
+        </div>
+      </div>
+    </div>
+
+    <p>They paid market price. Then they received a 95% discount. Then — after Tiven proved the market price had recovered — they paid market price again. The discount was the anomaly: a one-time departure from every other price in SyncPilot's capital history.</p>
+
+    <!-- ======================= -->
+    <!-- SECTION 5: DISPUTED $$  -->
+    <!-- ======================= -->
+    <h2 id="disputed" style="margin-top: var(--sp-12);">€1 or €13? The Disputed Price</h2>
+
+    <p>A November 2025 attorney note (RA Tomanke, page&nbsp;35) claims Perseus actually paid €13 per share for the March 2023 tranche — €1,662,505 total. The company's own capital-event filings record €1.00 per share — €127,885 total.</p>
+
+    <div class="dispute-grid">
+      <!-- Header row -->
+      <div class="dispute-header dispute-header--label"></div>
+      <div class="dispute-header dispute-header--filing">If €1.00/share<br><span style="font-weight:400; font-size:0.6rem; letter-spacing:0.04em;">COMPANY FILINGS</span></div>
+      <div class="dispute-header dispute-header--attorney">If €13.00/share<br><span style="font-weight:400; font-size:0.6rem; letter-spacing:0.04em;">RA TOMANKE</span></div>
+
+      <!-- Row 1: Total paid -->
+      <div class="dispute-cell dispute-cell--label">Total paid</div>
+      <div class="dispute-cell dispute-cell--filing">€127,885</div>
+      <div class="dispute-cell dispute-cell--attorney">€1,662,505</div>
+
+      <!-- Row 2: Discount vs Dec '22 -->
+      <div class="dispute-cell dispute-cell--label">Discount vs Dec '22 (€18.96)</div>
+      <div class="dispute-cell dispute-cell--filing">94.7%</div>
+      <div class="dispute-cell dispute-cell--attorney">31.4%</div>
+
+      <!-- Row 3: Discount vs May '23 -->
+      <div class="dispute-cell dispute-cell--label">Discount vs May '23 (€20.56)</div>
+      <div class="dispute-cell dispute-cell--filing">95.1%</div>
+      <div class="dispute-cell dispute-cell--attorney">36.8%</div>
+
+      <!-- Row 4: Implied valuation -->
+      <div class="dispute-cell dispute-cell--label">Implied valuation</div>
+      <div class="dispute-cell dispute-cell--filing">€5.4M</div>
+      <div class="dispute-cell dispute-cell--attorney">€70.2M</div>
+    </div>
+
+    <p>The filings and the attorney's claim cannot both be true. Neither SyncPilot nor Perseus has publicly resolved this contradiction.</p>
+
+    <p>One fact is not in dispute: the lawyer who co-owns the entity that received the discounted shares is the same lawyer who drafted — and failed to notarize — a €18.75&nbsp;million convertible loan agreement with a different SyncPilot investor. €6.15&nbsp;million was paid. Zero shares were delivered.</p>
+
+    <p>That story is next.</p>
+
+    <!-- ---- CTA ---- -->
+    <a href="lvs.html" class="cta-next">
+      <div class="cta-next-label">Next Investigation</div>
+      <div class="cta-next-title">The LVS Trap →</div>
+    </a>
+
+    <!-- ---- CHAPTER NAV ---- -->
+    <div class="chapter-nav">
+      <a href="perseus.html" class="prev">Ch. 2: The 95% Discount</a>
+      <a href="lvs.html" class="next">Ch. 4: The LVS Trap</a>
+    </div>
+
+  </article>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        These are documented facts and analytical questions. No allegation of wrongdoing is made. Charges referenced were dropped; no conviction resulted. Individuals are presumed innocent unless proven otherwise in a court of law.
+      </div>
+      <div class="footer-meta">
+        <span>Last updated: February 2026</span>
+        <span>Cookie-free · No personal data collected</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function() {
+    'use strict';
+    /* Load actual photos if available; fall back to initials */
+    function tryLoadPhoto(avatarId, src) {
+      var el = document.getElementById(avatarId);
+      if (!el || !src) return;
+      var img = new Image();
+      img.onload = function() {
+        el.innerHTML = '';
+        el.appendChild(img);
+      };
+      img.onerror = function() { /* keep initials */ };
+      img.src = src;
+      img.alt = avatarId === 'avatarMH' ? 'Martin Hunstein' : 'Diethard Erik Goerg';
+    }
+    tryLoadPhoto('avatarMH', 'assets/hunstein_placeholder.png');
+    tryLoadPhoto('avatarDEG', 'assets/goerg_placeholder.png');
+  })();
+  </script>
+
+  <script>
+  (function(){
+    var btn = document.getElementById('menuToggle');
+    var menu = document.getElementById('sideMenu');
+    var overlay = document.getElementById('menuOverlay');
+    function toggle() {
+      btn.classList.toggle('active');
+      menu.classList.toggle('open');
+      overlay.classList.toggle('visible');
+    }
+    if (btn) {
+      btn.addEventListener('click', toggle);
+      overlay.addEventListener('click', toggle);
+    }
+  })();
+  </script>
+</body>
+</html>

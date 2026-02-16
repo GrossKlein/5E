@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The LVS Trap — SyncPilot SE</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* === LVS PAGE STYLES === */
+
+    /* ---- Hook ---- */
+    .lvs-hook {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: var(--sp-8) var(--sp-4) var(--sp-4);
+      text-align: left;
+    }
+    .hook-lines {
+      font-family: var(--font-body);
+      font-size: clamp(1.05rem, 2.8vw, 1.35rem);
+      font-weight: 600;
+      color: var(--slate);
+      line-height: 1.7;
+    }
+    .hook-lines .hook-em {
+      color: #CC0033;
+      font-style: normal;
+    }
+    .hook-kicker {
+      margin-top: var(--sp-6);
+      font-family: var(--font-ui);
+      font-size: 0.92rem;
+      color: rgba(38,42,51,0.55);
+      line-height: 1.55;
+      border-left: 3px solid #CC0033;
+      padding-left: var(--sp-4);
+    }
+
+    /* ---- Summary stat bar ---- */
+    .lvs-stats {
+      display: flex;
+      gap: var(--sp-6);
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: var(--sp-6) 0;
+      padding: var(--sp-4) var(--sp-6);
+      background: rgba(204,0,51,0.03);
+      border: 1px solid rgba(204,0,51,0.1);
+      border-radius: 6px;
+    }
+    .lvs-stat {
+      text-align: center;
+    }
+    .lvs-stat-value {
+      font-family: var(--font-body);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--slate);
+    }
+    .lvs-stat-value--red { color: #CC0033; }
+    .lvs-stat-value--green { color: #0A7D3F; }
+    .lvs-stat-label {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(38,42,51,0.45);
+      margin-top: 2px;
+    }
+
+    /* ---- Vertical event timeline ---- */
+    .event-timeline {
+      position: relative;
+      padding-left: 32px;
+      margin: var(--sp-6) 0;
+    }
+    .event-timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--wheat);
+    }
+    .evt {
+      position: relative;
+      padding-bottom: var(--sp-4);
+    }
+    .evt:last-child { padding-bottom: 0; }
+    .evt-dot {
+      position: absolute;
+      left: -28px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--paper);
+    }
+    .evt-dot--email  { background: rgba(38,42,51,0.3); box-shadow: 0 0 0 1px rgba(38,42,51,0.3); }
+    .evt-dot--pay    { background: #0A7D3F; box-shadow: 0 0 0 1px #0A7D3F; }
+    .evt-dot--warn   { background: #CC0033; box-shadow: 0 0 0 1px #CC0033; }
+    .evt-dot--gap    { background: transparent; border: 2px dashed rgba(38,42,51,0.2); box-shadow: none; }
+    .evt-date {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: rgba(38,42,51,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .evt-body {
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      color: var(--slate);
+      line-height: 1.5;
+      margin-top: 2px;
+    }
+    .evt-body em {
+      color: #CC0033;
+      font-style: normal;
+      font-weight: 600;
+    }
+    .evt-gap {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-style: italic;
+      color: rgba(38,42,51,0.35);
+      padding: var(--sp-3) 0;
+    }
+
+    /* ---- Triptych (3-role diagram) ---- */
+    .triptych {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      grid-template-rows: auto auto auto;
+      gap: var(--sp-2);
+      margin: var(--sp-6) 0;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .tri-center {
+      grid-column: 2;
+      grid-row: 1 / 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tri-hub {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--slate);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .tri-hub-initials {
+      font-family: var(--font-ui);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--paper);
+    }
+    .tri-hub-name {
+      font-family: var(--font-ui);
+      font-size: 0.55rem;
+      color: rgba(255,241,229,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+    }
+    .tri-panel {
+      padding: var(--sp-3) var(--sp-4);
+      border-radius: 6px;
+      font-family: var(--font-ui);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .tri-panel--left {
+      grid-column: 1;
+      grid-row: 1;
+      text-align: right;
+      background: rgba(13,118,128,0.06);
+      border: 1px solid rgba(13,118,128,0.15);
+    }
+    .tri-panel--top {
+      grid-column: 1 / 4;
+      grid-row: 1;
+      display: none; /* use left/right layout instead */
+    }
+    .tri-panel--right {
+      grid-column: 3;
+      grid-row: 1;
+      text-align: left;
+      background: rgba(204,0,51,0.05);
+      border: 1px solid rgba(204,0,51,0.15);
+    }
+    .tri-panel--bottom {
+      grid-column: 1 / 4;
+      grid-row: 3;
+      text-align: center;
+      background: rgba(255,136,51,0.06);
+      border: 1px solid rgba(255,136,51,0.15);
+    }
+    /* Connector lines */
+    .tri-connector {
+      grid-row: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tri-connector--left { grid-column: 1; }
+    .tri-connector--right { grid-column: 3; }
+    .tri-connector hr {
+      width: 100%;
+      border: none;
+      border-top: 2px dashed rgba(38,42,51,0.15);
+    }
+    .tri-role {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 2px;
+    }
+    .tri-role--teal { color: var(--oxford); }
+    .tri-role--red { color: #CC0033; }
+    .tri-role--mango { color: var(--mango); }
+    .tri-desc {
+      font-size: 0.8rem;
+      color: rgba(38,42,51,0.65);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 540px) {
+      .triptych {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+        gap: var(--sp-3);
+      }
+      .tri-center { grid-column: 1; grid-row: 1; }
+      .tri-panel--left { grid-column: 1; grid-row: 2; text-align: center; }
+      .tri-panel--right { grid-column: 1; grid-row: 3; text-align: center; }
+      .tri-panel--bottom { grid-column: 1; grid-row: 4; }
+      .tri-connector { display: none; }
+    }
+
+    /* ---- Closing stats ---- */
+    .closing-ledger {
+      margin: var(--sp-6) 0;
+      padding: var(--sp-6);
+      background: rgba(204,0,51,0.03);
+      border: 1px solid rgba(204,0,51,0.12);
+      border-radius: 6px;
+    }
+    .closing-ledger-line {
+      font-family: var(--font-ui);
+      font-size: 0.95rem;
+      color: rgba(38,42,51,0.6);
+      line-height: 1.6;
+      display: flex;
+      justify-content: space-between;
+      padding: var(--sp-1) 0;
+      border-bottom: 1px solid rgba(242,223,206,0.4);
+    }
+    .closing-ledger-line:last-child { border-bottom: none; }
+    .closing-ledger-line span:last-child {
+      font-weight: 700;
+      color: var(--slate);
+    }
+    .closing-ledger-line--red span:last-child { color: #CC0033; }
+
+    /* ---- CTA (shared pattern) ---- */
+    .cta-next {
+      display: block;
+      text-align: center;
+      padding: var(--sp-6) var(--sp-4);
+      margin: var(--sp-8) 0 var(--sp-4);
+      background: rgba(38,42,51,0.03);
+      border: 1px solid rgba(38,42,51,0.12);
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .cta-next:hover {
+      background: rgba(38,42,51,0.06);
+      border-color: rgba(38,42,51,0.25);
+    }
+    .cta-next-label {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(38,42,51,0.4);
+    }
+    .cta-next-title {
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--slate);
+      margin-top: var(--sp-1);
+    }
+
+    /* ---- Question block ---- */
+    .question-block {
+      border-left: 4px solid #CC0033;
+      background: rgba(204,0,51,0.04);
+      padding: var(--sp-4) var(--sp-6);
+      margin: var(--sp-6) 0;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      font-style: italic;
+    }
+
+    [id] { scroll-margin-top: calc(var(--nav-height) + var(--sp-4)); }
+  </style>
+</head>
+
+<body>
+
+  <!-- ====== TOP NAV ====== -->
+  <nav class="site-nav">
+    <div class="nav-left">
+      <button class="hamburger" id="menuToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <a class="nav-title" href="index.html">SyncPilot — Investigative Dossier</a>
+    </div>
+  </nav>
+
+  <!-- ====== SIDE MENU ====== -->
+  <aside class="side-menu" id="sideMenu">
+    <a href="index.html" class="menu-link">Dossier Home</a>
+    <div class="menu-group-label">Chapters</div>
+    <a href="profile.html" class="menu-link"><span class="ch-num">1.</span>The Company</a>
+    <a href="perseus.html" class="menu-link"><span class="ch-num">2.</span>The 95% Discount</a>
+    <a href="goldfinger.html" class="menu-link"><span class="ch-num">3.</span>The Goldfinger Connection</a>
+    <a href="lvs.html" class="menu-link active"><span class="ch-num">4.</span>The LVS Trap</a>
+    <a href="evidence.html" class="menu-link"><span class="ch-num">5.</span>The Evidence Room</a>
+  </aside>
+  <div class="side-menu-overlay" id="menuOverlay"></div>
+
+  <!-- ====== HOOK ====== -->
+  <div class="lvs-hook">
+    <div class="hook-lines">
+      A lawyer drafts a contract.<br>
+      He delays its notarization for months.<br>
+      His client pays <span class="hook-em">€6.15&nbsp;million</span> across four tranches.<br>
+      The lawyer never notarizes the contract.<br>
+      Then he claims it's void — <span class="hook-em">because he didn't notarize it.</span>
+    </div>
+    <div class="hook-kicker">
+      The same lawyer's company acquired shares in the same firm at a 95% discount.
+    </div>
+  </div>
+
+  <hr style="max-width:680px; margin:0 auto var(--sp-2);">
+
+  <!-- ====== CONTENT ====== -->
+  <article class="content-area">
+
+    <div style="margin-bottom: var(--sp-4);">
+      <a href="goldfinger.html" style="font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600; text-decoration: none;">← Ch. 3: The Goldfinger Connection</a>
+    </div>
+
+    <!-- ====================== -->
+    <!-- SECTION 2: THE DEAL    -->
+    <!-- ====================== -->
+    <h2 id="deal">The Deal</h2>
+
+    <p>On 21 May 2021, LVS entered a Cooperation and Call Option Agreement with SyncPilot SE. The terms: €18,750,000 to be paid in tranches, in exchange for 750,000 shares in the holding structure.</p>
+
+    <p>Martin Hunstein of GHR Goerg Hunstein Rechtsanwälte drafted the agreement. He served as legal advisor to the transaction. Hunstein — together with his partner Diethard Goerg — owns H.G. Perseus GmbH StBG, the entity that would acquire SyncPilot shares at a 95% discount twenty-two months later.</p>
+
+    <p>The contract required notarization to be legally binding under German law. Hunstein was responsible for arranging it.</p>
+
+    <!-- ========================= -->
+    <!-- SECTION 3: THE MONEY TRAIL -->
+    <!-- ========================= -->
+    <h2 id="money">The Money Trail</h2>
+
+    <p>LVS paid four tranches between April and August 2021:</p>
+
+    <div style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th style="text-align:right;">Amount</th>
+          <th>Date Paid</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td style="text-align:right;">€650,000</td>
+          <td>7 April 2021</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td style="text-align:right;">€1,500,000</td>
+          <td>29 April 2021</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td style="text-align:right;">€1,000,000</td>
+          <td>7 June 2021</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td style="text-align:right;">€3,000,000</td>
+          <td>31 August 2021</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="lvs-stats">
+      <div class="lvs-stat">
+        <div class="lvs-stat-value lvs-stat-value--green">€6,150,000</div>
+        <div class="lvs-stat-label">Total Paid</div>
+      </div>
+      <div class="lvs-stat">
+        <div class="lvs-stat-value lvs-stat-value--red">0</div>
+        <div class="lvs-stat-label">Shares Delivered</div>
+      </div>
+      <div class="lvs-stat">
+        <div class="lvs-stat-value lvs-stat-value--red">No</div>
+        <div class="lvs-stat-label">Contract Notarized</div>
+      </div>
+    </div>
+
+    <p>All four payments carry source-document confirmation. The remaining tranches — €12.6&nbsp;million — were never paid. The contract was never notarized. No shares were ever delivered.</p>
+
+    <!-- ================================= -->
+    <!-- SECTION 4: THE NOTARIZATION TRAP  -->
+    <!-- ================================= -->
+    <h2 id="timeline">The Notarization Trap</h2>
+
+    <p>The contract Hunstein drafted required notarization to be legally binding. Here is what happened instead.</p>
+
+    <div class="event-timeline">
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--email"></div>
+        <div class="evt-date">16 February 2021</div>
+        <div class="evt-body">Hunstein sends NDA to LVS (Damerau), introduces SyncPilot. Describes the product, SAP partnership, and target customers.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--email"></div>
+        <div class="evt-date">25–27 March 2021</div>
+        <div class="evt-body">Hunstein sends finalized term sheet. Notes it "reflects subjects discussed" and that founder Bleicher "discussed with legacy shareholders and accepted."</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--pay"></div>
+        <div class="evt-date">7 April 2021</div>
+        <div class="evt-body">LVS pays Tranche 1: €650,000.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--pay"></div>
+        <div class="evt-date">29 April 2021</div>
+        <div class="evt-body">LVS pays Tranche 2: €1,500,000.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--warn"></div>
+        <div class="evt-date">21 May 2021</div>
+        <div class="evt-body">Cooperation and Call Option Agreement signed. <em>Not notarized.</em></div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--pay"></div>
+        <div class="evt-date">7 June 2021</div>
+        <div class="evt-body">LVS pays Tranche 3: €1,000,000.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--pay"></div>
+        <div class="evt-date">31 August 2021</div>
+        <div class="evt-body">LVS pays Tranche 4: €3,000,000.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--email"></div>
+        <div class="evt-date">21 August 2021</div>
+        <div class="evt-body">Hunstein sends a variation agreement (Änderungsvereinbarung). Proposes <em>"initially doing a simple signature"</em> to "have a copy" before formal notarization.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--email"></div>
+        <div class="evt-date">24 August 2021</div>
+        <div class="evt-body">Hunstein asks about scheduling notarization. LVS signatory responds: traveling, will handle it later.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--email"></div>
+        <div class="evt-date">30 August 2021</div>
+        <div class="evt-body">Hunstein sends updated variation agreement with new payment deadline: 31 March 2022.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--gap"></div>
+        <div class="evt-gap">Months pass. No notarization.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--email"></div>
+        <div class="evt-date">27 December 2021</div>
+        <div class="evt-body">LVS contacts Bleicher directly, asking him to confirm cancellation of the second part of the variation agreement.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--warn"></div>
+        <div class="evt-date">January 2022</div>
+        <div class="evt-body">Final two tranches (€12.1M) are <em>never paid</em>.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--gap"></div>
+        <div class="evt-gap">Two years pass.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--email"></div>
+        <div class="evt-date">22 April 2024</div>
+        <div class="evt-body">Goerg (Hunstein's partner) contacts LVS, acknowledges €6.15M was paid, attempts to re-engage investment.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--warn"></div>
+        <div class="evt-date">3 May 2025</div>
+        <div class="evt-body">LVS principal tells a lawyer: <em>"The contracts are from Hunstein who was supposed to sign them with notary authorization and have them notarized. He kept delaying."</em></div>
+      </div>
+
+    </div>
+
+    <div class="question-block">
+      The lawyer who drafted the contract was responsible for notarization. He never completed it. His client paid €6.15&nbsp;million on the basis of that contract. He now claims the contract is void.
+    </div>
+
+    <!-- =============================== -->
+    <!-- SECTION 5: THREE ROLES          -->
+    <!-- =============================== -->
+    <h2 id="roles">One Lawyer, Three Roles</h2>
+
+    <p>Martin Hunstein occupied three roles simultaneously in this transaction:</p>
+
+    <div class="triptych">
+      <!-- Left panel: Lawyer -->
+      <div class="tri-panel tri-panel--left">
+        <div class="tri-role tri-role--teal">Role 1: Legal Advisor</div>
+        <div class="tri-desc">Drafted the LVS Cooperation & Call Option Agreement. Prepared the variation agreement. Responsible for notarization.</div>
+      </div>
+
+      <!-- Left connector -->
+      <div class="tri-connector tri-connector--left"><hr></div>
+
+      <!-- Center hub -->
+      <div class="tri-center">
+        <div class="tri-hub">
+          <span class="tri-hub-initials">MH</span>
+          <span class="tri-hub-name">Hunstein</span>
+        </div>
+      </div>
+
+      <!-- Right connector -->
+      <div class="tri-connector tri-connector--right"><hr></div>
+
+      <!-- Right panel: Perseus -->
+      <div class="tri-panel tri-panel--right">
+        <div class="tri-role tri-role--red">Role 2: Perseus Principal</div>
+        <div class="tri-desc">Managing Director and 50% owner of H.G. Perseus GmbH StBG. Acquired 127,885 SyncPilot shares at €1.00 — a 95% discount.</div>
+      </div>
+
+      <!-- Bottom panel: Gatekeeper -->
+      <div class="tri-panel tri-panel--bottom">
+        <div class="tri-role tri-role--mango">Role 3: Notarization Gatekeeper</div>
+        <div class="tri-desc">The contract he drafted required notarization to be legally binding. He was the professional responsible for completing this step. He never did.</div>
+      </div>
+    </div>
+
+    <p>The conflict: the lawyer who collected €6.15 million through a contract he drafted is the same person whose company acquired shares at one-twentieth of market price — in the same company, twenty-two months later.</p>
+
+    <!-- =========================================== -->
+    <!-- SECTION 6: WHERE DID THE MONEY GO?          -->
+    <!-- =========================================== -->
+    <h2 id="money-trail" style="margin-top: var(--sp-12);">The €6.15 Million Question: Where Did the Money Go?</h2>
+
+    <p>LVS transferred €6,150,000 to SyncPilot between April and August 2021. In return, LVS received zero shares, zero equity, and a contract that was never notarized.</p>
+
+    <p>SyncPilot's Managing Director — Franz-Xaver Bleicher, the company's founder and largest beneficial owner — controlled where investor funds were directed. The evidence suggests at least two personal uses of company capital during the relevant period:</p>
+
+    <div class="info-box" style="border-left-color: #CC0033; background: rgba(204,0,51,0.03); margin: var(--sp-6) 0; padding: var(--sp-4) var(--sp-6); border-radius: 0 6px 6px 0;">
+
+      <p style="margin-top:0;"><strong style="color:#CC0033;">1. Property acquisition.</strong> Bleicher purchased residential property during the period in which LVS funds were flowing into SyncPilot. The timing and source of funds for this acquisition are part of the ongoing investigation. Evidence will be presented in the Evidence Room.</p>
+
+      <p style="margin-bottom:0;"><strong style="color:#CC0033;">2. Partner buyout.</strong> Bleicher acquired the stake of a co-owner in SyncPilot's holding structure. This consolidation of control required capital. The source of that capital — and whether it included investor funds designated for operational purposes — is a central question of this dossier.</p>
+
+    </div>
+
+    <p>Under German law, a managing director's diversion of corporate funds to personal use constitutes <em>Untreue</em> (breach of fiduciary duty, §266 StGB) — a criminal offence carrying a sentence of up to five years. If investor funds were represented as being for corporate purposes but were instead used for personal acquisitions, this additionally constitutes <em>Betrug</em> (fraud, §263 StGB).</p>
+
+    <div class="closing-ledger">
+      <div class="closing-ledger-line">
+        <span>LVS funds transferred</span>
+        <span>€6,150,000</span>
+      </div>
+      <div class="closing-ledger-line closing-ledger-line--red">
+        <span>Shares delivered to LVS</span>
+        <span>0</span>
+      </div>
+      <div class="closing-ledger-line closing-ledger-line--red">
+        <span>Contract notarized</span>
+        <span>No</span>
+      </div>
+      <div class="closing-ledger-line closing-ledger-line--red">
+        <span>Bleicher property acquired during period</span>
+        <span>Yes</span>
+      </div>
+      <div class="closing-ledger-line closing-ledger-line--red">
+        <span>Bleicher partner buyout during period</span>
+        <span>Yes</span>
+      </div>
+      <div class="closing-ledger-line">
+        <span>SyncPilot implied valuation today</span>
+        <span>€128 million</span>
+      </div>
+    </div>
+
+    <div class="question-block">
+      An investor paid €6.15&nbsp;million. A managing director bought a house and bought out his partner. The contract was never notarized. No shares were ever delivered. These are the documented facts. The question is whether a German prosecutor will connect them.
+    </div>
+
+    <!-- ---- CTA ---- -->
+    <a href="evidence.html" class="cta-next">
+      <div class="cta-next-label">Source Data</div>
+      <div class="cta-next-title">The Evidence Room →</div>
+    </a>
+
+    <!-- ---- CHAPTER NAV ---- -->
+    <div class="chapter-nav">
+      <a href="goldfinger.html" class="prev">Ch. 3: The Goldfinger Connection</a>
+      <a href="evidence.html" class="next">Ch. 5: The Evidence Room</a>
+    </div>
+
+  </article>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        These are documented facts and analytical questions. No allegation of criminal wrongdoing is made; references to German criminal statutes describe the legal framework, not accusations. All payments and dates are sourced from primary documents. Individuals are presumed innocent unless proven otherwise in a court of law.
+      </div>
+      <div class="footer-meta">
+        <span>Last updated: February 2026</span>
+        <span>Cookie-free · No personal data collected</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    var btn = document.getElementById('menuToggle');
+    var menu = document.getElementById('sideMenu');
+    var overlay = document.getElementById('menuOverlay');
+    function toggle() {
+      btn.classList.toggle('active');
+      menu.classList.toggle('open');
+      overlay.classList.toggle('visible');
+    }
+    if (btn) {
+      btn.addEventListener('click', toggle);
+      overlay.addEventListener('click', toggle);
+    }
+  })();
+  </script>
+
+</body>
+</html>

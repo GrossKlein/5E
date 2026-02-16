@@ -347,15 +347,30 @@
   <!-- ====== TOP NAV ====== -->
   <nav class="site-nav">
     <div class="nav-left">
+      <button class="hamburger" id="menuToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
       <a class="nav-title" href="index.html">SyncPilot — Investigative Dossier</a>
     </div>
   </nav>
+
+  <!-- ====== SIDE MENU ====== -->
+  <aside class="side-menu" id="sideMenu">
+    <a href="index.html" class="menu-link">Dossier Home</a>
+    <div class="menu-group-label">Chapters</div>
+    <a href="profile.html" class="menu-link active"><span class="ch-num">1.</span>The Company</a>
+    <a href="perseus.html" class="menu-link"><span class="ch-num">2.</span>The 95% Discount</a>
+    <a href="goldfinger.html" class="menu-link"><span class="ch-num">3.</span>The Goldfinger Connection</a>
+    <a href="lvs.html" class="menu-link"><span class="ch-num">4.</span>The LVS Trap</a>
+    <a href="evidence.html" class="menu-link"><span class="ch-num">5.</span>The Evidence Room</a>
+  </aside>
+  <div class="side-menu-overlay" id="menuOverlay"></div>
 
   <!-- ====== CONTENT ====== -->
   <article class="content-area">
 
     <div style="margin-bottom: var(--sp-4);">
-      <a href="index.html" style="font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600; text-decoration: none;">← Back to Dossier</a>
+      <a href="index.html" style="font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600; text-decoration: none;">← Dossier Home</a>
     </div>
 
     <h1 id="top">The Company</h1>
@@ -589,7 +604,7 @@
     <!-- ---- CHAPTER NAV ---- -->
     <div class="chapter-nav">
       <a href="index.html" class="prev">Dossier Home</a>
-      <a href="perseus.html" class="next">The Perseus Affair</a>
+      <a href="perseus.html" class="next">Ch. 2: The 95% Discount</a>
     </div>
 
   </article>
@@ -715,5 +730,21 @@
   })();
   </script>
 
+  <script>
+  (function(){
+    var btn = document.getElementById('menuToggle');
+    var menu = document.getElementById('sideMenu');
+    var overlay = document.getElementById('menuOverlay');
+    function toggle() {
+      btn.classList.toggle('active');
+      menu.classList.toggle('open');
+      overlay.classList.toggle('visible');
+    }
+    if (btn) {
+      btn.addEventListener('click', toggle);
+      overlay.addEventListener('click', toggle);
+    }
+  })();
+  </script>
 </body>
 </html>

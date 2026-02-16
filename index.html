@@ -178,9 +178,14 @@
       transform: translateY(-50%) translateX(3px);
     }
 
-    /* Two-column for the two warning cards */
+    /* Two-column for paired cards */
     .dossier-grid--two {
       grid-template-columns: 1fr 1fr;
+    }
+
+    /* Three-column for investigation cards */
+    .dossier-grid--three {
+      grid-template-columns: 1fr 1fr 1fr;
     }
 
     /* ---- Ornament between about and cards ---- */
@@ -207,8 +212,15 @@
     }
 
     /* ---- Responsive ---- */
+    @media (max-width: 1024px) {
+      .dossier-grid--three {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
     @media (max-width: 768px) {
-      .dossier-grid--two {
+      .dossier-grid--two,
+      .dossier-grid--three {
         grid-template-columns: 1fr;
       }
       .index-hero {
@@ -235,9 +247,24 @@
   <!-- ====== TOP NAV ====== -->
   <nav class="site-nav">
     <div class="nav-left">
+      <button class="hamburger" id="menuToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
       <a class="nav-title" href="index.html">SyncPilot — Investigative Dossier</a>
     </div>
   </nav>
+
+  <!-- ====== SIDE MENU ====== -->
+  <aside class="side-menu" id="sideMenu">
+    <a href="index.html" class="menu-link active">Dossier Home</a>
+    <div class="menu-group-label">Chapters</div>
+    <a href="profile.html" class="menu-link"><span class="ch-num">1.</span>The Company</a>
+    <a href="perseus.html" class="menu-link"><span class="ch-num">2.</span>The 95% Discount</a>
+    <a href="goldfinger.html" class="menu-link"><span class="ch-num">3.</span>The Goldfinger Connection</a>
+    <a href="lvs.html" class="menu-link"><span class="ch-num">4.</span>The LVS Trap</a>
+    <a href="evidence.html" class="menu-link"><span class="ch-num">5.</span>The Evidence Room</a>
+  </aside>
+  <div class="side-menu-overlay" id="menuOverlay"></div>
 
   <!-- ====== HERO ====== -->
   <header class="index-hero">
@@ -279,12 +306,21 @@
     <!-- Part II -->
     <div class="section-divider">Part II — Evidence &amp; Analysis</div>
 
-    <div class="dossier-grid dossier-grid--two">
+    <div class="dossier-grid dossier-grid--three">
       <a href="perseus.html" class="dossier-card dossier-card--warning">
         <div class="card-label">Investigation</div>
-        <div class="card-title">The Perseus Affair</div>
+        <div class="card-title">The 95% Discount</div>
         <p class="card-desc">
-          €18.96 per share. Then €1.00. Then €20.56. Same company. Same board. The buyers: two defendants from Germany's largest tax fraud case.
+          €18.96 per share. Then €1.00. Then €20.56. Same company. Same board. 95 days apart.
+        </p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <a href="goldfinger.html" class="dossier-card dossier-card--warning">
+        <div class="card-label">Investigation</div>
+        <div class="card-title">The Goldfinger Connection</div>
+        <p class="card-desc">
+          The buyers: two defendants from Germany's largest tax fraud prosecution. The price they paid doesn't match the company's own filings.
         </p>
         <span class="card-arrow">→</span>
       </a>
@@ -293,7 +329,7 @@
         <div class="card-label">Investigation</div>
         <div class="card-title">The LVS Trap</div>
         <p class="card-desc">
-          A lawyer drafts a contract, delays notarization, collects €6.15M in four tranches, then claims it's void. The same lawyer bought shares at a 95% discount.
+          €6.15M paid. Zero shares delivered. Contract never notarized. The managing director bought a house and bought out his partner. The same lawyer who drafted the contract bought shares at a 95% discount.
         </p>
         <span class="card-arrow">→</span>
       </a>
@@ -330,5 +366,21 @@
     </div>
   </footer>
 
+  <script>
+  (function(){
+    var btn = document.getElementById('menuToggle');
+    var menu = document.getElementById('sideMenu');
+    var overlay = document.getElementById('menuOverlay');
+    function toggle() {
+      btn.classList.toggle('active');
+      menu.classList.toggle('open');
+      overlay.classList.toggle('visible');
+    }
+    if (btn) {
+      btn.addEventListener('click', toggle);
+      overlay.addEventListener('click', toggle);
+    }
+  })();
+  </script>
 </body>
 </html>
