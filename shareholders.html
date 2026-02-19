@@ -11,7 +11,6 @@
 
   <style>
     /* === SHAREHOLDERS PAGE STYLES === */
-    /* All rules use existing dossier tokens (--sp-*, --font-*, --text-*, palette vars) */
 
     /* ---- BLUF summary box ---- */
     .sh-bluf {
@@ -34,7 +33,7 @@
       line-height: 1.6;
       margin-bottom: var(--sp-3);
     }
-    .sh-bluf p:last-child { margin-bottom: 0; }
+    .sh-bluf p:last-of-type { margin-bottom: 0; }
     .sh-bluf strong { font-weight: 700; color: var(--slate); }
 
     .sh-bluf-stats {
@@ -130,7 +129,9 @@
       background: var(--paper);
     }
 
-    /* ---- Viz grid layout ---- */
+    /* ---- Viz grid layout ----
+       FIX: Explicit grid-column prevents auto-placement from swapping
+       the graph and selection panels. The graph MUST get the wide column. */
     .viz-grid {
       display: grid;
       grid-template-columns: 2.2fr 1fr;
@@ -138,8 +139,10 @@
       gap: var(--sp-3);
       margin-bottom: var(--sp-3);
     }
+    .viz-grid .panel-graph  { grid-column: 1; grid-row: 1; }
+    .viz-grid .panel-detail { grid-column: 2; grid-row: 1; }
 
-    /* ---- Panels (graph, details, timeline) ---- */
+    /* ---- Panels ---- */
     .panel {
       background: #fff;
       border: 1px solid var(--wheat);
@@ -181,10 +184,8 @@
 
     .viz {
       width: 100%;
-      height: calc(100% - 72px); /* header + footer */
+      height: calc(100% - 72px);
     }
-
-    .side { grid-row: 1 / span 1; }
 
     .timeline {
       grid-column: 1 / -1;
@@ -290,10 +291,7 @@
       line-height: 1.6;
       color: rgba(38,42,51,0.55);
     }
-    .sh-source strong {
-      font-weight: 600;
-      color: var(--slate);
-    }
+    .sh-source strong { font-weight: 600; color: var(--slate); }
     .sh-source code {
       font-size: var(--text-caption);
       background: rgba(242,223,206,0.5);
@@ -301,7 +299,6 @@
       border-radius: 2px;
     }
 
-    /* ---- Timeline note ---- */
     .note {
       font-family: var(--font-ui);
       font-size: var(--text-caption);
@@ -309,7 +306,38 @@
       font-style: italic;
     }
 
-    /* ---- vis-timeline overrides (dossier typography) ---- */
+    /* ---- UBO tooltip ---- */
+    .ubo-tip {
+      position: absolute;
+      z-index: 50;
+      background: var(--slate);
+      color: var(--paper);
+      font-family: var(--font-ui);
+      font-size: var(--text-small);
+      line-height: 1.45;
+      padding: 6px 10px;
+      border-radius: 4px;
+      pointer-events: none;
+      max-width: 280px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      opacity: 0;
+      transition: opacity 0.12s;
+    }
+    .ubo-tip.visible { opacity: 1; }
+    .ubo-tip-label {
+      font-size: var(--text-caption);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,241,229,0.5);
+      margin-bottom: 3px;
+    }
+    .ubo-tip-name {
+      font-weight: 600;
+      color: var(--paper);
+    }
+    .ubo-tip-name + .ubo-tip-name { margin-top: 1px; }
+
+    /* ---- vis-timeline overrides ---- */
     .vis-timeline {
       font-family: var(--font-ui) !important;
       border-color: var(--wheat) !important;
@@ -318,14 +346,10 @@
     .vis-panel.vis-left,
     .vis-panel.vis-right,
     .vis-panel.vis-top,
-    .vis-panel.vis-bottom {
-      border-color: var(--wheat) !important;
-    }
+    .vis-panel.vis-bottom { border-color: var(--wheat) !important; }
     .vis-grid.vis-vertical,
     .vis-grid.vis-minor,
-    .vis-grid.vis-major {
-      border-color: rgba(242,223,206,0.5) !important;
-    }
+    .vis-grid.vis-major { border-color: rgba(242,223,206,0.5) !important; }
     .vis-time-axis .vis-text {
       font-family: var(--font-ui) !important;
       font-size: var(--text-caption) !important;
@@ -356,16 +380,12 @@
       border-color: rgba(38,42,51,0.15) !important;
       color: rgba(38,42,51,0.35) !important;
     }
-    .vis-item.tl-uncertain {
-      border-style: dashed !important;
-    }
+    .vis-item.tl-uncertain { border-style: dashed !important; }
     .vis-item.vis-selected {
       border-color: var(--mango) !important;
       box-shadow: none !important;
     }
-    .vis-item .vis-item-content {
-      padding: 3px 6px !important;
-    }
+    .vis-item .vis-item-content { padding: 3px 6px !important; }
 
     /* ---- Responsive ---- */
     @media (max-width: 860px) {
@@ -373,9 +393,9 @@
         grid-template-columns: 1fr;
         grid-template-rows: clamp(300px, 40vh, 440px) auto;
       }
-      .side { grid-row: auto; }
+      .viz-grid .panel-graph  { grid-column: 1; grid-row: 1; }
+      .viz-grid .panel-detail { grid-column: 1; grid-row: 2; }
     }
-
     @media (max-width: 640px) {
       .sh-bluf-stats { gap: var(--sp-2) var(--sp-4); }
       .sh-stat strong { font-size: 1.15rem; }
@@ -388,8 +408,6 @@
   <!-- Cytoscape.js + vis-timeline (pinned CDN) -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.33.1/cytoscape.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/vis-timeline@8.5.0/standalone/umd/vis-timeline-graph2d.min.js"></script>
-
-  <!-- ShareViz app logic (unchanged) -->
   <script defer src="app.js"></script>
 </head>
 
@@ -513,7 +531,8 @@
     <!-- ── CYTOSCAPE + DETAILS GRID ── -->
     <div class="viz-grid">
 
-      <div class="panel">
+      <!-- Graph panel — explicit grid-column: 1 via .panel-graph -->
+      <div class="panel panel-graph">
         <div class="panel-header">
           <h2>
             <span data-lang-en>Ownership graph</span>
@@ -551,7 +570,8 @@
         </div>
       </div>
 
-      <div class="panel side">
+      <!-- Details panel — explicit grid-column: 2 via .panel-detail -->
+      <div class="panel panel-detail">
         <div class="panel-header">
           <h2>
             <span data-lang-en>Selection</span>
@@ -587,12 +607,14 @@
         No ownership percentages are inferred. Some periods use a year-range
         (e.g.&nbsp;"2022-23"); these items are rendered from the earliest possible date
         and shown with a dashed border. Built&nbsp;2026-02-18.
+        <strong>Hover over</strong> a legal-person node in the graph to see its natural-person owners (UBOs).
       </p>
       <p data-lang-de>
         <strong>Datenquelle.</strong> <code>data/graph.min.json</code> — aus der Ordnerstruktur abgeleitete
         Beteiligungsstruktur. Keine Beteiligungsquoten werden abgeleitet. Einige Zeiträume verwenden
         Jahresbereiche (z.&nbsp;B.&nbsp;„2022-23"); diese werden ab dem frühestmöglichen Datum dargestellt
         und mit gestricheltem Rand markiert. Stand&nbsp;18.02.2026.
+        <strong>Mit der Maus</strong> über einen Firmenknoten fahren, um die natürlichen Personen (UBOs) zu sehen.
       </p>
     </div>
 
@@ -609,6 +631,9 @@
     </div>
 
   </article>
+
+  <!-- UBO tooltip element (positioned absolutely over graph) -->
+  <div class="ubo-tip" id="uboTip"></div>
 
   <!-- ====== FOOTER ====== -->
   <footer class="site-footer">
@@ -641,5 +666,151 @@
     }
   })();
   </script>
+
+  <!-- ====== UBO HOVER FEATURE ======
+       Waits for app.js to expose window._shareviz, then adds
+       mouseover/mouseout on org nodes showing natural person owners. -->
+  <script>
+  (function() {
+    'use strict';
+
+    var tip = document.getElementById('uboTip');
+    var cyContainer = document.getElementById('cy');
+    var pollCount = 0;
+
+    function init() {
+      if (!window._shareviz || !window._shareviz.getCy()) {
+        if (++pollCount < 60) return setTimeout(init, 200);
+        return; // give up after 12s
+      }
+      attach(window._shareviz.getCy());
+
+      // Re-attach after view mode changes (cy gets destroyed/recreated)
+      var viewSelect = document.getElementById('viewMode');
+      if (viewSelect) {
+        viewSelect.addEventListener('change', function() {
+          // Wait for app.js to rebuild cy
+          setTimeout(function() {
+            var newCy = window._shareviz.getCy();
+            if (newCy) attach(newCy);
+          }, 150);
+        });
+      }
+    }
+
+    function attach(cy) {
+      var dataset = window._shareviz.getDataset();
+      var nodesById = window._shareviz.getNodesById();
+      if (!dataset || !nodesById) return;
+
+      // Pre-build lookup: for each org node, find natural person owners
+      // (persons whose edges point TO this org, at any depth in current view)
+      var orgPersons = {};
+      dataset.links.forEach(function(link) {
+        var srcNode = nodesById.get(link.source);
+        if (!srcNode) return;
+        if (srcNode.kind === 'person') {
+          if (!orgPersons[link.target]) orgPersons[link.target] = [];
+          orgPersons[link.target].push({
+            name: srcNode.label,
+            status: link.status || 'unknown'
+          });
+        }
+      });
+
+      // Also walk one level deeper: if an org owns another org, inherit persons
+      dataset.links.forEach(function(link) {
+        var srcNode = nodesById.get(link.source);
+        if (!srcNode || srcNode.kind !== 'org') return;
+        var srcPersons = orgPersons[link.source];
+        if (!srcPersons) return;
+        if (!orgPersons[link.target]) orgPersons[link.target] = [];
+        srcPersons.forEach(function(p) {
+          // Avoid duplicates
+          var exists = orgPersons[link.target].some(function(x) { return x.name === p.name; });
+          if (!exists) {
+            orgPersons[link.target].push({ name: p.name, status: p.status, indirect: true });
+          }
+        });
+      });
+
+      // Mouseover on org nodes
+      cy.on('mouseover', 'node[kind = "org"]', function(evt) {
+        var nodeId = evt.target.id();
+        var persons = orgPersons[nodeId];
+        if (!persons || persons.length === 0) return;
+
+        var html = '<div class="ubo-tip-label">Natural person owners</div>';
+        persons.forEach(function(p) {
+          var suffix = p.indirect ? ' <span style="opacity:0.5">(indirect)</span>' : '';
+          var statusDot = p.status === 'current' ? '●' : (p.status === 'former' ? '○' : '◌');
+          html += '<div class="ubo-tip-name">' + statusDot + ' ' + escHtml(p.name) + suffix + '</div>';
+        });
+        tip.innerHTML = html;
+
+        // Position near the node
+        var pos = evt.target.renderedPosition();
+        var rect = cyContainer.getBoundingClientRect();
+        tip.style.left = (rect.left + pos.x + 12) + 'px';
+        tip.style.top  = (rect.top  + pos.y - 10 + window.scrollY) + 'px';
+        tip.classList.add('visible');
+      });
+
+      cy.on('mouseout', 'node', function() {
+        tip.classList.remove('visible');
+      });
+
+      // Also show UBO info in the details panel on click
+      cy.on('tap', 'node[kind = "org"]', function(evt) {
+        var nodeId = evt.target.id();
+        var persons = orgPersons[nodeId];
+        if (!persons || persons.length === 0) return;
+
+        // Wait for app.js to render its details first, then append
+        setTimeout(function() {
+          var detailsEl = document.getElementById('details');
+          if (!detailsEl) return;
+
+          var section = document.createElement('div');
+          section.style.marginTop = 'var(--sp-3)';
+          section.style.paddingTop = 'var(--sp-3)';
+          section.style.borderTop = '1px solid var(--wheat)';
+
+          var label = document.createElement('div');
+          label.className = 'k';
+          label.style.marginBottom = '4px';
+          label.style.color = 'var(--claret)';
+          label.style.fontWeight = '700';
+          label.textContent = 'Natural person owners (UBOs)';
+          section.appendChild(label);
+
+          var list = document.createElement('ul');
+          list.className = 'list';
+          persons.forEach(function(p) {
+            var li = document.createElement('li');
+            var prefix = p.indirect ? '↳ ' : '';
+            var statusLabel = p.status === 'current' ? 'Current' :
+                              (p.status === 'former' ? 'Former' : 'Unknown period');
+            li.innerHTML = '<strong>' + prefix + escHtml(p.name) + '</strong>' +
+              '<div style="color:rgba(38,42,51,0.5);font-size:var(--text-caption);">' + statusLabel +
+              (p.indirect ? ' · indirect' : ' · direct') + '</div>';
+            list.appendChild(li);
+          });
+          section.appendChild(list);
+          detailsEl.appendChild(section);
+        }, 50);
+      });
+    }
+
+    function escHtml(s) {
+      var d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
+    init();
+  })();
+  </script>
+
 </body>
 </html>
