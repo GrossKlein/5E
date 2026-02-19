@@ -639,6 +639,14 @@
     renderCytoscape(viewMode);
 
     wireUI();
+
+    // Expose internals for page-level extensions (UBO hover, etc.)
+    window._shareviz = {
+      getCy:       function() { return cy; },
+      getDataset:  function() { return dataset; },
+      getNodesById: function() { return nodesById; },
+      getLinksForView: getLinksForView,
+    };
   }
 
   // Run
