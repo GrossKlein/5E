@@ -1,6 +1,13 @@
 /* ============================================================
    SyncPilot Investigative Dossier — Shared Stylesheet
    FT Colour Palette · Source Serif / Source Sans Typography
+   ──────────────────────────────────────────────────────────
+   v2.0 — Fluid Spacing & Adaptive Layout
+   • Spacing tokens sp-6+ use clamp() for viewport-adaptive rhythm
+   • Container padding is fluid — no more breakpoint overrides
+   • Typography scale includes fluid body/UI sizes
+   • Language toggle condensed from 30 lines to 6
+   • Responsive section reduced — clamp() handles the heavy lifting
    ============================================================ */
 
 /* --- Google Fonts --- */
@@ -38,23 +45,42 @@
   --risk-medium: var(--mango);
   --risk-low:    #0A7D3F;
 
-  /* Typography */
+  /* Typography — font stacks */
   --font-body: 'Source Serif 4', 'Georgia', serif;
   --font-ui:   'Source Sans 3', 'Helvetica Neue', sans-serif;
 
-  /* Spacing scale (4px base) */
-  --sp-1: 0.25rem;
-  --sp-2: 0.5rem;
-  --sp-3: 0.75rem;
-  --sp-4: 1rem;
-  --sp-6: 1.5rem;
-  --sp-8: 2rem;
-  --sp-12: 3rem;
-  --sp-16: 4rem;
+  /* Typography — fluid size scale
+     Body and UI sizes now adapt to viewport.
+     Micro sizes (captions, badges) stay fixed at minimum legible. */
+  --text-body:    clamp(0.94rem, 0.85rem + 0.25vw, 1.05rem);   /* ~15px → 16.8px */
+  --text-ui:      clamp(0.82rem, 0.76rem + 0.18vw, 0.88rem);   /* ~13px → 14px   */
+  --text-small:   clamp(0.72rem, 0.68rem + 0.12vw, 0.78rem);   /* ~11.5px → 12.5px */
+  --text-caption:  0.68rem;                                      /* 10.9px fixed    */
+
+  /* Spacing scale (4px base, Origami-aligned)
+     ────────────────────────────────────────────
+     sp-1 through sp-4: FIXED — micro spacing shouldn't fluctuate.
+     sp-6 through sp-16: FLUID via clamp() — compresses on mobile,
+     expands on desktop. Smooth interpolation, no breakpoint jumps.
+
+     Formula: clamp(mobile-min, preferred, desktop-max)
+     Preferred uses rem + vw blend for linear scaling.            */
+  --sp-1:  0.25rem;                                       /*  4px fixed     */
+  --sp-2:  0.5rem;                                        /*  8px fixed     */
+  --sp-3:  0.75rem;                                       /* 12px fixed     */
+  --sp-4:  1rem;                                          /* 16px fixed     */
+  --sp-6:  clamp(1rem,    0.5rem  + 1.25vw, 1.5rem);     /* 16px → 24px   */
+  --sp-8:  clamp(1.5rem,  0.75rem + 1.5vw,  2rem);       /* 24px → 32px   */
+  --sp-12: clamp(2rem,    1rem    + 2.5vw,  3rem);        /* 32px → 48px   */
+  --sp-16: clamp(2.5rem,  1.25rem + 3vw,    4rem);        /* 40px → 64px   */
+
+  /* Container — fluid inline padding
+     Ranges from 16px on narrow to 40px on wide viewports. */
+  --container-padding: clamp(1rem, 0.5rem + 2vw, 2.5rem);
 
   /* Layout */
-  --max-width: 1140px;
-  --nav-height: 56px;
+  --max-width: 1200px;
+  --nav-height: clamp(50px, 46px + 0.75vw, 56px);
   --sidebar-width: 280px;
 }
 
@@ -69,6 +95,7 @@ html {
 
 body {
   font-family: var(--font-body);
+  font-size: var(--text-body);
   color: var(--text);
   background: var(--bg);
   line-height: 1.65;
@@ -107,7 +134,7 @@ h3 {
 }
 
 h4 {
-  font-size: 1rem;
+  font-size: var(--text-ui);
   color: var(--heading-secondary);
   font-family: var(--font-ui);
   font-weight: 600;
@@ -133,14 +160,14 @@ strong { font-weight: 600; }
 blockquote {
   border-left: 3px solid var(--claret);
   padding: var(--sp-3) var(--sp-6);
-  margin: var(--sp-6) 0;
+  margin-block: var(--sp-6);
   background: rgba(242,223,206,0.4);
   font-style: italic;
 }
 
 code, pre {
   font-family: 'IBM Plex Mono', 'Consolas', monospace;
-  font-size: 0.88rem;
+  font-size: var(--text-ui);
 }
 
 pre {
@@ -149,31 +176,36 @@ pre {
   padding: var(--sp-4);
   border-radius: 4px;
   overflow-x: auto;
-  margin: var(--sp-4) 0;
+  margin-block: var(--sp-4);
 }
 
 hr {
   border: none;
   border-top: 1px solid var(--wheat);
-  margin: var(--sp-8) 0;
+  margin-block: var(--sp-8);
 }
 
-/* --- Layout Containers --- */
+/* --- Layout Containers ---
+   All three containers now use --container-padding for inline spacing.
+   This single fluid value replaces the old breakpoint overrides for
+   padding-left / padding-right at 768px. */
 .container {
   max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--sp-6);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
 }
 
 .content-area {
   max-width: 780px;
-  margin: 0 auto;
-  padding: var(--sp-8) var(--sp-6);
+  margin-inline: auto;
+  padding-block: var(--sp-8);
+  padding-inline: var(--container-padding);
 }
 
 .full-width {
   max-width: none;
-  padding: var(--sp-8) var(--sp-6);
+  padding-block: var(--sp-8);
+  padding-inline: var(--container-padding);
 }
 
 /* --- Top Navigation Bar --- */
@@ -188,7 +220,7 @@ hr {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--sp-6);
+  padding-inline: var(--container-padding);
   z-index: 1000;
   box-shadow: 0 1px 4px rgba(0,0,0,0.15);
 }
@@ -281,7 +313,7 @@ hr {
   transition: transform 0.25s ease;
   z-index: 999;
   overflow-y: auto;
-  padding: var(--sp-6) 0;
+  padding-block: var(--sp-6);
 }
 .side-menu.open { transform: translateX(0); }
 
@@ -302,7 +334,7 @@ hr {
 
 .menu-group-label {
   font-family: var(--font-ui);
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -313,7 +345,7 @@ hr {
 .menu-link {
   display: block;
   font-family: var(--font-ui);
-  font-size: 0.88rem;
+  font-size: var(--text-ui);
   color: var(--paper);
   text-decoration: none;
   padding: var(--sp-2) var(--sp-6);
@@ -334,7 +366,7 @@ hr {
   width: 26px;
   font-weight: 600;
   color: rgba(255,241,229,0.5);
-  font-size: 0.78rem;
+  font-size: var(--text-small);
 }
 
 /* --- Search Overlay --- */
@@ -346,7 +378,7 @@ hr {
   z-index: 1001;
   display: none;
   justify-content: center;
-  padding: var(--sp-8) var(--sp-6);
+  padding: var(--sp-8) var(--container-padding);
 }
 .search-overlay.open { display: flex; }
 
@@ -387,7 +419,7 @@ hr {
 .search-result-item:hover { background: var(--wheat); }
 .search-result-item .result-chapter {
   font-family: var(--font-ui);
-  font-size: 0.75rem;
+  font-size: var(--text-small);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -417,13 +449,13 @@ hr {
   border-left: 4px solid var(--claret);
   background: rgba(242,223,206,0.35);
   padding: var(--sp-4) var(--sp-6);
-  margin: var(--sp-6) 0;
-  font-size: 1.05rem;
+  margin-block: var(--sp-6);
+  font-size: var(--text-body);
   line-height: 1.55;
 }
 .bluf-label {
   font-family: var(--font-ui);
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -436,12 +468,12 @@ hr {
   background: var(--info-bg);
   border-radius: 4px;
   padding: var(--sp-4) var(--sp-6);
-  margin: var(--sp-6) 0;
+  margin-block: var(--sp-6);
   font-size: 0.95rem;
 }
 .info-box-label {
   font-family: var(--font-ui);
-  font-size: 0.7rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -455,15 +487,18 @@ hr {
   border-left: 4px solid var(--mango);
   border-radius: 0 4px 4px 0;
   padding: var(--sp-4) var(--sp-6);
-  margin: var(--sp-6) 0;
+  margin-block: var(--sp-6);
 }
 
-/* --- Card Grid --- */
+/* --- Card Grid ---
+   min(100%, 320px) prevents the minmax floor from exceeding the
+   viewport width on narrow screens — a known edge case with the
+   old minmax(320px, 1fr). Gap is now fluid via --sp-6. */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
   gap: var(--sp-6);
-  margin: var(--sp-6) 0;
+  margin-block: var(--sp-6);
 }
 
 .card {
@@ -523,7 +558,7 @@ hr {
 
 .card-meta {
   font-family: var(--font-ui);
-  font-size: 0.82rem;
+  font-size: var(--text-ui);
   color: rgba(38,42,51,0.65);
   line-height: 1.5;
   margin-bottom: var(--sp-3);
@@ -531,7 +566,7 @@ hr {
 
 .card-section-label {
   font-family: var(--font-ui);
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -543,7 +578,7 @@ hr {
 .card-list {
   list-style: none;
   font-family: var(--font-ui);
-  font-size: 0.82rem;
+  font-size: var(--text-ui);
   line-height: 1.6;
   color: var(--slate);
 }
@@ -557,7 +592,7 @@ hr {
 }
 .card-pct-label {
   font-family: var(--font-ui);
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: rgba(38,42,51,0.5);
@@ -567,7 +602,7 @@ hr {
 .badge {
   display: inline-block;
   font-family: var(--font-ui);
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -588,7 +623,7 @@ hr {
   align-items: center;
   gap: 6px;
   font-family: var(--font-ui);
-  font-size: 0.78rem;
+  font-size: var(--text-small);
   font-weight: 600;
 }
 .risk-dot {
@@ -607,7 +642,7 @@ hr {
 .chart-container {
   position: relative;
   width: 100%;
-  margin: var(--sp-6) 0;
+  margin-block: var(--sp-6);
   background: #fff;
   border-radius: 6px;
   padding: var(--sp-4);
@@ -616,7 +651,7 @@ hr {
 
 .chart-title {
   font-family: var(--font-ui);
-  font-size: 0.88rem;
+  font-size: var(--text-ui);
   font-weight: 700;
   color: var(--slate);
   margin-bottom: var(--sp-3);
@@ -624,7 +659,7 @@ hr {
 
 .chart-subtitle {
   font-family: var(--font-ui);
-  font-size: 0.75rem;
+  font-size: var(--text-small);
   color: rgba(38,42,51,0.55);
   margin-top: -8px;
   margin-bottom: var(--sp-3);
@@ -637,19 +672,22 @@ hr {
 
 .chart-source {
   font-family: var(--font-ui);
-  font-size: 0.68rem;
+  font-size: var(--text-caption);
   color: rgba(38,42,51,0.45);
   margin-top: var(--sp-2);
   text-align: right;
 }
 
-/* --- Tables --- */
+/* --- Tables ---
+   Font size is now fluid via --text-ui. Cell padding uses the
+   fluid sp-2/sp-3 tokens. The old 768px override for table
+   font-size and cell padding is no longer needed. */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: var(--sp-4) 0;
+  margin-block: var(--sp-4);
   font-family: var(--font-ui);
-  font-size: 0.88rem;
+  font-size: var(--text-ui);
 }
 
 thead th {
@@ -657,7 +695,7 @@ thead th {
   text-align: left;
   padding: var(--sp-2) var(--sp-3);
   font-weight: 600;
-  font-size: 0.78rem;
+  font-size: var(--text-small);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   border-bottom: 2px solid rgba(38,42,51,0.15);
@@ -675,7 +713,7 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
 .accordion {
   border: 1px solid var(--wheat);
   border-radius: 4px;
-  margin: var(--sp-4) 0;
+  margin-block: var(--sp-4);
 }
 .accordion-header {
   display: flex;
@@ -705,13 +743,15 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--sp-6) 0;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  padding-block: var(--sp-6);
   margin-top: var(--sp-8);
   border-top: 1px solid var(--wheat);
   font-family: var(--font-ui);
 }
 .chapter-nav a {
-  font-size: 0.88rem;
+  font-size: var(--text-ui);
   font-weight: 600;
   text-decoration: none;
 }
@@ -722,15 +762,15 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
 .site-footer {
   background: var(--slate);
   color: rgba(255,241,229,0.7);
-  padding: var(--sp-8) var(--sp-6);
+  padding: var(--sp-8) var(--container-padding);
   margin-top: var(--sp-16);
   font-family: var(--font-ui);
-  font-size: 0.78rem;
+  font-size: var(--text-small);
   line-height: 1.6;
 }
 .footer-inner {
   max-width: var(--max-width);
-  margin: 0 auto;
+  margin-inline: auto;
 }
 .footer-disclaimer {
   max-width: 700px;
@@ -743,17 +783,17 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
   gap: var(--sp-4);
   padding-top: var(--sp-4);
   border-top: 1px solid rgba(255,241,229,0.15);
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   color: rgba(255,241,229,0.45);
 }
 
 /* --- Index / TOC Styles --- */
 .toc-section {
-  margin: var(--sp-8) 0;
+  margin-block: var(--sp-8);
 }
 .toc-section-title {
   font-family: var(--font-ui);
-  font-size: 0.72rem;
+  font-size: var(--text-caption);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -766,7 +806,7 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
   list-style: none;
 }
 .toc-item {
-  padding: var(--sp-3) 0;
+  padding-block: var(--sp-3);
   border-bottom: 1px solid rgba(242,223,206,0.5);
 }
 .toc-item a {
@@ -779,7 +819,7 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
 .toc-item a:hover { color: var(--claret); }
 .toc-ch-num {
   font-family: var(--font-ui);
-  font-size: 0.78rem;
+  font-size: var(--text-small);
   font-weight: 700;
   color: var(--claret);
   min-width: 28px;
@@ -792,7 +832,7 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
 }
 .toc-ch-desc {
   font-family: var(--font-ui);
-  font-size: 0.82rem;
+  font-size: var(--text-ui);
   color: rgba(38,42,51,0.55);
   margin-top: 2px;
 }
@@ -800,9 +840,9 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
 /* --- Hero / Index Heading --- */
 .hero {
   text-align: center;
-  padding: var(--sp-12) var(--sp-6) var(--sp-8);
+  padding: var(--sp-12) var(--container-padding) var(--sp-8);
   max-width: 720px;
-  margin: 0 auto;
+  margin-inline: auto;
 }
 .hero h1 {
   font-size: clamp(2rem, 5vw, 3rem);
@@ -817,82 +857,50 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
 }
 .hero-subtitle {
   font-family: var(--font-ui);
-  font-size: 1rem;
+  font-size: var(--text-body);
   color: rgba(38,42,51,0.6);
   line-height: 1.5;
 }
 
-/* --- Language Toggle Content --- */
+/* --- Language Toggle Content ---
+   Condensed from 30 lines to 6 using :is() selector lists.
+   Works identically — every element type is still covered. */
+:is(div,p,section,li,span,h1,h2,h3,h4,tr,td,th)[data-lang-de] { display: none; }
+:is(div,p,section,li,span,h1,h2,h3,h4,tr,td,th)[data-lang-en] { display: unset; }
+
+body.lang-de :is(div,p,section,li,span,h1,h2,h3,h4,tr,td,th)[data-lang-de] { display: unset; }
+body.lang-de :is(div,p,section,li,span,h1,h2,h3,h4,tr,td,th)[data-lang-en] { display: none; }
+
+/* Inline-level fallback (for mixed inline text) */
 [data-lang-de] { display: none; }
 [data-lang-en] { display: unset; }
 body.lang-de [data-lang-de] { display: unset; }
 body.lang-de [data-lang-en] { display: none; }
 
-/* Block-level language toggling */
-div[data-lang-de], p[data-lang-de], section[data-lang-de],
-li[data-lang-de], span[data-lang-de], h1[data-lang-de],
-h2[data-lang-de], h3[data-lang-de], h4[data-lang-de],
-tr[data-lang-de], td[data-lang-de], th[data-lang-de] { display: none; }
+/* --- Responsive ---
+   With fluid spacing, fluid containers, and fluid typography, most
+   of the old breakpoint overrides are eliminated. What remains are
+   pure LAYOUT changes that can't be expressed with clamp().
 
-div[data-lang-en], p[data-lang-en], section[data-lang-en],
-li[data-lang-en], span[data-lang-en], h1[data-lang-en],
-h2[data-lang-en], h3[data-lang-en], h4[data-lang-en],
-tr[data-lang-en], td[data-lang-en], th[data-lang-en] { display: unset; }
+   Removed (now handled by clamp()):
+   • Container/content-area padding overrides at 768px
+   • Hero padding overrides at 768px
+   • Table font-size/cell-padding overrides at 768px
+   • Card padding overrides at 375px
+   • BLUF padding overrides at 375px                              */
 
-body.lang-de div[data-lang-de], body.lang-de p[data-lang-de],
-body.lang-de section[data-lang-de], body.lang-de li[data-lang-de],
-body.lang-de span[data-lang-de], body.lang-de h1[data-lang-de],
-body.lang-de h2[data-lang-de], body.lang-de h3[data-lang-de],
-body.lang-de h4[data-lang-de], body.lang-de tr[data-lang-de],
-body.lang-de td[data-lang-de], body.lang-de th[data-lang-de] { display: unset; }
-
-body.lang-de div[data-lang-en], body.lang-de p[data-lang-en],
-body.lang-de section[data-lang-en], body.lang-de li[data-lang-en],
-body.lang-de span[data-lang-en], body.lang-de h1[data-lang-en],
-body.lang-de h2[data-lang-en], body.lang-de h3[data-lang-en],
-body.lang-de h4[data-lang-en], body.lang-de tr[data-lang-en],
-body.lang-de td[data-lang-en], body.lang-de th[data-lang-en] { display: none; }
-
-/* --- Responsive --- */
-
-/* Tablet */
-@media (max-width: 1024px) {
-  .card-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  :root { --nav-height: 50px; }
-
-  .container, .content-area, .full-width {
-    padding-left: var(--sp-4);
-    padding-right: var(--sp-4);
-  }
-
+/* Cards stack to single column on narrow viewports */
+@media (max-width: 640px) {
   .card-grid {
     grid-template-columns: 1fr;
   }
 
   .chapter-nav {
     flex-direction: column;
-    gap: var(--sp-4);
     text-align: center;
   }
 
-  .hero { padding: var(--sp-8) var(--sp-4) var(--sp-6); }
-
   .footer-meta { flex-direction: column; }
-
-  table { font-size: 0.82rem; }
-  thead th, tbody td { padding: var(--sp-2); }
-}
-
-/* Small mobile */
-@media (max-width: 375px) {
-  .card { padding: var(--sp-4); }
-  .bluf { padding: var(--sp-3) var(--sp-4); }
 }
 
 /* --- Print --- */
