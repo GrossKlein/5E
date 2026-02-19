@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shareholders — SyncPilot SE</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- vis-timeline styles (required before app.js) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-timeline@8.5.0/styles/vis-timeline-graph2d.min.css" />
+
+  <style>
+    /* === SHAREHOLDERS PAGE STYLES === */
+    /* All rules use existing dossier tokens (--sp-*, --font-*, --text-*, palette vars) */
+
+    /* ---- BLUF summary box ---- */
+    .sh-bluf {
+      border-left: 4px solid var(--claret);
+      background: rgba(242,223,206,0.35);
+      padding: var(--sp-4) var(--sp-6);
+      margin-block: var(--sp-6);
+    }
+    .sh-bluf-label {
+      font-family: var(--font-ui);
+      font-size: var(--text-caption);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--claret);
+      margin-bottom: var(--sp-2);
+    }
+    .sh-bluf p {
+      font-size: var(--text-body);
+      line-height: 1.6;
+      margin-bottom: var(--sp-3);
+    }
+    .sh-bluf p:last-child { margin-bottom: 0; }
+    .sh-bluf strong { font-weight: 700; color: var(--slate); }
+
+    .sh-bluf-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-3) var(--sp-6);
+      margin-top: var(--sp-4);
+      padding-top: var(--sp-3);
+      border-top: 1px solid var(--wheat);
+    }
+    .sh-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      font-family: var(--font-ui);
+      font-size: var(--text-caption);
+      color: rgba(38,42,51,0.55);
+      line-height: 1.2;
+    }
+    .sh-stat strong {
+      font-family: var(--font-body);
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .sh-stat--current strong { color: var(--oxford); }
+    .sh-stat--former  strong { color: rgba(38,42,51,0.45); }
+
+    /* ---- Viz section heading + controls bar ---- */
+    .sh-controls-bar {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--sp-4);
+      flex-wrap: wrap;
+      margin-bottom: var(--sp-4);
+      margin-top: var(--sp-8);
+    }
+    .sh-controls-bar h2 {
+      margin: 0;
+      padding: 0;
+      border: none;
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      color: var(--heading-secondary);
+    }
+
+    .controls {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--sp-3);
+      flex-wrap: wrap;
+    }
+    .control {
+      display: grid;
+      gap: 3px;
+      font-family: var(--font-ui);
+      font-size: var(--text-caption);
+      color: rgba(38,42,51,0.55);
+    }
+    .control input,
+    .control select {
+      height: 32px;
+      padding: 4px 10px;
+      border: 1px solid var(--wheat);
+      background: #fff;
+      color: var(--slate);
+      border-radius: 4px;
+      font-family: var(--font-ui);
+      font-size: var(--text-ui);
+      min-width: 190px;
+      transition: border-color 0.15s;
+    }
+    .control input:focus,
+    .control select:focus {
+      outline: none;
+      border-color: var(--oxford);
+    }
+    .btn {
+      height: 32px;
+      padding: 4px 14px;
+      border: 1px solid var(--wheat);
+      background: #fff;
+      color: var(--slate);
+      border-radius: 4px;
+      font-family: var(--font-ui);
+      font-size: var(--text-ui);
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .btn:hover {
+      border-color: rgba(38,42,51,0.3);
+      background: var(--paper);
+    }
+
+    /* ---- Viz grid layout ---- */
+    .viz-grid {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr;
+      grid-template-rows: clamp(380px, 48vh, 540px);
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-3);
+    }
+
+    /* ---- Panels (graph, details, timeline) ---- */
+    .panel {
+      background: #fff;
+      border: 1px solid var(--wheat);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-3);
+      padding: var(--sp-2) var(--sp-3);
+      border-bottom: 1px solid var(--wheat);
+      background: #fff;
+      flex-wrap: wrap;
+    }
+    .panel-header h2 {
+      margin: 0;
+      padding: 0;
+      border: none;
+      font-family: var(--font-ui);
+      font-size: var(--text-caption);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(38,42,51,0.5);
+    }
+    .panel-footer {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      padding: var(--sp-2) var(--sp-3);
+      border-top: 1px solid var(--wheat);
+      font-family: var(--font-ui);
+      font-size: var(--text-caption);
+      color: rgba(38,42,51,0.45);
+    }
+    .meta-sep { color: var(--wheat); padding: 0 2px; }
+
+    .viz {
+      width: 100%;
+      height: calc(100% - 72px); /* header + footer */
+    }
+
+    .side { grid-row: 1 / span 1; }
+
+    .timeline {
+      grid-column: 1 / -1;
+      min-height: clamp(240px, 28vh, 360px);
+    }
+    .timeline-canvas {
+      height: calc(100% - 36px);
+    }
+
+    /* ---- Details pane ---- */
+    .details {
+      padding: var(--sp-3);
+      font-family: var(--font-ui);
+      font-size: var(--text-ui);
+      line-height: 1.45;
+      color: var(--slate);
+      overflow-y: auto;
+      max-height: calc(100% - 36px);
+    }
+    .hint {
+      color: rgba(38,42,51,0.45);
+      font-style: italic;
+    }
+    .details h3 {
+      margin: 0 0 var(--sp-2) 0;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--slate);
+    }
+    .kv {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 3px var(--sp-3);
+      margin-bottom: var(--sp-3);
+    }
+    .kv .k {
+      color: rgba(38,42,51,0.45);
+      font-size: var(--text-small);
+    }
+    .list {
+      margin: var(--sp-2) 0 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .list li {
+      padding: var(--sp-2) var(--sp-3);
+      border: 1px solid var(--wheat);
+      border-radius: 4px;
+      margin-bottom: var(--sp-2);
+      font-size: var(--text-ui);
+      line-height: 1.4;
+    }
+
+    /* ---- Legend badges ---- */
+    .legend {
+      display: flex;
+      gap: var(--sp-2);
+      flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-family: var(--font-ui);
+      font-size: var(--text-caption);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      border: 1px solid var(--wheat);
+      gap: 5px;
+      white-space: nowrap;
+    }
+    .badge::before {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .badge-target        { border-color: var(--claret); color: var(--claret); }
+    .badge-target::before { background: var(--claret); }
+    .badge-org           { border-color: var(--oxford); color: var(--oxford); }
+    .badge-org::before   { background: var(--oxford); }
+    .badge-person        { border-color: #0f5499; color: #0f5499; }
+    .badge-person::before { background: #0f5499; }
+    .badge-edge-current  { border-color: var(--oxford); color: var(--oxford); }
+    .badge-edge-current::before { background: var(--oxford); border-radius: 50%; }
+    .badge-edge-former   { border-color: rgba(38,42,51,0.35); color: rgba(38,42,51,0.45); }
+    .badge-edge-former::before  { background: rgba(38,42,51,0.35); border-radius: 50%; }
+    .badge-edge-unknown  { border-color: rgba(38,42,51,0.2); color: rgba(38,42,51,0.35); }
+    .badge-edge-unknown::before { background: rgba(38,42,51,0.2); border-radius: 50%; }
+
+    /* ---- Source note ---- */
+    .sh-source {
+      margin-top: var(--sp-6);
+      padding: var(--sp-3) var(--sp-4);
+      background: rgba(242,223,206,0.25);
+      border-radius: 4px;
+      font-family: var(--font-ui);
+      font-size: var(--text-small);
+      line-height: 1.6;
+      color: rgba(38,42,51,0.55);
+    }
+    .sh-source strong {
+      font-weight: 600;
+      color: var(--slate);
+    }
+    .sh-source code {
+      font-size: var(--text-caption);
+      background: rgba(242,223,206,0.5);
+      padding: 1px 4px;
+      border-radius: 2px;
+    }
+
+    /* ---- Timeline note ---- */
+    .note {
+      font-family: var(--font-ui);
+      font-size: var(--text-caption);
+      color: rgba(38,42,51,0.45);
+      font-style: italic;
+    }
+
+    /* ---- vis-timeline overrides (dossier typography) ---- */
+    .vis-timeline {
+      font-family: var(--font-ui) !important;
+      border-color: var(--wheat) !important;
+    }
+    .vis-panel.vis-center,
+    .vis-panel.vis-left,
+    .vis-panel.vis-right,
+    .vis-panel.vis-top,
+    .vis-panel.vis-bottom {
+      border-color: var(--wheat) !important;
+    }
+    .vis-grid.vis-vertical,
+    .vis-grid.vis-minor,
+    .vis-grid.vis-major {
+      border-color: rgba(242,223,206,0.5) !important;
+    }
+    .vis-time-axis .vis-text {
+      font-family: var(--font-ui) !important;
+      font-size: var(--text-caption) !important;
+      color: rgba(38,42,51,0.45) !important;
+    }
+    .vis-labelset .vis-label {
+      font-family: var(--font-ui) !important;
+      font-size: var(--text-small) !important;
+      color: var(--slate) !important;
+    }
+    .vis-item {
+      font-family: var(--font-ui) !important;
+      font-size: var(--text-small) !important;
+      color: var(--slate) !important;
+      border-radius: 4px !important;
+    }
+    .vis-item.tl-current {
+      background: var(--wheat) !important;
+      border-color: var(--oxford) !important;
+    }
+    .vis-item.tl-former {
+      background: #fff !important;
+      border-color: rgba(38,42,51,0.3) !important;
+      color: rgba(38,42,51,0.45) !important;
+    }
+    .vis-item.tl-unknown {
+      background: #fff !important;
+      border-color: rgba(38,42,51,0.15) !important;
+      color: rgba(38,42,51,0.35) !important;
+    }
+    .vis-item.tl-uncertain {
+      border-style: dashed !important;
+    }
+    .vis-item.vis-selected {
+      border-color: var(--mango) !important;
+      box-shadow: none !important;
+    }
+    .vis-item .vis-item-content {
+      padding: 3px 6px !important;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 860px) {
+      .viz-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: clamp(300px, 40vh, 440px) auto;
+      }
+      .side { grid-row: auto; }
+    }
+
+    @media (max-width: 640px) {
+      .sh-bluf-stats { gap: var(--sp-2) var(--sp-4); }
+      .sh-stat strong { font-size: 1.15rem; }
+      .controls { flex-direction: column; align-items: stretch; }
+      .control input,
+      .control select { min-width: 0; }
+    }
+  </style>
+
+  <!-- Cytoscape.js + vis-timeline (pinned CDN) -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.33.1/cytoscape.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vis-timeline@8.5.0/standalone/umd/vis-timeline-graph2d.min.js"></script>
+
+  <!-- ShareViz app logic (unchanged) -->
+  <script defer src="app.js"></script>
+</head>
+
+<body>
+
+  <!-- ====== TOP NAV ====== -->
+  <nav class="site-nav">
+    <div class="nav-left">
+      <button class="hamburger" id="menuToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <a class="nav-title" href="index.html">SyncPilot — Investigative Dossier</a>
+    </div>
+  </nav>
+
+  <!-- ====== SIDE MENU ====== -->
+  <aside class="side-menu" id="sideMenu">
+    <a href="index.html" class="menu-link">Dossier Home</a>
+    <div class="menu-group-label">Chapters</div>
+    <a href="profile.html" class="menu-link"><span class="ch-num">1.</span>The Company</a>
+    <a href="perseus.html" class="menu-link"><span class="ch-num">2.</span>The 95% Discount</a>
+    <a href="goldfinger.html" class="menu-link"><span class="ch-num">3.</span>The Goldfinger Connection</a>
+    <a href="lvs.html" class="menu-link"><span class="ch-num">4.</span>The LVS Trap</a>
+    <a href="evidence.html" class="menu-link"><span class="ch-num">5.</span>The Evidence Room</a>
+    <div class="menu-group-label">Visualisations</div>
+    <a href="shareholders.html" class="menu-link active"><span class="ch-num">⬡</span>Shareholders</a>
+  </aside>
+  <div class="side-menu-overlay" id="menuOverlay"></div>
+
+  <!-- ====== CONTENT ====== -->
+  <article class="content-area" style="max-width: var(--max-width);">
+
+    <h1>
+      <span data-lang-en>Shareholders</span>
+      <span data-lang-de>Gesellschafter</span>
+    </h1>
+
+    <!-- ── BLUF ── -->
+    <div class="sh-bluf">
+      <div class="sh-bluf-label">
+        <span data-lang-en>Bottom Line Up Front</span>
+        <span data-lang-de>Zusammenfassung</span>
+      </div>
+      <p data-lang-en>
+        A folder-derived ownership analysis of SyncPilot&nbsp;SE's corporate filings reveals a web of
+        <strong>65&nbsp;distinct entities</strong> connected by <strong>92&nbsp;ownership edges</strong>.
+        Of these, <strong>19&nbsp;entities hold or held direct stakes</strong> in SyncPilot&nbsp;SE itself —
+        <strong>14&nbsp;current</strong> shareholders and <strong>5&nbsp;former</strong>.
+        The graph below exposes multi-layered holding structures; several natural persons appear
+        at multiple levels of the chain, raising questions about effective control versus nominal shareholding.
+        No ownership percentages could be inferred from the folder structure; only the existence and
+        temporal range of each relationship is documented.
+      </p>
+      <p data-lang-de>
+        Eine aus der Ordnerstruktur abgeleitete Beteiligungsanalyse der Unternehmensunterlagen von SyncPilot&nbsp;SE
+        offenbart ein Netzwerk von <strong>65&nbsp;einzelnen Entitäten</strong>, verbunden durch
+        <strong>92&nbsp;Beteiligungskanten</strong>. Davon halten oder hielten
+        <strong>19&nbsp;Entitäten direkte Beteiligungen</strong> an SyncPilot&nbsp;SE —
+        <strong>14&nbsp;aktuelle</strong> Gesellschafter und <strong>5&nbsp;ehemalige</strong>.
+        Die untenstehende Grafik zeigt mehrstufige Holdingstrukturen; mehrere natürliche Personen
+        erscheinen auf verschiedenen Ebenen der Kette, was Fragen zur tatsächlichen Kontrolle
+        gegenüber nomineller Beteiligung aufwirft.
+        Aus der Ordnerstruktur konnten keine Beteiligungsquoten abgeleitet werden; lediglich das
+        Bestehen und der zeitliche Rahmen jeder Beziehung sind dokumentiert.
+      </p>
+      <div class="sh-bluf-stats">
+        <span class="sh-stat">
+          <span data-lang-en>Entities</span><span data-lang-de>Entitäten</span>
+          <strong>65</strong>
+        </span>
+        <span class="sh-stat">
+          <span data-lang-en>Ownership edges</span><span data-lang-de>Beteiligungskanten</span>
+          <strong>92</strong>
+        </span>
+        <span class="sh-stat">
+          <span data-lang-en>Direct shareholders</span><span data-lang-de>Direkte Gesellschafter</span>
+          <strong>19</strong>
+        </span>
+        <span class="sh-stat sh-stat--current">
+          <span data-lang-en>Current</span><span data-lang-de>Aktuell</span>
+          <strong>14</strong>
+        </span>
+        <span class="sh-stat sh-stat--former">
+          <span data-lang-en>Former</span><span data-lang-de>Ehemalig</span>
+          <strong>5</strong>
+        </span>
+      </div>
+    </div>
+
+    <!-- ── VIZ CONTROLS ── -->
+    <div class="sh-controls-bar">
+      <h2>
+        <span data-lang-en>Ownership graph &amp; timeline</span>
+        <span data-lang-de>Beteiligungsgrafik &amp; Zeitleiste</span>
+      </h2>
+      <div class="controls">
+        <label class="control">
+          <span>
+            <span data-lang-en>Graph view</span>
+            <span data-lang-de>Ansicht</span>
+          </span>
+          <select id="viewMode">
+            <option value="direct" selected>Direct shareholders only</option>
+            <option value="full">Full ownership graph (folder-derived)</option>
+          </select>
+        </label>
+        <label class="control">
+          <span>
+            <span data-lang-en>Search entity</span>
+            <span data-lang-de>Entität suchen</span>
+          </span>
+          <input id="searchInput" type="search" placeholder="Type a name…" autocomplete="off" />
+        </label>
+        <button id="resetBtn" class="btn" type="button">
+          <span data-lang-en>Reset</span>
+          <span data-lang-de>Zurücksetzen</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── CYTOSCAPE + DETAILS GRID ── -->
+    <div class="viz-grid">
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2>
+            <span data-lang-en>Ownership graph</span>
+            <span data-lang-de>Beteiligungsgrafik</span>
+          </h2>
+          <div class="legend">
+            <span class="badge badge-target">SyncPilot SE</span>
+            <span class="badge badge-org">
+              <span data-lang-en>Legal person</span>
+              <span data-lang-de>Juristische Person</span>
+            </span>
+            <span class="badge badge-person">
+              <span data-lang-en>Natural person</span>
+              <span data-lang-de>Natürliche Person</span>
+            </span>
+            <span class="badge badge-edge-current">
+              <span data-lang-en>Current</span>
+              <span data-lang-de>Aktuell</span>
+            </span>
+            <span class="badge badge-edge-former">
+              <span data-lang-en>Former</span>
+              <span data-lang-de>Ehemalig</span>
+            </span>
+            <span class="badge badge-edge-unknown">
+              <span data-lang-en>Unknown period</span>
+              <span data-lang-de>Unbekannter Zeitraum</span>
+            </span>
+          </div>
+        </div>
+        <div id="cy" class="viz"></div>
+        <div class="panel-footer">
+          <span id="asOf">As of: —</span>
+          <span class="meta-sep">·</span>
+          <span id="counts">—</span>
+        </div>
+      </div>
+
+      <div class="panel side">
+        <div class="panel-header">
+          <h2>
+            <span data-lang-en>Selection</span>
+            <span data-lang-de>Auswahl</span>
+          </h2>
+        </div>
+        <div id="details" class="details">
+          <div class="hint">
+            <span data-lang-en>Click a node or edge to see details.</span>
+            <span data-lang-de>Knoten oder Kante anklicken für Details.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── TIMELINE ── -->
+    <div class="panel timeline">
+      <div class="panel-header">
+        <h2>
+          <span data-lang-en>Direct shareholder timeline</span>
+          <span data-lang-de>Zeitleiste der direkten Gesellschafter</span>
+        </h2>
+        <div class="note" id="timelineNote"></div>
+      </div>
+      <div id="tl" class="timeline-canvas"></div>
+    </div>
+
+    <!-- ── SOURCE NOTE ── -->
+    <div class="sh-source">
+      <p data-lang-en>
+        <strong>Data source.</strong> <code>data/graph.min.json</code> — folder-derived ownership structure.
+        No ownership percentages are inferred. Some periods use a year-range
+        (e.g.&nbsp;"2022-23"); these items are rendered from the earliest possible date
+        and shown with a dashed border. Built&nbsp;2026-02-18.
+      </p>
+      <p data-lang-de>
+        <strong>Datenquelle.</strong> <code>data/graph.min.json</code> — aus der Ordnerstruktur abgeleitete
+        Beteiligungsstruktur. Keine Beteiligungsquoten werden abgeleitet. Einige Zeiträume verwenden
+        Jahresbereiche (z.&nbsp;B.&nbsp;„2022-23"); diese werden ab dem frühestmöglichen Datum dargestellt
+        und mit gestricheltem Rand markiert. Stand&nbsp;18.02.2026.
+      </p>
+    </div>
+
+    <!-- ── CHAPTER NAV ── -->
+    <div class="chapter-nav">
+      <a href="profile.html" class="prev">
+        <span data-lang-en>Ch. 1: The Company</span>
+        <span data-lang-de>Kap. 1: Das Unternehmen</span>
+      </a>
+      <a href="evidence.html" class="next">
+        <span data-lang-en>The Evidence Room</span>
+        <span data-lang-de>Der Beweisraum</span>
+      </a>
+    </div>
+
+  </article>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <span data-lang-en>This analysis represents investigative questions and pattern identification, not legal determinations of wrongdoing. Individuals are presumed innocent unless proven otherwise in a court of law.</span>
+        <span data-lang-de>Diese Analyse stellt investigative Fragen und Mustererkennung dar, keine rechtlichen Feststellungen von Fehlverhalten. Personen gelten als unschuldig, bis ihre Schuld rechtskräftig festgestellt wird.</span>
+      </div>
+      <div class="footer-meta">
+        <span>Last updated: February 2026</span>
+        <span>Cookie-free · No personal data collected</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====== MENU TOGGLE ====== -->
+  <script>
+  (function(){
+    var btn = document.getElementById('menuToggle');
+    var menu = document.getElementById('sideMenu');
+    var overlay = document.getElementById('menuOverlay');
+    function toggle() {
+      btn.classList.toggle('active');
+      menu.classList.toggle('open');
+      overlay.classList.toggle('visible');
+    }
+    if (btn) {
+      btn.addEventListener('click', toggle);
+      overlay.addEventListener('click', toggle);
+    }
+  })();
+  </script>
+</body>
+</html>

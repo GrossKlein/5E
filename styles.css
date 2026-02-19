@@ -920,3 +920,71 @@ body.lang-de [data-lang-en] { display: none; }
 
   .site-footer { background: #fff; color: #333; border-top: 2px solid #000; }
 }
+/* --- vis-timeline: force dossier typography into third-party widget --- */
+.vis-timeline {
+  font-family: var(--font-ui) !important;
+  border-color: var(--wheat) !important;
+}
+
+.vis-panel.vis-center,
+.vis-panel.vis-left,
+.vis-panel.vis-right,
+.vis-panel.vis-top,
+.vis-panel.vis-bottom {
+  border-color: var(--wheat) !important;
+}
+
+.vis-grid.vis-vertical,
+.vis-grid.vis-minor,
+.vis-grid.vis-major {
+  border-color: rgba(242,223,206,0.5) !important;
+}
+
+.vis-time-axis .vis-text {
+  font-family: var(--font-ui) !important;
+  font-size: var(--text-caption) !important;
+  color: rgba(38,42,51,0.45) !important;
+}
+
+.vis-labelset .vis-label {
+  font-family: var(--font-ui) !important;
+  font-size: var(--text-small) !important;
+  color: var(--slate) !important;
+}
+
+.vis-item {
+  font-family: var(--font-ui) !important;
+  font-size: var(--text-small) !important;
+  color: var(--slate) !important;
+  border-radius: 4px !important;
+}
+
+.vis-item.tl-current {
+  background: var(--wheat) !important;
+  border-color: var(--oxford) !important;
+}
+
+.vis-item.tl-former {
+  background: #fff !important;
+  border-color: rgba(38,42,51,0.3) !important;
+  color: rgba(38,42,51,0.45) !important;
+}
+
+.vis-item.tl-unknown {
+  background: #fff !important;
+  border-color: rgba(38,42,51,0.15) !important;
+  color: rgba(38,42,51,0.35) !important;
+}
+
+.vis-item.tl-uncertain {
+  border-style: dashed !important;
+}
+
+.vis-item.vis-selected {
+  border-color: var(--mango) !important;
+  box-shadow: none !important;
+}
+
+.vis-item .vis-item-content {
+  padding: 3px 6px !important;
+}
