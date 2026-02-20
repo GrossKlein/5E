@@ -861,22 +861,196 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
   color: rgba(38,42,51,0.6);
   line-height: 1.5;
 }
+/* ============================================================
+   Dossier Shell Components — append to styles.css
+   ──────────────────────────────────────────────────────────
+   Styles for components injected by dossier.js:
+   • Language toggle (flag pills)
+   • Hamburger label (index only)
+   • Fixed bottom chapter bar
+   • Compliance footer sections
+   ============================================================ */
 
-/* --- Language Toggle Content ---
-   Condensed from 30 lines to 6 using :is() selector lists.
-   Works identically — every element type is still covered. */
-:is(div,p,section,li,span,h1,h2,h3,h4,tr,td,th)[data-lang-de] { display: none; }
-:is(div,p,section,li,span,h1,h2,h3,h4,tr,td,th)[data-lang-en] { display: unset; }
+/* --- Language Toggle (nav-right) --- */
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  background: rgba(255,241,229,0.08);
+  border: 1px solid rgba(255,241,229,0.18);
+  border-radius: 20px;
+  transition: background 0.15s;
+}
+.lang-toggle:hover {
+  background: rgba(255,241,229,0.14);
+}
 
-body.lang-de :is(div,p,section,li,span,h1,h2,h3,h4,tr,td,th)[data-lang-de] { display: unset; }
-body.lang-de :is(div,p,section,li,span,h1,h2,h3,h4,tr,td,th)[data-lang-en] { display: none; }
+.lang-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 1px;
+  line-height: 0;
+  opacity: 0.38;
+  border-bottom: 2px solid transparent;
+  transition: opacity 0.15s, border-color 0.15s;
+  border-radius: 0;
+}
+.lang-btn:hover {
+  opacity: 0.7;
+}
+.lang-btn.active {
+  opacity: 1;
+  border-bottom-color: var(--claret);
+}
 
-/* Inline-level fallback (for mixed inline text) */
-[data-lang-de] { display: none; }
-[data-lang-en] { display: unset; }
-body.lang-de [data-lang-de] { display: unset; }
-body.lang-de [data-lang-en] { display: none; }
+.flag-icon {
+  display: block;
+  width: 20px;
+  height: 14px;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 0 0 0.5px rgba(0,0,0,0.12);
+}
 
+.lang-sep {
+  color: rgba(255,241,229,0.25);
+  font-size: 0.7rem;
+  line-height: 1;
+  user-select: none;
+}
+
+/* --- Hamburger label ("Contents" / "Inhalt") --- */
+.hamburger-label {
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: rgba(255,241,229,0.7);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.15s;
+}
+.hamburger:hover ~ .hamburger-label,
+.hamburger-label:hover {
+  color: var(--paper);
+}
+
+@media (max-width: 480px) {
+  .hamburger-label { display: none; }
+}
+
+/* --- Fixed Bottom Chapter Bar --- */
+.fixed-chapter-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  background: var(--wheat);
+  border-top: 1px solid rgba(38,42,51,0.08);
+  box-shadow: 0 -2px 12px rgba(38,42,51,0.06);
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+  pointer-events: none;
+}
+.fixed-chapter-bar.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fixed-bar-inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px var(--container-padding);
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  min-height: 32px;
+}
+
+.fixed-bar-prev,
+.fixed-bar-next {
+  color: var(--oxford);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.15s;
+  white-space: nowrap;
+}
+.fixed-bar-prev:hover,
+.fixed-bar-next:hover {
+  color: var(--claret);
+}
+
+.fixed-bar-center {
+  color: rgba(38,42,51,0.45);
+  font-weight: 400;
+  font-size: var(--text-caption);
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 480px) {
+  .fixed-bar-center { display: none; }
+}
+
+/* --- Footer Sections --- */
+.site-footer .footer-section {
+  margin-bottom: var(--sp-6);
+  max-width: 700px;
+}
+
+.footer-section-label {
+  font-family: var(--font-ui);
+  font-size: var(--text-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,241,229,0.45);
+  margin-bottom: var(--sp-2);
+}
+
+.site-footer .footer-section p {
+  font-size: var(--text-small);
+  line-height: 1.6;
+  color: rgba(255,241,229,0.7);
+  margin-bottom: var(--sp-2);
+}
+.site-footer .footer-section p:last-child {
+  margin-bottom: 0;
+}
+
+.site-footer .footer-section a {
+  color: rgba(255,241,229,0.85);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.site-footer .footer-section a:hover {
+  color: var(--paper);
+}
+
+.footer-aside {
+  font-size: var(--text-caption);
+  color: rgba(255,241,229,0.4);
+  font-style: italic;
+}
+
+/* Add bottom padding on pages with fixed bar so footer isn't obscured */
+body[data-page]:not([data-page="index"]) .site-footer {
+  padding-bottom: calc(var(--sp-8) + 40px);
+}
+
+/* --- Print: hide shell components --- */
+@media print {
+  .lang-toggle,
+  .hamburger-label,
+  .fixed-chapter-bar { display: none !important; }
+}
 /* --- Responsive ---
    With fluid spacing, fluid containers, and fluid typography, most
    of the old breakpoint overrides are eliminated. What remains are
