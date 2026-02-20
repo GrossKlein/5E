@@ -127,167 +127,92 @@
       margin-left: 4px;
     }
 
-    /* ---- Capital event timeline ---- */
-    .timeline-scroll {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      padding: var(--sp-4) 0 var(--sp-6);
-      margin: var(--sp-4) 0;
+    /* ---- D3 Capital chart ---- */
+    #capital-chart svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
     }
-    .timeline-track {
-      display: flex;
-      align-items: flex-start;
-      min-width: max-content;
-      position: relative;
-      padding-top: 8px;
+    #capital-chart .grid-line {
+      stroke: rgba(242,223,206,0.5);
+      stroke-width: 1;
     }
-    .timeline-track::before {
-      content: '';
-      position: absolute;
-      top: 38px;
-      left: 20px;
-      right: 20px;
-      height: 2px;
-      background: var(--wheat);
+    #capital-chart .axis-label {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 11px;
+      fill: rgba(38,42,51,0.45);
     }
-    .tl-node {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 124px;
-      flex-shrink: 0;
-      position: relative;
-      cursor: default;
+    #capital-chart .event-line {
+      fill: none;
+      stroke: #0D7680;
+      stroke-width: 2;
+      stroke-linejoin: round;
+      stroke-linecap: round;
     }
-    .tl-date {
-      font-family: var(--font-ui);
-      font-size: 0.65rem;
-      font-weight: 600;
-      color: rgba(38,42,51,0.45);
-      margin-bottom: var(--sp-2);
-      white-space: nowrap;
-    }
-    .tl-dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--oxford);
-      border: 3px solid var(--paper);
-      box-shadow: 0 0 0 2px var(--oxford);
-      z-index: 2;
-      transition: transform 0.15s;
-    }
-    .tl-node:hover .tl-dot { transform: scale(1.3); }
-    .tl-node--anomaly .tl-dot {
-      background: var(--risk-high);
-      box-shadow: 0 0 0 2px var(--risk-high);
-    }
-    .tl-body {
-      margin-top: var(--sp-3);
-      text-align: center;
-      font-family: var(--font-ui);
-      line-height: 1.35;
-    }
-    .tl-price {
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--slate);
-    }
-    .tl-node--anomaly .tl-price {
-      color: var(--risk-high);
-    }
-    .tl-shares {
-      font-size: 0.68rem;
-      color: rgba(38,42,51,0.5);
-      margin-top: 1px;
-      font-variant-numeric: tabular-nums;
-    }
-    .tl-buyer {
-      font-size: 0.68rem;
-      color: rgba(38,42,51,0.45);
-      margin-top: 3px;
-      max-width: 115px;
-    }
-    .tl-val {
-      font-size: 0.62rem;
-      color: rgba(38,42,51,0.4);
-      margin-top: 2px;
-    }
-    .tl-node--anomaly .tl-val {
-      color: var(--risk-high);
-      font-weight: 600;
-    }
-    .tl-node--anomaly .tl-shares {
-      color: var(--risk-high);
-    }
-    /* Detail toggle: hidden by default, revealed per-node */
-    .ct-detail-extra {
-      display: grid;
-      grid-template-rows: 0fr;
-      opacity: 0;
-      transition: grid-template-rows 0.25s ease, opacity 0.25s ease;
-    }
-    .ct-detail-extra > div {
-      overflow: hidden;
-    }
-    .ct-detail-extra.is-open {
-      grid-template-rows: 1fr;
-      opacity: 1;
-    }
-    .tl-toggle {
-      font-family: var(--font-ui);
-      font-size: var(--text-caption, 0.68rem);
-      color: rgba(38,42,51,0.4);
-      background: none;
-      border: none;
+    #capital-chart .event-dot {
+      stroke: #fff;
+      stroke-width: 2;
       cursor: pointer;
-      padding: 2px 6px;
-      margin-top: 2px;
-      letter-spacing: 0.08em;
-      line-height: 1;
-      border-radius: 3px;
-      transition: color 0.15s, background 0.15s;
+      transition: r 0.12s ease;
     }
-    .tl-toggle:hover {
-      color: rgba(38,42,51,0.65);
-      background: rgba(38,42,51,0.06);
+    #capital-chart .event-dot:hover { r: 7; }
+    #capital-chart .event-dot--anomaly {
+      stroke-width: 3;
+      cursor: pointer;
     }
-    .timeline-hint {
-      font-family: var(--font-ui);
-      font-size: 0.72rem;
-      color: rgba(38,42,51,0.35);
-      text-align: right;
-      margin-top: -4px;
+    #capital-chart .event-dot--anomaly:hover { r: 10; }
+    #capital-chart .annotation-text {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
     }
-
-    /* Tooltip on hover */
-    .tl-node .tl-tooltip {
-      display: none;
+    #capital-chart .annotation-connector {
+      stroke-width: 1.5;
+      stroke-dasharray: 4,3;
+      fill: none;
+    }
+    #capital-chart .zone-label {
+      font-family: 'Source Serif 4', serif;
+      font-size: 10px;
+      font-style: italic;
+      fill: rgba(38,42,51,0.35);
+    }
+    #capital-chart .val-label {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 10px;
+      fill: rgba(38,42,51,0.5);
+    }
+    .d3-tooltip {
       position: absolute;
-      bottom: calc(100% + 10px);
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--slate);
-      color: var(--paper);
-      font-family: var(--font-ui);
-      font-size: 0.72rem;
-      padding: 6px 10px;
+      pointer-events: none;
+      background: #262A33;
+      color: #FFF1E5;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.75rem;
+      padding: 8px 12px;
       border-radius: 4px;
+      line-height: 1.5;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 20;
+      max-width: 260px;
       white-space: nowrap;
-      z-index: 10;
-      line-height: 1.4;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
-    .tl-node .tl-tooltip::after {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 5px solid transparent;
-      border-top-color: var(--slate);
+    .d3-tooltip.is-visible { opacity: 1; }
+    .d3-tooltip .tt-date { font-weight: 700; }
+    .d3-tooltip .tt-price { color: #fff; font-weight: 700; }
+    .d3-tooltip .tt-buyer { opacity: 0.7; }
+    .d3-tooltip .tt-val { opacity: 0.55; font-size: 0.68rem; }
+    @keyframes pulse-anomaly {
+      0%, 100% { r: 8; opacity: 1; }
+      50% { r: 13; opacity: 0.6; }
     }
-    .tl-node:hover .tl-tooltip { display: block; }
+    #capital-chart .pulse { animation: pulse-anomaly 0.6s ease 1; }
+
+    /* Fallback timeline (hidden when D3 loads) */
+    #capital-fallback { display: none; }
 
     /* ---- Revenue bars ---- */
     .rev-bar-list {
@@ -369,7 +294,6 @@
         grid-template-columns: 100px 1fr 65px;
       }
       .rev-bar-label { font-size: 0.78rem; }
-      .tl-node { width: 105px; }
     }
   </style>
 </head>
@@ -588,15 +512,17 @@
 
     <div class="chart-container">
       <div class="chart-title" data-lang-en="Board-set share prices swung from €18.96 to €1.00 and back in 150 days" data-lang-de="Vom Vorstand festgesetzte Aktienpreise schwankten in 150 Tagen von 18,96 € auf 1,00 € und zurück">Board-set share prices swung from €18.96 to €1.00 and back in 150 days</div>
-      <div class="chart-subtitle">Tap ⋯ for detail · Hover for full summary · Scroll → on mobile</div>
+      <div id="capital-chart"></div>
+      <div class="chart-source" data-lang-en="Source: Handelsregister filings, SyncPilot SE annual reports" data-lang-de="Quelle: Handelsregister-Einträge, SyncPilot SE Jahresberichte">Source: Handelsregister filings, SyncPilot SE annual reports</div>
+    </div>
 
-      <div class="timeline-scroll">
-        <div class="timeline-track" id="capitalTimeline">
-          <!-- Nodes injected by JS -->
-        </div>
-      </div>
-      <div class="timeline-hint">← scroll →</div>
-      <div class="chart-source">Source: Handelsregister filings, shareholder meeting minutes</div>
+    <!-- Fallback: old evenly-spaced timeline (shown only if D3 fails to load) -->
+    <div id="capital-fallback" style="display:none">
+      <noscript>
+        <p style="font-family:var(--font-ui);color:rgba(38,42,51,0.5);font-size:0.85rem;">
+          Enable JavaScript to view the interactive capital-event chart.
+        </p>
+      </noscript>
     </div>
 
     <div class="info-box">
@@ -654,67 +580,341 @@
     </div>
   </footer>
 
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+
   <!-- ====== INTERACTIVE JS ====== -->
   <script>
   (function() {
     'use strict';
 
     /* ===============================
-       CAPITAL EVENT TIMELINE
+       D3 CAPITAL EVENT CHART
        =============================== */
-    var events = [
-      { date: '23 Sep 2020', price: '€1.00',  buyer: 'Formation',              val: null,    shares: '120,000',   anomaly: false },
-      { date: '7 Dec 2020',  price: '€4.70',  buyer: 'Contribution in kind',   val: '€23.5M',shares: '4,880,000', anomaly: false },
-      { date: '13 Dec 2021', price: '€13.00', buyer: 'Saupe + Kimmich',        val: '€66.5M',shares: '115,385',   anomaly: false },
-      { date: '9 Dec 2022',  price: '€18.96', buyer: 'H.G. Perseus',           val: '€100M', shares: '158,208',   anomaly: false },
-      { date: '14 Mar 2023', price: '€1.00',  buyer: 'H.G. Perseus',           val: '€5.4M', shares: '127,885',   anomaly: true  },
-      { date: '11 May 2023', price: '€20.56', buyer: 'Tiven GmbH',             val: '€112M', shares: '48,632',    anomaly: false },
-      { date: '5 Jun 2023',  price: '€20.56', buyer: 'H.G. Perseus',           val: null,    shares: '16,211',    anomaly: false },
-      { date: '30 Jun 2023', price: '€20.56', buyer: 'bgh Vermögensverwaltung', val: '€113M',shares: '32,421',    anomaly: false },
-      { date: '17 May 2024', price: '€23.64', buyer: '5th Dimension Invest.',   val: '€131M',shares: '55,550',    anomaly: false },
-      { date: '5 Aug 2025',  price: '€23.00', buyer: 'ATLASI + Callidus',       val: '€128M',shares: '21,739',    anomaly: false }
+    var capitalEvents = [
+      { date:'2020-12-07', price:4.70,   buyer:'BOSYNC Beteiligungs UG',
+        label:'Capital increase (contribution in kind)', shares:2486138,
+        valuation:23500000, anomaly:false },
+      { date:'2021-12-03', price:13.00,  buyer:'Saupe / Kimmich',
+        label:'Auth. capital II — first utilization', shares:115385,
+        valuation:66500005, anomaly:false },
+      { date:'2022-12-09', price:18.96,  buyer:'H.G. Perseus GmbH StbG',
+        label:'Auth. capital II — Perseus entry at market', shares:158208,
+        valuation:100000001, anomaly:false },
+      { date:'2023-03-14', price:1.00,   buyer:'H.G. Perseus GmbH StbG',
+        label:'Auth. capital II — Perseus at €1.00', shares:127885,
+        valuation:5401478, anomaly:true },
+      { date:'2023-05-11', price:20.56,  buyer:'Tiven GmbH',
+        label:'Auth. capital II — post-Perseus (Tiven)', shares:48632,
+        valuation:112068432, anomaly:false },
+      { date:'2023-06-15', price:20.56,  buyer:'H.G. Perseus + bgh',
+        label:'Auth. capital II — post-Perseus (Perseus+bgh)', shares:48632,
+        valuation:113068432, anomaly:false },
+      { date:'2024-05-17', price:23.64,  buyer:'5th. Dimension Investment GmbH',
+        label:'Capital increase 2024', shares:55550,
+        valuation:131313301, anomaly:false },
+      { date:'2025-08-05', price:23.00,  buyer:'ATLASI GROUP GmbH',
+        label:'Capital increase 2025 (pending)', shares:14493,
+        valuation:128248713, anomaly:false }
     ];
 
-    var track = document.getElementById('capitalTimeline');
-    if (track) {
-      events.forEach(function(e) {
-        var node = document.createElement('div');
-        node.className = 'tl-node' + (e.anomaly ? ' tl-node--anomaly' : '');
+    function buildCapitalChart() {
+      if (typeof d3 === 'undefined') {
+        var fb = document.getElementById('capital-fallback');
+        if (fb) fb.style.display = 'block';
+        return;
+      }
 
-        // Short date for display
-        var parts = e.date.split(' ');
-        var shortDate = parts[1] + ' ' + parts[2]; // "Sep 2020"
+      var container = document.getElementById('capital-chart');
+      if (!container) return;
 
-        // Tooltip
-        var tip = e.buyer + ': ' + e.shares + ' shares @ ' + e.price;
-        if (e.val) tip += ' (val. ' + e.val + ')';
+      /* --- Tooltip div --- */
+      var tooltip = document.querySelector('.d3-tooltip');
+      if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.className = 'd3-tooltip';
+        document.body.appendChild(tooltip);
+      }
 
-        node.innerHTML =
-          '<div class="tl-tooltip">' + tip + '</div>' +
-          '<div class="tl-date">' + shortDate + '</div>' +
-          '<div class="tl-dot"></div>' +
-          '<div class="tl-body">' +
-            '<div class="tl-price">' + e.price + '</div>' +
-            '<button class="tl-toggle" aria-label="Show details" title="Show details">⋯</button>' +
-            '<div class="ct-detail-extra"><div>' +
-              '<div class="tl-shares">' + e.shares + ' sh.</div>' +
-              '<div class="tl-buyer">' + e.buyer + '</div>' +
-              (e.val ? '<div class="tl-val">val. ' + e.val + '</div>' : '<div class="tl-val" style="opacity:0.3;">—</div>') +
-            '</div></div>' +
-          '</div>';
-        track.appendChild(node);
+      /* --- Parse dates --- */
+      var parseDate = d3.timeParse('%Y-%m-%d');
+      var data = capitalEvents.map(function(d) {
+        return Object.assign({}, d, { dateObj: parseDate(d.date) });
       });
 
-      /* Toggle detail panels */
-      track.addEventListener('click', function(evt) {
-        var btn = evt.target.closest('.tl-toggle');
-        if (!btn) return;
-        var extra = btn.parentNode.querySelector('.ct-detail-extra');
-        if (!extra) return;
-        var open = extra.classList.toggle('is-open');
-        btn.setAttribute('aria-label', open ? 'Hide details' : 'Show details');
-        btn.setAttribute('title', open ? 'Hide details' : 'Show details');
+      /* --- Dimensions --- */
+      var rect = container.getBoundingClientRect();
+      var fullW = Math.max(rect.width, 320);
+      var margin = { top: 40, right: 30, bottom: 50, left: 55 };
+      var w = fullW - margin.left - margin.right;
+      var h = Math.min(Math.max(fullW * 0.48, 220), 360) - margin.top - margin.bottom;
+
+      /* --- Clear previous --- */
+      container.innerHTML = '';
+
+      /* --- Scales --- */
+      var x = d3.scaleTime()
+        .domain([new Date(2020, 11, 1), new Date(2025, 8, 1)])
+        .range([0, w]);
+
+      var y = d3.scaleLinear()
+        .domain([0, 28])
+        .range([h, 0]);
+
+      /* --- SVG --- */
+      var svg = d3.select(container)
+        .append('svg')
+          .attr('viewBox', '0 0 ' + fullW + ' ' + (h + margin.top + margin.bottom))
+          .attr('preserveAspectRatio', 'xMidYMid meet')
+          .attr('role', 'img')
+          .attr('aria-label', 'Line chart: SyncPilot share price at each capital event, Dec 2020 – Aug 2025');
+
+      var g = svg.append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+      /* --- Y gridlines --- */
+      var yTicks = [0, 5, 10, 15, 20, 25];
+      g.selectAll('.grid-line')
+        .data(yTicks)
+        .enter().append('line')
+          .attr('class', 'grid-line')
+          .attr('x1', 0).attr('x2', w)
+          .attr('y1', function(d) { return y(d); })
+          .attr('y2', function(d) { return y(d); });
+
+      /* --- Y labels --- */
+      g.selectAll('.y-label')
+        .data(yTicks)
+        .enter().append('text')
+          .attr('class', 'axis-label')
+          .attr('x', -10)
+          .attr('y', function(d) { return y(d); })
+          .attr('dy', '0.35em')
+          .attr('text-anchor', 'end')
+          .text(function(d) { return '€' + d; });
+
+      /* --- X labels at each event --- */
+      var fmtDate = d3.timeFormat("%b '%y");
+      g.selectAll('.x-label')
+        .data(data)
+        .enter().append('text')
+          .attr('class', 'axis-label')
+          .attr('x', function(d) { return x(d.dateObj); })
+          .attr('y', h + 18)
+          .attr('text-anchor', 'middle')
+          .text(function(d) { return fmtDate(d.dateObj); });
+
+      /* ================================
+         ANNOTATION: "Nothing happened" zone
+         ================================ */
+      var zoneX1 = x(parseDate('2022-12-09'));
+      var zoneX2 = x(parseDate('2023-03-14'));
+      g.append('rect')
+        .attr('x', zoneX1).attr('y', 0)
+        .attr('width', zoneX2 - zoneX1).attr('height', h)
+        .attr('fill', 'rgba(38,42,51,0.04)')
+        .attr('rx', 3);
+
+      g.append('text')
+        .attr('class', 'zone-label')
+        .attr('x', (zoneX1 + zoneX2) / 2)
+        .attr('y', y(26.5))
+        .attr('text-anchor', 'middle')
+        .text('no event justifies this drop');
+
+      /* ================================
+         LINE
+         ================================ */
+      var lineGen = d3.line()
+        .x(function(d) { return x(d.dateObj); })
+        .y(function(d) { return y(d.price); })
+        .curve(d3.curveMonotoneX);
+
+      var path = g.append('path')
+        .datum(data)
+        .attr('class', 'event-line')
+        .attr('d', lineGen);
+
+      /* Stroke-dasharray draw animation */
+      var totalLength = path.node().getTotalLength();
+      path
+        .attr('stroke-dasharray', totalLength)
+        .attr('stroke-dashoffset', totalLength)
+        .transition()
+          .duration(1400)
+          .ease(d3.easeCubicOut)
+          .attr('stroke-dashoffset', 0);
+
+      /* ================================
+         ANNOTATIONS: percentage connectors
+         ================================ */
+      var ptDec22 = data[2];  // €18.96
+      var ptMar23 = data[3];  // €1.00
+      var ptMay23 = data[4];  // €20.56
+
+      /* −94.7% connector */
+      var midDropX = (x(ptDec22.dateObj) + x(ptMar23.dateObj)) / 2;
+      var midDropY = (y(ptDec22.price) + y(ptMar23.price)) / 2;
+      g.append('line')
+        .attr('class', 'annotation-connector')
+        .attr('x1', x(ptDec22.dateObj) + 4)
+        .attr('y1', y(ptDec22.price) + 4)
+        .attr('x2', x(ptMar23.dateObj) - 4)
+        .attr('y2', y(ptMar23.price) - 4)
+        .attr('stroke', '#CC0033');
+
+      g.append('text')
+        .attr('class', 'annotation-text')
+        .attr('x', midDropX + 4)
+        .attr('y', midDropY - 6)
+        .attr('fill', '#CC0033')
+        .attr('text-anchor', 'middle')
+        .text('−94.7% in 95 days');
+
+      /* +1,956% connector */
+      var midRiseX = (x(ptMar23.dateObj) + x(ptMay23.dateObj)) / 2;
+      var midRiseY = (y(ptMar23.price) + y(ptMay23.price)) / 2;
+      g.append('line')
+        .attr('class', 'annotation-connector')
+        .attr('x1', x(ptMar23.dateObj) + 4)
+        .attr('y1', y(ptMar23.price) - 4)
+        .attr('x2', x(ptMay23.dateObj) - 4)
+        .attr('y2', y(ptMay23.price) + 4)
+        .attr('stroke', '#0A7D3F');
+
+      g.append('text')
+        .attr('class', 'annotation-text')
+        .attr('x', midRiseX - 4)
+        .attr('y', midRiseY + 16)
+        .attr('fill', '#0A7D3F')
+        .attr('text-anchor', 'middle')
+        .text('+1,956%');
+
+      /* Valuation callouts at the anomaly */
+      g.append('text')
+        .attr('class', 'val-label')
+        .attr('x', x(ptDec22.dateObj))
+        .attr('y', y(ptDec22.price) - 12)
+        .attr('text-anchor', 'middle')
+        .text('val. €100M');
+
+      g.append('text')
+        .attr('class', 'val-label')
+        .attr('x', x(ptMar23.dateObj))
+        .attr('y', y(ptMar23.price) + 20)
+        .attr('text-anchor', 'middle')
+        .attr('fill', '#CC0033')
+        .attr('font-weight', '600')
+        .text('val. €5.4M');
+
+      /* ================================
+         DOTS — staggered fade-in
+         ================================ */
+      var dots = g.selectAll('.event-dot')
+        .data(data)
+        .enter().append('circle')
+          .attr('class', function(d) {
+            return 'event-dot' + (d.anomaly ? ' event-dot--anomaly' : '');
+          })
+          .attr('cx', function(d) { return x(d.dateObj); })
+          .attr('cy', function(d) { return y(d.price); })
+          .attr('r', 0)
+          .attr('fill', function(d) { return d.anomaly ? '#CC0033' : '#0D7680'; })
+          .attr('stroke', '#fff')
+          .attr('stroke-width', function(d) { return d.anomaly ? 3 : 2; });
+
+      dots.transition()
+        .delay(function(d, i) { return 1000 + i * 80; })
+        .duration(300)
+        .ease(d3.easeBackOut)
+        .attr('r', function(d) { return d.anomaly ? 8 : 5; });
+
+      /* Pulse the anomaly dot after it appears */
+      dots.filter(function(d) { return d.anomaly; })
+        .transition()
+        .delay(1000 + 3 * 80 + 350)
+        .duration(1)
+        .on('end', function() { d3.select(this).classed('pulse', true); });
+
+      /* ================================
+         TOOLTIPS
+         ================================ */
+      var fmtFull = d3.timeFormat('%d %b %Y');
+      var fmtVal = function(v) {
+        return v >= 1e6 ? '€' + (v / 1e6).toFixed(1) + 'M' : '€' + d3.format(',')(v);
+      };
+      var fmtShares = d3.format(',');
+
+      function showTip(event, d) {
+        var html =
+          '<div class="tt-date">' + fmtFull(d.dateObj) + '</div>' +
+          '<div class="tt-price">€' + d.price.toFixed(2) + '</div>' +
+          '<div class="tt-buyer">' + d.buyer + '</div>' +
+          '<div>' + fmtShares(d.shares) + ' shares</div>' +
+          '<div class="tt-val">Implied val. ' + fmtVal(d.valuation) + '</div>';
+        tooltip.innerHTML = html;
+        tooltip.classList.add('is-visible');
+      }
+
+      function moveTip(event) {
+        var tx = event.pageX + 14;
+        var ty = event.pageY - 20;
+        /* Keep within viewport */
+        var tw = tooltip.offsetWidth;
+        if (tx + tw > window.innerWidth - 10) tx = event.pageX - tw - 14;
+        tooltip.style.left = tx + 'px';
+        tooltip.style.top = ty + 'px';
+      }
+
+      function hideTip() {
+        tooltip.classList.remove('is-visible');
+      }
+
+      dots
+        .on('mouseenter', showTip)
+        .on('mousemove', moveTip)
+        .on('mouseleave', hideTip);
+
+      /* Mobile: click to show, click elsewhere to hide */
+      dots.on('touchstart', function(event, d) {
+        event.preventDefault();
+        showTip(event, d);
+        var touch = event.touches[0];
+        tooltip.style.left = (touch.pageX + 14) + 'px';
+        tooltip.style.top = (touch.pageY - 20) + 'px';
       });
+      svg.on('click', function(event) {
+        if (!event.target.classList.contains('event-dot')) hideTip();
+      });
+    }
+
+    /* --- Initial render + debounced resize --- */
+    if (typeof d3 !== 'undefined') {
+      buildCapitalChart();
+      var resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(buildCapitalChart, 180);
+      });
+    } else {
+      /* D3 might load deferred — poll briefly */
+      var d3Poll = setInterval(function() {
+        if (typeof d3 !== 'undefined') {
+          clearInterval(d3Poll);
+          buildCapitalChart();
+          var resizeTimer;
+          window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(buildCapitalChart, 180);
+          });
+        }
+      }, 100);
+      setTimeout(function() {
+        clearInterval(d3Poll);
+        if (typeof d3 === 'undefined') {
+          var fb = document.getElementById('capital-fallback');
+          if (fb) fb.style.display = 'block';
+        }
+      }, 5000);
     }
 
     /* ===============================
