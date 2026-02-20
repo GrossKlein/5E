@@ -341,29 +341,7 @@
   </style>
 </head>
 
-<body>
-
-  <!-- ====== TOP NAV ====== -->
-  <nav class="site-nav">
-    <div class="nav-left">
-      <button class="hamburger" id="menuToggle" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-      <a class="nav-title" href="index.html">SyncPilot — Investigative Dossier</a>
-    </div>
-  </nav>
-
-  <!-- ====== SIDE MENU ====== -->
-  <aside class="side-menu" id="sideMenu">
-    <a href="index.html" class="menu-link">Dossier Home</a>
-    <div class="menu-group-label">Chapters</div>
-    <a href="profile.html" class="menu-link"><span class="ch-num">1.</span>The Company</a>
-    <a href="perseus.html" class="menu-link"><span class="ch-num">2.</span>The 95% Discount</a>
-    <a href="goldfinger.html" class="menu-link active"><span class="ch-num">3.</span>The Goldfinger Connection</a>
-    <a href="lvs.html" class="menu-link"><span class="ch-num">4.</span>The LVS Trap</a>
-    <a href="evidence.html" class="menu-link"><span class="ch-num">5.</span>The Evidence Room</a>
-  </aside>
-  <div class="side-menu-overlay" id="menuOverlay"></div>
+<body data-page="goldfinger">
 
   <!-- ====== HOOK ====== -->
   <div class="gf-hook">
@@ -558,28 +536,7 @@
       <div class="cta-next-title">The LVS Trap →</div>
     </a>
 
-    <!-- ---- CHAPTER NAV ---- -->
-    <div class="chapter-nav">
-      <a href="perseus.html" class="prev">Ch. 2: The 95% Discount</a>
-      <a href="lvs.html" class="next">Ch. 4: The LVS Trap</a>
-    </div>
-
-  </article>
-
-  <!-- ====== FOOTER ====== -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-disclaimer">
-        These are documented facts and analytical questions. No allegation of wrongdoing is made. Charges referenced were dropped; no conviction resulted. Individuals are presumed innocent unless proven otherwise in a court of law.
-      </div>
-      <div class="footer-meta">
-        <span>Last updated: February 2026</span>
-        <span>Cookie-free · No personal data collected</span>
-      </div>
-    </div>
-  </footer>
-
-  <script>
+    <!-- ---- CHAPTER NAV ---- --></article><script>
   (function() {
     'use strict';
     /* Load actual photos if available; fall back to initials */
@@ -599,22 +556,6 @@
     tryLoadPhoto('avatarDEG', 'assets/goerg_placeholder.png');
   })();
   </script>
-
-  <script>
-  (function(){
-    var btn = document.getElementById('menuToggle');
-    var menu = document.getElementById('sideMenu');
-    var overlay = document.getElementById('menuOverlay');
-    function toggle() {
-      btn.classList.toggle('active');
-      menu.classList.toggle('open');
-      overlay.classList.toggle('visible');
-    }
-    if (btn) {
-      btn.addEventListener('click', toggle);
-      overlay.addEventListener('click', toggle);
-    }
-  })();
-  </script>
+  <script src="dossier.js"></script>
 </body>
 </html>
