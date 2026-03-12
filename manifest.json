@@ -49,7 +49,7 @@
           "id": "clients",
           "file": "clients.html",
           "short": { "en": "Analysis", "de": "Analyse" },
-          "title": { "en": "Client Exposure", "de": "Kundenexposition" }
+          "title": { "en": "Vendor Risk", "de": "Lieferantenrisiko" }
         },
         {
           "id": "shareholders",

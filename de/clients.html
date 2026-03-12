@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kundenexposition — SyncPilot</title>
+  <title>Lieferantenrisiko — SyncPilot</title>
   <meta name="description" content="SyncPilot Kundenliste: 55 Organisationen, €44,2 Mio. prognostizierter Umsatz, 84% von deutschen steuerfinanzierten Einrichtungen.">
   <link rel="stylesheet" href="../styles.css">
   <style>
@@ -58,10 +58,11 @@
 
     .procurement-questions { max-width:780px; margin:var(--sp-8) auto; padding:var(--sp-6); background:rgba(153,15,61,0.03); border:1px solid rgba(153,15,61,0.12); border-radius:6px; }
     .pq-title { font-family:var(--font-ui); font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--claret); margin-bottom:var(--sp-4); }
-    .pq-list { list-style:none; padding:0; margin:0; }
-    .pq-list li { font-family:var(--font-ui); font-size:var(--text-ui); color:var(--slate); line-height:1.6; padding:var(--sp-2) 0 var(--sp-2) var(--sp-6); border-bottom:1px solid rgba(153,15,61,0.06); position:relative; }
-    .pq-list li::before { content:'?'; position:absolute; left:0; font-weight:700; color:var(--claret); font-size:1rem; }
+    .pq-list { list-style:none; padding:0; margin:0; counter-reset:pq; }
+    .pq-list li { font-family:var(--font-ui); font-size:var(--text-ui); color:var(--slate); line-height:1.6; padding:var(--sp-3) 0 var(--sp-3) var(--sp-8); border-bottom:1px solid rgba(153,15,61,0.06); position:relative; }
+    .pq-list li::before { counter-increment:pq; content:counter(pq); position:absolute; left:0; font-weight:700; color:var(--claret); font-size:1.1rem; font-family:var(--font-ui); }
     .pq-list li:last-child { border-bottom:none; }
+    .pq-list a { color:var(--claret); text-decoration:underline; text-underline-offset:2px; }
 
     .ce-cta { max-width:780px; margin:var(--sp-8) auto; padding:var(--sp-6); text-align:center; border:2px solid var(--claret); border-radius:6px; background:rgba(153,15,61,0.02); }
     .ce-cta p { font-family:var(--font-ui); font-size:1rem; font-weight:600; color:var(--claret); margin:0; }
@@ -78,10 +79,25 @@
   </div>
 
   <article>
-    <h1 style="text-align:center; margin-bottom:var(--sp-2);">Kundenexposition</h1>
+    <h1 style="text-align:center; margin-bottom:var(--sp-2);">Lieferantenrisiko</h1>
     <p style="text-align:center; font-family:var(--font-ui); font-size:var(--text-ui); color:rgba(38,42,51,0.5); max-width:600px; margin:0 auto var(--sp-8);">
       Jede Organisation, die mit SyncPilot vertraglich verbunden ist. Umsatzdaten aus unternehmensinternen Prognosen, März 2024.
     </p>
+
+
+    <!-- ====== FRAGEN (vor der Grafik) ====== -->
+    <div class="procurement-questions">
+      <div class="pq-title">Fragen an Ihre Vergabestelle</div>
+      <ol class="pq-list">
+        <li>Wurde vor Vertragsunterzeichnung eine Hintergrundprüfung der <a href="syncpilot.html">Eigentümerstruktur von SyncPilot</a> durchgeführt — 31 UBOs, 26 Holdinggesellschaften, 6 Jurisdiktionen?</li>
+        <li>Ist Ihrer Organisation bekannt, dass zwei SyncPilot-Gesellschafter im Rahmen einer €1-Milliarden-Steuerbetrugser­mittlung <a href="goldfinger.html">verhaftet und inhaftiert</a> wurden — und anschließend Unternehmensanteile mit einem <a href="perseus.html">Rabatt von 95%</a> erhielten?</li>
+        <li>Deckt Ihr Lieferanten-Due-Diligence-Prozess die <a href="goldfinger.html#buyers">persönliche Strafhistorie</a> der Personen ab, denen Ihr Lieferant letztlich gehört?</li>
+        <li>Wurde SyncPilot jemals aufgefordert, eine <a href="syncpilot.html#capital">unabhängige Aktienbewertung durch Dritte</a> vorzulegen? Jeder Preis in der Unternehmensgeschichte wurde vom eigenen Vorstand festgesetzt.</li>
+        <li>Ist Ihnen bekannt, dass die Gründer <a href="lvs.html">€6,15 Mio. von einem Investor einzogen, null Aktien lieferten und den maßgeblichen Vertrag nie beurkunden ließen</a>? Der Investor klagt.</li>
+        <li>Enthält Ihr Vertrag Prüfungsrechte bezüglich der Mittelverwendung — angesichts dessen, dass der alleinige Geschäftsführer im Zeitraum des Investorengeldflusses <a href="lvs.html#money">Privatimmobilien erwarb</a>?</li>
+        <li>Wenn dieses Dossier morgen im <a href="https://www.handelsblatt.com" target="_blank" rel="noopener">Handelsblatt</a> oder <a href="https://www.spiegel.de" target="_blank" rel="noopener">Spiegel</a> erschiene, wie würde Ihre Behörde die Lieferantenbeziehung gegenüber Steuerzahlern erklären?</li>
+      </ol>
+    </div>
 
     <div class="sector-section">
       <h2 style="margin-top:0;">Umsatz nach Sektoren</h2>
@@ -213,19 +229,6 @@
       </table>
       </div>
       <div class="chart-source" style="margin-top:var(--sp-3);">Quelle: SyncPilot interne Umsatzprognose, März 2024.</div>
-    </div>
-
-    <div class="procurement-questions">
-      <div class="pq-title">Fragen an Ihre Vergabestelle</div>
-      <ul class="pq-list">
-        <li>Wurde vor Vertragsunterzeichnung eine Hintergrundprüfung der Eigentümerstruktur von SyncPilot durchgeführt?</li>
-        <li>Ist Ihrer Organisation bekannt, dass zwei Gesellschafter Angeklagte in einem der größten Steuerstrafverfahren Deutschlands waren?</li>
-        <li>Deckt Ihr Lieferanten-Due-Diligence-Prozess die persönliche Rechtshistorie der wirtschaftlich Berechtigten ab?</li>
-        <li>Wurde SyncPilot jemals aufgefordert, im Rahmen Ihres Beschaffungsprozesses eine unabhängige Aktienbewertung durch Dritte vorzulegen?</li>
-        <li>Ist Ihnen bekannt, dass ein Investor €6,15 Mio. an SyncPilot zahlte und null Aktien erhielt, wobei der maßgebliche Vertrag nie beurkundet wurde?</li>
-        <li>Enthält Ihr Vertrag Prüfungsrechte bezüglich der Mittelverwendung des Unternehmens?</li>
-        <li>Wenn dieses Dossier morgen im Handelsblatt oder Spiegel erschiene, wie würde Ihre Behörde die Lieferantenbeziehung erklären?</li>
-      </ul>
     </div>
 
     <div class="ce-cta">

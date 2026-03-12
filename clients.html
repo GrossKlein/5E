@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Client Exposure — SyncPilot</title>
+  <title>Vendor Risk — SyncPilot</title>
   <meta name="description" content="SyncPilot client list: 55 organisations, €44.2M projected revenue, 84% from German taxpayer-funded agencies.">
   <link rel="stylesheet" href="styles.css">
   <style>
@@ -58,10 +58,11 @@
 
     .procurement-questions { max-width:780px; margin:var(--sp-8) auto; padding:var(--sp-6); background:rgba(153,15,61,0.03); border:1px solid rgba(153,15,61,0.12); border-radius:6px; }
     .pq-title { font-family:var(--font-ui); font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--claret); margin-bottom:var(--sp-4); }
-    .pq-list { list-style:none; padding:0; margin:0; }
-    .pq-list li { font-family:var(--font-ui); font-size:var(--text-ui); color:var(--slate); line-height:1.6; padding:var(--sp-2) 0 var(--sp-2) var(--sp-6); border-bottom:1px solid rgba(153,15,61,0.06); position:relative; }
-    .pq-list li::before { content:'?'; position:absolute; left:0; font-weight:700; color:var(--claret); font-size:1rem; }
+    .pq-list { list-style:none; padding:0; margin:0; counter-reset:pq; }
+    .pq-list li { font-family:var(--font-ui); font-size:var(--text-ui); color:var(--slate); line-height:1.6; padding:var(--sp-3) 0 var(--sp-3) var(--sp-8); border-bottom:1px solid rgba(153,15,61,0.06); position:relative; }
+    .pq-list li::before { counter-increment:pq; content:counter(pq); position:absolute; left:0; font-weight:700; color:var(--claret); font-size:1.1rem; font-family:var(--font-ui); }
     .pq-list li:last-child { border-bottom:none; }
+    .pq-list a { color:var(--claret); text-decoration:underline; text-underline-offset:2px; }
 
     .ce-cta { max-width:780px; margin:var(--sp-8) auto; padding:var(--sp-6); text-align:center; border:2px solid var(--claret); border-radius:6px; background:rgba(153,15,61,0.02); }
     .ce-cta p { font-family:var(--font-ui); font-size:1rem; font-weight:600; color:var(--claret); margin:0; }
@@ -78,10 +79,24 @@
   </div>
 
   <article>
-    <h1 style="text-align:center; margin-bottom:var(--sp-2);">Client Exposure</h1>
+    <h1 style="text-align:center; margin-bottom:var(--sp-2);">Vendor Risk</h1>
     <p style="text-align:center; font-family:var(--font-ui); font-size:var(--text-ui); color:rgba(38,42,51,0.5); max-width:600px; margin:0 auto var(--sp-8);">
       Every organisation that contracts with SyncPilot. Revenue data from internal company forecasts, March 2024.
     </p>
+
+    <!-- ====== QUESTIONS (moved above chart) ====== -->
+    <div class="procurement-questions">
+      <div class="pq-title">Questions for Your Procurement Office</div>
+      <ol class="pq-list">
+        <li>Was a background check conducted on SyncPilot's <a href="syncpilot.html">beneficial ownership structure</a> — 31 UBOs, 26 holding entities, 6 jurisdictions — before the contract was signed?</li>
+        <li>Is your organisation aware that two SyncPilot shareholders were <a href="goldfinger.html">arrested and detained</a> in a €1&nbsp;billion tax fraud prosecution — then received company shares at a <a href="perseus.html">95% discount</a>?</li>
+        <li>Does your vendor due diligence process cover the <a href="goldfinger.html#buyers">personal criminal history</a> of the people who ultimately own your supplier?</li>
+        <li>Has SyncPilot ever been required to provide an <a href="syncpilot.html#capital">independent third-party share valuation</a>? Every price in the company's history was set by its own board.</li>
+        <li>Are you aware that the founders <a href="lvs.html">collected €6.15M from an investor, delivered zero shares, and never notarized the governing contract</a>? The investor is suing.</li>
+        <li>Does your contract include audit rights over SyncPilot's use of funds — given that the sole managing director <a href="lvs.html#money">acquired personal property</a> during the period investor money was flowing in?</li>
+        <li>If this dossier appeared in <a href="https://www.handelsblatt.com" target="_blank" rel="noopener">Handelsblatt</a> or <a href="https://www.spiegel.de" target="_blank" rel="noopener">Der Spiegel</a> tomorrow, how would your agency explain the vendor relationship to taxpayers?</li>
+      </ol>
+    </div>
 
     <div class="sector-section">
       <h2 style="margin-top:0;">Revenue by Sector</h2>
@@ -213,19 +228,6 @@
       </table>
       </div>
       <div class="chart-source" style="margin-top:var(--sp-3);">Source: SyncPilot internal revenue forecast, March 2024.</div>
-    </div>
-
-    <div class="procurement-questions">
-      <div class="pq-title">Questions for Your Procurement Office</div>
-      <ul class="pq-list">
-        <li>Was a background check conducted on SyncPilot's beneficial ownership structure before the contract was signed?</li>
-        <li>Is your organisation aware that two shareholders were defendants in one of Germany's largest tax fraud prosecutions?</li>
-        <li>Does your vendor due diligence process cover the personal legal history of ultimate beneficial owners?</li>
-        <li>Has SyncPilot ever been required to provide an independent third-party share valuation as part of your procurement process?</li>
-        <li>Are you aware that an investor paid €6.15M to SyncPilot and received zero shares, with the governing contract never notarized?</li>
-        <li>Does your contract include audit rights over the company's use of funds?</li>
-        <li>If this dossier appeared in Handelsblatt or Der Spiegel tomorrow, how would your agency explain the vendor relationship?</li>
-      </ul>
     </div>
 
     <div class="ce-cta">
