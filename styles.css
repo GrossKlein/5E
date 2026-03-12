@@ -787,6 +787,40 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
   color: rgba(255,241,229,0.45);
 }
 
+.footer-contact {
+  padding-bottom: var(--sp-4);
+  margin-bottom: var(--sp-2);
+}
+.footer-contact-title {
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,241,229,0.55);
+  margin-bottom: var(--sp-2);
+}
+.footer-contact-body {
+  font-size: var(--text-small);
+  color: rgba(255,241,229,0.4);
+  line-height: 1.5;
+  margin: 0 0 var(--sp-2) 0;
+}
+.footer-contact-email {
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  color: rgba(255,241,229,0.55);
+  margin: 0;
+}
+.footer-contact-email a {
+  color: rgba(255,241,229,0.7);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.footer-contact-email a:hover {
+  color: var(--paper);
+}
+
 /* --- Index / TOC Styles --- */
 .toc-section {
   margin-block: var(--sp-8);

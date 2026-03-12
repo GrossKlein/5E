@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Letter to SAP — SyncPilot Dossier</title>
+  <meta name="description" content="An open letter to SAP SE regarding its Silver partnership with SyncPilot: tax fraud defendants among shareholders, €6.15M investor dispute, no independent valuation. Does this meet SAP's Partner Code of Conduct?">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .sap-hook {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--sp-8) var(--sp-4) var(--sp-4);
+      text-align: center;
+    }
+    .sap-hook-main {
+      font-family: var(--font-body);
+      font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+      font-weight: 700;
+      color: var(--slate);
+      line-height: 1.35;
+      margin-bottom: var(--sp-4);
+    }
+    .sap-hook-sub {
+      font-family: var(--font-ui);
+      font-size: var(--text-ui);
+      color: rgba(38,42,51,0.5);
+      line-height: 1.6;
+    }
+    .sap-badge {
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: var(--sp-4);
+    }
+    .sap-badge--silver {
+      background: rgba(38,42,51,0.06);
+      color: var(--slate);
+      border: 1px solid rgba(38,42,51,0.15);
+    }
+    .sap-badge--gold {
+      background: rgba(255,136,51,0.08);
+      color: #CC6600;
+      border: 1px solid rgba(255,136,51,0.2);
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    .fact-card {
+      background: rgba(153,15,61,0.03);
+      border: 1px solid rgba(153,15,61,0.12);
+      border-left: 4px solid var(--claret);
+      border-radius: 0 6px 6px 0;
+      padding: var(--sp-4) var(--sp-6);
+      margin: var(--sp-4) 0;
+    }
+    .fact-card p { margin: 0; }
+    .fact-card a { color: var(--claret); }
+
+    .sap-questions {
+      background: var(--card-bg);
+      border-radius: 6px;
+      padding: var(--sp-6);
+      margin: var(--sp-6) 0;
+    }
+    .sap-questions-title {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--claret);
+      margin-bottom: var(--sp-4);
+      padding-bottom: var(--sp-2);
+      border-bottom: 2px solid var(--claret);
+    }
+    .sq-list { list-style: none; padding: 0; margin: 0; counter-reset: sq; }
+    .sq-list li {
+      font-family: var(--font-ui);
+      font-size: var(--text-ui);
+      color: var(--slate);
+      line-height: 1.6;
+      padding: var(--sp-3) 0 var(--sp-3) var(--sp-8);
+      border-bottom: 1px solid rgba(242,223,206,0.5);
+      position: relative;
+    }
+    .sq-list li::before {
+      counter-increment: sq;
+      content: counter(sq);
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      color: var(--claret);
+      font-size: 1.1rem;
+      font-family: var(--font-ui);
+    }
+    .sq-list li:last-child { border-bottom: none; }
+    .sq-list a { color: var(--claret); text-decoration: underline; text-underline-offset: 2px; }
+
+    .sap-action {
+      background: var(--slate);
+      color: var(--paper);
+      border-radius: 6px;
+      padding: var(--sp-6);
+      margin: var(--sp-8) 0 var(--sp-4);
+    }
+    .sap-action-title {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,241,229,0.55);
+      margin-bottom: var(--sp-3);
+    }
+    .sap-action p {
+      font-family: var(--font-ui);
+      font-size: var(--text-ui);
+      color: rgba(255,241,229,0.8);
+      line-height: 1.6;
+      margin: var(--sp-2) 0;
+    }
+    .sap-action a { color: var(--paper); text-decoration: underline; }
+    .sap-action code {
+      font-family: var(--font-ui);
+      background: rgba(255,241,229,0.1);
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--paper);
+    }
+  </style>
+</head>
+
+<body data-page="sap">
+
+  <!-- ====== HOOK ====== -->
+  <div class="sap-hook">
+    <div>
+      <span class="sap-badge sap-badge--gold">Gold Partner</span>
+      <span class="sap-badge sap-badge--silver">Silver Partner</span>
+    </div>
+    <p class="sap-hook-main">
+      Open Letter to SAP SE
+    </p>
+    <p class="sap-hook-sub">
+      Your partnership lends procurement credibility to a company whose shareholders include two tax fraud defendants, whose board granted insiders a 95% share discount, and whose investor is suing for €6.15 million in undelivered shares. This letter asks SAP to enforce its own standards.
+    </p>
+  </div>
+
+  <hr style="max-width:720px; margin:0 auto;">
+
+  <!-- ====== CONTENT ====== -->
+  <article class="content-area">
+
+    <h2>What SAP's Partnership Means</h2>
+
+    <p>SyncPilot holds an <a href="https://partnerfinder.sap.com/partnerNavigator?q=SYNCPILOT" target="_blank" rel="noopener">SAP Silver partnership</a>, downgraded from Gold. When a German city council, a Bundesagentur für Arbeit branch, or an AOK regional office sees "SAP Silver Partner" on a procurement bid, it signals one thing: SAP has vetted this company. SAP trusts it. You can too.</p>
+
+    <p>SyncPilot uses this credential to win public-sector contracts worth six figures and above. <a href="clients.html">84% of SyncPilot's €44.2 million in projected revenue</a> comes from taxpayer-funded organisations. The SAP badge is not a decoration — it is a commercial weapon. It converts government procurement officers into paying clients.</p>
+
+    <p>The question is whether SAP knows what it is endorsing.</p>
+
+    <h2>What SAP's Partner Code of Conduct Requires</h2>
+
+    <p>The <a href="https://www.sap.com/documents/2023/07/02b2d2b7-7e7e-0010-bca6-c68f7e60039b.html" target="_blank" rel="noopener">SAP Partner Code of Conduct</a> states that all work performed for SAP must be in full compliance with the Code and all applicable laws, rules, regulations, and policies. SAP's own ethics page describes the Code as a "cornerstone of this commitment to integrity."</p>
+
+    <p>Here is what SyncPilot's governance record looks like against that standard:</p>
+
+    <div class="fact-card">
+      <p><strong>Fact 1.</strong> Two SyncPilot shareholders — Martin Hunstein and Diethard Goerg — were <a href="goldfinger.html">arrested, jailed, and prosecuted</a> in a €1 billion tax fraud investigation. 800 officers raided 200 premises. Their law firm was dissolved. The case was dismissed under §153 StPO — not an acquittal.</p>
+    </div>
+
+    <div class="fact-card">
+      <p><strong>Fact 2.</strong> Twenty-two months after walking out of detention, Hunstein and Goerg's entity H.G. Perseus acquired SyncPilot shares at <a href="perseus.html">€1.00 per share</a> — a 95% discount. Every other investor paid €18–21. The board approved it.</p>
+    </div>
+
+    <div class="fact-card">
+      <p><strong>Fact 3.</strong> An investor paid <a href="lvs.html">€6.15 million to SyncPilot and received zero shares</a>. The governing contract was never notarized — by the lawyer who drafted it. That lawyer is Martin Hunstein. The investor is suing.</p>
+    </div>
+
+    <div class="fact-card">
+      <p><strong>Fact 4.</strong> SyncPilot's sole managing director Franz-Xaver Bleicher <a href="lvs.html#money">acquired personal property</a> during the months that investor funds were flowing into the company. No independent audit has been conducted.</p>
+    </div>
+
+    <div class="fact-card">
+      <p><strong>Fact 5.</strong> Every share price in SyncPilot's history was <a href="syncpilot.html#capital">set by the board Bleicher controls</a>. No independent valuation has ever been commissioned. The company's €128 million paper valuation exists only because its own board says it does.</p>
+    </div>
+
+    <div class="fact-card">
+      <p><strong>Fact 6.</strong> SyncPilot routes 100% of its equity through <a href="syncpilot.html">26 holding entities across 6 jurisdictions</a> — Germany, Malta, Luxembourg, Switzerland, and Liechtenstein. 31 ultimate beneficial owners. No share has ever traded on a public exchange.</p>
+    </div>
+
+    <h2>Questions for SAP's Partner Compliance Team</h2>
+
+    <div class="sap-questions">
+      <div class="sap-questions-title">We expect answers</div>
+      <ol class="sq-list">
+        <li>Did SAP conduct beneficial ownership due diligence on SyncPilot before granting partner status? Did SAP identify the 26 holding entities, 6 jurisdictions, and 31 UBOs?</li>
+        <li>Is SAP aware that two SyncPilot shareholders — the owners of H.G. Perseus — were arrested and detained in a €1 billion tax fraud investigation?</li>
+        <li>Has SAP reviewed the March 2023 capital event in which H.G. Perseus acquired shares at €1.00 — a 95% discount from the price paid by every other investor three months earlier?</li>
+        <li>Is SAP aware of the pending litigation from an investor who paid €6.15 million and received zero shares, with the governing contract never notarized by the lawyer who drafted it?</li>
+        <li>Does SAP's partner compliance review process include verification of independent share valuations? SyncPilot has never had one.</li>
+        <li>When was SyncPilot downgraded from Gold to Silver? What triggered the downgrade? Was it a compliance review — or an administrative one?</li>
+        <li>Has SAP filed a report with its Office of Ethics &amp; Compliance regarding SyncPilot's governance record? If not, why not?</li>
+        <li>Will SAP conduct a formal compliance review of SyncPilot's partnership status based on the documented facts in this dossier?</li>
+      </ol>
+    </div>
+
+    <p>Every fact cited above is sourced from Handelsregister filings, corporate correspondence, and public records. The full documentation is available in the <a href="evidence.html">Evidence Room</a>.</p>
+
+    <h2>What We Are Asking SAP to Do</h2>
+
+    <p>We are not asking SAP to investigate SyncPilot. We are asking SAP to enforce its own Partner Code of Conduct. Specifically:</p>
+
+    <p><strong>1. Suspend SyncPilot's Silver partnership</strong> pending a compliance review by SAP's Office of Ethics &amp; Compliance.</p>
+
+    <p><strong>2. Conduct beneficial ownership due diligence</strong> on SyncPilot's shareholder structure, including the criminal history of Hunstein and Goerg and the role of H.G. Perseus.</p>
+
+    <p><strong>3. Require an independent third-party share valuation</strong> as a condition of continued partnership. No share price in SyncPilot's history has ever been set by anyone other than Bleicher's board.</p>
+
+    <p><strong>4. Disclose the basis for the Gold-to-Silver downgrade.</strong> If it was administrative, say so. If it was compliance-related, say that too. Procurement officers making six-figure decisions deserve to know.</p>
+
+    <p>Until SAP acts, every public-sector contract SyncPilot wins under the SAP badge is a contract won under a credibility endorsement that SAP has not verified. That makes SAP part of the story.</p>
+
+    <div class="sap-action">
+      <div class="sap-action-title">Report This to SAP</div>
+      <p>SAP provides a dedicated channel for reporting partner compliance concerns. If you are a procurement officer, SAP employee, SyncPilot employee, or investor with relevant information:</p>
+      <p><strong>SAP Ethics &amp; Compliance:</strong> <a href="mailto:ethicalbusiness@sap.com">ethicalbusiness@sap.com</a></p>
+      <p><strong>SAP Speak Out (anonymous):</strong> <a href="https://app.convercent.com/en-us/LandingPage/2d3e70b7-4b7b-ea11-a972-000d3a1bbd52" target="_blank" rel="noopener">app.convercent.com</a></p>
+      <p><strong>This dossier's contact:</strong> <a href="mailto:syncpilot-dossier@proton.me">syncpilot-dossier@proton.me</a> (encrypted)</p>
+      <p>The SAP Partner Code of Conduct can be read <a href="https://www.sap.com/documents/2023/07/02b2d2b7-7e7e-0010-bca6-c68f7e60039b.html" target="_blank" rel="noopener">here</a>.</p>
+    </div>
+
+  </article>
+  <script defer src="data/dossier.js"></script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offener Brief an SAP — SyncPilot-Dossier</title>
+  <meta name="description" content="Ein offener Brief an SAP SE bezüglich der Silver-Partnerschaft mit SyncPilot: Steuerbetrugsbeschuldigte unter den Gesellschaftern, €6,15 Mio. Investorenstreit, keine unabhängige Bewertung. Entspricht dies SAPs Partner Code of Conduct?">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .sap-hook {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--sp-8) var(--sp-4) var(--sp-4);
+      text-align: center;
+    }
+    .sap-hook-main {
+      font-family: var(--font-body);
+      font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+      font-weight: 700;
+      color: var(--slate);
+      line-height: 1.35;
+      margin-bottom: var(--sp-4);
+    }
+    .sap-hook-sub {
+      font-family: var(--font-ui);
+      font-size: var(--text-ui);
+      color: rgba(38,42,51,0.5);
+      line-height: 1.6;
+    }
+    .sap-badge {
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: var(--sp-4);
+    }
+    .sap-badge--silver {
+      background: rgba(38,42,51,0.06);
+      color: var(--slate);
+      border: 1px solid rgba(38,42,51,0.15);
+    }
+    .sap-badge--gold {
+      background: rgba(255,136,51,0.08);
+      color: #CC6600;
+      border: 1px solid rgba(255,136,51,0.2);
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+
+    .fact-card {
+      background: rgba(153,15,61,0.03);
+      border: 1px solid rgba(153,15,61,0.12);
+      border-left: 4px solid var(--claret);
+      border-radius: 0 6px 6px 0;
+      padding: var(--sp-4) var(--sp-6);
+      margin: var(--sp-4) 0;
+    }
+    .fact-card p { margin: 0; }
+    .fact-card a { color: var(--claret); }
+
+    .sap-questions {
+      background: var(--card-bg);
+      border-radius: 6px;
+      padding: var(--sp-6);
+      margin: var(--sp-6) 0;
+    }
+    .sap-questions-title {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--claret);
+      margin-bottom: var(--sp-4);
+      padding-bottom: var(--sp-2);
+      border-bottom: 2px solid var(--claret);
+    }
+    .sq-list { list-style: none; padding: 0; margin: 0; counter-reset: sq; }
+    .sq-list li {
+      font-family: var(--font-ui);
+      font-size: var(--text-ui);
+      color: var(--slate);
+      line-height: 1.6;
+      padding: var(--sp-3) 0 var(--sp-3) var(--sp-8);
+      border-bottom: 1px solid rgba(242,223,206,0.5);
+      position: relative;
+    }
+    .sq-list li::before {
+      counter-increment: sq;
+      content: counter(sq);
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      color: var(--claret);
+      font-size: 1.1rem;
+      font-family: var(--font-ui);
+    }
+    .sq-list li:last-child { border-bottom: none; }
+    .sq-list a { color: var(--claret); text-decoration: underline; text-underline-offset: 2px; }
+
+    .sap-action {
+      background: var(--slate);
+      color: var(--paper);
+      border-radius: 6px;
+      padding: var(--sp-6);
+      margin: var(--sp-8) 0 var(--sp-4);
+    }
+    .sap-action-title {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,241,229,0.55);
+      margin-bottom: var(--sp-3);
+    }
+    .sap-action p {
+      font-family: var(--font-ui);
+      font-size: var(--text-ui);
+      color: rgba(255,241,229,0.8);
+      line-height: 1.6;
+      margin: var(--sp-2) 0;
+    }
+    .sap-action a { color: var(--paper); text-decoration: underline; }
+    .sap-action code {
+      font-family: var(--font-ui);
+      background: rgba(255,241,229,0.1);
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--paper);
+    }
+  </style>
+</head>
+
+<body data-page="sap">
+
+  <!-- ====== HOOK ====== -->
+  <div class="sap-hook">
+    <div>
+      <span class="sap-badge sap-badge--gold">Gold Partner</span>
+      <span class="sap-badge sap-badge--silver">Silver Partner</span>
+    </div>
+    <p class="sap-hook-main">
+      Open Letter to SAP SE
+    </p>
+    <p class="sap-hook-sub">
+      Ihre Partnerschaft verleiht einem Unternehmen Beschaffungsglaubwürdigkeit, zu dessen Gesellschaftern zwei Steuerbetrugsbeschuldigte gehören, dessen Vorstand Insidern einen Aktienrabatt von 95% gewährte und dessen Investor wegen nicht gelieferter Aktien im Wert von €6,15 Millionen klagt. Dieser Brief fordert SAP auf, die eigenen Standards durchzusetzen.
+    </p>
+  </div>
+
+  <hr style="max-width:720px; margin:0 auto;">
+
+  <!-- ====== CONTENT ====== -->
+  <article class="content-area">
+
+    <h2>Was SAPs Partnerschaft bedeutet</h2>
+
+    <p>SyncPilot hat eine <a href="https://partnerfinder.sap.com/partnerNavigator?q=SYNCPILOT" target="_blank" rel="noopener">SAP Silver-Partnerschaft</a>, herabgestuft von Gold. Wenn ein deutscher Stadtrat, eine Bundesagentur-für-Arbeit-Dienststelle oder ein AOK-Regionalbüro „SAP Silver Partner" auf einer Ausschreibung sieht, signalisiert das eines: SAP hat dieses Unternehmen geprüft. SAP vertraut ihm. Sie können es auch.</p>
+
+    <p>SyncPilot nutzt dieses Gütesiegel, um öffentliche Aufträge im sechsstelligen Bereich zu gewinnen. <a href="clients.html">84% von SyncPilots €44,2 Millionen prognostiziertem Umsatz</a> stammen von steuerfinanzierten Organisationen. Das SAP-Abzeichen ist keine Dekoration — es ist eine kommerzielle Waffe. Es verwandelt staatliche Beschaffungsbeamte in zahlende Kunden.</p>
+
+    <p>Die Frage ist, ob SAP weiß, was es damit empfiehlt.</p>
+
+    <h2>Was SAPs Partner Code of Conduct verlangt</h2>
+
+    <p>The <a href="https://www.sap.com/documents/2023/07/02b2d2b7-7e7e-0010-bca6-c68f7e60039b.html" target="_blank" rel="noopener">SAP Partner Code of Conduct</a> besagt, dass alle für SAP durchgeführten Arbeiten in vollem Einklang mit dem Code und allen geltenden Gesetzen, Vorschriften und Richtlinien stehen müssen. SAPs eigene Ethik-Seite beschreibt den Code als „Eckpfeiler dieses Bekenntnisses zur Integrität."</p>
+
+    <p>So sieht SyncPilots Governance-Bilanz vor diesem Standard aus:</p>
+
+    <div class="fact-card">
+      <p><strong>Fact 1.</strong> Zwei SyncPilot-Gesellschafter — Martin Hunstein und Diethard Goerg — wurden im Rahmen einer Steuerbetrugser­mittlung mit €1 Milliarde Volumen <a href="goldfinger.html">verhaftet, inhaftiert und angeklagt</a>. 800 Beamte durchsuchten 200 Räumlichkeiten. Ihre Kanzlei wurde aufgelöst. Das Verfahren wurde nach §153 StPO eingestellt — kein Freispruch.</p>
+    </div>
+
+    <div class="fact-card">
+      <p><strong>Fact 2.</strong> Zweiundzwanzig Monate nach der Entlassung aus der Haft erwarb die Gesellschaft von Hunstein und Goerg, H.G. Perseus, SyncPilot-Aktien zu <a href="perseus.html">€1,00 pro Aktie</a> — ein Rabatt von 95%. Jeder andere Investor zahlte €18–21. Der Vorstand genehmigte es.</p>
+    </div>
+
+    <div class="fact-card">
+      <p><strong>Fact 3.</strong> Ein Investor zahlte <a href="lvs.html">€6,15 Millionen an SyncPilot und erhielt null Aktien</a>. Der maßgebliche Vertrag wurde nie beurkundet — vom Anwalt, der ihn entwarf. Dieser Anwalt ist Martin Hunstein. Der Investor klagt.</p>
+    </div>
+
+    <div class="fact-card">
+      <p><strong>Fact 4.</strong> SyncPilots alleiniger Geschäftsführer Franz-Xaver Bleicher <a href="lvs.html#money">erwarb Privatimmobilien</a> in den Monaten, in denen Investorengelder ins Unternehmen flossen. Keine unabhängige Prüfung wurde durchgeführt.</p>
+    </div>
+
+    <div class="fact-card">
+      <p><strong>Fact 5.</strong> Jeder Aktienpreis in SyncPilots Geschichte wurde <a href="syncpilot.html#capital">vom Vorstand festgesetzt, den Bleicher kontrolliert</a>. Nie wurde eine unabhängige Bewertung beauftragt. Die €128-Millionen-Papierbewertung existiert nur, weil der eigene Vorstand es so bestimmt.</p>
+    </div>
+
+    <div class="fact-card">
+      <p><strong>Fact 6.</strong> SyncPilot leitet 100% seines Eigenkapitals über <a href="syncpilot.html">26 Holdinggesellschaften in 6 Jurisdiktionen</a> — Deutschland, Malta, Luxemburg, Schweiz und Liechtenstein. 31 wirtschaftlich Berechtigte. Keine Aktie wurde jemals an einer öffentlichen Börse gehandelt.</p>
+    </div>
+
+    <h2>Fragen an SAPs Partner-Compliance-Team</h2>
+
+    <div class="sap-questions">
+      <div class="sap-questions-title">Wir erwarten Antworten</div>
+      <ol class="sq-list">
+        <li>Hat SAP eine Prüfung der wirtschaftlichen Berechtigung bei SyncPilot durchgeführt, bevor der Partnerstatus gewährt wurde? Hat SAP die 26 Holdinggesellschaften, 6 Jurisdiktionen und 31 UBOs identifiziert?</li>
+        <li>Ist SAP bekannt, dass zwei SyncPilot-Gesellschafter — die Inhaber von H.G. Perseus — im Rahmen einer €1-Milliarden-Steuerbetrugser­mittlung verhaftet und inhaftiert wurden?</li>
+        <li>Hat SAP das Kapitalereignis vom März 2023 geprüft, bei dem H.G. Perseus Aktien zu €1,00 erwarb — ein Rabatt von 95% gegenüber dem Preis, den jeder andere Investor drei Monate zuvor zahlte?</li>
+        <li>Ist SAP das anhängige Verfahren eines Investors bekannt, der €6,15 Millionen zahlte und null Aktien erhielt, wobei der maßgebliche Vertrag vom verfassenden Anwalt nie beurkundet wurde?</li>
+        <li>Umfasst SAPs Partner-Compliance-Prüfprozess die Verifizierung unabhängiger Aktienbewertungen? SyncPilot hatte nie eine.</li>
+        <li>Wann wurde SyncPilot von Gold auf Silver herabgestuft? Was löste die Herabstufung aus? War es eine Compliance-Prüfung — oder eine administrative?</li>
+        <li>Hat SAP einen Bericht bei seinem Office of Ethics &amp; Compliance über SyncPilots Governance-Bilanz eingereicht? Falls nicht, warum nicht?</li>
+        <li>Wird SAP eine formelle Compliance-Prüfung von SyncPilots Partnerstatus auf Grundlage der dokumentierten Fakten in diesem Dossier durchführen?</li>
+      </ol>
+    </div>
+
+    <p>Jede oben zitierte Tatsache stammt aus Handelsregister-Einträgen, Unternehmenskorrespondenz und öffentlichen Aufzeichnungen. Die vollständige Dokumentation ist im <a href="evidence.html">Beweisraum</a> verfügbar.</p>
+
+    <h2>Was wir SAP auffordern zu tun</h2>
+
+    <p>Wir fordern SAP nicht auf, SyncPilot zu untersuchen. Wir fordern SAP auf, den eigenen Partner Code of Conduct durchzusetzen. Konkret:</p>
+
+    <p><strong>1. SyncPilots Silver-Partnerschaft aussetzen</strong> bis zu einer Compliance-Prüfung durch SAPs Office of Ethics &amp; Compliance.</p>
+
+    <p><strong>2. Due-Diligence-Prüfung der wirtschaftlichen Berechtigung durchführen</strong> bezüglich SyncPilots Gesellschafterstruktur, einschließlich der Strafhistorie von Hunstein und Goerg und der Rolle von H.G. Perseus.</p>
+
+    <p><strong>3. Eine unabhängige Aktienbewertung durch Dritte verlangen</strong> als Bedingung für die Fortsetzung der Partnerschaft. Kein Aktienpreis in SyncPilots Geschichte wurde jemals von jemand anderem als Bleichers Vorstand festgesetzt.</p>
+
+    <p><strong>4. Die Grundlage für die Herabstufung von Gold auf Silver offenlegen.</strong> Wenn es administrativ war, sagen Sie es. Wenn es compliance-bedingt war, sagen Sie das auch. Beschaffungsbeamte, die sechsstellige Entscheidungen treffen, verdienen es zu wissen.</p>
+
+    <p>Solange SAP nicht handelt, ist jeder öffentliche Auftrag, den SyncPilot unter dem SAP-Abzeichen gewinnt, ein Auftrag, der unter einer Glaubwürdigkeitsbürgschaft gewonnen wurde, die SAP nicht verifiziert hat. Das macht SAP zum Teil der Geschichte.</p>
+
+    <div class="sap-action">
+      <div class="sap-action-title">Melden Sie dies bei SAP</div>
+      <p>SAP stellt einen dedizierten Kanal für die Meldung von Partner-Compliance-Bedenken bereit. Wenn Sie Beschaffungsbeamter, SAP-Mitarbeiter, SyncPilot-Mitarbeiter oder Investor mit relevanten Informationen sind:</p>
+      <p><strong>SAP Ethics &amp; Compliance:</strong> <a href="mailto:ethicalbusiness@sap.com">ethicalbusiness@sap.com</a></p>
+      <p><strong>SAP Speak Out (anonym):</strong> <a href="https://app.convercent.com/en-us/LandingPage/2d3e70b7-4b7b-ea11-a972-000d3a1bbd52" target="_blank" rel="noopener">app.convercent.com</a></p>
+      <p><strong>Kontakt dieses Dossiers:</strong> <a href="mailto:syncpilot-dossier@proton.me">syncpilot-dossier@proton.me</a> (verschlüsselt)</p>
+      <p>Der SAP Partner Code of Conduct kann gelesen werden <a href="https://www.sap.com/documents/2023/07/02b2d2b7-7e7e-0010-bca6-c68f7e60039b.html" target="_blank" rel="noopener">hier</a>.</p>
+    </div>
+
+  </article>
+  <script defer src="../data/dossier.js"></script>
+</body>
+</html>

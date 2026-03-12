@@ -175,11 +175,24 @@
     var updLabel = lang === 'de' ? 'Zuletzt aktualisiert' : 'Last updated';
     var cookieText = lang === 'de' ? 'Ohne Cookies \u00b7 Keine Datenerhebung' : 'Cookie-free \u00b7 No personal data collected';
 
+    var contactTitle = lang === 'de' ? 'Sichere Kontaktaufnahme' : 'Secure Contact';
+    var contactBody = lang === 'de'
+      ? 'Wenn Sie Informationen \u00fcber SyncPilot, dessen Gesellschafter oder verbundene Unternehmen haben, m\u00f6chten wir von Ihnen h\u00f6ren. Wir sch\u00fctzen unsere Quellen.'
+      : 'If you have information about SyncPilot, its shareholders, or related entities, we want to hear from you. We protect our sources.';
+    var emailLabel = lang === 'de' ? 'Verschl\u00fcsselte E-Mail' : 'Encrypted email';
+    var contactEmail = (m.footer && m.footer.contact_email) || 'syncpilot-dossier@proton.me';
+
     var f = document.createElement('footer'); f.className = 'site-footer';
-    f.innerHTML = '<div class="footer-inner"><div class="footer-meta">' +
-      '<span>' + updLabel + ': ' + esc(m.site.updated) + '</span>' +
-      '<span style="color:rgba(255,241,229,0.55);">' + esc(discText) + '</span>' +
-      '<span>' + cookieText + '</span>' +
+    f.innerHTML = '<div class="footer-inner">' +
+      '<div class="footer-contact">' +
+        '<div class="footer-contact-title">' + contactTitle + '</div>' +
+        '<p class="footer-contact-body">' + contactBody + '</p>' +
+        '<p class="footer-contact-email">' + emailLabel + ': <a href="mailto:' + esc(contactEmail) + '">' + esc(contactEmail) + '</a></p>' +
+      '</div>' +
+      '<div class="footer-meta">' +
+        '<span>' + updLabel + ': ' + esc(m.site.updated) + '</span>' +
+        '<span style="color:rgba(255,241,229,0.55);">' + esc(discText) + '</span>' +
+        '<span>' + cookieText + '</span>' +
       '</div></div>';
     document.body.appendChild(f);
   }
