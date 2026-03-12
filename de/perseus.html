@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Der 95%-Rabatt — SyncPilot SE</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* === PERSEUS PAGE STYLES === */
+
+    /* ---- Hook section ---- */
+    .hook {
+      text-align: center;
+      padding: var(--sp-12) var(--sp-4) var(--sp-8);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .hook-prices {
+      display: flex;
+      justify-content: center;
+      gap: var(--sp-8);
+      flex-wrap: wrap;
+      margin-bottom: var(--sp-8);
+    }
+    .hook-price-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .hook-date {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(38,42,51,0.45);
+      margin-bottom: var(--sp-2);
+    }
+    .hook-amount {
+      font-family: var(--font-body);
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--slate);
+    }
+    .hook-amount--anomaly {
+      color: #CC0033;
+    }
+    .hook-buyer {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      color: rgba(38,42,51,0.4);
+      margin-top: var(--sp-1);
+    }
+    .hook-line {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 600;
+      color: var(--slate);
+      line-height: 1.4;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    /* ---- Accent color override: risk-high throughout ---- */
+    .perseus-accent { color: #CC0033; }
+
+    /* ---- Price bars visual ---- */
+    .price-bars-wrap {
+      margin: var(--sp-6) 0;
+      display: flex;
+      justify-content: center;
+    }
+    .price-bars-wrap svg {
+      width: 100%;
+      max-width: 520px;
+      height: auto;
+    }
+
+    /* ---- Valuation chart ---- */
+    .val-chart-wrap {
+      margin: var(--sp-4) 0;
+    }
+    .val-chart-wrap svg {
+      width: 100%;
+      max-width: 680px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ---- Question block (standalone) ---- */
+    .question-block {
+      border-left: 4px solid #CC0033;
+      background: rgba(204,0,51,0.04);
+      padding: var(--sp-4) var(--sp-6);
+      margin: var(--sp-6) 0;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      font-style: italic;
+    }
+
+    /* ---- Answer block ---- */
+    .answer-block {
+      font-family: var(--font-ui);
+      font-size: 0.95rem;
+      color: rgba(38,42,51,0.7);
+      line-height: 1.6;
+      margin: var(--sp-4) 0 var(--sp-6);
+    }
+
+    /* ---- Valuation table ---- */
+    .val-table {
+      margin: var(--sp-4) 0;
+    }
+    .val-table td.val-anomaly {
+      color: #CC0033;
+      font-weight: 700;
+    }
+
+    /* ---- CTA link ---- */
+    .cta-next {
+      display: block;
+      text-align: center;
+      padding: var(--sp-6) var(--sp-4);
+      margin: var(--sp-8) 0 var(--sp-4);
+      background: rgba(204,0,51,0.04);
+      border: 1px solid rgba(204,0,51,0.15);
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .cta-next:hover {
+      background: rgba(204,0,51,0.08);
+      border-color: rgba(204,0,51,0.3);
+    }
+    .cta-next-label {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(38,42,51,0.4);
+    }
+    .cta-next-title {
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #CC0033;
+      margin-top: var(--sp-1);
+    }
+
+    /* ---- Closing section ---- */
+    .closing {
+      margin-top: var(--sp-8);
+    }
+    .closing p {
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    /* ---- Section scroll offset ---- */
+    [id] { scroll-margin-top: calc(var(--nav-height) + var(--sp-4)); }
+
+    @media (max-width: 480px) {
+      .hook-prices { gap: var(--sp-4); }
+      .hook-amount { font-size: 2rem; }
+    }
+  </style>
+</head>
+
+<body data-page="perseus">
+<!-- ====== HOOK ====== -->
+  <header class="hook">
+    <div class="hook-prices">
+      <div class="hook-price-block">
+        <span class="hook-date">Dezember 2022</span>
+        <span class="hook-amount">€18.96</span>
+        <span class="hook-buyer">H.G. Perseus</span>
+      </div>
+      <div class="hook-price-block">
+        <span class="hook-date">März 2023</span>
+        <span class="hook-amount hook-amount--anomaly">€1.00</span>
+        <span class="hook-buyer">H.G. Perseus</span>
+      </div>
+      <div class="hook-price-block">
+        <span class="hook-date">Mai 2023</span>
+        <span class="hook-amount">€20.56</span>
+        <span class="hook-buyer">Tiven GmbH</span>
+      </div>
+    </div>
+    <p class="hook-line">Dasselbe Unternehmen. Derselbe Käufer. Derselbe Vorstand.<br>95 Tage Abstand.</p>
+  </header>
+
+  <!-- ====== CONTENT ====== -->
+  <article class="content-area">
+
+    <div style="margin-bottom: var(--sp-4);">
+      <a href="profile.html" style="font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600; text-decoration: none;">← Kap. 1: Das Unternehmen</a>
+    </div>
+
+    <!-- ======================= -->
+    <!-- SECTION 2: THE DISCOUNT -->
+    <!-- ======================= -->
+    <h2 id="discount">Der 95%-Rabatt</h2>
+
+    <p>Am 9. Dezember 2022 erwarb die H.G. Perseus GmbH StBG 158.208 Aktien der SyncPilot SE zu €18,96 pro Aktie und zahlte €3.000.004. Der Vorstand setzte die implizierte Unternehmensbewertung auf €100&nbsp;Millionen fest.</p>
+
+    <p>Drei Monate später, am 14. März 2023, erwarb dieselbe Gesellschaft 127.885 weitere Aktien zu €1,00 pro Aktie — und zahlte nur €127.885. Die implizierte Bewertung brach auf €5,4&nbsp;Millionen ein.</p>
+
+    <p>Zwei Monate danach, am 11. Mai 2023, erwarb die Tiven GmbH Aktien zu €20,56 pro Aktie — was einer Bewertung von €112&nbsp;Millionen entsprach. Am 5. Juni 2023 kaufte Perseus selbst weitere 16.211 Aktien zu €20,56.</p>
+
+    <!-- Price bars SVG -->
+    <div class="chart-container">
+      <div class="chart-title">Gleicher Käufer, gleiche Firma: 95% Preisverfall in 95 Tagen</div>
+      <div class="price-bars-wrap">
+        <svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart comparing share prices: €18.96, €1.00, €20.56">
+          <!-- Grid lines -->
+          <line x1="80" y1="40" x2="480" y2="40" stroke="#F2DFCE" stroke-width="1"/>
+          <line x1="80" y1="100" x2="480" y2="100" stroke="#F2DFCE" stroke-width="1"/>
+          <line x1="80" y1="160" x2="480" y2="160" stroke="#F2DFCE" stroke-width="1"/>
+          <line x1="80" y1="220" x2="480" y2="220" stroke="#F2DFCE" stroke-width="1"/>
+
+          <!-- Y-axis labels -->
+          <text x="72" y="44" text-anchor="end" font-family="Source Sans 3, sans-serif" font-size="11" fill="rgba(38,42,51,0.4)">€20</text>
+          <text x="72" y="104" text-anchor="end" font-family="Source Sans 3, sans-serif" font-size="11" fill="rgba(38,42,51,0.4)">€15</text>
+          <text x="72" y="164" text-anchor="end" font-family="Source Sans 3, sans-serif" font-size="11" fill="rgba(38,42,51,0.4)">€10</text>
+          <text x="72" y="224" text-anchor="end" font-family="Source Sans 3, sans-serif" font-size="11" fill="rgba(38,42,51,0.4)">€5</text>
+
+          <!-- Baseline -->
+          <line x1="80" y1="250" x2="480" y2="250" stroke="rgba(38,42,51,0.15)" stroke-width="1"/>
+
+          <!-- Bar 1: €18.96 — height proportional (18.96/21 * 210 ≈ 189) -->
+          <rect x="110" y="61" width="80" height="189" rx="3" fill="#0D7680"/>
+          <text x="150" y="53" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="14" font-weight="700" fill="#262A33">€18.96</text>
+
+          <!-- Bar 2: €1.00 — height (1/21 * 210 ≈ 10) -->
+          <rect x="230" y="240" width="80" height="10" rx="3" fill="#CC0033"/>
+          <text x="270" y="234" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="14" font-weight="700" fill="#CC0033">€1.00</text>
+
+          <!-- Bar 3: €20.56 — height (20.56/21 * 210 ≈ 205) -->
+          <rect x="350" y="45" width="80" height="205" rx="3" fill="#0D7680"/>
+          <text x="390" y="37" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="14" font-weight="700" fill="#262A33">€20.56</text>
+
+          <!-- Discount annotation: horizontal bracket between bars 1 & 2 -->
+          <line x1="150" y1="20" x2="150" y2="28" stroke="rgba(38,42,51,0.2)" stroke-width="4"/>
+          <line x1="270" y1="20" x2="270" y2="28" stroke="rgba(38,42,51,0.2)" stroke-width="4"/>
+          <line x1="150" y1="22" x2="270" y2="22" stroke="rgba(38,42,51,0.2)" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="210" y="16" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" font-weight="700" fill="#CC0033">95% DISCOUNT</text>
+
+          <!-- Date labels -->
+          <text x="150" y="268" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(38,42,51,0.45)">Dec 2022</text>
+          <text x="270" y="268" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(38,42,51,0.45)">Mar 2023</text>
+          <text x="390" y="268" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(38,42,51,0.45)">May 2023</text>
+
+          <!-- Buyer labels -->
+          <text x="150" y="282" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(38,42,51,0.35)">H.G. Perseus</text>
+          <text x="270" y="282" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(38,42,51,0.35)">H.G. Perseus</text>
+          <text x="390" y="282" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(38,42,51,0.35)">Tiven GmbH</text>
+        </svg>
+      </div>
+      <div class="chart-source">Quelle: Handelsregister-Kapitalereignismeldungen</div>
+    </div>
+
+    <p>Zwischen Dezember und März fand keine Restrukturierung statt. Kein Kunde ging verloren. Kein Insolvenzantrag wurde gestellt. Der Umsatz änderte sich nicht. Das Produkt änderte sich nicht. Die einzige Variable war der Preis, den der Vorstand festsetzte — und wer kaufte.</p>
+
+    <!-- ======================= -->
+    <!-- SECTION 4: THE QUESTION -->
+    <!-- ======================= -->
+    <div class="closing">
+      <h2 id="question">Die Käufer</h2>
+
+      <p>Die H.G. Perseus GmbH StBG erwarb Aktien zu drei verschiedenen Preisen innerhalb von sechs Monaten. Zwei entsprachen dem, was jeder andere Investor zahlte. Einer nicht. Der Vorstand gewährte Perseus — und nur Perseus — einen Rabatt von 95%.</p>
+
+      <p>Perseus gehört zwei Münchner Anwälten. Beide waren Angeklagte in einem der größten Steuerstrafverfahren Deutschlands. Dieselben Anwälte entwarfen einen Investitionsvertrag über €18,75&nbsp;Millionen für einen anderen SyncPilot-Investor — und ließen ihn nicht beurkunden. Dieser Investor zahlte €6,15&nbsp;Millionen und erhielt nichts.</p>
+    </div>
+
+    <!-- ---- CTA ---- -->
+    <a href="goldfinger.html" class="cta-next">
+      <div class="cta-next-label">Nächste Untersuchung</div>
+      <div class="cta-next-title">Die Goldfinger-Verbindung →</div>
+    </a>
+</article>
+  <script defer src="../data/dossier.js"></script>
+</body>
+</html>

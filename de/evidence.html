@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Der Beweisraum — SyncPilot SE</title>
+  <meta name="description" content="Primärquelldaten zum SyncPilot-SE-Dossier: Kapitalereignisse, wirtschaftlich Berechtigte, Zahlungsbuch, E-Mail-Chronik, Gesellschaftsregister.">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .er-hook { max-width:780px; margin:0 auto; padding:var(--sp-8) var(--container-padding) var(--sp-4); text-align:center; }
+    .er-hook h1 { margin-bottom:var(--sp-2); }
+    .er-hook-sub { font-family:var(--font-ui); font-size:var(--text-ui); color:rgba(38,42,51,0.5); max-width:600px; margin:0 auto var(--sp-6); }
+    .er-stats { display:flex; justify-content:center; gap:var(--sp-6); flex-wrap:wrap; margin-bottom:var(--sp-8); }
+    .er-stat { text-align:center; }
+    .er-stat-num { font-family:var(--font-ui); font-size:1.6rem; font-weight:700; color:var(--claret); }
+    .er-stat-label { font-family:var(--font-ui); font-size:var(--text-caption); color:rgba(38,42,51,0.45); text-transform:uppercase; letter-spacing:0.08em; }
+    .er-section { max-width:960px; margin:0 auto var(--sp-2); padding:0 var(--container-padding); }
+    .accordion { border:1px solid var(--wheat); border-radius:6px; overflow:hidden; margin-bottom:var(--sp-3); }
+    .accordion-trigger { display:flex; align-items:center; justify-content:space-between; width:100%; padding:var(--sp-4); background:var(--card-bg); border:none; cursor:pointer; font-family:var(--font-ui); font-size:0.95rem; font-weight:700; color:var(--slate); text-align:left; transition:background 0.15s; }
+    .accordion-trigger:hover { background:var(--wheat); }
+    .accordion-trigger .acc-icon { font-size:0.7rem; color:rgba(38,42,51,0.3); transition:transform 0.2s; }
+    .accordion.open .accordion-trigger .acc-icon { transform:rotate(90deg); }
+    .accordion-trigger .acc-count { font-weight:400; font-size:var(--text-small); color:rgba(38,42,51,0.4); margin-left:var(--sp-2); }
+    .accordion-body { display:none; padding:var(--sp-4); background:var(--bg); overflow-x:auto; }
+    .accordion.open .accordion-body { display:block; }
+    .ev-table { width:100%; border-collapse:collapse; font-family:var(--font-ui); font-size:var(--text-small); }
+    .ev-table th { text-align:left; padding:var(--sp-2); font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:rgba(38,42,51,0.4); border-bottom:2px solid var(--wheat); white-space:nowrap; cursor:pointer; user-select:none; }
+    .ev-table th:hover { color:var(--oxford); }
+    .ev-table th::after { content:'\21C5'; margin-left:4px; font-size:0.55rem; opacity:0.3; }
+    .ev-table th.sort-asc::after { content:'\2191'; opacity:0.8; color:var(--oxford); }
+    .ev-table th.sort-desc::after { content:'\2193'; opacity:0.8; color:var(--oxford); }
+    .ev-table th.no-sort { cursor:default; }
+    .ev-table th.no-sort::after { content:''; }
+    .ev-table td { padding:var(--sp-1) var(--sp-2); border-bottom:1px solid rgba(242,223,206,0.4); vertical-align:top; line-height:1.5; }
+    .ev-table td.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .ev-table td.name-cell { font-family:var(--font-body); font-weight:600; }
+    .ev-table tbody tr:nth-child(even) td { background:rgba(242,223,206,0.15); }
+    .ev-table tr.row-anomaly td { background:rgba(204,0,51,0.04); border-left:3px solid #CC0033; }
+    .ev-table tr.row-top3 td { background:rgba(153,15,61,0.03); }
+    .ev-table tr.row-highlight td { background:rgba(153,15,61,0.06); border-left:3px solid var(--claret); }
+    .ev-table tbody tr:nth-child(even).row-highlight td { background:rgba(153,15,61,0.08); }
+    .src-link { font-family:var(--font-ui); font-size:0.6rem; font-weight:600; color:var(--oxford); text-decoration:none; padding:1px 5px; border:1px solid rgba(13,118,128,0.2); border-radius:3px; white-space:nowrap; }
+    .src-link:hover { background:rgba(13,118,128,0.06); }
+    .src-onfile { font-family:var(--font-ui); font-size:0.6rem; color:rgba(38,42,51,0.3); font-style:italic; }
+    .ev-search { margin-bottom:var(--sp-3); }
+    .ev-search input { width:100%; padding:6px 12px; border:1px solid var(--wheat); border-radius:4px; font-family:var(--font-ui); font-size:var(--text-small); background:var(--bg); color:var(--slate); outline:none; }
+    .ev-search input:focus { border-color:var(--oxford); }
+    .ev-search input::placeholder { color:rgba(38,42,51,0.3); }
+    @media (max-width:640px) { .ev-table { font-size:0.65rem; } .er-stats { gap:var(--sp-3); } }
+  </style>
+</head>
+<body data-page="evidence">
+<div class="er-hook">
+    <h1>Der Beweisraum</h1>
+    <p class="er-hook-sub">Jede Aussage in diesem Dossier zu ihrem Quelldokument zurückverfolgt. Klicken Sie auf einen Abschnitt, um ihn aufzuklappen. Klicken Sie auf Spaltenüberschriften zum Sortieren. Alle Tabellen sind durchsuchbar.</p>
+  </div>
+
+  <div class="er-stats">
+    <div class="er-stat"><div class="er-stat-num">91</div><div class="er-stat-label">Kapitalereignisse</div></div>
+    <div class="er-stat"><div class="er-stat-num">31</div><div class="er-stat-label">Wirtschaftl. Berechtigte</div></div>
+    <div class="er-stat"><div class="er-stat-num">26</div><div class="er-stat-label">Holdinggesellschaften</div></div>
+    <div class="er-stat"><div class="er-stat-num">30</div><div class="er-stat-label">E-Mail-Chronik</div></div>
+    <div class="er-stat"><div class="er-stat-num">&euro;6.15M</div><div class="er-stat-label">Nicht nachgewiesene Gelder</div></div>
+  </div>
+
+  <div class="er-section">
+
+    <div class="accordion" id="acc-capital">
+      <button class="accordion-trigger" onclick="toggleAcc('acc-capital')">
+        <span>&#x1F4CA; Kapitalereignisse<span class="acc-count">91 Aktienemissionen &middot; Sep 2020 &ndash; Aug 2025</span></span>
+        <span class="acc-icon">&#x25B6;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="ev-search"><input type="text" placeholder="Kapitalereignisse suchen&hellip;" oninput="filterTable(this,'tbl-capital')"></div>
+        <table class="ev-table" id="tbl-capital">
+          <thead><tr><th>Datum</th><th>Anteilseigner</th><th>Aktien</th><th>Nom.</th><th>Ausgabe &euro;</th><th>Ereignis</th><th class="no-sort">Quelle</th></tr></thead>
+          <tbody>
+<tr class="row-highlight"><td>2020-09-23</td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">61,134</td><td class="num">1</td><td class="num"></td><td>Acquisition of shares ; Name change to SYNCPILOT SE; Seat moved to Augsburg.</td><td><a href="https://drive.google.com/file/d/1EayB3ZyobIJzUXhYF5QwzCIEQnyP2BJN/view?usp=drive_link" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">40,799</td><td class="num">1</td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">18,065</td><td class="num">1</td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">2</td><td class="num">1</td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td>2020-12-07</td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">2,486,138</td><td class="num">1</td><td class="num">4.7</td><td>Capital Increase (Contribution in Kind of SyncPilot GmbH) .</td><td><a href="https://drive.google.com/file/d/1T7e2HizvwEuI1DBwERylkoP0qb-qJIGo/view?usp=drive_link" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">1,659,188</td><td class="num">1</td><td class="num">4.7</td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">734,674</td><td class="num">1</td><td class="num">4.7</td><td></td><td></td></tr>
+<tr><td class="name-cell">2021-09-09</td><td class="name-cell">0</td><td class="num">N/A</td><td class="num"></td><td>Creation Auth. Cap. I (€1M), Auth. Cap. II (€0.5M), Cond. Cap. 2021 (€0.5M). Registered.</td><td><a href="https://drive.google.com/file/d/1T7e2HizvwEuI1DBwERylkoP0qb-qJIGo/view?usp=drive_link" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell">2021-12-03</td><td class="name-cell">38,462</td><td class="num">1</td><td class="num">13</td><td>Capital Increase (Utilizing Auth. Cap. II). Total Capital: 5,115,385.</td><td><a href="https://drive.google.com/file/d/1E7Jjx3qhG1mTDQf0mLQt6jxYkhlMWWEm/view?usp=drive_link" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell">2021-12-13</td><td class="name-cell">76,923</td><td class="num">1</td><td class="num">13</td><td>Capital Increase (Utilizing Auth. Cap. II). Total Capital: 5,076,923.</td><td><a href="https://drive.google.com/file/d/19RHmGXyG6KvVCLDpFhzkZooRMF4I0teh/view?usp=drive_link" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell">2021-12-31</td><td class="name-cell">-849,994</td><td class="num"></td><td class="num"></td><td>Die 403.550 Anteile der AURIGA in Anlage 1 Hauptversammlung v. 17.5.2024 können nur durch Übertragung aus der DSI enstanden sein; da die Übertragung nicht in Anl. 2 oder 3 erscheint, muss sie vor 2022 stattgefunden haben</td><td><span class="src-onfile">Archiviert</span></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">849,994</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">0</td><td class="num">N/A</td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td>2022-12-09</td><td class="name-cell">H.G. Perseus GmbH StbG</td><td class="num">158,208</td><td class="num">1</td><td class="num">18.962404</td><td>Capital Increase (Utilizing Auth. Cap. II). Total Capital: 5,273,593.</td><td><a href="https://drive.google.com/file/d/1uNxImJL6UVUaAnCRYfuRpc0f3yrGu7ev/view?usp=drive_link" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr class="row-anomaly row-highlight"><td>2023-03-14</td><td class="name-cell">H.G. Perseus GmbH StbG</td><td class="num">127,885</td><td class="num">1</td><td class="num">1</td><td>Capital Increase (Utilizing Auth. Cap. II). Total Capital: 5,401,478.</td><td><a href="https://drive.google.com/file/d/1QYxcEwk8GrC8zPm4SdO4wpvfdD40XzaU/view?usp=drive_link" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell">2023-05-11</td><td class="name-cell">48,632</td><td class="num">1</td><td class="num">20.5626</td><td>Capital Increase (Utilizing Auth. Cap. II). Total Capital: 5,450,110.</td><td><a href="https://drive.google.com/file/d/116gAKoYRSmdrWi2cx8oKsb3oeCK_tk1b/view?usp=drive_link" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr class="row-highlight"><td>2023-06-05</td><td class="name-cell">H.G. Perseus GmbH StbG</td><td class="num">16,211</td><td class="num">1</td><td class="num">20.5626</td><td>Capital Increase (Utilizing Auth. Cap. II). Total Capital: 5,498,742.</td><td><a href="https://drive.google.com/file/d/1e-90Bhh9_KNelf-Vg3-c0mHIsmiAe94Q/view?usp=drive_link" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell">2023-06-30</td><td class="name-cell">32,421</td><td class="num">1</td><td class="num">20.5626</td><td>Capital Increase (Utilizing Auth. Cap. II).</td><td><a href="https://drive.google.com/file/d/1EJzlaP9qtWZUS9lb-A0UD-4dKmyiba0J/view?usp=drive_link" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell">2023-12-31</td><td class="name-cell">-195,000</td><td class="num"></td><td class="num"></td><td>Übertragung 2022/23 gem. Anl. 2 Niederschrift Hauptversammlung v. 17.5.2024</td><td><a href="https://drive.google.com/drive/u/3/folders/1ydxTFVoRGYJ_x3fZeWBX6CLWAei2-rDE" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">195,000</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">-79,610</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">79,610</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">-116,100</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">116,100</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">-68,966</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">68,966</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-103,448</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">103,448</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-849,993</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">849,993</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-512,718</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">512,718</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-285,000</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">285,000</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-162,045</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">162,045</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-38,225</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">38,225</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">-125,498</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">125,498</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">H.G. Perseus GmbH StbG</td><td class="num">-158,208</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">158,208</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">H.G. Perseus GmbH StbG</td><td class="num">-12,500</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">12,500</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-66,666</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">66,666</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">-54,574</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">54,574</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">-109,148</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">109,148</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">-128,388</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">128,388</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">-96,291</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">96,291</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">-96,291</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">96,291</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">-64,194</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">64,194</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell">2024-05-17</td><td class="name-cell">55,550</td><td class="num">1</td><td class="num">23.64177119711971</td><td>Capital Increase. Total Capital: 5,554,292.</td><td><a href="https://drive.google.com/file/d/1oiYsAH2kJtVDFBuPO1hCpelGgbv-UOuj/view?usp=drive_link" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr class="row-highlight"><td>2024-05-18</td><td class="name-cell">H.G. Perseus GmbH StbG</td><td class="num">-16,211</td><td class="num"></td><td class="num"></td><td>Übertragung 2024 gem. Anl. 3 Niederschrift Hauptversammlung v. 17.5.2024; nach der HV, da sonst Teilnehmerliste und Anteilsverteilung (Anl. 1) falsch</td><td><a href="https://drive.google.com/file/d/1rLoYHrRoiGPh6_L7TWDDL2Zbs4Ftjn9k/view?pli=1" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">16,211</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-76,923</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">76,923</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-563,124</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">563,124</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-212,355</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">212,355</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">H.G. Perseus GmbH StbG</td><td class="num">-115,385</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">115,385</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td>2025-08-05</td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">-269,790</td><td class="num"></td><td class="num"></td><td>Korrektur zur Angleichung der Anteilsverteilung an das Teilnehmerverzeichnis Hauptversammlung 5.8.25 (Anlage 1); keine genehmigten Übertragungen im Handelsregister</td><td><a href="https://drive.google.com/drive/u/3/folders/1ydxTFVoRGYJ_x3fZeWBX6CLWAei2-rDE" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-161,873</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-2</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">1</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">198,468</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-212,355</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">244,445</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">43,168</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-31,906</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">87,748</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">63,292</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">38,804</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">-17,094</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">17,094</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr class="row-highlight"><td></td><td class="name-cell">BOSYNC Beteiligungs UG</td><td class="num">-8,547</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">8,547</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-8,547</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">8,547</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">-4,274</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">4,274</td><td class="num"></td><td class="num"></td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">14,493</td><td class="num">1</td><td class="num">23</td><td></td><td></td></tr>
+<tr><td class="name-cell"></td><td class="name-cell">7,246</td><td class="num">1</td><td class="num">23</td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="accordion" id="acc-ubo">
+      <button class="accordion-trigger" onclick="toggleAcc('acc-ubo')">
+        <span>&#x1F464; Wirtschaftlich Berechtigte<span class="acc-count">31 Personen &middot; 6 Jurisdiktionen</span></span>
+        <span class="acc-icon">&#x25B6;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="ev-search"><input type="text" placeholder="UBOs suchen&hellip;" oninput="filterTable(this,'tbl-ubo')"></div>
+        <table class="ev-table" id="tbl-ubo">
+          <thead><tr><th>#</th><th>Name</th><th>% an SE</th><th>Aktien</th><th>Über (Holdinggesellschaft)</th></tr></thead>
+          <tbody>
+<tr class="row-top3"><td class="num">1</td><td class="name-cell"><strong>Bleicher, Franz-Xaver</strong></td><td class="num">16.48%</td><td class="num">918,947</td><td>BOSYNC Beteiligungs UG</td></tr>
+<tr class="row-top3"><td class="num">2</td><td class="name-cell"><strong>Krocke, Dr. Ingo</strong></td><td class="num">8.65%</td><td class="num">482,113</td><td>Attegia Holding Ltd.</td></tr>
+<tr class="row-top3"><td class="num">3</td><td class="name-cell"><strong>Steiner, Harald</strong></td><td class="num">8.58%</td><td class="num">478,431</td><td>AURIGA Capital AG, BOSYNC Beteiligungs UG</td></tr>
+<tr><td class="num">4</td><td class="name-cell"><strong>Jakisch, Bernd</strong></td><td class="num">4.70%</td><td class="num">262,100</td><td>Augusta Software GmbH</td></tr>
+<tr><td class="num">5</td><td class="name-cell"><strong>Funk, Dirk</strong></td><td class="num">4.70%</td><td class="num">262,100</td><td>Augusta Software GmbH</td></tr>
+<tr><td class="num">6</td><td class="name-cell"><strong>Schaeff, Alexander</strong></td><td class="num">4.67%</td><td class="num">260,160</td><td>Schaeff Group Holding AG, Schaeff Maschinen Verwaltung GmbH, Schaeff Pulp &amp; Paper Holding Gmbh, A. Schaeff Vermögensanlagen GbR, ZKP Innovations Holding Ltd.</td></tr>
+<tr><td class="num">7</td><td class="name-cell"><strong>Purkert, Gert</strong></td><td class="num">4.38%</td><td class="num">244,445</td><td>Tiven S.A. (Sàrl?)</td></tr>
+<tr><td class="num">8</td><td class="name-cell"><strong>Steiner, Christiane</strong></td><td class="num">4.29%</td><td class="num">239,215</td><td>AURIGA Capital AG, BOSYNC Beteiligungs UG</td></tr>
+<tr><td class="num">9</td><td class="name-cell"><strong>Kurth, Cornelius Vincent</strong></td><td class="num">4.00%</td><td class="num">222,802</td><td>Lapis Ltd.</td></tr>
+<tr><td class="num">10</td><td class="name-cell"><strong>Kurth, Lauritz Corvin Paul</strong></td><td class="num">4.00%</td><td class="num">222,802</td><td>Lapis Ltd.</td></tr>
+<tr><td class="num">11</td><td class="name-cell"><strong>Kurth, Dr. Hans-Rudolf</strong></td><td class="num">4.00%</td><td class="num">222,802</td><td>Lapis Ltd.</td></tr>
+<tr><td class="num">12</td><td class="name-cell"><strong>unbekannt</strong></td><td class="num">3.70%</td><td class="num">206,040</td><td>ZAR Group AG</td></tr>
+<tr><td class="num">13</td><td class="name-cell"><strong>Kimmich, Marc F.</strong></td><td class="num">3.70%</td><td class="num">206,040</td><td>ZKP Innovations Holding Ltd.</td></tr>
+<tr><td class="num">14</td><td class="name-cell"><strong>Hunstein, Martin</strong></td><td class="num">3.51%</td><td class="num">195,843</td><td>Perseus Innovations and Services Holding Ltd., ZKP Innovations Holding Ltd.</td></tr>
+<tr><td class="num">15</td><td class="name-cell"><strong>Goerg, Diethard Erik</strong></td><td class="num">3.51%</td><td class="num">195,843</td><td>Perseus Innovations and Services Holding Ltd., ZKP Innovations Holding Ltd.</td></tr>
+<tr><td class="num">16</td><td class="name-cell"><strong>Hansen, Bernd Gerhard</strong></td><td class="num">2.14%</td><td class="num">119,363</td><td>bgh Vermögensverwaltung GmbH, ZKP Innovations Holding Ltd.</td></tr>
+<tr><td class="num">17</td><td class="name-cell"><strong>Hansen, Friedrich Bernd</strong></td><td class="num">2.14%</td><td class="num">119,363</td><td>bgh Vermögensverwaltung GmbH, ZKP Innovations Holding Ltd.</td></tr>
+<tr><td class="num">18</td><td class="name-cell"><strong>Hansen, Jakob Gerhard</strong></td><td class="num">2.14%</td><td class="num">119,363</td><td>bgh Vermögensverwaltung GmbH, ZKP Innovations Holding Ltd.</td></tr>
+<tr><td class="num">19</td><td class="name-cell"><strong>Hansen, Wilhelm Reinhold</strong></td><td class="num">2.14%</td><td class="num">119,363</td><td>bgh Vermögensverwaltung GmbH, ZKP Innovations Holding Ltd.</td></tr>
+<tr><td class="num">20</td><td class="name-cell"><strong>Hansen, Paul Maria</strong></td><td class="num">2.14%</td><td class="num">119,363</td><td>bgh Vermögensverwaltung GmbH, ZKP Innovations Holding Ltd.</td></tr>
+<tr><td class="num">21</td><td class="name-cell"><strong>Steiner, Daniel</strong></td><td class="num">1.43%</td><td class="num">79,738</td><td>AURIGA Capital AG, BOSYNC Beteiligungs UG</td></tr>
+<tr><td class="num">22</td><td class="name-cell"><strong>Schaeff, Karl</strong></td><td class="num">0.92%</td><td class="num">51,259</td><td>Schaeff Group Holding AG, Schaeff Maschinen Verwaltung GmbH, Schaeff Pulp &amp; Paper Holding Gmbh, ZKP Innovations Holding Ltd.</td></tr>
+<tr><td class="num">23</td><td class="name-cell"><strong>Saupe, Christiane</strong></td><td class="num">0.91%</td><td class="num">50,962</td><td>direkt</td></tr>
+<tr><td class="num">24</td><td class="name-cell"><strong>Gerstner, Thomas</strong></td><td class="num">0.72%</td><td class="num">40,134</td><td>ATLASI GROUP GmbH</td></tr>
+<tr><td class="num">25</td><td class="name-cell"><strong>Schorr, Rainer</strong></td><td class="num">0.61%</td><td class="num">33,885</td><td>5th. Dimension Investment GmbH</td></tr>
+<tr><td class="num">26</td><td class="name-cell"><strong>Schorr, Petra</strong></td><td class="num">0.39%</td><td class="num">21,664</td><td>5th. Dimension Investment GmbH</td></tr>
+<tr><td class="num">27</td><td class="name-cell"><strong>Schaeff, Leonie</strong></td><td class="num">0.37%</td><td class="num">20,604</td><td>Schaeff Pulp &amp; Paper Holding Gmbh, A. Schaeff Vermögensanlagen GbR, ZKP Innovations Holding Ltd.</td></tr>
+<tr><td class="num">28</td><td class="name-cell"><strong>Schaeff, Antonia</strong></td><td class="num">0.37%</td><td class="num">20,604</td><td>Schaeff Pulp &amp; Paper Holding Gmbh, A. Schaeff Vermögensanlagen GbR, ZKP Innovations Holding Ltd.</td></tr>
+<tr><td class="num">29</td><td class="name-cell"><strong>Schaeff, Kilian</strong></td><td class="num">0.37%</td><td class="num">20,604</td><td>Schaeff Pulp &amp; Paper Holding Gmbh, A. Schaeff Vermögensanlagen GbR, ZKP Innovations Holding Ltd.</td></tr>
+<tr><td class="num">30</td><td class="name-cell"><strong>Brinkmann, Johann</strong></td><td class="num">0.18%</td><td class="num">10,033</td><td>Callidus Ventures GmbH</td></tr>
+<tr><td class="num">31</td><td class="name-cell"><strong>Brinkmann, Marisa</strong></td><td class="num">0.18%</td><td class="num">10,033</td><td>Callidus Ventures GmbH</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="accordion" id="acc-payments">
+      <button class="accordion-trigger" onclick="toggleAcc('acc-payments')">
+        <span>&#x1F4B0; LVS-Zahlungsbuch<span class="acc-count">&euro;6,15 Mio. gezahlt &middot; 0 Aktien geliefert</span></span>
+        <span class="acc-icon">&#x25B6;</span>
+      </button>
+      <div class="accordion-body">
+        <p style="font-family:var(--font-ui);font-size:var(--text-small);color:rgba(38,42,51,0.55);margin-bottom:var(--sp-3);">
+          Kooperations- und Kaufoptionsvertrag vom 21. Mai 2021. Vertragssumme: &euro;18.750.000 für 750.000 Aktien. Änderungsvereinbarung (&euro;7.500.000 / 375.000 Aktien) nie beurkundet.
+        </p>
+        <table class="ev-table" id="tbl-payments">
+          <thead><tr><th>Fälligkeitsdatum</th><th>Fälliger Betrag</th><th>Gezahlter Betrag</th><th>Zahlungsdatum</th><th class="no-sort">Quelle</th></tr></thead>
+          <tbody>
+<tr><td>2021-04-07</td><td class="num">€650,000</td><td class="num">€650,000</td><td>2021-04-07</td><td><a href="https://drive.google.com/file/d/19Q3NkkwyTRMumIRnWxnd3Hdi65HIngkt/view" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-05-21</td><td class="num">€1,500,000</td><td class="num">€1,500,000</td><td>2021-04-29</td><td><a href="https://drive.google.com/file/d/1MSLk5WiQ46OTp9-Sn-4ruHlqDfHkxzDF/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-05-31</td><td class="num">€1,000,000</td><td class="num">€1,000,000</td><td>2021-06-07</td><td><a href="https://drive.google.com/file/d/1Y2ezIaRt04V6zwDJ91giR89A7a1qfbW1/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-06-30</td><td class="num">€3,500,000</td><td class="num">€3,000,000</td><td>2021-08-31</td><td><a href="https://drive.google.com/file/d/1Aa2pscAY4D1gTfTmI9VIFVipbFeGIaYP/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2022-01-30</td><td class="num">€850,000</td><td class="num">€0</td><td></td><td><span class="src-onfile">Archiviert</span></td></tr>
+<tr><td>2022-01-30</td><td class="num">€11,250,000</td><td class="num">€0</td><td></td><td><span class="src-onfile">Archiviert</span></td></tr>
+          </tbody>
+          <tfoot><tr style="font-weight:700;border-top:2px solid var(--claret);">
+            <td>Gesamt</td><td class="num">&euro;18,750,000</td><td class="num" style="color:#CC0033;">&euro;6,150,000</td><td></td><td></td>
+          </tr></tfoot>
+        </table>
+        <div style="display:flex;gap:var(--sp-6);margin-top:var(--sp-4);font-family:var(--font-ui);font-size:var(--text-ui);">
+          <div><strong style="color:#CC0033;">&euro;6,150,000</strong> gezahlt</div>
+          <div><strong style="color:#CC0033;">0</strong> Aktien geliefert</div>
+          <div><strong style="color:#CC0033;">No</strong> Beurkundung</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion" id="acc-timeline">
+      <button class="accordion-trigger" onclick="toggleAcc('acc-timeline')">
+        <span>&#x1F4E7; Korrespondenz-Chronik<span class="acc-count">30 Einträge &middot; Feb 2021 &ndash; Aug 2025</span></span>
+        <span class="acc-icon">&#x25B6;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="ev-search"><input type="text" placeholder="Korrespondenz suchen&hellip;" oninput="filterTable(this,'tbl-timeline')"></div>
+        <table class="ev-table" id="tbl-timeline">
+          <thead><tr><th>Datum</th><th>Typ</th><th>Von</th><th>An</th><th>Zusammenfassung</th><th class="no-sort">Quelle</th></tr></thead>
+          <tbody>
+<tr><td>2021-02-16</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Bartl, Henrik</td><td>NDA sent</td><td><a href="https://drive.google.com/file/d/1r4VSFBNEbkQ5cawNyGNd-2wPLa1f7AtX/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-02-16</td><td>E-Mail</td><td>Hunstein, Martin</td><td>Damerau, Arnulf</td><td>NDA received; presentation SyncPilot GmbH; introduction Bleicher, Franz-Xaver; involvement DSI Digital Solutions Invest GmbH 2018; operations: SyncPilot Deutschland Gmbh &amp; Co. KG; IP rights bundled in SIP SyncPilot GmbH &amp; Co. KG; company offers dialog software solutions similar to the RFP by AOK; target customers AOK, German Pension Fund, Techniker Krankenkasse, etc.); SP made SAP &quot;gold partner&quot; in 18 months and is distributed by SAP</td><td><a href="https://drive.google.com/file/d/1r4VSFBNEbkQ5cawNyGNd-2wPLa1f7AtX/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-02-17</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Hunstein, Martin</td><td>Who is Augusta?</td><td><a href="https://drive.google.com/file/d/1r4VSFBNEbkQ5cawNyGNd-2wPLa1f7AtX/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-02-17</td><td>E-Mail</td><td>Hunstein, Martin</td><td>Damerau, Arnulf</td><td>Co-Founders, 2 software developers from Augsburg</td><td><a href="https://drive.google.com/file/d/1r4VSFBNEbkQ5cawNyGNd-2wPLa1f7AtX/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-03-03</td><td>E-Mail</td><td>Hunstein, Martin</td><td>Damerau, Arnulf</td><td>Bleicher, Franz-Xaver (founder and MD) wants to talk directly in connection with Damerau, Arnulf's possible investment; core product digital distribution; requests call</td><td><a href="https://drive.google.com/file/d/1r4VSFBNEbkQ5cawNyGNd-2wPLa1f7AtX/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-03-03</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Hunstein, Martin</td><td>Call requested for Thu or Fri evening</td><td><span class="src-onfile">Archiviert</span></td></tr>
+<tr><td>2021-03-04</td><td>E-Mail</td><td>Hunstein, Martin</td><td>Damerau, Arnulf</td><td>Works for Mr. Bleicher, AD's call.</td><td><span class="src-onfile">Archiviert</span></td></tr>
+<tr><td>2021-03-04</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Hunstein, Martin</td><td>Appointment set for Friday evening (5 Mar 2021)</td><td><a href="https://drive.google.com/file/d/1r4VSFBNEbkQ5cawNyGNd-2wPLa1f7AtX/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-03-25</td><td>E-Mail</td><td>Hunstein, Martin</td><td>Damerau, Arnulf</td><td>sends termsheet between FXB and AD concerning Syncpilot; requests feedback if it corresponds to what was previously discussed; attachments draft structure and cap table</td><td><a href="https://drive.google.com/file/d/1qnW__ioKl1zhDbL7UwbauQR_gCy0HI7G/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-03-26</td><td>E-Mail</td><td>Hunstein, Martin</td><td>Damerau, Arnulf</td><td>Finalized TS; reflects subjects discussed with DG on 25 Mar; FXB discussed with legacy shareholders and is accepted; deal details</td><td><a href="https://drive.google.com/file/d/1qnW__ioKl1zhDbL7UwbauQR_gCy0HI7G/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-03-27</td><td>E-Mail</td><td>Hunstein, Martin</td><td>Damerau, Arnuf</td><td>Answer to request data room for Syncpilot</td><td><a href="https://drive.google.com/file/d/1TwqtYcYt7jDJjWwLx7SiNDh_COvjMtlp/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-03-27</td><td>E-Mail</td><td>Hunstein, Martin</td><td>Damerau, Arnulf</td><td>TS as discussed with FXB; &quot;he (FXB) would almost prefer this variant, as he wouldn't have to confer with anyone&quot;</td><td><a href="https://drive.google.com/file/d/1qnW__ioKl1zhDbL7UwbauQR_gCy0HI7G/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-07-01</td><td>E-Mail</td><td>Hunstein, Martin</td><td>Damerau, Arnulf</td><td></td><td><a href="https://drive.google.com/file/d/1G5Ecc_DzkGBiDhdbJUfi8LKuqZgaOGQ8/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-08-21</td><td>E-Mail</td><td>Hunstein, Martin</td><td>Damerau, Arnulf</td><td>&quot;Hello Arnulf, attached is the variation agreement (Änderungsvereinbarung) as agreed with FXB&quot;</td><td><a href="https://drive.google.com/file/d/1MP5E24L3YIoNKK_9XAGHZ4E7ujzvkfWH/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-08-24</td><td>E-Mail</td><td>Hunstein, Martin</td><td>Damerau, Arnulf</td><td>Asking about appointment for signing of variation agreement; MH proposes to initially do a simple signature to &quot;have a certain contractual basis&quot;. Agreement to be notarized later, pending availability of notary and the necessary POA's.</td><td><a href="https://drive.google.com/file/d/1MP5E24L3YIoNKK_9XAGHZ4E7ujzvkfWH/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-08-24</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Hunstein, Martin</td><td>Will take care of it this evening - no time due to being on plane</td><td><a href="https://drive.google.com/file/d/1MP5E24L3YIoNKK_9XAGHZ4E7ujzvkfWH/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-08-30</td><td>E-Mail</td><td>Hunstein, Martin</td><td>Damerau, Arnulf</td><td>&quot;Hello Arnulf, attached is the variation agreement (Änderungsvereinbarung) with a payment due date of 31 Mar 2022, as discussed between you and Franz.&quot;</td><td><a href="https://drive.google.com/file/d/1X_Gb5Y1AKpkRy5RBRhSAOpibufjrh1g_/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2021-12-27</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Bleicher, Franz-Xaver</td><td>&quot;Dear Franz, thanks for the phone call. Please confirm that you agree to cancel the second part of the variation agreement. I hereby declare that I will not transfer the amount of 11,250,000 by 31 Mar 2022. Thanks for your confirmation.&quot;</td><td><a href="https://drive.google.com/file/d/1r4k_obW9TDiQT4NZDjXf5TdrkqzTN12f/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2022-03-25</td><td>E-Mail</td><td>Bleicher, Franz-Xaver</td><td>Damerau, Arnulf</td><td>confidential current SyncPilot numbers; FXB in negative mood as FXB wants to postpone subscription deadline by another 12 months; AD hard to reach, wanting to renegotiate already fixed agreements; FXB reminding AD that he is still required to advance € 12.1M loan, variation agreement invalid as not notarized; FXB reminds AD that € 1.35M are due on 31 Mar 2022; promises to notarize all rights and duties after receipt of payment; 2021 EOY statement delayed due to CPA being ill</td><td><a href="https://drive.google.com/file/d/1aZ3WFe8qQGS9HJz_sJaSc-io_aXVGdyd/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2022-03-25</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Heidbreder, Thomas</td><td>Msg from FXB dated 25 Mar 22 forwarded</td><td><a href="https://drive.google.com/file/d/1aZ3WFe8qQGS9HJz_sJaSc-io_aXVGdyd/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2022-03-30</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Levitan, Natasha</td><td>Msg from FXB dated 25 Mar 22 forwarded</td><td><a href="https://drive.google.com/file/d/1aZ3WFe8qQGS9HJz_sJaSc-io_aXVGdyd/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2022-03-30</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Bleicher, Franz-Xaver</td><td>Appreciates how revenue stabilizes and develops under the plan; criticizes personnel costs, too high compared to revenue, eating into profitability; asks to bring down personnel costs so company can turn a profit; asks if all employees and their associated costs are necessary to generate the AOK results; requests P&amp;L per client and vertical market</td><td><a href="https://drive.google.com/file/d/1aZ3WFe8qQGS9HJz_sJaSc-io_aXVGdyd/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2022-04-18</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>von Janowski, Daniel</td><td>Msg from FXB dated 25 Mar 22 forwarded</td><td><a href="https://drive.google.com/file/d/1aZ3WFe8qQGS9HJz_sJaSc-io_aXVGdyd/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2022-05-26</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Power, Vincent</td><td>Msg from FXB dated 25 Mar 22 forwarded</td><td><a href="https://drive.google.com/file/d/1aZ3WFe8qQGS9HJz_sJaSc-io_aXVGdyd/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2023-11-02</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Rothamel, Constance</td><td>Msg from FXB dated 25 Mar 22 forwarded; asks CR to look into SyncPilot; owes €1.25M from agreements; company now valued at € 250M and is support to do a capital increase at a valuation of € 450M; asks about possible conversion rights</td><td><a href="https://drive.google.com/file/d/1aZ3WFe8qQGS9HJz_sJaSc-io_aXVGdyd/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2025-05-03</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Fritsche, Sven</td><td>&quot;should this info become relevant&quot;</td><td><a href="https://drive.google.com/file/d/1G5Ecc_DzkGBiDhdbJUfi8LKuqZgaOGQ8/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2025-05-03</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Fritsche, Sven</td><td>&quot;The contracts are from Hunstein who was supposed to sign them with notary authorization and have them notarized. He kept postponing this time and again and in the end it was never notarized. Now they are telling me that all of this is legally void as it was NOT notarized.&quot;</td><td><a href="https://drive.google.com/file/d/1MP5E24L3YIoNKK_9XAGHZ4E7ujzvkfWH/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2025-05-03</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Eitschberger, Matthias</td><td>Msg from FXB dated 25 Mar 22 forwarded with request to file in SyncPilot data room</td><td><a href="https://drive.google.com/file/d/1aZ3WFe8qQGS9HJz_sJaSc-io_aXVGdyd/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2024-04-22</td><td>E-Mail</td><td>Goerg, Diethard</td><td>Damerau, Arnulf</td><td>Q1 reporting actual; revenue plan 2024/25 from SAP; trying to get AD back on board with the investment; 6.15M were paid in, approx. 12M still open, but &quot;that much money is not needed&quot; to revive the original agreement in its entirety</td><td><a href="https://drive.google.com/file/d/1UC-2An9Fy9t7vTKGhqSHtEKmOWhYPGDJ/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td>2025-08-21</td><td>E-Mail</td><td>Damerau, Arnulf</td><td>Kern, Konrad</td><td>Msg from FXB dated 25 Mar 22 forwarded</td><td><a href="https://drive.google.com/file/d/1aZ3WFe8qQGS9HJz_sJaSc-io_aXVGdyd/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="accordion" id="acc-entities">
+      <button class="accordion-trigger" onclick="toggleAcc('acc-entities')">
+        <span>&#x1F3E2; Gesellschaftsregister<span class="acc-count">26 Holdinggesellschaften &middot; Beteiligungsketten</span></span>
+        <span class="acc-icon">&#x25B6;</span>
+      </button>
+      <div class="accordion-body">
+        <div class="ev-search"><input type="text" placeholder="Gesellschaften suchen&hellip;" oninput="filterTable(this,'tbl-entities')"></div>
+        <table class="ev-table" id="tbl-entities">
+          <thead><tr><th>Gesellschaft</th><th class="no-sort">Inhaber / Gesellschafter</th></tr></thead>
+          <tbody>
+<tr><td class="name-cell"><strong>5th. Dimension Investment GmbH</strong></td><td>Schorr, Petra (39%) <a href="https://drive.google.com/file/d/1luuuTErWiuSC_hW9emI4N590QGDXqJCP/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Schorr, Rainer (61%) <a href="https://drive.google.com/file/d/1luuuTErWiuSC_hW9emI4N590QGDXqJCP/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Addit Asset Mgmt GmbH</strong></td><td>Sagasser geb. Dahms, Anna Maria Martha (100%) <a href="https://drive.google.com/file/d/1duMp6nG4C0Aj-U9d2brq9tKHpsswXkAO/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Atlasi Group GmbH</strong></td><td>Gerstner, Thomas (100%) <a href="https://drive.google.com/file/d/179lFAt5Svf5xBEFn135vZ3FT60Ko_ZCO/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Attegia Holding Ltd.</strong></td><td>Krocke, Dr. Ingo (100%) <a href="https://drive.google.com/drive/u/3/folders/1azKjKk5Ofqy2OwQAU6oxVX6IPDhRtieA" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Attegia Holding Ltd. (100%) <a href="https://drive.google.com/drive/u/3/folders/1azKjKk5Ofqy2OwQAU6oxVX6IPDhRtieA" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Augusta Software GmbH</strong></td><td>Jakisch, Bernd (50%) <a href="https://drive.google.com/file/d/12JQjxPXjiPt00AkmBBTyex4AMUIzuNhX/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Funk geb. Schreiter, Dirk (50%) <a href="https://drive.google.com/file/d/12JQjxPXjiPt00AkmBBTyex4AMUIzuNhX/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>AURIGA Capital AG</strong></td><td>Steiner, Harald (60%) <a href="https://drive.google.com/file/d/1tpzTYxvfQQMs1odVykaGhUe96JZxj6dO/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Steiner, Christiane (30%) <a href="https://drive.google.com/file/d/1tpzTYxvfQQMs1odVykaGhUe96JZxj6dO/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Steiner, Daniel (10%) <a href="https://drive.google.com/file/d/1tpzTYxvfQQMs1odVykaGhUe96JZxj6dO/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>bgh Vermögensverwaltung GmbH</strong></td><td>Hansen, Bernd Gerhard (20%) <a href="https://drive.google.com/file/d/1a827BFllVDrH293u0sgwpANyjcfp0qdh/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Hansen, Friedrich Bernd (20%) <a href="https://drive.google.com/file/d/1a827BFllVDrH293u0sgwpANyjcfp0qdh/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Hansen, Jakob Gerhard (20%) <a href="https://drive.google.com/file/d/1a827BFllVDrH293u0sgwpANyjcfp0qdh/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Hansen, Wilhelm Reinhold (20%) <a href="https://drive.google.com/file/d/1a827BFllVDrH293u0sgwpANyjcfp0qdh/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Hansen, Paul Maria (20%) <a href="https://drive.google.com/file/d/1a827BFllVDrH293u0sgwpANyjcfp0qdh/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>BOSYNC Beteiligungs UG</strong></td><td>AURIGA Capital GmbH (30%) <a href="https://drive.google.com/file/d/1BKtr7Cr2OVkmMbx2CgvoF3OUFJlUR4pk/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Oberhofer, Jürgen (20%) <a href="https://drive.google.com/file/d/1BKtr7Cr2OVkmMbx2CgvoF3OUFJlUR4pk/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Bleicher, Franz-Xaver (50%) <a href="https://drive.google.com/file/d/1BKtr7Cr2OVkmMbx2CgvoF3OUFJlUR4pk/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>AURIGA Capital GmbH (30%) <a href="https://drive.google.com/file/d/1vnFAXL08zql0wq5At7TNqwD8VZXVPne3/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Bleicher, Franz-Xaver (20%) <a href="https://drive.google.com/file/d/1vnFAXL08zql0wq5At7TNqwD8VZXVPne3/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Bleicher, Franz-Xaver (50%) <a href="https://drive.google.com/file/d/1vnFAXL08zql0wq5At7TNqwD8VZXVPne3/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Callidus Ventures GmbH</strong></td><td>Brinkmann, Johann (50%) <a href="https://drive.google.com/file/d/1tBlI3MEr2QPr3WEjKxVCAJV1ERA77d11/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Brinkmann, Marisa (50%) <a href="https://drive.google.com/file/d/1tBlI3MEr2QPr3WEjKxVCAJV1ERA77d11/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Chance Consulting &amp; Investment</strong></td><td>unknown (100%)<br>Wittner, Peter Hans <a href="https://drive.google.com/file/d/1iNR7hKV-6fDfX_3qoSzyXKUUDMeAW9vZ/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Concha Invest GmbH</strong></td><td>Lindner, Andreas Dietrich (50%) <a href="https://drive.google.com/file/d/1046Fq7-ZLcBVwllybeJJ2eqNGSvDQZA7/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Lindner, Marc Heinz Dietrich (25%) <a href="https://drive.google.com/file/d/1046Fq7-ZLcBVwllybeJJ2eqNGSvDQZA7/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Lindner, Natalie Larissa (25%) <a href="https://drive.google.com/file/d/1046Fq7-ZLcBVwllybeJJ2eqNGSvDQZA7/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>DSI Digital Solutions Invest Gm</strong></td><td>Addit Asset Management GmbH (17%) <a href="https://drive.google.com/file/d/1sG0vZ12v9nwPg0DKAcjWvlnUkjR2f4qO/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Chance Consulting &amp; Investment GmbH (17%) <a href="https://drive.google.com/file/d/1sG0vZ12v9nwPg0DKAcjWvlnUkjR2f4qO/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>AURIGA Capital AG (17%) <a href="https://drive.google.com/file/d/1sG0vZ12v9nwPg0DKAcjWvlnUkjR2f4qO/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Inter-Kapital Beteiligungs GmbH (17%) <a href="https://drive.google.com/file/d/1sG0vZ12v9nwPg0DKAcjWvlnUkjR2f4qO/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Concha Invest GmbH (17%) <a href="https://drive.google.com/file/d/1sG0vZ12v9nwPg0DKAcjWvlnUkjR2f4qO/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Privatconcept GmbH (17%) <a href="https://drive.google.com/file/d/1sG0vZ12v9nwPg0DKAcjWvlnUkjR2f4qO/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>H.G. Perseus GmbH StBG</strong></td><td>Hunstein, Martin (50%) <a href="https://drive.google.com/file/d/1QbqyhNbNRtcTOGq-zKSwIzElPs01T6H5/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Goerg, Diethard (50%) <a href="https://drive.google.com/file/d/1QbqyhNbNRtcTOGq-zKSwIzElPs01T6H5/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Inter-Kapital Beteiligungs GmbH</strong></td><td>Kriegel, Jürgen (100%) <a href="https://drive.google.com/file/d/1XHvWi-ozXOhjw7OcT9DIWSoGO8UkZJ14/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Lapis Ltd.</strong></td><td>Kurth, Cornelius Vincent (50%) <a href="https://drive.google.com/drive/u/3/folders/1UOFjKUOofvrH6wltQ80ovrismX8L47IK" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Kurth, Lauritz Corvin Paul (50%) <a href="https://drive.google.com/drive/u/3/folders/1UOFjKUOofvrH6wltQ80ovrismX8L47IK" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Kurth, Cornelius Vincent (33%) <a href="https://drive.google.com/drive/u/3/folders/1UOFjKUOofvrH6wltQ80ovrismX8L47IK" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Kurth, Lauritz Corvin Paul (33%) <a href="https://drive.google.com/drive/u/3/folders/1UOFjKUOofvrH6wltQ80ovrismX8L47IK" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Kurth, Dr. Hans-Rudolph (33%) <a href="https://drive.google.com/drive/u/3/folders/1UOFjKUOofvrH6wltQ80ovrismX8L47IK" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Perseus Innovations and Service</strong></td><td>Hunstein, Martin <a href="https://drive.google.com/file/d/1z8TWIOI0IwKwlzPPhTePXjl8cr4XefyM/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Goerg, Diethard <a href="https://drive.google.com/file/d/1z8TWIOI0IwKwlzPPhTePXjl8cr4XefyM/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Privatconcept GmbH</strong></td><td>Weixelmann, Cornelia (100%) <a href="https://drive.google.com/file/d/1wbb-u7BMoc5xEVbIzCS5P4u7I8ebAUFe/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Schaeff Group Holding AG</strong></td><td>SCHAEFF Maschinen Verwaltung GmbH (0%) <a href="https://drive.google.com/file/d/1loIl9MNWRAiDX4m1N-EFvBhc-x7N8xlq/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Schaeff, Dr. Alexander (94%) <a href="https://drive.google.com/file/d/1loIl9MNWRAiDX4m1N-EFvBhc-x7N8xlq/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Schaeff, Karl (6%) <a href="https://drive.google.com/file/d/1loIl9MNWRAiDX4m1N-EFvBhc-x7N8xlq/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Schaeff Maschinen Verwaltung Gm</strong></td><td>Schaeff, Alexander Christoph (94%) <a href="https://drive.google.com/file/d/1F5U3Qe7vGFNmK28uBXweywP1diqU8fv-/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Schaeff, Karl (6%) <a href="https://drive.google.com/file/d/1F5U3Qe7vGFNmK28uBXweywP1diqU8fv-/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Schaeff Pulp &amp; Paper Holding Gm</strong></td><td>Schaeff, Alexander (40%) <a href="https://drive.google.com/file/d/1T3LQ_oJMb8TKRhQ19sWeEAm2FBMSf7wk/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>A. Schaeff Vermögensanlagen GbR (40%) <a href="https://drive.google.com/file/d/1T3LQ_oJMb8TKRhQ19sWeEAm2FBMSf7wk/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Schaeff, Karl (20%) <a href="https://drive.google.com/file/d/1T3LQ_oJMb8TKRhQ19sWeEAm2FBMSf7wk/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>zu A. Schaeff Vermögensanlagen GbR:<br>Schaeff, Leonie (25%) <a href="https://drive.google.com/file/d/1T3LQ_oJMb8TKRhQ19sWeEAm2FBMSf7wk/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Schaeff, Antonia (25%) <a href="https://drive.google.com/file/d/1T3LQ_oJMb8TKRhQ19sWeEAm2FBMSf7wk/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Schaeff, Kilian (25%) <a href="https://drive.google.com/file/d/1T3LQ_oJMb8TKRhQ19sWeEAm2FBMSf7wk/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Schaeff, Alexander (25%) <a href="https://drive.google.com/file/d/1T3LQ_oJMb8TKRhQ19sWeEAm2FBMSf7wk/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Tiven GmbH</strong></td><td>Purkert, Gert (100%) <a href="https://drive.google.com/file/d/11fXyJ3D_WLKApFlNqpbouYT1kO7Q23hn/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>TIVEN MALTA LTD (100%) <a href="https://drive.google.com/file/d/1vlV0AMy3YSvuWRtrAXONNGUnsKSz0hCn/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Tiven Invest SA SICAV RAIF</strong></td><td>Purkert, Gert (100%) <a href="https://drive.google.com/file/d/1mfeJcGsWlB7hfJvtLoNYbXvQxklCq82E/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>Tiven Malta Ltd.</strong></td><td>Purkert, Gert (100%)</td></tr>
+<tr><td class="name-cell"><strong>Tiven S.A.</strong></td><td>Tiven Invest SA SICAV RAIF (100%) <a href="https://drive.google.com/file/d/1sg86i3FWvkEw9MWz-gZ4PTr6rz2ZwS9z/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>ZAR Group AG</strong></td><td>Zarges, Marco (100%) <a href="https://www.linkedin.com/in/marco-zarges-a4525a232/" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+<tr><td class="name-cell"><strong>ZKP Innovations Holding Ltd.</strong></td><td>bgh Vermögensverwaltungs GmbH (33%) <a href="https://drive.google.com/file/d/1rySfINIsIxVGv-C_oO_s5oTMgrDoLTdI/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>ZAR Group AG (17%) <a href="https://drive.google.com/file/d/1rySfINIsIxVGv-C_oO_s5oTMgrDoLTdI/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Schaeff Pulp &amp; paper Holding GmbH (17%) <a href="https://drive.google.com/file/d/1rySfINIsIxVGv-C_oO_s5oTMgrDoLTdI/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Perseus Innovations and Services Holding Ltd. (17%) <a href="https://drive.google.com/file/d/1rySfINIsIxVGv-C_oO_s5oTMgrDoLTdI/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a><br>Kimmich, Marc F. (17%) <a href="https://drive.google.com/file/d/1rySfINIsIxVGv-C_oO_s5oTMgrDoLTdI/view?usp=sharing" target="_blank" rel="noopener" class="src-link">Quelle ↗</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+  <script defer src="../data/dossier.js"></script>
+</body>
+</html>

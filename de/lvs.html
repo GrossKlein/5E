@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Die LVS-Falle — SyncPilot</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* === LVS PAGE STYLES === */
+
+    /* ---- Hook ---- */
+    .lvs-hook {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: var(--sp-8) var(--sp-4) var(--sp-4);
+      text-align: left;
+    }
+    .hook-lines {
+      font-family: var(--font-body);
+      font-size: clamp(1.05rem, 2.8vw, 1.35rem);
+      font-weight: 600;
+      color: var(--slate);
+      line-height: 1.7;
+    }
+    .hook-lines .hook-em {
+      color: #CC0033;
+      font-style: normal;
+    }
+    .hook-kicker {
+      margin-top: var(--sp-6);
+      font-family: var(--font-ui);
+      font-size: 0.92rem;
+      color: rgba(38,42,51,0.55);
+      line-height: 1.55;
+      border-left: 3px solid #CC0033;
+      padding-left: var(--sp-4);
+    }
+
+    /* ---- Summary stat bar ---- */
+    .lvs-stats {
+      display: flex;
+      gap: var(--sp-6);
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: var(--sp-6) 0;
+      padding: var(--sp-4) var(--sp-6);
+      background: rgba(204,0,51,0.03);
+      border: 1px solid rgba(204,0,51,0.1);
+      border-radius: 6px;
+    }
+    .lvs-stat {
+      text-align: center;
+    }
+    .lvs-stat-value {
+      font-family: var(--font-body);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--slate);
+    }
+    .lvs-stat-value--red { color: #CC0033; }
+    .lvs-stat-value--green { color: #0A7D3F; }
+    .lvs-stat-label {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(38,42,51,0.45);
+      margin-top: 2px;
+    }
+
+    /* ---- Vertical event timeline ---- */
+    .event-timeline {
+      position: relative;
+      padding-left: 32px;
+      margin: var(--sp-6) 0;
+    }
+    .event-timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--wheat);
+    }
+    .evt {
+      position: relative;
+      padding-bottom: var(--sp-4);
+    }
+    .evt:last-child { padding-bottom: 0; }
+    .evt-dot {
+      position: absolute;
+      left: -28px;
+      top: 5px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--paper);
+    }
+    .evt-dot--email  { background: rgba(38,42,51,0.3); box-shadow: 0 0 0 1px rgba(38,42,51,0.3); }
+    .evt-dot--pay    { background: #0A7D3F; box-shadow: 0 0 0 1px #0A7D3F; }
+    .evt-dot--warn   { background: #CC0033; box-shadow: 0 0 0 1px #CC0033; }
+    .evt-dot--gap    { background: transparent; border: 2px dashed rgba(38,42,51,0.2); box-shadow: none; }
+    .evt-date {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: rgba(38,42,51,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .evt-body {
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      color: var(--slate);
+      line-height: 1.5;
+      margin-top: 2px;
+    }
+    .evt-body em {
+      color: #CC0033;
+      font-style: normal;
+      font-weight: 600;
+    }
+    .evt-gap {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-style: italic;
+      color: rgba(38,42,51,0.35);
+      padding: var(--sp-3) 0;
+    }
+
+    /* ---- Triptych (3-role diagram) ---- */
+    .triptych {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      grid-template-rows: auto auto auto;
+      gap: var(--sp-2);
+      margin: var(--sp-6) 0;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .tri-center {
+      grid-column: 2;
+      grid-row: 1 / 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tri-hub {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--slate);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .tri-hub-initials {
+      font-family: var(--font-ui);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--paper);
+    }
+    .tri-hub-name {
+      font-family: var(--font-ui);
+      font-size: 0.55rem;
+      color: rgba(255,241,229,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 2px;
+    }
+    .tri-panel {
+      padding: var(--sp-3) var(--sp-4);
+      border-radius: 6px;
+      font-family: var(--font-ui);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .tri-panel--left {
+      grid-column: 1;
+      grid-row: 1;
+      text-align: right;
+      background: rgba(13,118,128,0.06);
+      border: 1px solid rgba(13,118,128,0.15);
+    }
+    .tri-panel--top {
+      grid-column: 1 / 4;
+      grid-row: 1;
+      display: none; /* use left/right layout instead */
+    }
+    .tri-panel--right {
+      grid-column: 3;
+      grid-row: 1;
+      text-align: left;
+      background: rgba(204,0,51,0.05);
+      border: 1px solid rgba(204,0,51,0.15);
+    }
+    .tri-panel--bottom {
+      grid-column: 1 / 4;
+      grid-row: 3;
+      text-align: center;
+      background: rgba(255,136,51,0.06);
+      border: 1px solid rgba(255,136,51,0.15);
+    }
+    /* Connector lines */
+    .tri-connector {
+      grid-row: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tri-connector--left { grid-column: 1; }
+    .tri-connector--right { grid-column: 3; }
+    .tri-connector hr {
+      width: 100%;
+      border: none;
+      border-top: 2px dashed rgba(38,42,51,0.15);
+    }
+    .tri-role {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 2px;
+    }
+    .tri-role--teal { color: var(--oxford); }
+    .tri-role--red { color: #CC0033; }
+    .tri-role--mango { color: var(--mango); }
+    .tri-desc {
+      font-size: 0.8rem;
+      color: rgba(38,42,51,0.65);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 540px) {
+      .triptych {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+        gap: var(--sp-3);
+      }
+      .tri-center { grid-column: 1; grid-row: 1; }
+      .tri-panel--left { grid-column: 1; grid-row: 2; text-align: center; }
+      .tri-panel--right { grid-column: 1; grid-row: 3; text-align: center; }
+      .tri-panel--bottom { grid-column: 1; grid-row: 4; }
+      .tri-connector { display: none; }
+    }
+
+    /* ---- Closing stats ---- */
+    .closing-ledger {
+      margin: var(--sp-6) 0;
+      padding: var(--sp-6);
+      background: rgba(204,0,51,0.03);
+      border: 1px solid rgba(204,0,51,0.12);
+      border-radius: 6px;
+    }
+    .closing-ledger-line {
+      font-family: var(--font-ui);
+      font-size: 0.95rem;
+      color: rgba(38,42,51,0.6);
+      line-height: 1.6;
+      display: flex;
+      justify-content: space-between;
+      padding: var(--sp-1) 0;
+      border-bottom: 1px solid rgba(242,223,206,0.4);
+    }
+    .closing-ledger-line:last-child { border-bottom: none; }
+    .closing-ledger-line span:last-child {
+      font-weight: 700;
+      color: var(--slate);
+    }
+    .closing-ledger-line--red span:last-child { color: #CC0033; }
+
+    /* ---- CTA (shared pattern) ---- */
+    .cta-next {
+      display: block;
+      text-align: center;
+      padding: var(--sp-6) var(--sp-4);
+      margin: var(--sp-8) 0 var(--sp-4);
+      background: rgba(38,42,51,0.03);
+      border: 1px solid rgba(38,42,51,0.12);
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .cta-next:hover {
+      background: rgba(38,42,51,0.06);
+      border-color: rgba(38,42,51,0.25);
+    }
+    .cta-next-label {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(38,42,51,0.4);
+    }
+    .cta-next-title {
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--slate);
+      margin-top: var(--sp-1);
+    }
+
+    /* ---- Question block ---- */
+    .question-block {
+      border-left: 4px solid #CC0033;
+      background: rgba(204,0,51,0.04);
+      padding: var(--sp-4) var(--sp-6);
+      margin: var(--sp-6) 0;
+      font-size: 1.05rem;
+      line-height: 1.55;
+      font-style: italic;
+    }
+
+    [id] { scroll-margin-top: calc(var(--nav-height) + var(--sp-4)); }
+  </style>
+</head>
+
+<body data-page="lvs">
+<!-- ====== HOOK ====== -->
+  <div class="lvs-hook">
+    <div class="hook-lines">
+      Ein Anwalt entwirft einen Vertrag.<br>
+      Er verzögert die Beurkundung monatelang.<br>
+      Sein Mandant zahlt <span class="hook-em">€6,15&nbsp;Millionen</span> in vier Tranchen.<br>
+      Der Anwalt beurkundet die Änderungsvereinbarung nie.<br>
+      Dann behauptet er, sie sei nichtig — <span class="hook-em">weil er sie nicht beurkundet hat.</span>
+    </div>
+    <div class="hook-kicker">
+      Die Gesellschaft desselben Anwalts erwarb Aktien derselben Firma mit einem Rabatt von 95%.
+    </div>
+  </div>
+
+  <hr style="max-width:680px; margin:0 auto var(--sp-2);">
+
+  <!-- ====== CONTENT ====== -->
+  <article class="content-area">
+
+    <div style="margin-bottom: var(--sp-4);">
+      <a href="goldfinger.html" style="font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600; text-decoration: none;">← Kap. 3: Die Goldfinger-Verbindung</a>
+    </div>
+
+    <!-- ====================== -->
+    <!-- SECTION 2: THE DEAL    -->
+    <!-- ====================== -->
+    <h2 id="deal">Der Deal</h2>
+
+    <p>Am 21. Mai 2021 schloss LVS einen Kooperations- und Kaufoptionsvertrag mit der SyncPilot SE. Die Konditionen: €18.750.000, zu zahlen in Tranchen, im Austausch für 750.000 Aktien an der Holdingstruktur.</p>
+
+    <p>Martin Hunstein von GHR Goerg Hunstein Rechtsanwälte entwarf den Vertrag. Er fungierte als Rechtsberater der Transaktion. Hunstein — zusammen mit seinem Partner Diethard Goerg — besitzt die H.G. Perseus GmbH StBG, die Gesellschaft, die zweiundzwanzig Monate später SyncPilot-Aktien mit 95% Rabatt erwerben sollte.</p>
+
+    <p>Der Vertrag wurde ordnungsgemäß notariell beurkundet. Im August 2021 beantragte LVS eine Änderung des Kooperations- und Kaufoptionsvertrags, die den Darlehensbetrag auf €7.500.000 im Austausch für 375.000 Aktien an der Holdingstruktur reduzierte (Option 1 im ursprünglichen Vertrag). Die Änderungsvereinbarung erforderte nach deutschem Recht eine notarielle Beurkundung, um rechtswirksam zu sein. Hunstein war für die Durchführung verantwortlich.</p>
+
+    <!-- ========================= -->
+    <!-- SECTION 3: THE MONEY TRAIL -->
+    <!-- ========================= -->
+    <h2 id="money">Die Geldspur</h2>
+
+    <p>LVS zahlte vier Tranchen zwischen April und August 2021:</p>
+
+    <div style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th style="text-align:right;">Betrag</th>
+          <th>Zahlungsdatum</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td style="text-align:right;">€650,000</td>
+          <td>7 April 2021</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td style="text-align:right;">€1,500,000</td>
+          <td>29 April 2021</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td style="text-align:right;">€1,000,000</td>
+          <td>7 June 2021</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td style="text-align:right;">€3,000,000</td>
+          <td>31 August 2021</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="lvs-stats">
+      <div class="lvs-stat">
+        <div class="lvs-stat-value lvs-stat-value--green">€6,150,000</div>
+        <div class="lvs-stat-label">Gesamt gezahlt</div>
+      </div>
+      <div class="lvs-stat">
+        <div class="lvs-stat-value lvs-stat-value--red">0</div>
+        <div class="lvs-stat-label">Aktien geliefert</div>
+      </div>
+      <div class="lvs-stat">
+        <div class="lvs-stat-value lvs-stat-value--red">No</div>
+        <div class="lvs-stat-label">Vertrag beurkundet</div>
+      </div>
+    </div>
+
+    <p>Alle vier Zahlungen sind durch Quelldokumente belegt. Die verbleibenden Tranchen — €12,6&nbsp;Millionen — wurden nie gezahlt. Die Änderungsvereinbarung wurde nie beurkundet. Es wurden nie Aktien geliefert.</p>
+
+    <!-- ================================= -->
+    <!-- SECTION 4: THE NOTARIZATION TRAP  -->
+    <!-- ================================= -->
+    <h2 id="timeline">Die Beurkundungsfalle</h2>
+    <div class="chart-subtitle">€6,15 Mio. gezahlt · null Aktien geliefert · keine Beurkundung</div>
+
+    <p>Die von Hunstein entworfene Änderungsvereinbarung erforderte eine notarielle Beurkundung, um rechtswirksam zu sein. Stattdessen geschah Folgendes.</p>
+
+    <div class="event-timeline">
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--email"></div>
+        <div class="evt-date">16 February 2021</div>
+        <div class="evt-body">Hunstein sendet NDA an LVS, stellt SyncPilot vor. Beschreibt das Produkt, die <a href="https://partnerfinder.sap.com/partnerNavigator?q=SYNCPILOT" target="_blank" rel="noopener">SAP-Partnerschaft</a> und die Zielkunden.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--email"></div>
+        <div class="evt-date">25–27 March 2021</div>
+        <div class="evt-body">Hunstein sendet finalisiertes Term Sheet. Vermerkt, es „spiegelt die besprochenen Themen wider" und Gründer Bleicher habe „mit Alt-Gesellschaftern besprochen und akzeptiert."</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--pay"></div>
+        <div class="evt-date">7 April 2021</div>
+        <div class="evt-body">LVS zahlt Tranche 1: €650.000.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--pay"></div>
+        <div class="evt-date">29 April 2021</div>
+        <div class="evt-body">LVS zahlt Tranche 2: €1.500.000.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--warn"></div>
+        <div class="evt-date">21 May 2021</div>
+        <div class="evt-body"><em>Kooperations- und Kaufoptionsvertrag unterzeichnet und notariell beurkundet.</em></div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--pay"></div>
+        <div class="evt-date">7 June 2021</div>
+        <div class="evt-body">LVS zahlt Tranche 3: €1.000.000.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--pay"></div>
+        <div class="evt-date">31 August 2021</div>
+        <div class="evt-body">LVS zahlt Tranche 4: €3.000.000.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--email"></div>
+        <div class="evt-date">21 August 2021</div>
+        <div class="evt-body">Hunstein sendet eine Änderungsvereinbarung. Schlägt vor, <em>„zunächst eine einfache Unterschrift"</em> zu leisten, um „eine Kopie zu haben", bevor die formale Beurkundung erfolgt.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--email"></div>
+        <div class="evt-date">24 August 2021</div>
+        <div class="evt-body">Hunstein fragt nach einem Termin für die Beurkundung. LVS-Unterzeichner antwortet: auf Reisen, erledigt es später.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--email"></div>
+        <div class="evt-date">30 August 2021</div>
+        <div class="evt-body">Hunstein sendet aktualisierte Änderungsvereinbarung mit neuem Zahlungsziel: 31. März 2022.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--gap"></div>
+        <div class="evt-gap">Monate vergehen. Keine Beurkundung.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--email"></div>
+        <div class="evt-date">27 December 2021</div>
+        <div class="evt-body">LVS kontaktiert Bleicher direkt und bittet um Bestätigung der Stornierung des zweiten Teils der Änderungsvereinbarung.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--gap"></div>
+        <div class="evt-gap">Zwei Jahre vergehen.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--email"></div>
+        <div class="evt-date">22 April 2024</div>
+        <div class="evt-body">Goerg (Hunsteins Partner) kontaktiert LVS, bestätigt den Eingang von €6,15 Mio., versucht die Investition wieder aufzunehmen.</div>
+      </div>
+
+      <div class="evt">
+        <div class="evt-dot evt-dot--warn"></div>
+        <div class="evt-date">3 May 2025</div>
+        <div class="evt-body">LVS-Prinzipal sagt einem Anwalt: <em>„Die Verträge stammen von Hunstein, der sie mit notarieller Vollmacht unterzeichnen und beurkunden lassen sollte. Er hat ständig verzögert."</em></div>
+      </div>
+
+    </div>
+
+    <div class="question-block">
+      Der Anwalt Hunstein, der die Änderungsvereinbarung entwarf, war für die Beurkundung verantwortlich. Er hat sie nie abgeschlossen. Sein Mandant stellte die Zahlungen bei €6,15 Millionen auf Grundlage dieser Änderungsvereinbarung ein. Hunstein behauptet nun, die Änderungsvereinbarung sei nichtig.
+    </div>
+
+    <!-- =============================== -->
+    <!-- SECTION 5: Hunstein's THREE ROLES          -->
+    <!-- =============================== -->
+    <h2 id="roles">Ein Anwalt, drei Rollen</h2>
+
+    <p>Martin Hunstein bekleidete in dieser Transaktion gleichzeitig drei Rollen:</p>
+
+    <div class="triptych">
+      <!-- Left panel: Lawyer -->
+      <div class="tri-panel tri-panel--left">
+        <div class="tri-role tri-role--teal">Rolle 1: Rechtsberater</div>
+        <div class="tri-desc">Entwarf den LVS-Kooperations- und Kaufoptionsvertrag. Erstellte die Änderungsvereinbarung. Verantwortlich für die Beurkundung.</div>
+      </div>
+
+      <!-- Left connector -->
+      <div class="tri-connector tri-connector--left"><hr></div>
+
+      <!-- Center hub -->
+      <div class="tri-center">
+        <div class="tri-hub">
+          <span class="tri-hub-initials">MH</span>
+          <span class="tri-hub-name">Hunstein</span>
+        </div>
+      </div>
+
+      <!-- Right connector -->
+      <div class="tri-connector tri-connector--right"><hr></div>
+
+      <!-- Right panel: Perseus -->
+      <div class="tri-panel tri-panel--right">
+        <div class="tri-role tri-role--red">Rolle 2: Perseus-Prinzipal</div>
+        <div class="tri-desc">Geschäftsführer und 50%-Inhaber der H.G. Perseus GmbH StBG. Erwarb 127.885 SyncPilot-Aktien zu €1,00 — ein Rabatt von 95%.</div>
+      </div>
+
+      <!-- Bottom panel: Gatekeeper -->
+      <div class="tri-panel tri-panel--bottom">
+        <div class="tri-role tri-role--mango">Rolle 3: Beurkundungs-Gatekeeper</div>
+        <div class="tri-desc">Der von ihm entworfene Vertrag erforderte eine notarielle Beurkundung, um rechtswirksam zu sein. Er war der Fachmann, der für diesen Schritt verantwortlich war. Er hat ihn nie vollzogen.</div>
+      </div>
+    </div>
+
+    <p>Der Interessenkonflikt: Der Anwalt, der über einen von ihm entworfenen Vertrag €6,15 Millionen einzog, ist dieselbe Person, deren Gesellschaft Aktien zum Zwanzigstel des Marktpreises erwarb — bei demselben Unternehmen, zweiundzwanzig Monate später.</p>
+
+    <!-- =========================================== -->
+    <!-- SECTION 6: WHERE DID THE MONEY GO?          -->
+    <!-- =========================================== -->
+    <h2 id="money-trail" style="margin-top: var(--sp-12);">Die €6,15-Millionen-Frage: Wo ist das Geld geblieben?</h2>
+
+    <p>LVS überwies zwischen April und August 2021 insgesamt €6.150.000 an SyncPilot. Im Gegenzug erhielt LVS null Aktien, null Beteiligungen und null Rückzahlung.</p>
+
+    <p>Franz-Xaver Bleicher — alleiniger Geschäftsführer und größter wirtschaftlich Berechtigter von SyncPilot — kontrollierte die Verwendung aller eingehenden Gelder. Folgende Tatsachen sind dokumentiert:</p>
+
+    <div class="info-box" style="border-left-color: var(--claret); background: rgba(153,15,61,0.03); margin: var(--sp-6) 0; padding: var(--sp-4) var(--sp-6); border-radius: 0 6px 6px 0;">
+
+      <p style="margin-top:0;"><strong>1. Das Geld ging bei SyncPilot ein.</strong> Alle vier Tranchen sind durch Banküberweisungsbelege bestätigt. Gesamt: €6.150.000.</p>
+
+      <p><strong>2. Es wurden keine Aktien ausgegeben.</strong> Das Handelsregister zeigt kein Kapitalereignis, das der LVS-Investition entspricht. Null Aktien wurden LVS oder einer mit LVS verbundenen Gesellschaft zugeteilt.</p>
+
+      <p><strong>3. Der Vertrag wurde nie beurkundet.</strong> Die Änderungsvereinbarung, die die reduzierte Investition regelte, bleibt rechtlich nichtig, weil der für die Beurkundung verantwortliche Anwalt — Hunstein — sie nie abschloss.</p>
+
+      <p style="margin-bottom:0;"><strong>4. Bleicher erwarb in diesem Zeitraum Privatvermögen.</strong> Hinweise deuten darauf hin, dass Bleicher Wohnimmobilien erwarb und den Anteil eines Mitinhabers an der BOSYNC-Holdingstruktur kaufte — in denselben Monaten, in denen LVS-Gelder in SyncPilot flossen. Die Herkunft des Kapitals für diese privaten Anschaffungen — und ob es Investorengelder umfasste, die für Unternehmenszwecke bestimmt waren — ist die zentrale Frage, die eine forensische Prüfung beantworten muss.</p>
+
+    </div>
+
+    <p>Nach deutschem Recht begeht ein Geschäftsführer, der Gesellschaftsmittel für persönliche Zwecke abzweigt, eine <em>Untreue</em> (Verletzung der Treuepflicht, §266 StGB) — strafbar mit bis zu fünf Jahren Freiheitsstrafe. Wurden die Gelder unter Vorspiegelung falscher Tatsachen eingeworben, liegt zusätzlich <em>Betrug</em> (§263 StGB) vor.</p>
+
+    <div class="closing-ledger">
+      <div class="closing-ledger-line">
+        <span>LVS-Gelder überwiesen</span>
+        <span>€6,150,000</span>
+      </div>
+      <div class="closing-ledger-line closing-ledger-line--red">
+        <span>An LVS gelieferte Aktien</span>
+        <span>0</span>
+      </div>
+      <div class="closing-ledger-line closing-ledger-line--red">
+        <span>Vertrag beurkundet</span>
+        <span>No</span>
+      </div>
+      <div class="closing-ledger-line closing-ledger-line--red">
+        <span>Bleicher-Immobilienerwerb im Zeitraum</span>
+        <span>Wird untersucht</span>
+      </div>
+      <div class="closing-ledger-line closing-ledger-line--red">
+        <span>Bleicher-Partnerübernahme im Zeitraum</span>
+        <span>Wird untersucht</span>
+      </div>
+      <div class="closing-ledger-line">
+        <span>Heutige implizierte Bewertung von SyncPilot</span>
+        <span>€128 million</span>
+      </div>
+    </div>
+
+    <div class="question-block">
+      Ein Investor zahlte €6,15&nbsp;Millionen. Der Vertrag wurde nie beurkundet. Es wurden keine Aktien geliefert. Der Geschäftsführer erwarb im selben Zeitraum Privatvermögen. Der Anwalt, der den Vertrag nicht beurkunden ließ, kaufte Aktien desselben Unternehmens mit 95% Rabatt. Dies sind dokumentierte Tatsachen. Eine forensische Prüfung der SyncPilot-Konten von April bis August 2021 wird klären, ob Investorengelder zweckentfremdet wurden.
+    </div>
+
+    <!-- ---- CTA ---- -->
+    <a href="evidence.html" class="cta-next">
+      <div class="cta-next-label">Quelldaten</div>
+      <div class="cta-next-title">Der Beweisraum →</div>
+    </a>
+</article>
+
+  <script defer src="../data/dossier.js"></script>
+</body>
+</html>
