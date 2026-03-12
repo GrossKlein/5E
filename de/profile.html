@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Das Unternehmen — SyncPilot SE</title>
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    /* === PROFILE PAGE STYLES === */
+
+    /* ---- Company metadata card ---- */
+    .company-card {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: var(--sp-6);
+      background: var(--card-bg);
+      border-radius: 6px;
+      padding: var(--sp-6);
+      margin: var(--sp-6) 0;
+      border: 1px solid rgba(242,223,206,0.6);
+    }
+    .company-card-logo {
+      width: 140px;
+      filter: grayscale(30%) opacity(0.8);
+      align-self: start;
+      padding-top: var(--sp-2);
+    }
+    .company-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-1) var(--sp-8);
+    }
+    .meta-row {
+      display: flex;
+      flex-direction: column;
+      padding: var(--sp-2) 0;
+      border-bottom: 1px solid rgba(242,223,206,0.5);
+    }
+    .meta-label {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(38,42,51,0.45);
+    }
+    .meta-value {
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--slate);
+      margin-top: 1px;
+    }
+    .meta-value a {
+      color: var(--oxford);
+      text-decoration: none;
+    }
+    .meta-value a:hover { text-decoration: underline; }
+
+    @media (max-width: 640px) {
+      .company-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .company-card-logo {
+        justify-self: center;
+        width: 120px;
+      }
+      .company-meta-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---- UBO table ---- */
+    .ubo-table tbody tr.ubo-top3 {
+      background: rgba(153,15,61,0.04);
+    }
+    .ubo-table tbody tr.ubo-top3 td:first-child {
+      font-weight: 700;
+      color: var(--claret);
+    }
+    .ubo-rank {
+      font-family: var(--font-ui);
+      font-weight: 700;
+      color: rgba(38,42,51,0.35);
+      font-size: 0.78rem;
+    }
+    .ubo-pct {
+      font-family: var(--font-ui);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .ubo-via {
+      font-size: 0.8rem;
+      color: rgba(38,42,51,0.55);
+    }
+    .ubo-summary {
+      background: rgba(153,15,61,0.06);
+      padding: var(--sp-3) var(--sp-4);
+      border-radius: 4px;
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      display: flex;
+      gap: var(--sp-8);
+      flex-wrap: wrap;
+      margin-top: var(--sp-4);
+    }
+    .ubo-stat-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(38,42,51,0.45);
+    }
+    .ubo-stat-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--claret);
+    }
+
+    /* Jurisdiction inline flags */
+    .jur-flags {
+      display: inline-flex;
+      gap: 6px;
+      font-size: 1rem;
+      vertical-align: middle;
+      margin-left: 4px;
+    }
+
+    /* ---- D3 Capital chart ---- */
+    #capital-chart svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+    #capital-chart .grid-line {
+      stroke: rgba(242,223,206,0.5);
+      stroke-width: 1;
+    }
+    #capital-chart .axis-label {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 11px;
+      fill: rgba(38,42,51,0.45);
+    }
+    #capital-chart .event-line {
+      fill: none;
+      stroke: #0D7680;
+      stroke-width: 2;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+    #capital-chart .event-dot {
+      stroke: #fff;
+      stroke-width: 2;
+      cursor: pointer;
+      transition: r 0.12s ease;
+    }
+    #capital-chart .event-dot:hover { r: 7; }
+    #capital-chart .event-dot--anomaly {
+      stroke-width: 3;
+      cursor: pointer;
+    }
+    #capital-chart .event-dot--anomaly:hover { r: 10; }
+    #capital-chart .annotation-text {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    #capital-chart .annotation-connector {
+      stroke-width: 1.5;
+      stroke-dasharray: 4,3;
+      fill: none;
+    }
+    #capital-chart .zone-label {
+      font-family: 'Source Serif 4', serif;
+      font-size: 10px;
+      font-style: italic;
+      fill: rgba(38,42,51,0.35);
+    }
+    #capital-chart .val-label {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 10px;
+      fill: rgba(38,42,51,0.5);
+    }
+    .d3-tooltip {
+      position: absolute;
+      pointer-events: none;
+      background: #262A33;
+      color: #FFF1E5;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.75rem;
+      padding: 8px 12px;
+      border-radius: 4px;
+      line-height: 1.5;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 20;
+      max-width: 260px;
+      white-space: nowrap;
+    }
+    .d3-tooltip.is-visible { opacity: 1; }
+    .d3-tooltip .tt-date { font-weight: 700; }
+    .d3-tooltip .tt-price { color: #fff; font-weight: 700; }
+    .d3-tooltip .tt-buyer { opacity: 0.7; }
+    .d3-tooltip .tt-val { opacity: 0.55; font-size: 0.68rem; }
+    @keyframes pulse-anomaly {
+      0%, 100% { r: 8; opacity: 1; }
+      50% { r: 13; opacity: 0.6; }
+    }
+    #capital-chart .pulse { animation: pulse-anomaly 0.6s ease 1; }
+
+    /* Fallback timeline (hidden when D3 loads) */
+    #capital-fallback { display: none; }
+
+    /* ---- Revenue bars ---- */
+    .rev-bar-list {
+      list-style: none;
+      margin: var(--sp-4) 0;
+    }
+    .rev-bar-item {
+      display: grid;
+      grid-template-columns: 140px 1fr 80px;
+      gap: var(--sp-3);
+      align-items: center;
+      padding: var(--sp-2) 0;
+      border-bottom: 1px solid rgba(242,223,206,0.5);
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+    }
+    .rev-bar-label {
+      font-weight: 600;
+      color: var(--slate);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .rev-bar-track {
+      height: 22px;
+      background: rgba(242,223,206,0.5);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .rev-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.7s ease;
+    }
+    .rev-bar-fill--public { background: var(--oxford); }
+    .rev-bar-fill--quasi  { background: rgba(13,118,128,0.55); }
+    .rev-bar-fill--other  { background: rgba(13,118,128,0.25); }
+    .rev-bar-amount {
+      font-variant-numeric: tabular-nums;
+      font-size: 0.78rem;
+      color: rgba(38,42,51,0.6);
+      text-align: right;
+      white-space: nowrap;
+    }
+    .rev-pct {
+      color: rgba(38,42,51,0.35);
+    }
+    .rev-concentration {
+      background: rgba(204,230,255,0.35);
+      padding: var(--sp-3) var(--sp-4);
+      border-radius: 4px;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      color: rgba(38,42,51,0.65);
+      margin-top: var(--sp-4);
+      line-height: 1.5;
+    }
+    .rev-concentration strong { color: var(--slate); }
+
+    /* ---- Source panel ---- */
+    .source-panel {
+      background: rgba(204,230,255,0.2);
+      border-radius: 4px;
+      padding: var(--sp-4) var(--sp-6);
+      margin: var(--sp-8) 0 0;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      color: rgba(38,42,51,0.55);
+      line-height: 1.5;
+    }
+    .source-panel a { font-weight: 600; }
+
+    /* ---- Section scroll offset ---- */
+    [id] { scroll-margin-top: calc(var(--nav-height) + var(--sp-4)); }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 768px) {
+      .rev-bar-item {
+        grid-template-columns: 100px 1fr 65px;
+      }
+      .rev-bar-label { font-size: 0.78rem; }
+    }
+  </style>
+</head>
+
+<body data-page="profile">
+<!-- ====== CONTENT ====== -->
+  <article class="content-area">
+
+    <div style="margin-bottom: var(--sp-4);">
+      <a href="index.html" style="font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600; text-decoration: none;">← Dossier Startseite</a>
+    </div>
+
+    <h1 id="top">Das Unternehmen</h1>
+
+    <!-- ---- BLUF ---- -->
+    <div class="bluf">
+      <div class="bluf-label">Zusammenfassung</div>
+      SyncPilot&nbsp;SE verkauft Beratungssoftware an deutsche Behörden. 84% seines Umsatzes von €44&nbsp;Millionen stammen von steuerfinanzierten Einrichtungen — <a href="https://www.arbeitsagentur.de" target="_blank" rel="noopener">Bundesagentur für Arbeit</a>, <a href="https://www.aok.de" target="_blank" rel="noopener">AOK (Allgemeine Ortskrankenkasse)</a>, <a href="https://www.berlin.de/rbmskzl/" target="_blank" rel="noopener">Senatskanzlei Berlin</a>. Das Unternehmen hat eine Papierbewertung von €128&nbsp;Millionen. Es leitet 100% seines Eigenkapitals über 26&nbsp;Holdinggesellschaften in sechs Jurisdiktionen. Ein Mann kontrolliert alles: Gründer und Geschäftsführer Franz-Xaver Bleicher.
+    </div>
+
+    <!-- ======================= -->
+    <!-- SECTION 1: IDENTITY     -->
+    <!-- ======================= -->
+    <h2 id="identity">Unternehmensidentität</h2>
+
+    <div class="company-card">
+      <img src="../assets/SYNCPILOT_logo_1.png" alt="SyncPilot logo" class="company-card-logo">
+      <div class="company-meta-grid">
+        <div class="meta-row">
+          <span class="meta-label">Rechtsform</span>
+          <span class="meta-value">SyncPilot SE</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Gesellschaftsform</span>
+          <span class="meta-value">Societas Europaea (SE)</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Sitz</span>
+          <span class="meta-value">Augsburg, Germany</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Gründung</span>
+          <span class="meta-value">23 September 2020</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Grundkapital</span>
+          <span class="meta-value">€5,576,031</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Ausstehende Aktien</span>
+          <span class="meta-value">5,576,031 × €1 nominal</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Geschäftsführer</span>
+          <span class="meta-value">Franz-Xaver Bleicher</span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">SAP-Partnerschaft</span>
+          <span class="meta-value">Silver <span class="badge badge-sh" style="font-size:0.58rem; vertical-align:middle; margin-left:4px;">vormals Gold</span></span>
+        </div>
+        <div class="meta-row">
+          <span class="meta-label">Webseite</span>
+          <span class="meta-value"><a href="https://syncpilot.com" target="_blank" rel="noopener">syncpilot.com</a></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================= -->
+    <!-- SECTION 2: THE BUSINESS -->
+    <!-- ======================= -->
+    <h2 id="business">Das Geschäft</h2>
+
+    <p>SyncPilot entwickelt Software für geführte Online-Verkaufsberatungen. Das Kernprodukt ermöglicht Co-Browsing, Videokonferenzen und Bildschirmfreigabe zwischen Vertriebsmitarbeitern und Kunden. Die Software richtet sich an regulierte Branchen — Versicherung, öffentliche Verwaltung, Gesundheitswesen — in denen die Compliance verlangt, dass der Kunde exakt dasselbe sieht wie der Berater, in Echtzeit.</p>
+
+    <p>Die Kundenbasis ist überwiegend deutsch-öffentlich und halböffentlich. Die fünf größten Kunden — <a href="https://www.arbeitsagentur.de" target="_blank" rel="noopener">Bundesagentur für Arbeit</a>, <a href="https://www.ekom21.de" target="_blank" rel="noopener">ekom21</a>, <a href="https://www.berlin.de/rbmskzl/" target="_blank" rel="noopener">Senatskanzlei Berlin</a>, <a href="https://www.itsg.de" target="_blank" rel="noopener">ITSG</a>, and <a href="https://www.akdb.de" target="_blank" rel="noopener">AKDB Bayern</a> — machen 41% des Umsatzes aus. Krankenversicherungen (angeführt von der <a href="https://www.aok.de" target="_blank" rel="noopener">AOK (Allgemeine Ortskrankenkasse)</a> mit elf Regionalbüros) und Sozialversicherungsträger steuern weitere 42% bei. Unternehmensnamen stehen auf der Liste — <a href="https://www.volkswagen.de" target="_blank" rel="noopener">Volkswagen</a>, <a href="https://www.vodafone.de" target="_blank" rel="noopener">Vodafone</a>, <a href="https://www.axa.de" target="_blank" rel="noopener">AXA</a>, <a href="https://www.eon.de" target="_blank" rel="noopener">E.ON</a> — zusammen machen sie jedoch weniger als 15% des prognostizierten Kundenumsatzes von €44,2 Mio. für 2024/25 aus.</p>
+
+    <p>SyncPilot hat eine <a href="https://partnerfinder.sap.com/partnerNavigator?q=SYNCPILOT" target="_blank" rel="noopener">Silver-Partnerschaft mit SAP</a>, herabgestuft von Gold. Die Partnerschaft verleiht Beschaffungsglaubwürdigkeit — bedeutet aber auch, dass deutsche Behörden SyncPilot in SAP-Ökosystem-Verträge im sechsstelligen Bereich integrieren.</p>
+
+    <!-- ======================= -->
+    <!-- SECTION 3: OWNERSHIP    -->
+    <!-- ======================= -->
+    <h2 id="ownership">Wer kontrolliert dieses Unternehmen?</h2>
+
+    <p>Franz-Xaver Bleicher hält 16,48% — den größten effektiven Anteil — vollständig über seine Holdinggesellschaft BOSYNC Beteiligungs UG, in der er als Geschäftsführer fungiert und 70% direkt hält. Die nächsten zwei größten Begünstigten, Dr.&nbsp;Ingo Krocke (8,65%) und Harald Steiner (8,58%), leiten ihre Beteiligungen über Attegia Holding Ltd. in Malta bzw. AURIGA Capital AG in der Schweiz. Zusammen kontrollieren diese drei Personen über ein Drittel der SyncPilot SE, ohne dass ihre Namen direkt im Aktienregister erscheinen.</p>
+
+    <p>Insgesamt halten 31 wirtschaftlich Berechtigte Anteile über 26 Gesellschaften in sechs Jurisdiktionen:
+      <span class="jur-flags" title="Germany, Malta, Luxembourg, Switzerland, Liechtenstein">🇩🇪 🇲🇹 🇱🇺 🇨🇭 🇱🇮</span>
+      — Deutschland (18), Malta (4), Luxemburg (2), Schweiz (1) und Liechtenstein (1). Kein Anteil wurde jemals über eine öffentliche Börse oder unabhängige Drittbewertung gehandelt.
+    </p>
+
+    <h4>Eine Person kontrolliert 16,5% — danach fällt die Konzentration steil</h4>
+
+    <div style="overflow-x: auto;">
+    <table class="ubo-table">
+      <thead>
+        <tr>
+          <th style="width:36px;">#</th>
+          <th>Name</th>
+          <th style="text-align:right;">% an SE</th>
+          <th>Über (Holdinggesellschaft)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="ubo-top3">
+          <td class="ubo-rank">1</td>
+          <td><strong>Bleicher, Franz-Xaver</strong></td>
+          <td style="text-align:right;" class="ubo-pct">16.48%</td>
+          <td class="ubo-via">BOSYNC Beteiligungs UG</td>
+        </tr>
+        <tr class="ubo-top3">
+          <td class="ubo-rank">2</td>
+          <td><strong>Krocke, Dr. Ingo</strong></td>
+          <td style="text-align:right;" class="ubo-pct">8.65%</td>
+          <td class="ubo-via">Attegia Holding Ltd. <span class="jur-flags">🇲🇹</span></td>
+        </tr>
+        <tr class="ubo-top3">
+          <td class="ubo-rank">3</td>
+          <td><strong>Steiner, Harald</strong></td>
+          <td style="text-align:right;" class="ubo-pct">8.58%</td>
+          <td class="ubo-via">AURIGA Capital AG + BOSYNC <span class="jur-flags">🇨🇭</span></td>
+        </tr>
+        <tr>
+          <td class="ubo-rank">4</td>
+          <td>Jakisch, Bernd</td>
+          <td style="text-align:right;" class="ubo-pct">4.70%</td>
+          <td class="ubo-via">Augusta Software GmbH</td>
+        </tr>
+        <tr>
+          <td class="ubo-rank">5</td>
+          <td>Funk, Dirk</td>
+          <td style="text-align:right;" class="ubo-pct">4.70%</td>
+          <td class="ubo-via">Augusta Software GmbH</td>
+        </tr>
+        <tr>
+          <td class="ubo-rank">6</td>
+          <td>Schaeff, Alexander</td>
+          <td style="text-align:right;" class="ubo-pct">4.67%</td>
+          <td class="ubo-via">5 entities, 3 jurisdictions <span class="jur-flags">🇩🇪 🇱🇮</span></td>
+        </tr>
+        <tr>
+          <td class="ubo-rank">7</td>
+          <td>Purkert, Gert</td>
+          <td style="text-align:right;" class="ubo-pct">4.38%</td>
+          <td class="ubo-via">Tiven S.A. (Sàrl) <span class="jur-flags">🇱🇺</span></td>
+        </tr>
+        <tr>
+          <td class="ubo-rank">8</td>
+          <td>Steiner, Christiane</td>
+          <td style="text-align:right;" class="ubo-pct">4.29%</td>
+          <td class="ubo-via">AURIGA Capital AG + BOSYNC <span class="jur-flags">🇨🇭</span></td>
+        </tr>
+        <tr>
+          <td class="ubo-rank">9</td>
+          <td>Kurth, Cornelius V.</td>
+          <td style="text-align:right;" class="ubo-pct">4.00%</td>
+          <td class="ubo-via">Lapis Ltd. <span class="jur-flags">🇲🇹</span></td>
+        </tr>
+        <tr>
+          <td class="ubo-rank">10</td>
+          <td>Kurth, Lauritz C.P.</td>
+          <td style="text-align:right;" class="ubo-pct">4.00%</td>
+          <td class="ubo-via">Lapis Ltd. <span class="jur-flags">🇲🇹</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="ubo-summary">
+      <div>
+        <div class="ubo-stat-label">Top 3 zusammen</div>
+        <div class="ubo-stat-value">33.71%</div>
+      </div>
+      <div>
+        <div class="ubo-stat-label">Gesamt-UBOs</div>
+        <div class="ubo-stat-value">31</div>
+      </div>
+      <div>
+        <div class="ubo-stat-label">Holdinggesellschaften</div>
+        <div class="ubo-stat-value">26</div>
+      </div>
+      <div>
+        <div class="ubo-stat-label">Jurisdiktionen</div>
+        <div class="ubo-stat-value">6</div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SECTION 3b: BLEICHER PROFILE   -->
+    <!-- ============================== -->
+    <h2 id="bleicher">Der Mann im Zentrum: Franz-Xaver Bleicher</h2>
+
+    <div class="company-card" style="grid-template-columns: 120px 1fr; border-left: 3px solid var(--claret);">
+      <img src="../assets/Bleicher, FXB b.jpg" alt="Franz-Xaver Bleicher" style="width:120px; border-radius:4px; align-self:start; filter:grayscale(50%);">
+      <div>
+        <div class="company-meta-grid" style="grid-template-columns: 1fr 1fr;">
+          <div class="meta-row"><span class="meta-label">Vollständiger Name</span><span class="meta-value">Franz-Xaver Bleicher</span></div>
+          <div class="meta-row"><span class="meta-label">Geboren</span><span class="meta-value">9 September 1972, Augsburg</span></div>
+          <div class="meta-row"><span class="meta-label">Funktion</span><span class="meta-value">Geschäftsführer &amp; Gründer</span></div>
+          <div class="meta-row"><span class="meta-label">Effektiver Anteil</span><span class="meta-value">16.48% (größter UBO)</span></div>
+          <div class="meta-row"><span class="meta-label">Über</span><span class="meta-value">BOSYNC Beteiligungs UG (70% Inhaber, GF)</span></div>
+          <div class="meta-row"><span class="meta-label">Früherer Anteil</span><span class="meta-value">50.9% bei Gründung (Sep 2020)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <p>Bleicher gründete SyncPilot und ist seit der Gründung alleiniger Geschäftsführer. Bei der Gründung im September 2020 hielt er 50,9% des Unternehmens. Bis August 2025 sank sein effektiver Anteil auf 23,5% — dennoch bleibt er der größte einzelne wirtschaftlich Berechtigte und die einzige Person mit operativer Kontrolle über das Unternehmen.</p>
+
+    <p>Im Zeitraum von April bis August 2021 — während €6,15&nbsp;Millionen an Investorengeldern in SyncPilot flossen — erwarb Bleicher Wohnimmobilien und kaufte den Anteil eines Mitinhabers an der Holdingstruktur. Die Herkunft der Mittel für diese privaten Anschaffungen im selben Zeitraum, in dem Investorenkapital ins Unternehmen floss, ist eine zentrale Frage dieses Dossiers. Harte Dokumentation wird noch untersucht; die zeitliche Überschneidung ist belegt.</p>
+
+    <p>Jeder Aktienpreis in der Geschichte von SyncPilot wurde vom Vorstand festgesetzt, den Bleicher kontrolliert. Nie wurde eine unabhängige Bewertung beauftragt. Keine Aktie wurde jemals an einer öffentlichen Börse gehandelt. Die Papierbewertung von €128&nbsp;Millionen existiert nur, weil Bleichers Vorstand es so bestimmt.</p>
+
+    <!-- ======================= -->
+    <!-- SECTION 4: CAPITAL      -->
+    <!-- ======================= -->
+    <h2 id="capital">Vom Vorstand festgesetzte Aktienpreise schwankten in 150 Tagen von €18,96 auf €1,00 und zurück</h2>
+
+    <p>SyncPilot SE hat zwischen September 2020 und August 2025 zehn Kapitalereignisse durchgeführt. Der Aktienpreis pro Ereignis — vom Vorstand festgesetzt, nie durch eine unabhängige Bewertung — lag zwischen €1,00 und €23,64. Ein Ereignis sticht hervor: Am 14. März 2023 erwarb H.G. Perseus 127.885 Aktien zu je €1,00, was einer Unternehmensbewertung von €5,4 Mio. entspricht — ein Rabatt von 95% gegenüber der €100-Mio.-Bewertung nur drei Monate zuvor.</p>
+
+    <div class="chart-container">
+      <div class="chart-title">Board-set share prices swung from €18.96 to €1.00 and back in 150 days</div>
+      <div id="capital-chart"></div>
+      <div class="chart-source">Quelle: Handelsregister-Einträge, SyncPilot SE Jahresberichte</div>
+    </div>
+
+    <!-- Fallback: old evenly-spaced timeline (shown only if D3 fails to load) -->
+    <div id="capital-fallback" style="display:none">
+      <noscript>
+        <p style="font-family:var(--font-ui);color:rgba(38,42,51,0.5);font-size:0.85rem;">
+          Enable JavaScript to view the interactive capital-event chart.
+        </p>
+      </noscript>
+    </div>
+
+    <div class="info-box">
+      <div class="info-box-label">Hinweis zum €1,00-Ereignis</div>
+      Die Transaktion vom März 2023 wird in <a href="perseus.html"><strong>Die Perseus-Affäre</strong></a> analysiert. Eine Anwaltsnotiz vom November 2025 (RA Tomanke) behauptet, es seien tatsächlich €13/Aktie gezahlt worden (insgesamt €1,66 Mio.); die Unternehmensunterlagen verzeichnen €1,00 (insgesamt €127.885). Beide Zahlen sind im <a href="evidence.html">Beweisraum</a>.
+    </div>
+
+    <!-- ======================= -->
+    <!-- SECTION 5: REVENUE      -->
+    <!-- ======================= -->
+    <h2 id="revenue">Umsatzübersicht</h2>
+
+    <p>Der prognostizierte jährliche Umsatz von SyncPilot stieg von €6,9 Mio. im Januar 2024 auf €25,5 Mio. bis Dezember 2025 — ein Anstieg von 268% auf dem Papier. Die Kundenliste umfasst 55 Organisationen, doch die Umsatzkonzentration ist extrem: Die fünf größten Kunden machen 41% aus, der öffentliche Sektor allein generiert 42% des Gesamtumsatzes.</p>
+
+    <div class="chart-container">
+      <div class="chart-title">84% des Umsatzes entfällt auf drei Kategorien des öffentlichen Sektors</div>
+      <div class="chart-subtitle">Gesamt: €44,2 Mio. über 55 Kunden</div>
+
+      <ul class="rev-bar-list" id="revBars">
+        <!-- Injected by JS -->
+      </ul>
+
+      <div class="rev-concentration">
+        <strong>84,3%</strong> des Umsatzes stammen aus drei Sektoren — öffentliche Verwaltung, Sozialversicherung und Krankenversicherung — alle von deutschen Steuerzahlern finanziert.
+      </div>
+
+      <div class="chart-source">Quelle: SyncPilot SE interne Umsatzprognose, März 2024</div>
+    </div>
+
+    <!-- ======================= -->
+    <!-- SECTION 6: SOURCE NOTE  -->
+    <!-- ======================= -->
+    <div class="source-panel">
+      Alle Daten stammen aus Handelsregister-Einträgen, Hauptversammlungsprotokollen und Unternehmenskorrespondenz. Vollständige Quellenlinks im <a href="evidence.html">Beweisraum</a>.
+    </div>
+</article>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+
+  <!-- ====== INTERACTIVE JS ====== -->
+  <script>
+  (function() {
+    'use strict';
+
+    /* ===============================
+       D3 CAPITAL EVENT CHART
+       =============================== */
+    var capitalEvents = [
+      { date:'2020-12-07', price:4.70,   buyer:'BOSYNC Beteiligungs UG',
+        label:'Capital increase (contribution in kind)', shares:2486138,
+        valuation:23500000, anomaly:false },
+      { date:'2021-12-03', price:13.00,  buyer:'Saupe / Kimmich',
+        label:'Auth. capital II — first utilization', shares:115385,
+        valuation:66500005, anomaly:false },
+      { date:'2022-12-09', price:18.96,  buyer:'H.G. Perseus GmbH StbG',
+        label:'Auth. capital II — Perseus entry at market', shares:158208,
+        valuation:100000001, anomaly:false },
+      { date:'2023-03-14', price:1.00,   buyer:'H.G. Perseus GmbH StbG',
+        label:'Auth. capital II — Perseus at €1.00', shares:127885,
+        valuation:5401478, anomaly:true },
+      { date:'2023-05-11', price:20.56,  buyer:'Tiven GmbH',
+        label:'Auth. capital II — post-Perseus (Tiven)', shares:48632,
+        valuation:112068432, anomaly:false },
+      { date:'2023-06-15', price:20.56,  buyer:'H.G. Perseus + bgh',
+        label:'Auth. capital II — post-Perseus (Perseus+bgh)', shares:48632,
+        valuation:113068432, anomaly:false },
+      { date:'2024-05-17', price:23.64,  buyer:'5th. Dimension Investment GmbH',
+        label:'Capital increase 2024', shares:55550,
+        valuation:131313301, anomaly:false },
+      { date:'2025-08-05', price:23.00,  buyer:'ATLASI GROUP GmbH',
+        label:'Capital increase 2025 (pending)', shares:14493,
+        valuation:128248713, anomaly:false }
+    ];
+
+    function buildCapitalChart() {
+      if (typeof d3 === 'undefined') {
+        var fb = document.getElementById('capital-fallback');
+        if (fb) fb.style.display = 'block';
+        return;
+      }
+
+      var container = document.getElementById('capital-chart');
+      if (!container) return;
+
+      /* --- Tooltip div --- */
+      var tooltip = document.querySelector('.d3-tooltip');
+      if (!tooltip) {
+        tooltip = document.createElement('div');
+        tooltip.className = 'd3-tooltip';
+        document.body.appendChild(tooltip);
+      }
+
+      /* --- Parse dates --- */
+      var parseDate = d3.timeParse('%Y-%m-%d');
+      var data = capitalEvents.map(function(d) {
+        return Object.assign({}, d, { dateObj: parseDate(d.date) });
+      });
+
+      /* --- Dimensions --- */
+      var rect = container.getBoundingClientRect();
+      var fullW = Math.max(rect.width, 320);
+      var margin = { top: 40, right: 30, bottom: 50, left: 55 };
+      var w = fullW - margin.left - margin.right;
+      var h = Math.min(Math.max(fullW * 0.48, 220), 360) - margin.top - margin.bottom;
+
+      /* --- Clear previous --- */
+      container.innerHTML = '';
+
+      /* --- Scales --- */
+      var x = d3.scaleTime()
+        .domain([new Date(2020, 11, 1), new Date(2025, 8, 1)])
+        .range([0, w]);
+
+      var y = d3.scaleLinear()
+        .domain([0, 28])
+        .range([h, 0]);
+
+      /* --- SVG --- */
+      var svg = d3.select(container)
+        .append('svg')
+          .attr('viewBox', '0 0 ' + fullW + ' ' + (h + margin.top + margin.bottom))
+          .attr('preserveAspectRatio', 'xMidYMid meet')
+          .attr('role', 'img')
+          .attr('aria-label', 'Line chart: SyncPilot share price at each capital event, Dec 2020 – Aug 2025');
+
+      var g = svg.append('g')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+      /* --- Y gridlines --- */
+      var yTicks = [0, 5, 10, 15, 20, 25];
+      g.selectAll('.grid-line')
+        .data(yTicks)
+        .enter().append('line')
+          .attr('class', 'grid-line')
+          .attr('x1', 0).attr('x2', w)
+          .attr('y1', function(d) { return y(d); })
+          .attr('y2', function(d) { return y(d); });
+
+      /* --- Y labels --- */
+      g.selectAll('.y-label')
+        .data(yTicks)
+        .enter().append('text')
+          .attr('class', 'axis-label')
+          .attr('x', -10)
+          .attr('y', function(d) { return y(d); })
+          .attr('dy', '0.35em')
+          .attr('text-anchor', 'end')
+          .text(function(d) { return '€' + d; });
+
+      /* --- X labels at each event --- */
+      var fmtDate = d3.timeFormat("%b '%y");
+      g.selectAll('.x-label')
+        .data(data)
+        .enter().append('text')
+          .attr('class', 'axis-label')
+          .attr('x', function(d) { return x(d.dateObj); })
+          .attr('y', h + 18)
+          .attr('text-anchor', 'middle')
+          .text(function(d) { return fmtDate(d.dateObj); });
+
+      /* ================================
+         ANNOTATION: "Nothing happened" zone
+         ================================ */
+      var zoneX1 = x(parseDate('2022-12-09'));
+      var zoneX2 = x(parseDate('2023-03-14'));
+      g.append('rect')
+        .attr('x', zoneX1).attr('y', 0)
+        .attr('width', zoneX2 - zoneX1).attr('height', h)
+        .attr('fill', 'rgba(38,42,51,0.04)')
+        .attr('rx', 3);
+
+      g.append('text')
+        .attr('class', 'zone-label')
+        .attr('x', (zoneX1 + zoneX2) / 2)
+        .attr('y', y(26.5))
+        .attr('text-anchor', 'middle')
+        .text('no event justifies this drop');
+
+      /* ================================
+         LINE
+         ================================ */
+      var lineGen = d3.line()
+        .x(function(d) { return x(d.dateObj); })
+        .y(function(d) { return y(d.price); })
+        .curve(d3.curveMonotoneX);
+
+      var path = g.append('path')
+        .datum(data)
+        .attr('class', 'event-line')
+        .attr('d', lineGen);
+
+      /* Stroke-dasharray draw animation */
+      var totalLength = path.node().getTotalLength();
+      path
+        .attr('stroke-dasharray', totalLength)
+        .attr('stroke-dashoffset', totalLength)
+        .transition()
+          .duration(1400)
+          .ease(d3.easeCubicOut)
+          .attr('stroke-dashoffset', 0);
+
+      /* ================================
+         ANNOTATIONS: percentage connectors
+         ================================ */
+      var ptDec22 = data[2];  // €18.96
+      var ptMar23 = data[3];  // €1.00
+      var ptMay23 = data[4];  // €20.56
+
+      /* −94.7% connector */
+      var midDropX = (x(ptDec22.dateObj) + x(ptMar23.dateObj)) / 2;
+      var midDropY = (y(ptDec22.price) + y(ptMar23.price)) / 2;
+      g.append('line')
+        .attr('class', 'annotation-connector')
+        .attr('x1', x(ptDec22.dateObj) + 4)
+        .attr('y1', y(ptDec22.price) + 4)
+        .attr('x2', x(ptMar23.dateObj) - 4)
+        .attr('y2', y(ptMar23.price) - 4)
+        .attr('stroke', '#CC0033');
+
+      g.append('text')
+        .attr('class', 'annotation-text')
+        .attr('x', midDropX + 4)
+        .attr('y', midDropY - 6)
+        .attr('fill', '#CC0033')
+        .attr('text-anchor', 'middle')
+        .text('−94.7% in 95 days');
+
+      /* +1,956% connector */
+      var midRiseX = (x(ptMar23.dateObj) + x(ptMay23.dateObj)) / 2;
+      var midRiseY = (y(ptMar23.price) + y(ptMay23.price)) / 2;
+      g.append('line')
+        .attr('class', 'annotation-connector')
+        .attr('x1', x(ptMar23.dateObj) + 4)
+        .attr('y1', y(ptMar23.price) - 4)
+        .attr('x2', x(ptMay23.dateObj) - 4)
+        .attr('y2', y(ptMay23.price) + 4)
+        .attr('stroke', '#0A7D3F');
+
+      g.append('text')
+        .attr('class', 'annotation-text')
+        .attr('x', midRiseX - 4)
+        .attr('y', midRiseY + 16)
+        .attr('fill', '#0A7D3F')
+        .attr('text-anchor', 'middle')
+        .text('+1,956%');
+
+      /* Valuation callouts at the anomaly */
+      g.append('text')
+        .attr('class', 'val-label')
+        .attr('x', x(ptDec22.dateObj))
+        .attr('y', y(ptDec22.price) - 12)
+        .attr('text-anchor', 'middle')
+        .text('val. €100M');
+
+      g.append('text')
+        .attr('class', 'val-label')
+        .attr('x', x(ptMar23.dateObj))
+        .attr('y', y(ptMar23.price) + 20)
+        .attr('text-anchor', 'middle')
+        .attr('fill', '#CC0033')
+        .attr('font-weight', '600')
+        .text('val. €5.4M');
+
+      /* ================================
+         DOTS — staggered fade-in
+         ================================ */
+      var dots = g.selectAll('.event-dot')
+        .data(data)
+        .enter().append('circle')
+          .attr('class', function(d) {
+            return 'event-dot' + (d.anomaly ? ' event-dot--anomaly' : '');
+          })
+          .attr('cx', function(d) { return x(d.dateObj); })
+          .attr('cy', function(d) { return y(d.price); })
+          .attr('r', 0)
+          .attr('fill', function(d) { return d.anomaly ? '#CC0033' : '#0D7680'; })
+          .attr('stroke', '#fff')
+          .attr('stroke-width', function(d) { return d.anomaly ? 3 : 2; });
+
+      dots.transition()
+        .delay(function(d, i) { return 1000 + i * 80; })
+        .duration(300)
+        .ease(d3.easeBackOut)
+        .attr('r', function(d) { return d.anomaly ? 8 : 5; });
+
+      /* Pulse the anomaly dot after it appears */
+      dots.filter(function(d) { return d.anomaly; })
+        .transition()
+        .delay(1000 + 3 * 80 + 350)
+        .duration(1)
+        .on('end', function() { d3.select(this).classed('pulse', true); });
+
+      /* ================================
+         TOOLTIPS
+         ================================ */
+      var fmtFull = d3.timeFormat('%d %b %Y');
+      var fmtVal = function(v) {
+        return v >= 1e6 ? '€' + (v / 1e6).toFixed(1) + 'M' : '€' + d3.format(',')(v);
+      };
+      var fmtShares = d3.format(',');
+
+      function showTip(event, d) {
+        var html =
+          '<div class="tt-date">' + fmtFull(d.dateObj) + '</div>' +
+          '<div class="tt-price">€' + d.price.toFixed(2) + '</div>' +
+          '<div class="tt-buyer">' + d.buyer + '</div>' +
+          '<div>' + fmtShares(d.shares) + ' shares</div>' +
+          '<div class="tt-val">Implied val. ' + fmtVal(d.valuation) + '</div>';
+        tooltip.innerHTML = html;
+        tooltip.classList.add('is-visible');
+      }
+
+      function moveTip(event) {
+        var tx = event.pageX + 14;
+        var ty = event.pageY - 20;
+        /* Keep within viewport */
+        var tw = tooltip.offsetWidth;
+        if (tx + tw > window.innerWidth - 10) tx = event.pageX - tw - 14;
+        tooltip.style.left = tx + 'px';
+        tooltip.style.top = ty + 'px';
+      }
+
+      function hideTip() {
+        tooltip.classList.remove('is-visible');
+      }
+
+      dots
+        .on('mouseenter', showTip)
+        .on('mousemove', moveTip)
+        .on('mouseleave', hideTip);
+
+      /* Mobile: click to show, click elsewhere to hide */
+      dots.on('touchstart', function(event, d) {
+        event.preventDefault();
+        showTip(event, d);
+        var touch = event.touches[0];
+        tooltip.style.left = (touch.pageX + 14) + 'px';
+        tooltip.style.top = (touch.pageY - 20) + 'px';
+      });
+      svg.on('click', function(event) {
+        if (!event.target.classList.contains('event-dot')) hideTip();
+      });
+    }
+
+    /* --- Initial render + debounced resize --- */
+    if (typeof d3 !== 'undefined') {
+      buildCapitalChart();
+      var resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(buildCapitalChart, 180);
+      });
+    } else {
+      /* D3 might load deferred — poll briefly */
+      var d3Poll = setInterval(function() {
+        if (typeof d3 !== 'undefined') {
+          clearInterval(d3Poll);
+          buildCapitalChart();
+          var resizeTimer;
+          window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(buildCapitalChart, 180);
+          });
+        }
+      }, 100);
+      setTimeout(function() {
+        clearInterval(d3Poll);
+        if (typeof d3 === 'undefined') {
+          var fb = document.getElementById('capital-fallback');
+          if (fb) fb.style.display = 'block';
+        }
+      }, 5000);
+    }
+
+    /* ===============================
+       REVENUE BARS (animated on scroll)
+       =============================== */
+    var sectors = [
+      { label: 'Public sector',     amount: 18709020, type: 'public' },
+      { label: 'Social insurance',  amount: 9413992,  type: 'quasi'  },
+      { label: 'Health insurance',  amount: 9148440,  type: 'quasi'  },
+      { label: 'Automotive',        amount: 2212500,  type: 'other'  },
+      { label: 'Energy',            amount: 2186200,  type: 'other'  },
+      { label: 'General insurance', amount: 1908070,  type: 'other'  },
+      { label: 'Communications',    amount: 340569,   type: 'other'  },
+      { label: 'Other',             amount: 306794,   type: 'other'  }
+    ];
+
+    var total = 44225585;
+    var maxAmt = sectors[0].amount;
+    var list = document.getElementById('revBars');
+
+    if (list) {
+      sectors.forEach(function(s) {
+        var pct = (s.amount / total * 100).toFixed(1);
+        var barPct = (s.amount / maxAmt * 100).toFixed(1);
+        var amtStr = s.amount >= 1000000
+          ? '€' + (s.amount / 1000000).toFixed(1) + 'M'
+          : '€' + Math.round(s.amount / 1000) + 'K';
+
+        var li = document.createElement('li');
+        li.className = 'rev-bar-item';
+        li.innerHTML =
+          '<span class="rev-bar-label">' + s.label + '</span>' +
+          '<div class="rev-bar-track">' +
+            '<div class="rev-bar-fill rev-bar-fill--' + s.type + '" style="width:0%;" data-width="' + barPct + '%"></div>' +
+          '</div>' +
+          '<span class="rev-bar-amount">' + amtStr + ' <span class="rev-pct">(' + pct + '%)</span></span>';
+        list.appendChild(li);
+      });
+
+      /* Animate bars when they scroll into view */
+      var animated = false;
+      function animateBars() {
+        if (animated) return;
+        var rect = list.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) {
+          animated = true;
+          var fills = list.querySelectorAll('.rev-bar-fill');
+          fills.forEach(function(fill, i) {
+            setTimeout(function() {
+              fill.style.width = fill.getAttribute('data-width');
+            }, i * 90);
+          });
+        }
+      }
+      window.addEventListener('scroll', animateBars, { passive: true });
+      setTimeout(animateBars, 400);
+    }
+
+  })();
+  </script>
+  <script defer src="../data/dossier.js"></script>
+</body>
+</html>
