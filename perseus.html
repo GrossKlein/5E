@@ -285,175 +285,17 @@
       <div class="chart-source">Source: Handelsregister capital-event filings</div>
     </div>
 
-    <div class="question-block">
-      What happened between December 2022 and March 2023 that justified a 95% price collapse? And what happened between March and May that justified a 2,000% rebound?
-    </div>
-
-    <div class="answer-block">
-      Nothing visible. No restructuring. No new anchor clients. No bankruptcy filing. No market shock. Revenue didn't change. The product didn't change. The clients didn't change. The only thing that changed was who was buying — and what price the board chose to set.
-    </div>
-
-    <!-- ======================= -->
-    <!-- SECTION 3: WHIPLASH     -->
-    <!-- ======================= -->
-    <h2 id="whiplash">The Valuation Whiplash</h2>
-
-    <div style="overflow-x: auto;">
-    <table class="val-table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Event</th>
-          <th style="text-align:right;">Price/Share</th>
-          <th style="text-align:right;">Implied Valuation</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>9 Dec 2022</td>
-          <td>Perseus buys 158,208 shares</td>
-          <td style="text-align:right;">€18.96</td>
-          <td style="text-align:right;">€100,000,000</td>
-        </tr>
-        <tr>
-          <td>14 Mar 2023</td>
-          <td>Perseus buys 127,885 shares</td>
-          <td style="text-align:right;" class="val-anomaly">€1.00</td>
-          <td style="text-align:right;" class="val-anomaly">€5,401,478</td>
-        </tr>
-        <tr>
-          <td>11 May 2023</td>
-          <td>Tiven buys 48,632 shares</td>
-          <td style="text-align:right;">€20.56</td>
-          <td style="text-align:right;">€112,068,432</td>
-        </tr>
-        <tr>
-          <td>5 Jun 2023</td>
-          <td>Perseus buys 16,211 shares</td>
-          <td style="text-align:right;">€20.56</td>
-          <td style="text-align:right;">—</td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-
-    <p>€100&nbsp;million. Then €5.4&nbsp;million. Then €112&nbsp;million. In 150 days. The company did not go bankrupt. It did not restructure. It did not lose a single client. A valuation set by the same board swung by a factor of twenty — then swung back.</p>
-
-    <!-- Valuation line chart SVG -->
-    <div class="chart-container">
-      <div class="chart-title" data-lang-en="Valuation dropped 20× in 150 days — then swung back" data-lang-de="Bewertung schwankte um das 20-Fache in 150 Tagen — und kehrte zurück">Valuation dropped 20× in 150 days — then swung back</div>
-      <div class="chart-subtitle">Dec 2022 – Jun 2023 · Based on share price at each capital event</div>
-      <div class="val-chart-wrap">
-        <svg viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line chart showing SyncPilot valuation: €100M in Dec 2022, plunging to €5.4M in Mar 2023, rebounding to €112M in May 2023">
-          <!-- Chart area: x=80..640, y=30..260 -->
-          <!-- Y range: 0–120M. Scale: 1M = (260-30)/120 = 1.917px/M -->
-          <!-- X positions proportional to calendar time (178 days, Dec 9 2022 – Jun 5 2023) -->
-          <!-- Dec 9 = x110, Mar 14 = x382, May 11 = x548, Jun 5 = x620 -->
-
-          <!-- Grid lines -->
-          <line x1="80" y1="30" x2="650" y2="30" stroke="#F2DFCE" stroke-width="1"/>
-          <line x1="80" y1="68" x2="650" y2="68" stroke="#F2DFCE" stroke-width="1"/>
-          <line x1="80" y1="107" x2="650" y2="107" stroke="#F2DFCE" stroke-width="1"/>
-          <line x1="80" y1="145" x2="650" y2="145" stroke="#F2DFCE" stroke-width="1"/>
-          <line x1="80" y1="184" x2="650" y2="184" stroke="#F2DFCE" stroke-width="1"/>
-          <line x1="80" y1="222" x2="650" y2="222" stroke="#F2DFCE" stroke-width="1"/>
-
-          <!-- Y-axis labels -->
-          <text x="72" y="34" text-anchor="end" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(38,42,51,0.4)">€120M</text>
-          <text x="72" y="72" text-anchor="end" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(38,42,51,0.4)">€100M</text>
-          <text x="72" y="111" text-anchor="end" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(38,42,51,0.4)">€80M</text>
-          <text x="72" y="149" text-anchor="end" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(38,42,51,0.4)">€60M</text>
-          <text x="72" y="188" text-anchor="end" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(38,42,51,0.4)">€40M</text>
-          <text x="72" y="226" text-anchor="end" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(38,42,51,0.4)">€20M</text>
-
-          <!-- Baseline -->
-          <line x1="80" y1="260" x2="650" y2="260" stroke="rgba(38,42,51,0.15)" stroke-width="1"/>
-          <text x="72" y="264" text-anchor="end" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(38,42,51,0.4)">€0</text>
-
-          <!-- Month markers on X-axis -->
-          <line x1="110" y1="258" x2="110" y2="262" stroke="rgba(38,42,51,0.2)" stroke-width="1"/>
-          <line x1="207" y1="258" x2="207" y2="262" stroke="rgba(38,42,51,0.2)" stroke-width="1"/>
-          <line x1="296" y1="258" x2="296" y2="262" stroke="rgba(38,42,51,0.2)" stroke-width="1"/>
-          <line x1="382" y1="258" x2="382" y2="262" stroke="rgba(38,42,51,0.2)" stroke-width="1"/>
-          <line x1="468" y1="258" x2="468" y2="262" stroke="rgba(38,42,51,0.2)" stroke-width="1"/>
-          <line x1="548" y1="258" x2="548" y2="262" stroke="rgba(38,42,51,0.2)" stroke-width="1"/>
-          <line x1="620" y1="258" x2="620" y2="262" stroke="rgba(38,42,51,0.2)" stroke-width="1"/>
-
-          <!-- Month labels -->
-          <text x="110" y="274" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(38,42,51,0.35)">Dec</text>
-          <text x="207" y="274" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(38,42,51,0.35)">Jan</text>
-          <text x="296" y="274" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(38,42,51,0.35)">Feb</text>
-          <text x="382" y="274" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(38,42,51,0.35)">Mar</text>
-          <text x="468" y="274" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(38,42,51,0.35)">Apr</text>
-          <text x="548" y="274" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(38,42,51,0.35)">May</text>
-          <text x="620" y="274" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(38,42,51,0.35)">Jun</text>
-
-          <!-- "Nothing happened" zone - grey band between Dec and Mar -->
-          <rect x="110" y="30" width="272" height="230" fill="rgba(38,42,51,0.02)" rx="2"/>
-
-          <!-- The line (proportional x) -->
-          <polyline
-            points="110,68 382,250 548,45 620,44"
-            fill="none"
-            stroke="#0D7680"
-            stroke-width="2.5"
-            stroke-linejoin="round"
-          />
-
-          <!-- Data points -->
-          <circle cx="110" cy="68" r="5" fill="#0D7680"/>
-          <circle cx="382" cy="250" r="7" fill="#CC0033" stroke="#fff" stroke-width="2"/>
-          <circle cx="548" cy="45" r="5" fill="#0D7680"/>
-          <circle cx="620" cy="44" r="4" fill="#0D7680" opacity="0.6"/>
-
-          <!-- Annotations: Dec 2022 €100M -->
-          <text x="110" y="58" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" font-weight="700" fill="#262A33">€100M</text>
-          <text x="110" y="288" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(38,42,51,0.45)">9 Dec 2022</text>
-          <text x="110" y="300" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="8" fill="rgba(38,42,51,0.3)">Perseus @ €18.96</text>
-
-          <!-- Annotations: Mar 2023 €5.4M (anomaly) -->
-          <text x="382" y="244" text-anchor="start" font-family="Source Sans 3, sans-serif" font-size="12" font-weight="700" fill="#CC0033" dx="12">€5.4M</text>
-          <text x="382" y="288" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(38,42,51,0.45)">14 Mar 2023</text>
-          <text x="382" y="300" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="8" font-weight="600" fill="#CC0033">Perseus @ €1.00</text>
-
-          <!-- Annotations: May 2023 €112M -->
-          <text x="548" y="35" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" font-weight="700" fill="#262A33">€112M</text>
-          <text x="548" y="288" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(38,42,51,0.45)">11 May</text>
-          <text x="548" y="300" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="8" fill="rgba(38,42,51,0.3)">Tiven @ €20.56</text>
-
-          <!-- Annotations: Jun 2023 -->
-          <text x="620" y="288" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="9" fill="rgba(38,42,51,0.45)">5 Jun</text>
-          <text x="620" y="300" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="8" fill="rgba(38,42,51,0.3)">Perseus @ €20.56</text>
-
-          <!-- Percentage annotations along the line segments -->
-          <text x="240" y="145" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" font-weight="700" fill="#CC0033" transform="rotate(-33, 240, 145)">−94.6%</text>
-          <text x="465" y="155" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" font-weight="700" fill="#0D7680" transform="rotate(-51, 465, 155)">+1,975%</text>
-
-          <!-- "95 days" span indicator -->
-          <line x1="110" y1="315" x2="382" y2="315" stroke="rgba(38,42,51,0.2)" stroke-width="1"/>
-          <line x1="110" y1="312" x2="110" y2="318" stroke="rgba(38,42,51,0.2)" stroke-width="1"/>
-          <line x1="382" y1="312" x2="382" y2="318" stroke="rgba(38,42,51,0.2)" stroke-width="1"/>
-          <text x="246" y="325" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="8" fill="rgba(38,42,51,0.3)">95 days</text>
-
-          <line x1="382" y1="315" x2="548" y2="315" stroke="rgba(38,42,51,0.2)" stroke-width="1"/>
-          <line x1="548" y1="312" x2="548" y2="318" stroke="rgba(38,42,51,0.2)" stroke-width="1"/>
-          <text x="465" y="325" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="8" fill="rgba(38,42,51,0.3)">58 days</text>
-        </svg>
-      </div>
-      <div class="chart-source">Source: Handelsregister filings · Valuation = shares outstanding × price/share at event date</div>
-    </div>
+    <p>No restructuring took place between December and March. No clients were lost. No bankruptcy was filed. Revenue did not change. The product did not change. The only variable was the price the board chose to set — and who was buying.</p>
 
     <!-- ======================= -->
     <!-- SECTION 4: THE QUESTION -->
     <!-- ======================= -->
     <div class="closing">
-      <h2 id="question">The Question</h2>
+      <h2 id="question">The Buyers</h2>
 
-      <p>H.G. Perseus GmbH StBG acquired shares at three different prices over six months. Two of those prices matched what every other investor paid. One did not.</p>
+      <p>H.G. Perseus GmbH StBG acquired shares at three different prices over six months. Two matched what every other investor paid. One did not. The board granted Perseus — and only Perseus — a 95% discount.</p>
 
-      <p>Who owns H.G. Perseus? What is their history? And why did the board grant them — and only them — a 95% discount?</p>
-
-      <p>The answers involve two Munich lawyers, a tax fraud prosecution, and a second deal that went wrong.</p>
+      <p>Perseus is owned by two Munich lawyers. Both were defendants in one of Germany's largest tax fraud prosecutions. The same lawyers drafted a €18.75&nbsp;million investment contract for a different SyncPilot investor — then failed to notarize it. That investor paid €6.15&nbsp;million and received nothing.</p>
     </div>
 
     <!-- ---- CTA ---- -->
@@ -474,7 +316,7 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-disclaimer">
-        These are documented facts and analytical questions. No allegation of wrongdoing is made. Individuals are presumed innocent unless proven otherwise in a court of law.
+        All facts sourced from Handelsregister filings and public information. We stand behind every claim on this site.
       </div>
       <div class="footer-meta">
         <span>Last updated: February 2026</span>

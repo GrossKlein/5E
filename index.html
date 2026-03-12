@@ -4,79 +4,198 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SyncPilot SE — An Investigative Dossier</title>
+  <meta name="description" content="Investigative dossier on SyncPilot SE: insider share pricing, Goldfinger tax fraud defendants among shareholders, €6.15M investor funds unaccounted for. Sourced from Handelsregister filings and primary documents.">
   <link rel="stylesheet" href="styles.css">
   <style>
     /* === INDEX-SPECIFIC OVERRIDES === */
-
-    /* Remove default body padding-top since we handle nav inline */
-    body {
-      padding-top: 0;
-    }
+    body { padding-top: 0; }
 
     /* ---- Hero ---- */
     .index-hero {
-      text-align: center;
-      padding: calc(var(--nav-height) + var(--sp-12)) var(--sp-6) var(--sp-6);
-      max-width: 740px;
+      padding: calc(var(--nav-height) + var(--sp-12)) var(--container-padding) var(--sp-8);
+      max-width: 800px;
       margin: 0 auto;
+      text-align: center;
     }
-
-    .subject-logo {
-      display: inline-block;
-      max-width: 220px;
-      margin-bottom: var(--sp-6);
-      filter: grayscale(40%) opacity(0.7);
-      transition: filter 0.3s;
-    }
-    .subject-logo:hover {
-      filter: grayscale(0%) opacity(1);
-    }
-
     .index-hero h1 {
       font-size: clamp(2rem, 5vw, 2.8rem);
       color: var(--heading-primary);
       margin-bottom: var(--sp-3);
       letter-spacing: -0.015em;
     }
-
     .hero-rule {
-      width: 56px;
-      height: 3px;
+      width: 56px; height: 3px;
       background: var(--claret);
       margin: 0 auto var(--sp-4);
       border: none;
     }
 
-    .hero-subtitle {
+    /* ---- Hook block ---- */
+    .prosecution-hook {
+      max-width: 720px;
+      margin: 0 auto var(--sp-8);
+      padding: var(--sp-6);
+      background: rgba(153,15,61,0.04);
+      border-left: 4px solid var(--claret);
+      border-radius: 0 6px 6px 0;
+    }
+    .prosecution-hook p {
+      font-size: clamp(1rem, 0.9rem + 0.3vw, 1.12rem);
+      line-height: 1.65;
+      margin-bottom: var(--sp-3);
+    }
+    .prosecution-hook p:last-child { margin-bottom: 0; }
+    .prosecution-hook strong { color: var(--claret); }
+    .prosecution-hook em { font-style: normal; font-weight: 600; color: var(--slate); }
+
+    /* ---- Charge cards ---- */
+    .charge-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-4);
+      max-width: var(--max-width);
+      margin: 0 auto var(--sp-8);
+      padding: 0 var(--container-padding);
+    }
+    .charge-card {
+      text-align: center;
+      padding: var(--sp-6) var(--sp-4);
+      background: var(--card-bg);
+      border-radius: 6px;
+      border-top: 3px solid var(--claret);
+    }
+    .charge-number {
       font-family: var(--font-ui);
-      font-size: 1.05rem;
-      color: rgba(38,42,51,0.6);
-      line-height: 1.55;
-      max-width: 600px;
-      margin: 0 auto;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: var(--claret);
+      line-height: 1.1;
+      margin-bottom: var(--sp-2);
+    }
+    .charge-label {
+      font-family: var(--font-ui);
+      font-size: var(--text-small);
+      color: rgba(38,42,51,0.55);
+      line-height: 1.4;
     }
 
-    /* ---- About panel ---- */
-    .about-panel {
-      max-width: 680px;
-      margin: var(--sp-6) auto var(--sp-8);
-      padding: var(--sp-4) var(--sp-6);
-      background: rgba(204,230,255,0.25);
-      border-radius: 4px;
+    /* ---- Client exposure panel ---- */
+    .client-exposure {
+      max-width: 780px;
+      margin: 0 auto var(--sp-8);
+      padding: var(--sp-6);
+      background: rgba(204,230,255,0.2);
+      border: 1px solid rgba(204,230,255,0.5);
+      border-radius: 6px;
+    }
+    .client-exposure-title {
       font-family: var(--font-ui);
-      font-size: 0.88rem;
-      color: rgba(38,42,51,0.72);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--oxford);
+      margin-bottom: var(--sp-3);
+    }
+    .client-exposure p {
+      font-family: var(--font-ui);
+      font-size: var(--text-ui);
+      color: rgba(38,42,51,0.7);
       line-height: 1.6;
-      text-align: center;
+      margin-bottom: var(--sp-3);
+    }
+    .client-exposure p:last-child { margin-bottom: 0; }
+    .client-list-inline {
+      font-family: var(--font-ui);
+      font-size: var(--text-ui);
+      color: var(--slate);
+      line-height: 1.7;
+    }
+    .client-list-inline a {
+      color: var(--oxford);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .client-list-inline a:hover { text-decoration: underline; }
+
+    /* ---- Cast of characters ---- */
+    .cast-section {
+      max-width: var(--max-width);
+      margin: 0 auto var(--sp-8);
+      padding: 0 var(--container-padding);
+    }
+    .cast-title {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--claret);
+      margin-bottom: var(--sp-4);
+      padding-bottom: var(--sp-2);
+      border-bottom: 2px solid var(--claret);
+    }
+    .cast-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--sp-4);
+    }
+    .cast-card {
+      display: flex;
+      gap: var(--sp-3);
+      padding: var(--sp-4);
+      background: var(--card-bg);
+      border-radius: 6px;
+      align-items: flex-start;
+    }
+    .cast-photo {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      filter: grayscale(40%);
+      flex-shrink: 0;
+    }
+    .cast-info { flex: 1; min-width: 0; }
+    .cast-name {
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--slate);
+      margin-bottom: 2px;
+    }
+    .cast-role {
+      font-family: var(--font-ui);
+      font-size: var(--text-small);
+      color: rgba(38,42,51,0.5);
+      line-height: 1.4;
+    }
+    .cast-badge {
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-top: 4px;
+    }
+    .cast-badge--target {
+      background: rgba(153,15,61,0.08);
+      color: var(--claret);
+    }
+    .cast-badge--defendant {
+      background: rgba(204,0,51,0.08);
+      color: #CC0033;
     }
 
     /* ---- Section dividers ---- */
     .section-group {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 0 var(--sp-6);
+      padding: 0 var(--container-padding);
     }
-
     .section-divider {
       font-family: var(--font-ui);
       font-size: 0.7rem;
@@ -89,10 +208,7 @@
       margin-bottom: var(--sp-4);
       margin-top: var(--sp-8);
     }
-
-    .section-divider:first-of-type {
-      margin-top: 0;
-    }
+    .section-divider:first-of-type { margin-top: 0; }
 
     /* ---- Dossier cards ---- */
     .dossier-grid {
@@ -101,7 +217,6 @@
       gap: var(--sp-4);
       margin-bottom: var(--sp-6);
     }
-
     .dossier-card {
       display: block;
       background: var(--card-bg);
@@ -118,18 +233,9 @@
       transform: translateY(-2px);
       color: var(--text);
     }
-
-    /* Accent borders by type */
-    .dossier-card--neutral {
-      border-left-color: var(--oxford);
-    }
-    .dossier-card--warning {
-      border-left-color: var(--claret);
-    }
-    .dossier-card--reference {
-      border-left-color: rgba(38,42,51,0.25);
-    }
-
+    .dossier-card--neutral  { border-left-color: var(--oxford); }
+    .dossier-card--warning  { border-left-color: var(--claret); }
+    .dossier-card--reference { border-left-color: rgba(38,42,51,0.25); }
     .dossier-card:hover.dossier-card--neutral  { border-left-color: var(--teal); }
     .dossier-card:hover.dossier-card--warning  { border-left-color: #CC0033; }
     .dossier-card:hover.dossier-card--reference { border-left-color: rgba(38,42,51,0.45); }
@@ -154,7 +260,6 @@
       line-height: 1.25;
       margin-bottom: var(--sp-2);
     }
-
     .card-desc {
       font-family: var(--font-ui);
       font-size: 0.85rem;
@@ -162,11 +267,9 @@
       line-height: 1.5;
       margin: 0;
     }
-
     .card-arrow {
       position: absolute;
-      top: 50%;
-      right: var(--sp-4);
+      top: 50%; right: var(--sp-4);
       transform: translateY(-50%);
       font-family: var(--font-ui);
       font-size: 1.1rem;
@@ -177,32 +280,33 @@
       color: var(--claret);
       transform: translateY(-50%) translateX(3px);
     }
+    .dossier-grid--two { grid-template-columns: 1fr 1fr; }
+    .dossier-grid--three { grid-template-columns: 1fr 1fr 1fr; }
 
-    /* Two-column for paired cards */
-    .dossier-grid--two {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    /* Three-column for investigation cards */
-    .dossier-grid--three {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-
-    /* ---- Ornament between about and cards ---- */
-    .ornament {
+    /* ---- CTA for procurement ---- */
+    .procurement-cta {
+      max-width: 780px;
+      margin: var(--sp-8) auto;
+      padding: var(--sp-6);
       text-align: center;
-      margin: var(--sp-6) auto var(--sp-2);
-      color: rgba(38,42,51,0.15);
-      font-size: 1.2rem;
-      letter-spacing: 0.5em;
-      user-select: none;
+      border: 2px solid var(--claret);
+      border-radius: 6px;
+      background: rgba(153,15,61,0.02);
+    }
+    .procurement-cta p {
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--claret);
+      margin: 0;
+      line-height: 1.5;
     }
 
     /* ---- Disclaimer ---- */
     .index-disclaimer {
       max-width: var(--max-width);
       margin: var(--sp-8) auto 0;
-      padding: var(--sp-4) var(--sp-6);
+      padding: var(--sp-4) var(--container-padding);
       font-family: var(--font-ui);
       font-size: 0.75rem;
       color: rgba(38,42,51,0.4);
@@ -213,31 +317,18 @@
 
     /* ---- Responsive ---- */
     @media (max-width: 1024px) {
-      .dossier-grid--three {
-        grid-template-columns: 1fr 1fr;
-      }
+      .dossier-grid--three { grid-template-columns: 1fr 1fr; }
     }
-
     @media (max-width: 768px) {
       .dossier-grid--two,
-      .dossier-grid--three {
-        grid-template-columns: 1fr;
-      }
-      .index-hero {
-        padding-top: calc(var(--nav-height) + var(--sp-8));
-      }
-      .subject-logo {
-        max-width: 170px;
-      }
-      .card-arrow {
-        display: none;
-      }
+      .dossier-grid--three { grid-template-columns: 1fr; }
+      .charge-grid { grid-template-columns: 1fr; }
+      .cast-grid { grid-template-columns: 1fr; }
+      .index-hero { padding-top: calc(var(--nav-height) + var(--sp-8)); }
+      .card-arrow { display: none; }
     }
-
     @media (min-width: 769px) {
-      .dossier-card {
-        padding-right: calc(var(--sp-6) + 28px);
-      }
+      .dossier-card { padding-right: calc(var(--sp-6) + 28px); }
     }
   </style>
 </head>
@@ -270,36 +361,148 @@
 
   <!-- ====== HERO ====== -->
   <header class="index-hero">
-    <img src="assets/SYNCPILOT_logo_1.png"
-         alt="SyncPilot — Subject of Investigation"
-         class="subject-logo">
-    <h1>An Investigative Dossier</h1>
+    <h1>SyncPilot SE</h1>
     <hr class="hero-rule">
-    <p class="hero-subtitle">
-      Opaque ownership. Insider pricing. Two criminal defendants among the shareholders.<br>
-      This is what due diligence turned up.
+    <p style="font-family: var(--font-ui); font-size: 1.05rem; color: rgba(38,42,51,0.55); line-height: 1.55; max-width: 600px; margin: 0 auto;">
+      An investigative dossier into the company that handles digital consultations for German federal agencies — and the people who control it.
     </p>
   </header>
 
-  <!-- ====== ABOUT ====== -->
-  <div class="about-panel">
-    This dossier examines the corporate structure, capital transactions, and governance patterns of SyncPilot&nbsp;SE, a German software services company. It presents evidence-based investigations, with every factual claim citing a public filing or primary document.
+  <!-- ====== PROSECUTION HOOK ====== -->
+  <div class="prosecution-hook">
+    <p><strong>€6.15&nbsp;million</strong> paid by an investor. <em>Zero shares delivered.</em> The contract was never notarized — by the lawyer who drafted it.</p>
+    <p>That same lawyer's company acquired shares in SyncPilot at <strong>a 95% discount</strong> — paying €1.00 per share when every other investor paid €18–21.</p>
+    <p>That same lawyer was <strong>a defendant in the <a href="https://www.lto.de/recht/justiz/j/goldfinger-prozess-staatsanwaltschaft-augsburg-eingestellt-entschaedigung-strafanzeigen-kanzleidaten" target="_blank" rel="noopener">Goldfinger tax fraud prosecution</a></strong>, one of the largest in German history.</p>
+    <p>The company's sole managing director — who controlled all incoming funds — <strong>acquired personal property during the period investor money was flowing in.</strong></p>
+    <p>This company's clients include the <a href="https://www.arbeitsagentur.de" target="_blank" rel="noopener">Bundesagentur für Arbeit</a>, <a href="https://www.aok.de" target="_blank" rel="noopener">AOK (Allgemeine Ortskrankenkasse)</a>, and the <a href="https://www.berlin.de/rbmskzl/" target="_blank" rel="noopener">Senatskanzlei Berlin</a>. 84% of its revenue comes from German taxpayers.</p>
   </div>
 
-  <div class="ornament">· · ·</div>
+  <!-- ====== CHARGE CARDS ====== -->
+  <div class="charge-grid">
+    <div class="charge-card">
+      <div class="charge-number">95%</div>
+      <div class="charge-label">Discount on shares granted to an entity owned by two tax fraud defendants</div>
+    </div>
+    <div class="charge-card">
+      <div class="charge-number">€6.15M</div>
+      <div class="charge-label">Investor funds paid in. Zero shares issued. Contract never notarized.</div>
+    </div>
+    <div class="charge-card">
+      <div class="charge-number">€128M</div>
+      <div class="charge-label">Paper valuation — set by the board, never by an independent appraiser</div>
+    </div>
+  </div>
 
-  <!-- ====== CARDS ====== -->
+  <!-- ====== CLIENT EXPOSURE ====== -->
+  <div class="client-exposure">
+    <div class="client-exposure-title">Public Sector Exposure</div>
+    <p>SyncPilot SE's software is embedded in digital consultation systems across German federal, state, and municipal agencies. <strong>84.3% of its €44.2M projected revenue</strong> comes from three taxpayer-funded sectors: public administration, social insurance, and health insurance.</p>
+    <p class="client-list-inline">
+      Top clients include:
+      <a href="https://www.arbeitsagentur.de" target="_blank" rel="noopener">Bundesagentur für Arbeit</a> ·
+      <a href="https://www.aok.de" target="_blank" rel="noopener">AOK (Allgemeine Ortskrankenkasse)</a> (11 regional offices) ·
+      <a href="https://www.berlin.de/rbmskzl/" target="_blank" rel="noopener">Senatskanzlei Berlin</a> ·
+      <a href="https://www.ekom21.de" target="_blank" rel="noopener">ekom21</a> ·
+      <a href="https://www.itsg.de" target="_blank" rel="noopener">ITSG</a> ·
+      <a href="https://www.akdb.de" target="_blank" rel="noopener">AKDB Bayern</a> ·
+      <a href="https://www.deutsche-rentenversicherung.de" target="_blank" rel="noopener">Deutsche Rentenversicherung</a> ·
+      <a href="https://www.svlfg.de" target="_blank" rel="noopener">SVLFG</a> ·
+      <a href="https://www.volkswagen.de" target="_blank" rel="noopener">Volkswagen</a> ·
+      <a href="https://www.vodafone.de" target="_blank" rel="noopener">Vodafone</a> ·
+      <a href="https://www.eon.de" target="_blank" rel="noopener">E.ON</a> ·
+      <a href="https://www.axa.de" target="_blank" rel="noopener">AXA</a>
+    </p>
+    <p>SyncPilot holds a <a href="https://partnerfinder.sap.com/partnerNavigator?q=SYNCPILOT" target="_blank" rel="noopener">Silver partnership with SAP</a> (downgraded from Gold), through which it reaches enterprise procurement cycles.</p>
+  </div>
+
+  <!-- ====== CAST OF CHARACTERS ====== -->
+  <div class="cast-section">
+    <div class="cast-title">Key Figures</div>
+    <div class="cast-grid">
+
+      <div class="cast-card">
+        <img src="assets/franz-bleicher-2425.jpg" alt="Franz-Xaver Bleicher" class="cast-photo">
+        <div class="cast-info">
+          <div class="cast-name">Franz-Xaver Bleicher</div>
+          <div class="cast-role">Founder &amp; sole Managing Director. Largest beneficial owner (16.48%). Controls fund allocation.</div>
+          <span class="cast-badge cast-badge--target">Subject of Investigation</span>
+        </div>
+      </div>
+
+      <div class="cast-card">
+        <img src="assets/Hunstein, Martin.png" alt="Martin Hunstein" class="cast-photo">
+        <div class="cast-info">
+          <div class="cast-name">Martin Hunstein</div>
+          <div class="cast-role">Lawyer. MD of H.G. Perseus. Drafted the LVS contract. Failed to notarize it. Acquired shares at 95% discount.</div>
+          <span class="cast-badge cast-badge--defendant">Goldfinger Defendant</span>
+        </div>
+      </div>
+
+      <div class="cast-card">
+        <img src="assets/Diethard, Goerg.png" alt="Diethard Erik Goerg" class="cast-photo">
+        <div class="cast-info">
+          <div class="cast-name">Diethard Erik Goerg</div>
+          <div class="cast-role">Lawyer. Co-owner of H.G. Perseus. Partner at GHR. Re-engaged LVS in April 2024.</div>
+          <span class="cast-badge cast-badge--defendant">Goldfinger Defendant</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ====== CHAPTER CARDS ====== -->
   <main class="section-group">
 
-    <!-- Part I -->
-    <div class="section-divider">Part I — Corporate Profile</div>
+    <div class="section-divider">The Investigation</div>
 
     <div class="dossier-grid dossier-grid--two">
       <a href="profile.html" class="dossier-card dossier-card--neutral">
-        <div class="card-label">Profile</div>
+        <div class="card-label">Chapter 1</div>
         <div class="card-title">The Company</div>
         <p class="card-desc">
-          Software services firm. €128M paper valuation. 31 beneficial owners across 6 jurisdictions. One man from Augsburg at the center.
+          €128M paper valuation. 31 beneficial owners. 26 holding entities across 6 jurisdictions. One man from Augsburg at the center.
+        </p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <a href="perseus.html" class="dossier-card dossier-card--warning">
+        <div class="card-label">Chapter 2</div>
+        <div class="card-title">The 95% Discount</div>
+        <p class="card-desc">
+          €18.96 per share. Then €1.00. Then €20.56. Same company. Same board. 95 days apart.
+        </p>
+        <span class="card-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="dossier-grid dossier-grid--two">
+      <a href="goldfinger.html" class="dossier-card dossier-card--warning">
+        <div class="card-label">Chapter 3</div>
+        <div class="card-title">The Goldfinger Connection</div>
+        <p class="card-desc">
+          The buyers who received the 95% discount: two defendants from one of Germany's largest tax fraud prosecutions.
+        </p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <a href="lvs.html" class="dossier-card dossier-card--warning">
+        <div class="card-label">Chapter 4</div>
+        <div class="card-title">The LVS Trap</div>
+        <p class="card-desc">
+          €6.15M paid. Zero shares delivered. The lawyer who drafted the contract never notarized it — then his company bought shares at a 95% discount.
+        </p>
+        <span class="card-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="section-divider">Source Data &amp; Visualisations</div>
+
+    <div class="dossier-grid dossier-grid--two">
+      <a href="evidence.html" class="dossier-card dossier-card--reference">
+        <div class="card-label">Reference</div>
+        <div class="card-title">The Evidence Room</div>
+        <p class="card-desc">
+          Capital events, UBO directory, entity map, payment ledger, client list, email timeline. Every source document.
         </p>
         <span class="card-arrow">→</span>
       </a>
@@ -308,53 +511,7 @@
         <div class="card-label">Visualisation</div>
         <div class="card-title">Shareholders</div>
         <p class="card-desc">
-          Interactive ownership graph and timeline. 65&nbsp;entities, 92&nbsp;ownership edges, 19&nbsp;direct shareholders — 14&nbsp;current, 5&nbsp;former. Multi-layered holding structures exposed.
-        </p>
-        <span class="card-arrow">→</span>
-      </a>
-    </div>
-
-    <!-- Part II -->
-    <div class="section-divider">Part II — Evidence &amp; Analysis</div>
-
-    <div class="dossier-grid dossier-grid--three">
-      <a href="perseus.html" class="dossier-card dossier-card--warning">
-        <div class="card-label">Investigation</div>
-        <div class="card-title">The 95% Discount</div>
-        <p class="card-desc">
-          €18.96 per share. Then €1.00. Then €20.56. Same company. Same board. 95 days apart.
-        </p>
-        <span class="card-arrow">→</span>
-      </a>
-
-      <a href="goldfinger.html" class="dossier-card dossier-card--warning">
-        <div class="card-label">Investigation</div>
-        <div class="card-title">The Goldfinger Connection</div>
-        <p class="card-desc">
-          The buyers: two defendants from Germany's largest tax fraud prosecution. The price they paid doesn't match the company's own filings.
-        </p>
-        <span class="card-arrow">→</span>
-      </a>
-
-      <a href="lvs.html" class="dossier-card dossier-card--warning">
-        <div class="card-label">Investigation</div>
-        <div class="card-title">The LVS Trap</div>
-        <p class="card-desc">
-          €6.15M paid. Zero shares delivered. Contract never notarized. The managing director bought a house and bought out his partner. The same lawyer who drafted the contract bought shares at a 95% discount.
-        </p>
-        <span class="card-arrow">→</span>
-      </a>
-    </div>
-
-    <!-- Source Data -->
-    <div class="section-divider">Source Data</div>
-
-    <div class="dossier-grid">
-      <a href="evidence.html" class="dossier-card dossier-card--reference">
-        <div class="card-label">Reference</div>
-        <div class="card-title">The Evidence Room</div>
-        <p class="card-desc">
-          All source data: capital events, UBO directory, entity map, payment ledger, client list, email timeline.
+          Interactive ownership graph: 65 entities, 92 ownership edges, 19 direct shareholders. Multi-layered holding structures.
         </p>
         <span class="card-arrow">→</span>
       </a>
@@ -362,16 +519,21 @@
 
   </main>
 
+  <!-- ====== PROCUREMENT CTA ====== -->
+  <div class="procurement-cta">
+    <p>If your organisation contracts with SyncPilot SE, this dossier concerns you.</p>
+  </div>
+
   <!-- ====== DISCLAIMER ====== -->
   <div class="index-disclaimer">
-    This analysis represents investigative questions and pattern identification, not legal determinations of wrongdoing. Individuals are presumed innocent unless proven otherwise in a court of law.
+    All facts sourced from Handelsregister filings and public information. We stand behind every claim on this site.
   </div>
 
   <!-- ====== FOOTER ====== -->
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-meta">
-        <span>Last updated: February 2026</span>
+        <span>Last updated: March 2026</span>
         <span>Cookie-free · No personal data collected</span>
       </div>
     </div>
