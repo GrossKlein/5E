@@ -17,26 +17,26 @@
           "title": { "en": "SyncPilot", "de": "SyncPilot" }
         },
         {
-          "id": "perseus",
-          "file": "perseus.html",
+          "id": "the-95-percent-discount",
+          "file": "the-95-percent-discount.html",
           "short": { "en": "Ch. 2", "de": "Kap. 2" },
           "title": { "en": "The 95% Discount", "de": "Der 95%-Rabatt" }
         },
         {
-          "id": "goldfinger",
-          "file": "goldfinger.html",
+          "id": "the-goldfinger-connection",
+          "file": "the-goldfinger-connection.html",
           "short": { "en": "Ch. 3", "de": "Kap. 3" },
           "title": { "en": "The Goldfinger Connection", "de": "Die Goldfinger-Verbindung" }
         },
         {
-          "id": "lvs",
-          "file": "lvs.html",
+          "id": "the-lvs-trap",
+          "file": "the-lvs-trap.html",
           "short": { "en": "Ch. 4", "de": "Kap. 4" },
           "title": { "en": "The LVS Trap", "de": "Die LVS-Falle" }
         },
         {
-          "id": "evidence",
-          "file": "evidence.html",
+          "id": "the-evidence-room",
+          "file": "the-evidence-room.html",
           "short": { "en": "Ch. 5", "de": "Kap. 5" },
           "title": { "en": "The Evidence Room", "de": "Der Beweisraum" }
         }
@@ -46,14 +46,14 @@
       "label": { "en": "Analysis", "de": "Analyse" },
       "pages": [
         {
-          "id": "sap",
-          "file": "sap.html",
+          "id": "sap-syncpilot-vendor-risk",
+          "file": "sap-syncpilot-vendor-risk.html",
           "short": { "en": "Letter", "de": "Brief" },
           "title": { "en": "Open Letter to SAP", "de": "Offener Brief an SAP" }
         },
         {
-          "id": "clients",
-          "file": "clients.html",
+          "id": "vendor-risk",
+          "file": "vendor-risk.html",
           "short": { "en": "Analysis", "de": "Analyse" },
           "title": { "en": "Vendor Risk", "de": "Lieferantenrisiko" }
         },
