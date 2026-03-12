@@ -97,26 +97,39 @@
       color: var(--oxford);
       margin-bottom: var(--sp-3);
     }
-    .client-exposure p {
-      font-family: var(--font-ui);
-      font-size: var(--text-ui);
-      color: rgba(38,42,51,0.7);
-      line-height: 1.6;
-      margin-bottom: var(--sp-3);
+    .client-card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
     }
-    .client-exposure p:last-child { margin-bottom: 0; }
-    .client-list-inline {
-      font-family: var(--font-ui);
-      font-size: var(--text-ui);
-      color: var(--slate);
-      line-height: 1.7;
-    }
-    .client-list-inline a {
-      color: var(--oxford);
-      font-weight: 600;
+    .client-chip {
+      display: inline-flex;
+      flex-direction: column;
+      padding: 6px 14px;
+      border-radius: 6px;
       text-decoration: none;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: transform 0.15s, box-shadow 0.15s;
+      min-width: 0;
     }
-    .client-list-inline a:hover { text-decoration: underline; }
+    .client-chip:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 12px rgba(38,42,51,0.1);
+    }
+    .chip-name { font-family:var(--font-ui); font-size:var(--text-small); font-weight:700; white-space:nowrap; }
+    .chip-rev { font-family:var(--font-ui); font-size:0.6rem; font-weight:600; opacity:0.6; }
+    .chip-detail { font-family:var(--font-ui); font-size:0.58rem; opacity:0.5; }
+
+    .client-chip--public { background:rgba(153,15,61,0.06); border-color:rgba(153,15,61,0.12); }
+    .client-chip--public .chip-name { color:var(--claret); }
+    .client-chip--social { background:rgba(204,0,51,0.05); border-color:rgba(204,0,51,0.1); }
+    .client-chip--social .chip-name { color:#CC0033; }
+    .client-chip--health { background:rgba(255,136,51,0.06); border-color:rgba(255,136,51,0.12); }
+    .client-chip--health .chip-name { color:#cc6600; }
+    .client-chip--enterprise { background:rgba(13,118,128,0.05); border-color:rgba(13,118,128,0.1); }
+    .client-chip--enterprise .chip-name { color:var(--oxford); }
+    .client-chip--sap { background:rgba(38,42,51,0.04); border-color:rgba(38,42,51,0.1); }
+    .client-chip--sap .chip-name { color:var(--slate); }
 
     /* ---- Cast of characters ---- */
     .cast-section {
@@ -361,7 +374,7 @@
 
   <!-- ====== HERO ====== -->
   <header class="index-hero">
-    <h1>SyncPilot SE</h1>
+    <h1>SyncPilot</h1>
     <hr class="hero-rule">
     <p style="font-family: var(--font-ui); font-size: 1.05rem; color: rgba(38,42,51,0.55); line-height: 1.55; max-width: 600px; margin: 0 auto;">
       An investigative dossier into the company that handles digital consultations for German federal agencies — and the people who control it.
@@ -374,7 +387,11 @@
     <p>That same lawyer's company acquired shares in SyncPilot at <strong>a 95% discount</strong> — paying €1.00 per share when every other investor paid €18–21.</p>
     <p>That same lawyer was <strong>a defendant in the <a href="https://www.lto.de/recht/justiz/j/goldfinger-prozess-staatsanwaltschaft-augsburg-eingestellt-entschaedigung-strafanzeigen-kanzleidaten" target="_blank" rel="noopener">Goldfinger tax fraud prosecution</a></strong>, one of the largest in German history.</p>
     <p>The company's sole managing director — who controlled all incoming funds — <strong>acquired personal property during the period investor money was flowing in.</strong></p>
-    <p>This company's clients include the <a href="https://www.arbeitsagentur.de" target="_blank" rel="noopener">Bundesagentur für Arbeit</a>, <a href="https://www.aok.de" target="_blank" rel="noopener">AOK (Allgemeine Ortskrankenkasse)</a>, and the <a href="https://www.berlin.de/rbmskzl/" target="_blank" rel="noopener">Senatskanzlei Berlin</a>. 84% of its revenue comes from German taxpayers.</p>
+  </div>
+
+  <!-- ====== WHY THIS MATTERS ====== -->
+  <div style="max-width:720px; margin:0 auto var(--sp-6); text-align:center; font-family:var(--font-ui); font-size:var(--text-ui); color:rgba(38,42,51,0.55); line-height:1.6;">
+    This is the company that provides digital consultation software to the <a href="https://www.arbeitsagentur.de" target="_blank" rel="noopener">Bundesagentur für Arbeit</a>, the <a href="https://www.aok.de" target="_blank" rel="noopener">AOK (Allgemeine Ortskrankenkasse)</a>, and the <a href="https://www.berlin.de/rbmskzl/" target="_blank" rel="noopener">Senatskanzlei Berlin</a>. <strong style="color:var(--claret);">84% of its revenue comes from German taxpayers.</strong>
   </div>
 
   <!-- ====== CHARGE CARDS ====== -->
@@ -396,23 +413,78 @@
   <!-- ====== CLIENT EXPOSURE ====== -->
   <div class="client-exposure">
     <div class="client-exposure-title">Public Sector Exposure</div>
-    <p>SyncPilot SE's software is embedded in digital consultation systems across German federal, state, and municipal agencies. <strong>84.3% of its €44.2M projected revenue</strong> comes from three taxpayer-funded sectors: public administration, social insurance, and health insurance.</p>
-    <p class="client-list-inline">
-      Top clients include:
-      <a href="https://www.arbeitsagentur.de" target="_blank" rel="noopener">Bundesagentur für Arbeit</a> ·
-      <a href="https://www.aok.de" target="_blank" rel="noopener">AOK (Allgemeine Ortskrankenkasse)</a> (11 regional offices) ·
-      <a href="https://www.berlin.de/rbmskzl/" target="_blank" rel="noopener">Senatskanzlei Berlin</a> ·
-      <a href="https://www.ekom21.de" target="_blank" rel="noopener">ekom21</a> ·
-      <a href="https://www.itsg.de" target="_blank" rel="noopener">ITSG</a> ·
-      <a href="https://www.akdb.de" target="_blank" rel="noopener">AKDB Bayern</a> ·
-      <a href="https://www.deutsche-rentenversicherung.de" target="_blank" rel="noopener">Deutsche Rentenversicherung</a> ·
-      <a href="https://www.svlfg.de" target="_blank" rel="noopener">SVLFG</a> ·
-      <a href="https://www.volkswagen.de" target="_blank" rel="noopener">Volkswagen</a> ·
-      <a href="https://www.vodafone.de" target="_blank" rel="noopener">Vodafone</a> ·
-      <a href="https://www.eon.de" target="_blank" rel="noopener">E.ON</a> ·
-      <a href="https://www.axa.de" target="_blank" rel="noopener">AXA</a>
+
+    <!-- Stat header -->
+    <div style="display:flex; align-items:baseline; gap:var(--sp-3); margin-bottom:var(--sp-4); flex-wrap:wrap;">
+      <span style="font-family:var(--font-ui); font-size:clamp(1.8rem,4vw,2.2rem); font-weight:700; color:var(--claret); line-height:1;">84.3%</span>
+      <span style="font-family:var(--font-ui); font-size:var(--text-ui); color:rgba(38,42,51,0.55);">of €44.2M projected revenue comes from taxpayer-funded organisations</span>
+    </div>
+
+    <!-- Client card grid -->
+    <div class="client-card-grid">
+      <!-- Top public sector clients -->
+      <a href="https://www.arbeitsagentur.de" target="_blank" rel="noopener" class="client-chip client-chip--public">
+        <span class="chip-name">Bundesagentur für Arbeit</span>
+        <span class="chip-rev">€4.6M</span>
+      </a>
+      <a href="https://www.ekom21.de" target="_blank" rel="noopener" class="client-chip client-chip--public">
+        <span class="chip-name">ekom21</span>
+        <span class="chip-rev">€3.9M</span>
+      </a>
+      <a href="https://www.berlin.de/rbmskzl/" target="_blank" rel="noopener" class="client-chip client-chip--public">
+        <span class="chip-name">Senatskanzlei Berlin</span>
+        <span class="chip-rev">€3.8M</span>
+      </a>
+      <a href="https://www.akdb.de" target="_blank" rel="noopener" class="client-chip client-chip--public">
+        <span class="chip-name">AKDB Bayern</span>
+        <span class="chip-rev">€3.0M</span>
+      </a>
+      <a href="https://www.itsg.de" target="_blank" rel="noopener" class="client-chip client-chip--social">
+        <span class="chip-name">ITSG</span>
+        <span class="chip-rev">€3.0M</span>
+      </a>
+      <a href="https://www.aok.de" target="_blank" rel="noopener" class="client-chip client-chip--health">
+        <span class="chip-name">AOK</span>
+        <span class="chip-detail">11 regional offices</span>
+        <span class="chip-rev">€9.1M</span>
+      </a>
+      <a href="https://www.deutsche-rentenversicherung.de" target="_blank" rel="noopener" class="client-chip client-chip--social">
+        <span class="chip-name">Deutsche Rentenversicherung</span>
+      </a>
+      <a href="https://www.svlfg.de" target="_blank" rel="noopener" class="client-chip client-chip--social">
+        <span class="chip-name">SVLFG</span>
+        <span class="chip-rev">€1.1M</span>
+      </a>
+
+      <!-- Enterprise clients -->
+      <a href="https://www.volkswagen.de" target="_blank" rel="noopener" class="client-chip client-chip--enterprise">
+        <span class="chip-name">Volkswagen</span>
+        <span class="chip-rev">€2.2M</span>
+      </a>
+      <a href="https://www.eon.de" target="_blank" rel="noopener" class="client-chip client-chip--enterprise">
+        <span class="chip-name">E.ON</span>
+        <span class="chip-rev">€2.0M</span>
+      </a>
+      <a href="https://www.vodafone.de" target="_blank" rel="noopener" class="client-chip client-chip--enterprise">
+        <span class="chip-name">Vodafone</span>
+      </a>
+      <a href="https://www.axa.de" target="_blank" rel="noopener" class="client-chip client-chip--enterprise">
+        <span class="chip-name">AXA</span>
+      </a>
+
+      <!-- SAP card -->
+      <a href="https://partnerfinder.sap.com/partnerNavigator?q=SYNCPILOT" target="_blank" rel="noopener" class="client-chip client-chip--sap">
+        <span class="chip-name">SAP Partner</span>
+        <span class="chip-detail">Silver (↓ from Gold)</span>
+      </a>
+    </div>
+
+    <p style="font-family:var(--font-ui); font-size:var(--text-caption); color:rgba(38,42,51,0.35); margin-top:var(--sp-3); margin-bottom:0;">
+      <span style="display:inline-block; width:8px; height:8px; background:var(--claret); border-radius:2px; margin-right:4px; vertical-align:middle;"></span>Public admin
+      <span style="display:inline-block; width:8px; height:8px; background:#CC0033; border-radius:2px; margin:0 4px 0 12px; vertical-align:middle;"></span>Social insurance
+      <span style="display:inline-block; width:8px; height:8px; background:var(--mango); border-radius:2px; margin:0 4px 0 12px; vertical-align:middle;"></span>Health insurance
+      <span style="display:inline-block; width:8px; height:8px; background:var(--oxford); border-radius:2px; margin:0 4px 0 12px; vertical-align:middle;"></span>Enterprise
     </p>
-    <p>SyncPilot holds a <a href="https://partnerfinder.sap.com/partnerNavigator?q=SYNCPILOT" target="_blank" rel="noopener">Silver partnership with SAP</a> (downgraded from Gold), through which it reaches enterprise procurement cycles.</p>
   </div>
 
   <!-- ====== CAST OF CHARACTERS ====== -->
@@ -421,7 +493,7 @@
     <div class="cast-grid">
 
       <div class="cast-card">
-        <img src="assets/franz-bleicher-2425.jpg" alt="Franz-Xaver Bleicher" class="cast-photo">
+        <img src="assets/Bleicher, FXB b.jpg" alt="Franz-Xaver Bleicher" class="cast-photo">
         <div class="cast-info">
           <div class="cast-name">Franz-Xaver Bleicher</div>
           <div class="cast-role">Founder &amp; sole Managing Director. Largest beneficial owner (16.48%). Controls fund allocation.</div>
@@ -521,12 +593,7 @@
 
   <!-- ====== PROCUREMENT CTA ====== -->
   <div class="procurement-cta">
-    <p>If your organisation contracts with SyncPilot SE, this dossier concerns you.</p>
-  </div>
-
-  <!-- ====== DISCLAIMER ====== -->
-  <div class="index-disclaimer">
-    All facts sourced from Handelsregister filings and public information. We stand behind every claim on this site.
+    <p>If your organisation contracts with SyncPilot, this dossier concerns you.</p>
   </div>
 
   <!-- ====== FOOTER ====== -->
@@ -534,6 +601,7 @@
     <div class="footer-inner">
       <div class="footer-meta">
         <span>Last updated: March 2026</span>
+        <span style="color:rgba(255,241,229,0.55);">All facts sourced from Handelsregister filings and public information. We stand behind every claim on this site.</span>
         <span>Cookie-free · No personal data collected</span>
       </div>
     </div>
