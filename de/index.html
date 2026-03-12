@@ -139,7 +139,7 @@
     }
     .cast-title {
       font-family: var(--font-ui);
-      font-size: 0.68rem;
+      font-size: 0.9rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
@@ -150,49 +150,51 @@
     }
     .cast-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: var(--sp-4);
     }
     .cast-card {
       display: flex;
-      gap: var(--sp-3);
-      padding: var(--sp-4);
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: var(--sp-6) var(--sp-4);
       background: var(--card-bg);
       border-radius: 6px;
-      align-items: flex-start;
     }
     .cast-photo {
-      width: 64px;
-      height: 64px;
+      width: 128px;
+      height: 128px;
       border-radius: 50%;
       object-fit: cover;
       filter: grayscale(40%);
       flex-shrink: 0;
+      margin-bottom: var(--sp-3);
     }
     .cast-info { flex: 1; min-width: 0; }
     .cast-name {
       font-family: var(--font-ui);
-      font-size: 0.9rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: var(--slate);
-      margin-bottom: 2px;
+      margin-bottom: 4px;
     }
     .cast-role {
       font-family: var(--font-ui);
-      font-size: var(--text-small);
+      font-size: var(--text-ui);
       color: rgba(38,42,51,0.5);
-      line-height: 1.4;
+      line-height: 1.5;
     }
     .cast-badge {
       display: inline-block;
       font-family: var(--font-ui);
-      font-size: 0.58rem;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
-      padding: 2px 6px;
+      padding: 3px 10px;
       border-radius: 3px;
-      margin-top: 4px;
+      margin-top: 8px;
     }
     .cast-badge--target {
       background: rgba(153,15,61,0.08);
@@ -336,7 +338,6 @@
       .dossier-grid--two,
       .dossier-grid--three { grid-template-columns: 1fr; }
       .charge-grid { grid-template-columns: 1fr; }
-      .cast-grid { grid-template-columns: 1fr; }
       .index-hero { padding-top: calc(var(--nav-height) + var(--sp-8)); }
       .card-arrow { display: none; }
     }
@@ -500,18 +501,24 @@
   <!-- ====== CHAPTER CARDS ====== -->
   <main class="section-group">
 
-    <div class="section-divider">Die Untersuchung</div>
+    <!-- Section 1: Das Unternehmen (standalone) -->
+    <div class="section-divider">Das Unternehmen</div>
 
-    <div class="dossier-grid dossier-grid--two">
+    <div class="dossier-grid">
       <a href="profile.html" class="dossier-card dossier-card--neutral">
-        <div class="card-label">Kapitel 1</div>
+        <div class="card-label">Unternehmensprofil</div>
         <div class="card-title">Das Unternehmen</div>
         <p class="card-desc">
-          €128 Mio. Papierbewertung. 31 wirtschaftlich Berechtigte. 26 Holdinggesellschaften in 6 Jurisdiktionen. Ein Mann aus Augsburg im Zentrum.
+          €128 Mio. Papierbewertung. 31 wirtschaftlich Berechtigte. 26 Holdinggesellschaften in 6 Jurisdiktionen. 84% des Umsatzes von steuerfinanzierten Einrichtungen. Ein Mann aus Augsburg im Zentrum.
         </p>
         <span class="card-arrow">→</span>
       </a>
+    </div>
 
+    <!-- Section 2: Die Untersuchung (Anklagekapitel) -->
+    <div class="section-divider">Die Untersuchung</div>
+
+    <div class="dossier-grid dossier-grid--three">
       <a href="perseus.html" class="dossier-card dossier-card--warning">
         <div class="card-label">Kapitel 2</div>
         <div class="card-title">Der 95%-Rabatt</div>
@@ -520,14 +527,12 @@
         </p>
         <span class="card-arrow">→</span>
       </a>
-    </div>
 
-    <div class="dossier-grid dossier-grid--two">
       <a href="goldfinger.html" class="dossier-card dossier-card--warning">
         <div class="card-label">Kapitel 3</div>
         <div class="card-title">Die Goldfinger-Verbindung</div>
         <p class="card-desc">
-          Die Käufer, die den 95%-Rabatt erhielten: zwei Angeklagte aus einem der größten Steuerstrafverfahren Deutschlands.
+          Die Käufer: zwei Angeklagte aus einem Steuerstrafverfahren mit €1 Mrd. Volumen. Verhaftet. Inhaftiert. Dann 95% Rabatt erhalten.
         </p>
         <span class="card-arrow">→</span>
       </a>
@@ -536,20 +541,30 @@
         <div class="card-label">Kapitel 4</div>
         <div class="card-title">Die LVS-Falle</div>
         <p class="card-desc">
-          €6,15 Mio. gezahlt. Null Aktien geliefert. Der Anwalt, der den Vertrag entwarf, ließ ihn nie beurkunden — dann kaufte seine Gesellschaft Aktien mit 95% Rabatt.
+          €6,15 Mio. gezahlt. Null Aktien. Der Anwalt, der den Vertrag entwarf, ließ ihn nie beurkunden — dann kaufte seine Gesellschaft Aktien mit 95% Rabatt.
         </p>
         <span class="card-arrow">→</span>
       </a>
     </div>
 
-    <div class="section-divider">Quelldaten &amp; Visualisierungen</div>
+    <!-- Section 3: Beweise & Analyse -->
+    <div class="section-divider">Beweise &amp; Analyse</div>
 
-    <div class="dossier-grid dossier-grid--two">
+    <div class="dossier-grid dossier-grid--three">
       <a href="evidence.html" class="dossier-card dossier-card--reference">
-        <div class="card-label">Referenz</div>
+        <div class="card-label">Kapitel 5</div>
         <div class="card-title">Der Beweisraum</div>
         <p class="card-desc">
-          Kapitalereignisse, UBO-Verzeichnis, Organisationsstruktur, Zahlungsbuch, Kundenliste, E-Mail-Chronik. Jedes Quelldokument.
+          91 Kapitalereignisse, 31 UBOs, 30 E-Mail-Einträge, Zahlungsbuch, Gesellschaftsregister. Jedes Quelldokument.
+        </p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <a href="clients.html" class="dossier-card dossier-card--reference">
+        <div class="card-label">Analyse</div>
+        <div class="card-title">Kundenexposition</div>
+        <p class="card-desc">
+          55 Kunden. €44,2 Mio. Umsatz. 84,3% von steuerfinanzierten Einrichtungen. Steht Ihre Organisation auf dieser Liste?
         </p>
         <span class="card-arrow">→</span>
       </a>
@@ -558,7 +573,7 @@
         <div class="card-label">Visualisierung</div>
         <div class="card-title">Gesellschafter</div>
         <p class="card-desc">
-          Interaktive Beteiligungsgrafik: 65 Entitäten, 92 Beteiligungskanten, 19 direkte Gesellschafter. Mehrstufige Holdingstrukturen.
+          65 Entitäten, 92 Beteiligungskanten, 19 direkte Gesellschafter. Interaktive Grafik mehrstufiger Holdingstrukturen.
         </p>
         <span class="card-arrow">→</span>
       </a>
