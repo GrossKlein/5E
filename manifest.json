@@ -11,10 +11,10 @@
       "label": { "en": "Chapters", "de": "Kapitel" },
       "pages": [
         {
-          "id": "profile",
-          "file": "profile.html",
+          "id": "syncpilot",
+          "file": "syncpilot.html",
           "short": { "en": "Ch. 1", "de": "Kap. 1" },
-          "title": { "en": "The Company", "de": "Das Unternehmen" }
+          "title": { "en": "SyncPilot", "de": "SyncPilot" }
         },
         {
           "id": "perseus",
