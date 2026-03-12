@@ -49,25 +49,8 @@
     @media (max-width:640px) { .ev-table { font-size:0.65rem; } .er-stats { gap:var(--sp-3); } }
   </style>
 </head>
-<body>
-  <nav class="site-nav"><div class="nav-left">
-    <button class="hamburger" id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
-    <a class="nav-title" href="index.html">SyncPilot &mdash; Investigative Dossier</a>
-  </div></nav>
-  <aside class="side-menu" id="sideMenu">
-    <a href="index.html" class="menu-link">Dossier Home</a>
-    <div class="menu-group-label">Chapters</div>
-    <a href="profile.html" class="menu-link"><span class="ch-num">1.</span>The Company</a>
-    <a href="perseus.html" class="menu-link"><span class="ch-num">2.</span>The 95% Discount</a>
-    <a href="goldfinger.html" class="menu-link"><span class="ch-num">3.</span>The Goldfinger Connection</a>
-    <a href="lvs.html" class="menu-link"><span class="ch-num">4.</span>The LVS Trap</a>
-    <a href="evidence.html" class="menu-link active"><span class="ch-num">5.</span>The Evidence Room</a>
-    <div class="menu-group-label">Visualisations</div>
-    <a href="shareholders.html" class="menu-link"><span class="ch-num">&#x2B21;</span>Shareholders</a>
-  </aside>
-  <div class="side-menu-overlay" id="menuOverlay"></div>
-
-  <div class="er-hook">
+<body data-page="evidence">
+<div class="er-hook">
     <h1>The Evidence Room</h1>
     <p class="er-hook-sub">Every claim in this dossier traced to its source document. Click any section to expand. Click column headers to sort. All tables are searchable.</p>
   </div>
@@ -352,48 +335,6 @@
     </div>
 
   </div>
-
-  <div class="chapter-nav" style="max-width:780px; margin:var(--sp-8) auto var(--sp-6);">
-    <a href="lvs.html" class="prev">Ch. 4: The LVS Trap</a>
-    <a href="shareholders.html" class="next">Shareholders</a>
-  </div>
-
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-disclaimer"></div>
-      <div class="footer-meta"><span>Last updated: March 2026</span><span style="color:rgba(255,241,229,0.55);">All facts sourced from Handelsregister filings and public information. We stand behind every claim on this site.</span><span>Cookie-free &middot; No personal data collected</span></div>
-    </div>
-  </footer>
-
-  <script>
-  (function(){
-    var btn=document.getElementById('menuToggle'),menu=document.getElementById('sideMenu'),ov=document.getElementById('menuOverlay');
-    function tog(){btn.classList.toggle('active');menu.classList.toggle('open');ov.classList.toggle('visible');}
-    if(btn){btn.addEventListener('click',tog);ov.addEventListener('click',tog);}
-  })();
-  function toggleAcc(id){document.getElementById(id).classList.toggle('open');}
-  function filterTable(input,tableId){
-    var q=input.value.toLowerCase();
-    var rows=document.getElementById(tableId).querySelectorAll('tbody tr');
-    rows.forEach(function(r){r.style.display=r.textContent.toLowerCase().indexOf(q)>-1?'':'none';});
-  }
-  document.querySelectorAll('.ev-table th:not(.no-sort)').forEach(function(th){
-    th.addEventListener('click',function(){
-      var table=th.closest('table'),idx=Array.from(th.parentNode.children).indexOf(th);
-      var tbody=table.querySelector('tbody'),rows=Array.from(tbody.querySelectorAll('tr'));
-      var asc=!th.classList.contains('sort-asc');
-      th.parentNode.querySelectorAll('th').forEach(function(h){h.classList.remove('sort-asc','sort-desc');});
-      th.classList.add(asc?'sort-asc':'sort-desc');
-      rows.sort(function(a,b){
-        var av=a.children[idx]?a.children[idx].textContent.trim():'';
-        var bv=b.children[idx]?b.children[idx].textContent.trim():'';
-        var an=parseFloat(av.replace(/[^0-9.-]/g,'')),bn=parseFloat(bv.replace(/[^0-9.-]/g,''));
-        if(!isNaN(an)&&!isNaN(bn))return asc?an-bn:bn-an;
-        return asc?av.localeCompare(bv):bv.localeCompare(av);
-      });
-      rows.forEach(function(r){tbody.appendChild(r);});
-    });
-  });
-  </script>
+  <script defer src="data/dossier.js"></script>
 </body>
 </html>

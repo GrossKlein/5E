@@ -1,0 +1,72 @@
+{
+  "site": {
+    "title": {
+      "en": "SyncPilot — Investigative Dossier",
+      "de": "SyncPilot — Investigatives Dossier"
+    },
+    "updated": "March 2026"
+  },
+  "sections": [
+    {
+      "label": { "en": "Chapters", "de": "Kapitel" },
+      "pages": [
+        {
+          "id": "profile",
+          "file": "profile.html",
+          "short": { "en": "Ch. 1", "de": "Kap. 1" },
+          "title": { "en": "The Company", "de": "Das Unternehmen" }
+        },
+        {
+          "id": "perseus",
+          "file": "perseus.html",
+          "short": { "en": "Ch. 2", "de": "Kap. 2" },
+          "title": { "en": "The 95% Discount", "de": "Der 95%-Rabatt" }
+        },
+        {
+          "id": "goldfinger",
+          "file": "goldfinger.html",
+          "short": { "en": "Ch. 3", "de": "Kap. 3" },
+          "title": { "en": "The Goldfinger Connection", "de": "Die Goldfinger-Verbindung" }
+        },
+        {
+          "id": "lvs",
+          "file": "lvs.html",
+          "short": { "en": "Ch. 4", "de": "Kap. 4" },
+          "title": { "en": "The LVS Trap", "de": "Die LVS-Falle" }
+        },
+        {
+          "id": "evidence",
+          "file": "evidence.html",
+          "short": { "en": "Ch. 5", "de": "Kap. 5" },
+          "title": { "en": "The Evidence Room", "de": "Der Beweisraum" }
+        }
+      ]
+    },
+    {
+      "label": { "en": "Analysis", "de": "Analyse" },
+      "pages": [
+        {
+          "id": "clients",
+          "file": "clients.html",
+          "short": { "en": "Analysis", "de": "Analyse" },
+          "title": { "en": "Client Exposure", "de": "Kundenexposition" }
+        },
+        {
+          "id": "shareholders",
+          "file": "shareholders.html",
+          "short": { "en": "Vis.", "de": "Vis." },
+          "title": { "en": "Shareholders", "de": "Gesellschafter" }
+        }
+      ]
+    }
+  ],
+  "footer": {
+    "disclaimer": {
+      "en": "All facts sourced from Handelsregister filings and public information. We stand behind every claim on this site.",
+      "de": "Alle Fakten stammen aus Handelsregister-Einträgen und öffentlichen Informationen. Wir stehen hinter jeder Aussage auf dieser Seite."
+    },
+    "visdp_name": "",
+    "visdp_email": "",
+    "dmca_email": ""
+  }
+}

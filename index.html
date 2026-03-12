@@ -346,33 +346,8 @@
   </style>
 </head>
 
-<body>
-
-  <!-- ====== TOP NAV ====== -->
-  <nav class="site-nav">
-    <div class="nav-left">
-      <button class="hamburger" id="menuToggle" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-      <a class="nav-title" href="index.html">SyncPilot — Investigative Dossier</a>
-    </div>
-  </nav>
-
-  <!-- ====== SIDE MENU ====== -->
-  <aside class="side-menu" id="sideMenu">
-    <a href="index.html" class="menu-link active">Dossier Home</a>
-    <div class="menu-group-label">Chapters</div>
-    <a href="profile.html" class="menu-link"><span class="ch-num">1.</span>The Company</a>
-    <a href="perseus.html" class="menu-link"><span class="ch-num">2.</span>The 95% Discount</a>
-    <a href="goldfinger.html" class="menu-link"><span class="ch-num">3.</span>The Goldfinger Connection</a>
-    <a href="lvs.html" class="menu-link"><span class="ch-num">4.</span>The LVS Trap</a>
-    <a href="evidence.html" class="menu-link"><span class="ch-num">5.</span>The Evidence Room</a>
-    <div class="menu-group-label">Visualisations</div>
-    <a href="shareholders.html" class="menu-link"><span class="ch-num">⬡</span>Shareholders</a>
-  </aside>
-  <div class="side-menu-overlay" id="menuOverlay"></div>
-
-  <!-- ====== HERO ====== -->
+<body data-page="index">
+<!-- ====== HERO ====== -->
   <header class="index-hero">
     <h1>SyncPilot</h1>
     <hr class="hero-rule">
@@ -595,33 +570,6 @@
   <div class="procurement-cta">
     <p>If your organisation contracts with SyncPilot, this dossier concerns you.</p>
   </div>
-
-  <!-- ====== FOOTER ====== -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-meta">
-        <span>Last updated: March 2026</span>
-        <span style="color:rgba(255,241,229,0.55);">All facts sourced from Handelsregister filings and public information. We stand behind every claim on this site.</span>
-        <span>Cookie-free · No personal data collected</span>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-  (function(){
-    var btn = document.getElementById('menuToggle');
-    var menu = document.getElementById('sideMenu');
-    var overlay = document.getElementById('menuOverlay');
-    function toggle() {
-      btn.classList.toggle('active');
-      menu.classList.toggle('open');
-      overlay.classList.toggle('visible');
-    }
-    if (btn) {
-      btn.addEventListener('click', toggle);
-      overlay.addEventListener('click', toggle);
-    }
-  })();
-  </script>
+  <script defer src="data/dossier.js"></script>
 </body>
 </html>

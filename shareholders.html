@@ -411,33 +411,8 @@
   <script defer src="app.js"></script>
 </head>
 
-<body>
-
-  <!-- ====== TOP NAV ====== -->
-  <nav class="site-nav">
-    <div class="nav-left">
-      <button class="hamburger" id="menuToggle" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-      <a class="nav-title" href="index.html">SyncPilot — Investigative Dossier</a>
-    </div>
-  </nav>
-
-  <!-- ====== SIDE MENU ====== -->
-  <aside class="side-menu" id="sideMenu">
-    <a href="index.html" class="menu-link">Dossier Home</a>
-    <div class="menu-group-label">Chapters</div>
-    <a href="profile.html" class="menu-link"><span class="ch-num">1.</span>The Company</a>
-    <a href="perseus.html" class="menu-link"><span class="ch-num">2.</span>The 95% Discount</a>
-    <a href="goldfinger.html" class="menu-link"><span class="ch-num">3.</span>The Goldfinger Connection</a>
-    <a href="lvs.html" class="menu-link"><span class="ch-num">4.</span>The LVS Trap</a>
-    <a href="evidence.html" class="menu-link"><span class="ch-num">5.</span>The Evidence Room</a>
-    <div class="menu-group-label">Visualisations</div>
-    <a href="shareholders.html" class="menu-link active"><span class="ch-num">⬡</span>Shareholders</a>
-  </aside>
-  <div class="side-menu-overlay" id="menuOverlay"></div>
-
-  <!-- ====== CONTENT ====== -->
+<body data-page="shareholders">
+<!-- ====== CONTENT ====== -->
   <article class="content-area" style="max-width: var(--max-width);">
 
     <h1>
@@ -619,53 +594,11 @@
     </div>
 
     <!-- ── CHAPTER NAV ── -->
-    <div class="chapter-nav">
-      <a href="profile.html" class="prev">
-        <span data-lang-en>Ch. 1: The Company</span>
-        <span data-lang-de>Kap. 1: Das Unternehmen</span>
-      </a>
-      <a href="evidence.html" class="next">
-        <span data-lang-en>The Evidence Room</span>
-        <span data-lang-de>Der Beweisraum</span>
-      </a>
-    </div>
-
   </article>
 
   <!-- UBO tooltip element (positioned absolutely over graph) -->
   <div class="ubo-tip" id="uboTip"></div>
-
-  <!-- ====== FOOTER ====== -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-disclaimer">
-        <span data-lang-en>This analysis represents investigative questions and pattern identification, not legal determinations of wrongdoing. Individuals are presumed innocent unless proven otherwise in a court of law.</span>
-        <span data-lang-de>Diese Analyse stellt investigative Fragen und Mustererkennung dar, keine rechtlichen Feststellungen von Fehlverhalten. Personen gelten als unschuldig, bis ihre Schuld rechtskräftig festgestellt wird.</span>
-      </div>
-      <div class="footer-meta">
-        <span>Last updated: February 2026</span>
-        <span>Cookie-free · No personal data collected</span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ====== MENU TOGGLE ====== -->
-  <script>
-  (function(){
-    var btn = document.getElementById('menuToggle');
-    var menu = document.getElementById('sideMenu');
-    var overlay = document.getElementById('menuOverlay');
-    function toggle() {
-      btn.classList.toggle('active');
-      menu.classList.toggle('open');
-      overlay.classList.toggle('visible');
-    }
-    if (btn) {
-      btn.addEventListener('click', toggle);
-      overlay.addEventListener('click', toggle);
-    }
-  })();
-  </script>
+<!-- ====== MENU TOGGLE ====== -->
 
   <!-- ====== UBO HOVER FEATURE ======
        Waits for app.js to expose window._shareviz, then adds
@@ -812,5 +745,6 @@
   })();
   </script>
 
+  <script defer src="data/dossier.js"></script>
 </body>
 </html>
