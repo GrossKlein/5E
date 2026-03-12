@@ -335,6 +335,43 @@
     </div>
 
   </div>
+  <script>
+  function toggleAcc(id) {
+    var el = document.getElementById(id);
+    if (el) el.classList.toggle('open');
+  }
+  function filterTable(input, tableId) {
+    var q = input.value.toLowerCase();
+    var rows = document.getElementById(tableId).querySelectorAll('tbody tr');
+    rows.forEach(function(r) { r.style.display = r.textContent.toLowerCase().indexOf(q) > -1 ? '' : 'none'; });
+  }
+  function sortTable(th, tableId) {
+    var table = document.getElementById(tableId);
+    if (!table) return;
+    var tbody = table.querySelector('tbody');
+    var rows = Array.from(tbody.querySelectorAll('tr'));
+    var idx = Array.from(th.parentNode.children).indexOf(th);
+    var asc = th.getAttribute('data-sort') !== 'asc';
+    th.setAttribute('data-sort', asc ? 'asc' : 'desc');
+    Array.from(th.parentNode.children).forEach(function(h) { if (h !== th) h.removeAttribute('data-sort'); });
+    rows.sort(function(a, b) {
+      var aVal = (a.children[idx] || {}).textContent || '';
+      var bVal = (b.children[idx] || {}).textContent || '';
+      var aNum = parseFloat(aVal.replace(/[^0-9.\-]/g, ''));
+      var bNum = parseFloat(bVal.replace(/[^0-9.\-]/g, ''));
+      if (!isNaN(aNum) && !isNaN(bNum)) return asc ? aNum - bNum : bNum - aNum;
+      return asc ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
+    });
+    rows.forEach(function(r) { tbody.appendChild(r); });
+  }
+  // Auto-bind sortable headers
+  document.querySelectorAll('.ev-table').forEach(function(tbl) {
+    tbl.querySelectorAll('thead th:not(.no-sort)').forEach(function(th) {
+      th.style.cursor = 'pointer';
+      th.addEventListener('click', function() { sortTable(th, tbl.id); });
+    });
+  });
+  </script>
   <script defer src="data/dossier.js"></script>
 </body>
 </html>

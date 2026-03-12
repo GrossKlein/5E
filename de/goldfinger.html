@@ -48,9 +48,9 @@
       border-top: 3px solid #CC0033;
     }
     .profile-avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
+      width: 200px;
+      height: 200px;
+      border-radius: 6px;
       background: var(--slate);
       display: flex;
       align-items: center;
@@ -62,6 +62,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      filter: grayscale(40%);
     }
     .profile-avatar-initials {
       font-family: var(--font-ui);
@@ -367,12 +368,14 @@
     <!-- ======================= -->
     <h2 id="buyers">Wem gehört H.G. Perseus?</h2>
 
+    <p style="font-family:var(--font-ui); font-size:var(--text-ui); color:rgba(38,42,51,0.55); margin-bottom:var(--sp-6);"><strong>H.G.</strong> steht für <strong>H</strong>unstein und <strong>G</strong>oerg — die beiden Münchner Anwälte, denen die Gesellschaft gehört. Sie benannten die Holdinggesellschaft nach sich selbst.</p>
+
     <div class="profile-grid">
 
       <!-- Martin Hunstein -->
       <div class="profile-card">
         <div class="profile-avatar" id="avatarMH">
-          <span class="profile-avatar-initials">MH</span>
+          <img src="../assets/Hunstein, Martin.png" alt="Martin Hunstein">
         </div>
         <div class="profile-name">Martin Hunstein</div>
         <div class="profile-badges">
@@ -383,7 +386,7 @@
         <ul class="profile-meta-list">
           <li><strong>Geboren:</strong> 10. Juni 1971, München</li>
           <li><strong>Funktion bei Perseus:</strong> Geschäftsführer, 50% Gesellschafter der H.G. Perseus GmbH StBG</li>
-          <li><strong>Kanzlei:</strong> Partner bei GHR Goerg Hunstein Rechtsanwälte Steuerberater, München</li>
+          <li><strong>Kanzlei:</strong> Partner bei <a href="https://www.ghr-legal.de/" target="_blank" rel="noopener">GHR Goerg Hunstein Rechtsanwälte Steuerberater</a>, <a href="https://www.google.com/maps/place/Unterer+Anger+3,+80331+M%C3%BCnchen" target="_blank" rel="noopener">Unterer Anger 3, 80331 München</a></li>
           <li><strong>UBO-Anteil an SyncPilot:</strong> 3,51% (195.844 Aktien)</li>
           <li><strong>Via:</strong> Perseus Innovations GmbH + ZKP Innovations Holding GmbH</li>
           <li><strong>Strafhistorie:</strong> Angeklagter im <a href="https://www.lto.de/recht/justiz/j/goldfinger-prozess-staatsanwaltschaft-augsburg-eingestellt-entschaedigung-strafanzeigen-kanzleidaten" target="_blank" rel="noopener">Goldfinger-Steuerstrafverfahren</a>. In Untersuchungshaft. Kanzlei aufgelöst. Verfahren im Januar 2021 nach §153 II StPO eingestellt — kein Freispruch.</li>
@@ -394,7 +397,7 @@
       <!-- Diethard Erik Goerg -->
       <div class="profile-card">
         <div class="profile-avatar" id="avatarDEG">
-          <span class="profile-avatar-initials">DEG</span>
+          <img src="../assets/Diethard, Goerg.png" alt="Diethard Erik Goerg">
         </div>
         <div class="profile-name">Diethard Erik Goerg</div>
         <div class="profile-badges">
@@ -405,7 +408,7 @@
         <ul class="profile-meta-list">
           <li><strong>Wohnsitz:</strong> München</li>
           <li><strong>Funktion bei Perseus:</strong> Mitinhaber der H.G. Perseus GmbH StBG</li>
-          <li><strong>Kanzlei:</strong> Partner bei GHR Goerg Hunstein Rechtsanwälte Steuerberater, München</li>
+          <li><strong>Kanzlei:</strong> Partner bei <a href="https://www.ghr-legal.de/" target="_blank" rel="noopener">GHR Goerg Hunstein Rechtsanwälte Steuerberater</a>, <a href="https://www.google.com/maps/place/Unterer+Anger+3,+80331+M%C3%BCnchen" target="_blank" rel="noopener">Unterer Anger 3, 80331 München</a></li>
           <li><strong>UBO-Anteil an SyncPilot:</strong> 3,51% (195.844 Aktien)</li>
           <li><strong>Via:</strong> Perseus Innovations GmbH + ZKP Innovations Holding GmbH</li>
           <li><strong>Strafhistorie:</strong> Angeklagter im <a href="https://www.lto.de/recht/justiz/j/goldfinger-prozess-staatsanwaltschaft-augsburg-eingestellt-entschaedigung-strafanzeigen-kanzleidaten" target="_blank" rel="noopener">Goldfinger-Steuerstrafverfahren</a>. In Untersuchungshaft. Kanzlei aufgelöst. Verfahren im Januar 2021 nach §153 II StPO eingestellt — kein Freispruch.</li>
