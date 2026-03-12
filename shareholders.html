@@ -416,17 +416,17 @@
   <article class="content-area" style="max-width: var(--max-width);">
 
     <h1>
-      <span data-lang-en>Shareholders</span>
-      <span data-lang-de>Gesellschafter</span>
+      Shareholders
+      
     </h1>
 
     <!-- ── BLUF ── -->
     <div class="sh-bluf">
       <div class="sh-bluf-label">
-        <span data-lang-en>Bottom Line Up Front</span>
-        <span data-lang-de>Zusammenfassung</span>
+        Bottom Line Up Front
+        
       </div>
-      <p data-lang-en>
+      <p>
         A folder-derived ownership analysis of SyncPilot&nbsp;SE's corporate filings reveals a web of
         <strong>65&nbsp;distinct entities</strong> connected by <strong>92&nbsp;ownership edges</strong>.
         Of these, <strong>19&nbsp;entities hold or held direct stakes</strong> in SyncPilot&nbsp;SE itself —
@@ -436,37 +436,25 @@
         No ownership percentages could be inferred from the folder structure; only the existence and
         temporal range of each relationship is documented.
       </p>
-      <p data-lang-de>
-        Eine aus der Ordnerstruktur abgeleitete Beteiligungsanalyse der Unternehmensunterlagen von SyncPilot&nbsp;SE
-        offenbart ein Netzwerk von <strong>65&nbsp;einzelnen Entitäten</strong>, verbunden durch
-        <strong>92&nbsp;Beteiligungskanten</strong>. Davon halten oder hielten
-        <strong>19&nbsp;Entitäten direkte Beteiligungen</strong> an SyncPilot&nbsp;SE —
-        <strong>14&nbsp;aktuelle</strong> Gesellschafter und <strong>5&nbsp;ehemalige</strong>.
-        Die untenstehende Grafik zeigt mehrstufige Holdingstrukturen; mehrere natürliche Personen
-        erscheinen auf verschiedenen Ebenen der Kette, was Fragen zur tatsächlichen Kontrolle
-        gegenüber nomineller Beteiligung aufwirft.
-        Aus der Ordnerstruktur konnten keine Beteiligungsquoten abgeleitet werden; lediglich das
-        Bestehen und der zeitliche Rahmen jeder Beziehung sind dokumentiert.
-      </p>
       <div class="sh-bluf-stats">
         <span class="sh-stat">
-          <span data-lang-en>Entities</span><span data-lang-de>Entitäten</span>
+          Entities
           <strong>65</strong>
         </span>
         <span class="sh-stat">
-          <span data-lang-en>Ownership edges</span><span data-lang-de>Beteiligungskanten</span>
+          Ownership edges
           <strong>92</strong>
         </span>
         <span class="sh-stat">
-          <span data-lang-en>Direct shareholders</span><span data-lang-de>Direkte Gesellschafter</span>
+          Direct shareholders
           <strong>19</strong>
         </span>
         <span class="sh-stat sh-stat--current">
-          <span data-lang-en>Current</span><span data-lang-de>Aktuell</span>
+          Current
           <strong>14</strong>
         </span>
         <span class="sh-stat sh-stat--former">
-          <span data-lang-en>Former</span><span data-lang-de>Ehemalig</span>
+          Former
           <strong>5</strong>
         </span>
       </div>
@@ -475,14 +463,14 @@
     <!-- ── VIZ CONTROLS ── -->
     <div class="sh-controls-bar">
       <h2>
-        <span data-lang-en>Ownership graph &amp; timeline</span>
-        <span data-lang-de>Beteiligungsgrafik &amp; Zeitleiste</span>
+        Ownership graph &amp; timeline
+        
       </h2>
       <div class="controls">
         <label class="control">
           <span>
-            <span data-lang-en>Graph view</span>
-            <span data-lang-de>Ansicht</span>
+            Graph view
+            
           </span>
           <select id="viewMode">
             <option value="direct" selected>Direct shareholders only</option>
@@ -491,14 +479,14 @@
         </label>
         <label class="control">
           <span>
-            <span data-lang-en>Search entity</span>
-            <span data-lang-de>Entität suchen</span>
+            Search entity
+            
           </span>
           <input id="searchInput" type="search" placeholder="Type a name…" autocomplete="off" />
         </label>
         <button id="resetBtn" class="btn" type="button">
-          <span data-lang-en>Reset</span>
-          <span data-lang-de>Zurücksetzen</span>
+          Reset
+          
         </button>
       </div>
     </div>
@@ -510,30 +498,30 @@
       <div class="panel panel-graph">
         <div class="panel-header">
           <h2>
-            <span data-lang-en>Ownership graph</span>
-            <span data-lang-de>Beteiligungsgrafik</span>
+            Ownership graph
+            
           </h2>
           <div class="legend">
             <span class="badge badge-target">SyncPilot SE</span>
             <span class="badge badge-org">
-              <span data-lang-en>Legal person</span>
-              <span data-lang-de>Juristische Person</span>
+              Legal person
+              
             </span>
             <span class="badge badge-person">
-              <span data-lang-en>Natural person</span>
-              <span data-lang-de>Natürliche Person</span>
+              Natural person
+              
             </span>
             <span class="badge badge-edge-current">
-              <span data-lang-en>Current</span>
-              <span data-lang-de>Aktuell</span>
+              Current
+              
             </span>
             <span class="badge badge-edge-former">
-              <span data-lang-en>Former</span>
-              <span data-lang-de>Ehemalig</span>
+              Former
+              
             </span>
             <span class="badge badge-edge-unknown">
-              <span data-lang-en>Unknown period</span>
-              <span data-lang-de>Unbekannter Zeitraum</span>
+              Unknown period
+              
             </span>
           </div>
         </div>
@@ -549,14 +537,14 @@
       <div class="panel panel-detail">
         <div class="panel-header">
           <h2>
-            <span data-lang-en>Selection</span>
-            <span data-lang-de>Auswahl</span>
+            Selection
+            
           </h2>
         </div>
         <div id="details" class="details">
           <div class="hint">
-            <span data-lang-en>Click a node or edge to see details.</span>
-            <span data-lang-de>Knoten oder Kante anklicken für Details.</span>
+            Click a node or edge to see details.
+            
           </div>
         </div>
       </div>
@@ -567,8 +555,8 @@
     <div class="panel timeline">
       <div class="panel-header">
         <h2>
-          <span data-lang-en>Direct shareholder timeline</span>
-          <span data-lang-de>Zeitleiste der direkten Gesellschafter</span>
+          Direct shareholder timeline
+          
         </h2>
         <div class="note" id="timelineNote"></div>
       </div>
@@ -577,19 +565,12 @@
 
     <!-- ── SOURCE NOTE ── -->
     <div class="sh-source">
-      <p data-lang-en>
+      <p>
         <strong>Data source.</strong> <code>data/graph.min.json</code> — folder-derived ownership structure.
         No ownership percentages are inferred. Some periods use a year-range
         (e.g.&nbsp;"2022-23"); these items are rendered from the earliest possible date
         and shown with a dashed border. Built&nbsp;2026-02-18.
         <strong>Hover over</strong> a legal-person node in the graph to see its natural-person owners (UBOs).
-      </p>
-      <p data-lang-de>
-        <strong>Datenquelle.</strong> <code>data/graph.min.json</code> — aus der Ordnerstruktur abgeleitete
-        Beteiligungsstruktur. Keine Beteiligungsquoten werden abgeleitet. Einige Zeiträume verwenden
-        Jahresbereiche (z.&nbsp;B.&nbsp;„2022-23"); diese werden ab dem frühestmöglichen Datum dargestellt
-        und mit gestricheltem Rand markiert. Stand&nbsp;18.02.2026.
-        <strong>Mit der Maus</strong> über einen Firmenknoten fahren, um die natürlichen Personen (UBOs) zu sehen.
       </p>
     </div>
 
