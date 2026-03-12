@@ -8,60 +8,114 @@
   },
   "sections": [
     {
-      "label": { "en": "Chapters", "de": "Kapitel" },
+      "label": {
+        "en": "Chapters",
+        "de": "Kapitel"
+      },
       "pages": [
         {
           "id": "syncpilot",
           "file": "syncpilot.html",
-          "short": { "en": "Ch. 1", "de": "Kap. 1" },
-          "title": { "en": "SyncPilot", "de": "SyncPilot" }
+          "short": {
+            "en": "Profile",
+            "de": "Profil"
+          },
+          "title": {
+            "en": "SyncPilot",
+            "de": "SyncPilot"
+          }
         },
         {
           "id": "the-95-percent-discount",
           "file": "the-95-percent-discount.html",
-          "short": { "en": "Ch. 2", "de": "Kap. 2" },
-          "title": { "en": "The 95% Discount", "de": "Der 95%-Rabatt" }
+          "short": {
+            "en": "Discount",
+            "de": "Rabatt"
+          },
+          "title": {
+            "en": "The 95% Discount",
+            "de": "Der 95%-Rabatt"
+          }
         },
         {
           "id": "the-goldfinger-connection",
           "file": "the-goldfinger-connection.html",
-          "short": { "en": "Ch. 3", "de": "Kap. 3" },
-          "title": { "en": "The Goldfinger Connection", "de": "Die Goldfinger-Verbindung" }
+          "short": {
+            "en": "Goldfinger",
+            "de": "Goldfinger"
+          },
+          "title": {
+            "en": "The Goldfinger Connection",
+            "de": "Die Goldfinger-Verbindung"
+          }
         },
         {
           "id": "the-lvs-trap",
           "file": "the-lvs-trap.html",
-          "short": { "en": "Ch. 4", "de": "Kap. 4" },
-          "title": { "en": "The LVS Trap", "de": "Die LVS-Falle" }
+          "short": {
+            "en": "LVS",
+            "de": "LVS"
+          },
+          "title": {
+            "en": "The LVS Trap",
+            "de": "Die LVS-Falle"
+          }
         },
         {
           "id": "the-evidence-room",
           "file": "the-evidence-room.html",
-          "short": { "en": "Ch. 5", "de": "Kap. 5" },
-          "title": { "en": "The Evidence Room", "de": "Der Beweisraum" }
+          "short": {
+            "en": "Evidence",
+            "de": "Beweise"
+          },
+          "title": {
+            "en": "The Evidence Room",
+            "de": "Der Beweisraum"
+          }
         }
       ]
     },
     {
-      "label": { "en": "Analysis", "de": "Analyse" },
+      "label": {
+        "en": "Analysis",
+        "de": "Analyse"
+      },
       "pages": [
         {
           "id": "sap-syncpilot-vendor-risk",
           "file": "sap-syncpilot-vendor-risk.html",
-          "short": { "en": "Letter", "de": "Brief" },
-          "title": { "en": "Open Letter to SAP", "de": "Offener Brief an SAP" }
+          "short": {
+            "en": "SAP",
+            "de": "SAP"
+          },
+          "title": {
+            "en": "Open Letter to SAP",
+            "de": "Offener Brief an SAP"
+          }
         },
         {
           "id": "vendor-risk",
           "file": "vendor-risk.html",
-          "short": { "en": "Analysis", "de": "Analyse" },
-          "title": { "en": "Vendor Risk", "de": "Lieferantenrisiko" }
+          "short": {
+            "en": "Risk",
+            "de": "Risiko"
+          },
+          "title": {
+            "en": "Vendor Risk",
+            "de": "Lieferantenrisiko"
+          }
         },
         {
           "id": "shareholders",
           "file": "shareholders.html",
-          "short": { "en": "Vis.", "de": "Vis." },
-          "title": { "en": "Shareholders", "de": "Gesellschafter" }
+          "short": {
+            "en": "Shares",
+            "de": "Anteile"
+          },
+          "title": {
+            "en": "Shareholders",
+            "de": "Gesellschafter"
+          }
         }
       ]
     }
