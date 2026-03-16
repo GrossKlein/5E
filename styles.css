@@ -363,7 +363,8 @@ hr {
 }
 .menu-link .ch-num {
   display: inline-block;
-  width: 26px;
+  min-width: 52px;
+  margin-right: 4px;
   font-weight: 600;
   color: rgba(255,241,229,0.5);
   font-size: var(--text-small);
