@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Netzwerkanalyse — SyncPilot-Dossier</title>
+  <meta name="description" content="Interactive force-directed network graph: 67 persons, 60 entities, 150 connections across the SyncPilot corporate web. Forensic litigation database visualisation.">
+  <link rel="stylesheet" href="../styles.css">
+
+  <style>
+    /* === NETWORK PAGE STYLES === */
+
+    .net-bluf {
+      border-left: 4px solid var(--oxford);
+      background: rgba(242,223,206,0.35);
+      padding: var(--sp-4) var(--sp-6);
+      margin-block: var(--sp-6);
+    }
+    .net-bluf-label {
+      font-family: var(--font-ui);
+      font-size: var(--text-caption);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--oxford);
+      margin-bottom: var(--sp-2);
+    }
+    .net-bluf p {
+      font-size: var(--text-body);
+      line-height: 1.6;
+      margin-bottom: var(--sp-3);
+    }
+    .net-bluf p:last-of-type { margin-bottom: 0; }
+    .net-bluf strong { font-weight: 700; color: var(--slate); }
+
+    .net-bluf-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-3) var(--sp-6);
+      margin-top: var(--sp-4);
+      padding-top: var(--sp-3);
+      border-top: 1px solid var(--wheat);
+    }
+    .net-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      font-family: var(--font-ui);
+      font-size: var(--text-caption);
+      color: rgba(38,42,51,0.55);
+      line-height: 1.2;
+    }
+    .net-stat strong {
+      font-family: var(--font-body);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--oxford);
+      line-height: 1;
+    }
+
+    .net-controls-bar {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--sp-4);
+      flex-wrap: wrap;
+      margin-bottom: var(--sp-4);
+      margin-top: var(--sp-8);
+    }
+    .net-controls-bar h2 {
+      margin: 0; padding: 0; border: none;
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      color: var(--heading-secondary);
+    }
+    .net-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-3);
+      align-items: center;
+    }
+    .net-control {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-family: var(--font-ui);
+      font-size: var(--text-caption);
+      color: rgba(38,42,51,0.55);
+    }
+    .net-control select {
+      font-family: var(--font-ui);
+      font-size: var(--text-small);
+      padding: 5px 8px;
+      border: 1px solid var(--wheat);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--slate);
+      cursor: pointer;
+    }
+    .net-control select:focus { outline: 2px solid var(--oxford); outline-offset: 1px; }
+    .net-btn {
+      font-family: var(--font-ui);
+      font-size: var(--text-small);
+      font-weight: 600;
+      padding: 5px 14px;
+      background: transparent;
+      color: var(--oxford);
+      border: 1px solid var(--oxford);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      align-self: flex-end;
+    }
+    .net-btn:hover { background: var(--oxford); color: #fff; }
+
+    #graph-svg {
+      width: 100%;
+      height: 620px;
+      border: 1px solid var(--wheat);
+      border-radius: 6px;
+      background: var(--paper);
+      cursor: grab;
+      display: block;
+    }
+    #graph-svg:active { cursor: grabbing; }
+
+    .net-info {
+      margin-top: var(--sp-4);
+      padding: var(--sp-4) var(--sp-6);
+      background: var(--card-bg);
+      border-radius: 6px;
+      font-family: var(--font-ui);
+      font-size: var(--text-ui);
+      line-height: 1.65;
+      min-height: 52px;
+    }
+    .net-info .info-name {
+      font-family: var(--font-body);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--slate);
+      margin-bottom: 4px;
+    }
+    .net-info .info-lbl { color: rgba(38,42,51,0.45); font-size: var(--text-small); }
+    .net-info .info-val { font-weight: 600; color: var(--slate); }
+    .net-info .info-roles { margin-top: 4px; font-size: var(--text-small); color: rgba(38,42,51,0.6); }
+
+    .net-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: var(--sp-4);
+      font-family: var(--font-ui);
+      font-size: var(--text-caption);
+      color: rgba(38,42,51,0.5);
+    }
+    .net-legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .leg-rect { width: 12px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+    .leg-line { width: 18px; height: 0; border-top: 2px solid; flex-shrink: 0; }
+    .leg-dash { width: 18px; height: 0; border-top: 2px dashed; flex-shrink: 0; }
+
+    .node-lbl { pointer-events: none; }
+    .lk-role   { stroke-opacity: 0.18; stroke-width: 0.6; }
+    .lk-entity { stroke-opacity: 0.4;  stroke-width: 1.3; }
+    .lk-family { stroke-opacity: 0.35; stroke-width: 1; stroke-dasharray: 4 3; }
+
+    @media (max-width: 768px) {
+      #graph-svg { height: 400px; }
+      .net-controls { gap: var(--sp-2); }
+      .net-controls-bar { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+
+<body data-page="network">
+  <article class="content-area" style="max-width: var(--max-width);">
+
+    <h1>Netzwerkanalyse</h1>
+
+    <div class="net-bluf">
+      <div class="net-bluf-label">Zusammenfassung</div>
+      <p>
+        The forensic litigation database maps <strong>67&nbsp;natural persons</strong> and
+        <strong>60&nbsp;legal entities</strong> connected by <strong>150&nbsp;edges</strong> —
+        100 person-entity roles, 33 entity-to-entity ownership chains, and 17 family links.
+        The network reveals Franz-Xaver Bleicher's direct control over 11 entities (€5.7M combined
+        share capital), the DSI investor syndicate where 6 holding companies each hold 16.7%,
+        cross-border layering through Malta and Luxembourg, and the Krocke/Auctus three-tier
+        structure.
+      </p>
+      <div class="net-bluf-stats">
+        <span class="net-stat">Persons<strong>67</strong></span>
+        <span class="net-stat">Entities<strong>60</strong></span>
+        <span class="net-stat">Role links<strong>100</strong></span>
+        <span class="net-stat">Ownership chains<strong>33</strong></span>
+        <span class="net-stat">Family links<strong>17</strong></span>
+        <span class="net-stat">Entity clusters<strong>11</strong></span>
+      </div>
+    </div>
+
+    <div class="net-controls-bar">
+      <h2>Kräftegesteuerter Beteiligungsgraph</h2>
+      <div class="net-controls">
+        <label class="net-control">
+          <span>Relevanzstufe</span>
+          <select id="tierF">
+            <option value="0">Alle Stufen</option>
+            <option value="1">T1 — nur Hauptpersonen</option>
+            <option value="2">T1–T2 Kern</option>
+            <option value="3" selected>T1–T3 verbunden</option>
+            <option value="4">T1–T4 erweitert</option>
+            <option value="5">T1–T5 vollständig</option>
+          </select>
+        </label>
+        <label class="net-control">
+          <span>Entitäts-Cluster</span>
+          <select id="clusterF">
+            <option value="">Alle Cluster</option>
+            <option value="syncpilot">SyncPilot group</option>
+            <option value="bleicher_holdings">Bleicher holdings</option>
+            <option value="auriga">Auriga (Steiner)</option>
+            <option value="auctus">Auctus (Krocke)</option>
+            <option value="tiven">Tiven (Purkert)</option>
+            <option value="schaeff">Schaeff</option>
+            <option value="legal_services">Legal services</option>
+          </select>
+        </label>
+        <label class="net-control">
+          <span>Verbindungstyp</span>
+          <select id="linkF">
+            <option value="all">Alle Verbindungstypen</option>
+            <option value="role">Person → entity roles</option>
+            <option value="entity">Entity → entity ownership</option>
+            <option value="family">Nur Familienverbindungen</option>
+          </select>
+        </label>
+        <button id="resetBtn" class="net-btn" type="button">Ansicht zurücksetzen</button>
+      </div>
+    </div>
+
+    <svg id="graph-svg"></svg>
+
+    <div class="net-info" id="infoPanel">
+      <span class="info-lbl">Knoten anklicken · Ziehen zum Verschieben · Scrollen zum Zoomen · Hover zeigt Nachbarn</span>
+    </div>
+
+    <div class="net-legend">
+      <span><span class="leg-dot" style="background:#990F3D"></span> T1 principal</span>
+      <span><span class="leg-dot" style="background:#0D7680"></span> T2 core person</span>
+      <span><span class="leg-dot" style="background:rgba(38,42,51,0.4)"></span> T3+ person</span>
+      <span><span class="leg-rect" style="background:#0D7680"></span> Entity (colour = cluster)</span>
+      <span><span class="leg-line" style="border-color:#7F77DD"></span> Person–entity role</span>
+      <span><span class="leg-line" style="border-color:#0D7680"></span> Entity–entity ownership</span>
+      <span><span class="leg-dash" style="border-color:#990F3D"></span> Family link</span>
+    </div>
+
+    <p style="font-family:var(--font-ui); font-size:var(--text-caption); color:rgba(38,42,51,0.35); margin-top:var(--sp-6); text-align:center;">
+      Quelle: forensische Prozessdatenbank v3 · Erstellungsdatum 15.03.2026
+    </p>
+
+  </article>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <script>
+  (function(){
+    "use strict";
+    var CC={syncpilot:'#0D7680',bleicher_holdings:'#990F3D',auriga:'#FF8833',auctus:'#CC0033',tiven:'#0A7D3F',schaeff:'#6B5B3E',legal_services:'#7F77DD',schorr:'#534AB7',lindner_concha:'#D85A30',kurth_lapis:'#5DCAA5',hansen:'#97C459'};
+    var LC={role:'#7F77DD',entity:'#0D7680',family:'#990F3D'};
+    function nc(d){if(d.type==='person')return d.tier<=1?'#990F3D':d.tier<=2?'#0D7680':'rgba(38,42,51,0.4)';return CC[d.cluster]||'#B4A98A';}
+    function nr(d){if(d.id==='bleicher_franz_xaver')return 16;if(d.id==='syncpilot_se')return 14;if(d.id==='neumann_damerau_arnulf')return 13;return d.tier<=1?10:d.tier<=2?7:d.tier<=3?5.5:4;}
+    var DATA,allN,nMap,sim,svg,g,linkG,nodeG,labelG,zm,_lk,_nd;
+    fetch('../data/network.json').then(function(r){if(!r.ok)throw r;return r.json();}).then(function(d){DATA=d;go();}).catch(function(){fetch('../network.json').then(function(r){return r.json();}).then(function(d){DATA=d;go();});});
+    function go(){
+      allN=DATA.persons.map(function(p){return Object.assign({},p,{type:'person'});}).concat(DATA.entities.map(function(e){return Object.assign({},e,{type:'entity'});}));
+      nMap=new Map(allN.map(function(n){return[n.id,n];}));
+      var el=document.getElementById('graph-svg'),bx=el.getBoundingClientRect(),W=bx.width||960,H=bx.height||620;
+      svg=d3.select('#graph-svg').attr('viewBox','0 0 '+W+' '+H);
+      g=svg.append('g');linkG=g.append('g');nodeG=g.append('g');labelG=g.append('g');
+      zm=d3.zoom().scaleExtent([0.15,6]).on('zoom',function(e){g.attr('transform',e.transform);});
+      svg.call(zm);
+      document.getElementById('resetBtn').onclick=function(){svg.transition().duration(400).call(zm.transform,d3.zoomIdentity);};
+      document.getElementById('tierF').onchange=build;
+      document.getElementById('clusterF').onchange=build;
+      document.getElementById('linkF').onchange=build;
+      build();
+    }
+    function build(){
+      var tV=+document.getElementById('tierF').value,cV=document.getElementById('clusterF').value,lV=document.getElementById('linkF').value,mT=tV||5;
+      var nodes=allN.filter(function(n){return n.tier<=mT;});
+      if(cV){var ci=new Set(nodes.filter(function(n){return n.cluster===cV;}).map(function(n){return n.id;}));if(cV==='syncpilot'||cV==='bleicher_holdings'){ci.add('bleicher_franz_xaver');ci.add('neumann_damerau_arnulf');}nodes=nodes.filter(function(n){return ci.has(n.id);});}
+      var ni=new Set(nodes.map(function(n){return n.id;})),links=[];
+      function al(a,t){a.forEach(function(l){if(ni.has(l.source)&&ni.has(l.target))links.push(Object.assign({},l,{ltype:t}));});}
+      if(lV==='all'||lV==='role')al(DATA.roleLinks,'role');
+      if(lV==='all'||lV==='entity')al(DATA.entityLinks,'entity');
+      if(lV==='all'||lV==='family')al(DATA.familyLinks,'family');
+      var cn=new Set();links.forEach(function(l){cn.add(typeof l.source==='object'?l.source.id:l.source);cn.add(typeof l.target==='object'?l.target.id:l.target);});
+      if(!cV)nodes=nodes.filter(function(n){return cn.has(n.id)||n.tier<=2;});
+      if(sim)sim.stop();
+      var el=document.getElementById('graph-svg'),bx=el.getBoundingClientRect(),W=bx.width||960,H=bx.height||620;
+      sim=d3.forceSimulation(nodes).force('link',d3.forceLink(links).id(function(d){return d.id;}).distance(function(d){return d.ltype==='entity'?65:d.ltype==='family'?40:50;})).force('charge',d3.forceManyBody().strength(function(d){return d.tier<=1?-280:d.tier<=2?-150:-75;})).force('center',d3.forceCenter(W/2,H/2)).force('collision',d3.forceCollide().radius(function(d){return nr(d)+4;})).force('x',d3.forceX(W/2).strength(0.035)).force('y',d3.forceY(H/2).strength(0.035));
+      var ls=linkG.selectAll('line').data(links,function(d){return(d.source.id||d.source)+'-'+(d.target.id||d.target)+'-'+d.ltype;});ls.exit().remove();
+      _lk=ls.enter().append('line').merge(ls).attr('class',function(d){return'lk-'+d.ltype;}).attr('stroke',function(d){return LC[d.ltype];});
+      var ns=nodeG.selectAll('.nn').data(nodes,function(d){return d.id;});ns.exit().remove();
+      var ne=ns.enter().append('g').attr('class','nn').attr('cursor','pointer').call(d3.drag().on('start',function(e,d){if(!e.active)sim.alphaTarget(0.3).restart();d.fx=d.x;d.fy=d.y;}).on('drag',function(e,d){d.fx=e.x;d.fy=e.y;}).on('end',function(e,d){if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null;})).on('click',function(e,d){showInfo(d);}).on('mouseenter',function(e,d){hl(d,true);}).on('mouseleave',function(e,d){hl(d,false);});
+      ne.each(function(d){var el=d3.select(this);if(d.type==='entity'){var r=nr(d);el.append('rect').attr('width',r*2).attr('height',r*1.5).attr('x',-r).attr('y',-r*0.75).attr('rx',3).attr('fill',nc(d)).attr('stroke','rgba(38,42,51,0.12)').attr('stroke-width',0.5);}else{el.append('circle').attr('r',nr(d)).attr('fill',nc(d)).attr('stroke',d.tier<=1?'#FFF1E5':'none').attr('stroke-width',d.tier<=1?2:0);}});
+      _nd=ne.merge(ns);
+      var lbs=labelG.selectAll('text').data(nodes.filter(function(n){return n.tier<=3||nr(n)>4;}),function(d){return d.id;});lbs.exit().remove();
+      var lbe=lbs.enter().append('text').attr('class','node-lbl').attr('text-anchor','middle').attr('dy',function(d){return nr(d)+12;});
+      var albl=lbe.merge(lbs).text(function(d){var n=d.name;return n.length>24?n.slice(0,22)+'…':n;}).style('font-family','var(--font-ui)').style('font-size',function(d){return d.tier<=1?'11px':d.tier<=2?'10px':'8.5px';}).style('font-weight',function(d){return d.tier<=1?'700':d.tier<=2?'600':'400';}).style('fill',function(d){return d.tier<=2?'#262A33':'rgba(38,42,51,0.55)';});
+      sim.on('tick',function(){_lk.attr('x1',function(d){return d.source.x;}).attr('y1',function(d){return d.source.y;}).attr('x2',function(d){return d.target.x;}).attr('y2',function(d){return d.target.y;});_nd.attr('transform',function(d){return'translate('+d.x+','+d.y+')';});albl.attr('x',function(d){return d.x;}).attr('y',function(d){return d.y;});});
+      sim.alpha(1).restart();
+    }
+    function hl(d,on){if(!_lk||!_nd)return;if(!on){_lk.style('stroke-opacity',null);_nd.style('opacity',null);return;}var nb=new Set([d.id]);_lk.each(function(l){var s=l.source.id||l.source,t=l.target.id||l.target;if(s===d.id)nb.add(t);if(t===d.id)nb.add(s);});_lk.style('stroke-opacity',function(l){var s=l.source.id||l.source,t=l.target.id||l.target;return(s===d.id||t===d.id)?0.7:0.03;});_nd.style('opacity',function(n){return nb.has(n.id)?1:0.1;});}
+    function showInfo(d){var p=document.getElementById('infoPanel'),isE=d.type==='entity';var h='<div class="info-name">'+d.name+'</div>';h+='<span class="info-lbl">Type:</span> <span class="info-val">'+(isE?'Legal entity':'Natural person')+'</span>';h+=' &nbsp; <span class="info-lbl">Tier:</span> <span class="info-val">T'+d.tier+'</span>';if(isE){if(d.cluster)h+=' &nbsp; <span class="info-lbl">Cluster:</span> <span class="info-val">'+d.cluster+'</span>';if(d.form)h+=' &nbsp; <span class="info-lbl">Form:</span> <span class="info-val">'+d.form+'</span>';if(d.capital)h+=' &nbsp; <span class="info-lbl">Capital:</span> <span class="info-val">€'+Number(d.capital).toLocaleString()+'</span>';if(d.jurisdiction)h+=' &nbsp; <span class="info-lbl">Jur:</span> <span class="info-val">'+d.jurisdiction+'</span>';}else{if(d.city)h+=' &nbsp; <span class="info-lbl">City:</span> <span class="info-val">'+d.city+'</span>';if(d.country)h+=' &nbsp; <span class="info-lbl">Country:</span> <span class="info-val">'+d.country+'</span>';}var rl=DATA.roleLinks.filter(function(l){return l.source===d.id||l.target===d.id;}),el=DATA.entityLinks.filter(function(l){return l.source===d.id||l.target===d.id;}),fl=DATA.familyLinks.filter(function(l){return l.source===d.id||l.target===d.id;});h+='<div class="info-roles">'+rl.length+' role links · '+el.length+' entity links · '+fl.length+' family links';if(rl.length>0){var top=rl.slice(0,8).map(function(l){var o=l.source===d.id?l.target:l.source,n=nMap.get(o),pc=l.pct?' ('+l.pct+'%)':'';return l.type+pc+' → '+(n?n.name:o);});h+='<br>'+top.join(' · ');}h+='</div>';p.innerHTML=h;}
+  })();
+  </script>
+
+  <script defer src="../data/dossier.js"></script>
+</body>
+</html>

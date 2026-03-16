@@ -116,6 +116,18 @@
             "en": "Shareholders",
             "de": "Gesellschafter"
           }
+        },
+        {
+          "id": "network",
+          "file": "network.html",
+          "short": {
+            "en": "Network",
+            "de": "Netzwerk"
+          },
+          "title": {
+            "en": "Network Analysis",
+            "de": "Netzwerkanalyse"
+          }
         }
       ]
     }
