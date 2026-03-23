@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gesellschafter — SyncPilot</title>
-  <link rel="stylesheet" href="../styles.css">
-
-  <!-- vis-timeline styles (required before app.js) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-timeline@8.5.0/styles/vis-timeline-graph2d.min.css" />
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aktionäre – SyncPilot</title>
+  <meta name="description" content="31 ultimate beneficial owners of SyncPilot SE, sorted by effective shareholding. Ownership chains, capital events, and holding structures exposed." />
+  <link rel="stylesheet" href="../styles.css" />
   <style>
-    /* === SHAREHOLDERS PAGE STYLES === */
+    /* === SHAREHOLDERS PAGE STYLES (v2 — list redesign) === */
 
-    /* ---- BLUF summary box ---- */
     .sh-bluf {
       border-left: 4px solid var(--claret);
       background: rgba(242,223,206,0.35);
@@ -59,228 +55,173 @@
       font-weight: 700;
       line-height: 1;
     }
-    .sh-stat--current strong { color: var(--oxford); }
-    .sh-stat--former  strong { color: rgba(38,42,51,0.45); }
+    .sh-stat--claret strong { color: var(--claret); }
+    .sh-stat--oxford strong { color: var(--oxford); }
 
-    /* ---- Viz section heading + controls bar ---- */
-    .sh-controls-bar {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: var(--sp-4);
-      flex-wrap: wrap;
-      margin-bottom: var(--sp-4);
-      margin-top: var(--sp-8);
-    }
-    .sh-controls-bar h2 {
-      margin: 0;
-      padding: 0;
-      border: none;
-      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
-      color: var(--heading-secondary);
-    }
+    /* ---- UBO list ---- */
+    .ubo-list { margin-top: var(--sp-6); }
 
-    .controls {
-      display: flex;
-      align-items: flex-end;
-      gap: var(--sp-3);
-      flex-wrap: wrap;
-    }
-    .control {
+    .ubo-header {
       display: grid;
-      gap: 3px;
+      grid-template-columns: 32px 52px 1fr 80px 86px 120px;
+      gap: 0 var(--sp-3);
+      padding: var(--sp-2) var(--sp-4);
+      border-bottom: 2px solid var(--wheat);
       font-family: var(--font-ui);
-      font-size: var(--text-caption);
-      color: rgba(38,42,51,0.55);
-    }
-    .control input,
-    .control select {
-      height: 32px;
-      padding: 4px 10px;
-      border: 1px solid var(--wheat);
-      background: #fff;
-      color: var(--slate);
-      border-radius: 4px;
-      font-family: var(--font-ui);
-      font-size: var(--text-ui);
-      min-width: 190px;
-      transition: border-color 0.15s;
-    }
-    .control input:focus,
-    .control select:focus {
-      outline: none;
-      border-color: var(--oxford);
-    }
-    .btn {
-      height: 32px;
-      padding: 4px 14px;
-      border: 1px solid var(--wheat);
-      background: #fff;
-      color: var(--slate);
-      border-radius: 4px;
-      font-family: var(--font-ui);
-      font-size: var(--text-ui);
-      font-weight: 600;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-    }
-    .btn:hover {
-      border-color: rgba(38,42,51,0.3);
-      background: var(--paper);
-    }
-
-    /* ---- Viz grid layout ----
-       FIX: Explicit grid-column prevents auto-placement from swapping
-       the graph and selection panels. The graph MUST get the wide column. */
-    .viz-grid {
-      display: grid;
-      grid-template-columns: 2.2fr 1fr;
-      grid-template-rows: clamp(380px, 48vh, 540px);
-      gap: var(--sp-3);
-      margin-bottom: var(--sp-3);
-    }
-    .viz-grid .panel-graph  { grid-column: 1; grid-row: 1; }
-    .viz-grid .panel-detail { grid-column: 2; grid-row: 1; }
-
-    /* ---- Panels ---- */
-    .panel {
-      background: #fff;
-      border: 1px solid var(--wheat);
-      border-radius: 6px;
-      overflow: hidden;
-    }
-    .panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--sp-3);
-      padding: var(--sp-2) var(--sp-3);
-      border-bottom: 1px solid var(--wheat);
-      background: #fff;
-      flex-wrap: wrap;
-    }
-    .panel-header h2 {
-      margin: 0;
-      padding: 0;
-      border: none;
-      font-family: var(--font-ui);
-      font-size: var(--text-caption);
+      font-size: 0.6rem;
       font-weight: 700;
-      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: rgba(38,42,51,0.5);
+      letter-spacing: 0.08em;
+      color: rgba(38,42,51,0.4);
+      align-items: end;
     }
-    .panel-footer {
-      display: flex;
-      align-items: center;
-      gap: var(--sp-3);
-      padding: var(--sp-2) var(--sp-3);
-      border-top: 1px solid var(--wheat);
-      font-family: var(--font-ui);
-      font-size: var(--text-caption);
-      color: rgba(38,42,51,0.45);
-    }
-    .meta-sep { color: var(--wheat); padding: 0 2px; }
+    .ubo-header span:nth-child(4),
+    .ubo-header span:nth-child(5) { text-align: right; }
+    .ubo-header span:nth-child(6) { text-align: right; }
 
-    .viz {
-      width: 100%;
-      height: calc(100% - 72px);
-    }
-
-    .timeline {
-      grid-column: 1 / -1;
-      min-height: clamp(240px, 28vh, 360px);
-    }
-    .timeline-canvas {
-      height: calc(100% - 36px);
-    }
-
-    /* ---- Details pane ---- */
-    .details {
-      padding: var(--sp-3);
-      font-family: var(--font-ui);
-      font-size: var(--text-ui);
-      line-height: 1.45;
-      color: var(--slate);
-      overflow-y: auto;
-      max-height: calc(100% - 36px);
-    }
-    .hint {
-      color: rgba(38,42,51,0.45);
-      font-style: italic;
-    }
-    .details h3 {
-      margin: 0 0 var(--sp-2) 0;
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--slate);
-    }
-    .kv {
+    .ubo-row {
       display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 3px var(--sp-3);
-      margin-bottom: var(--sp-3);
+      grid-template-columns: 32px 52px 1fr 80px 86px 120px;
+      gap: 0 var(--sp-3);
+      align-items: center;
+      padding: var(--sp-3) var(--sp-4);
+      border-bottom: 1px solid rgba(242,223,206,0.6);
+      transition: background 0.12s;
     }
-    .kv .k {
-      color: rgba(38,42,51,0.45);
+    .ubo-row:hover { background: rgba(242,223,206,0.3); }
+    .ubo-row--top3 { background: rgba(153,15,61,0.03); }
+    .ubo-row--top3:hover { background: rgba(153,15,61,0.06); }
+
+    .ubo-rank {
+      font-family: var(--font-ui);
       font-size: var(--text-small);
+      font-weight: 700;
+      color: rgba(38,42,51,0.3);
+      text-align: center;
     }
-    .list {
-      margin: var(--sp-2) 0 0 0;
-      padding: 0;
-      list-style: none;
+    .ubo-row--top3 .ubo-rank { color: var(--claret); }
+
+    .ubo-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
     }
-    .list li {
-      padding: var(--sp-2) var(--sp-3);
-      border: 1px solid var(--wheat);
-      border-radius: 4px;
-      margin-bottom: var(--sp-2);
-      font-size: var(--text-ui);
-      line-height: 1.4;
+    .ubo-avatar--placeholder {
+      background: rgba(38,42,51,0.08);
+      color: rgba(38,42,51,0.38);
+    }
+    .ubo-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(30%);
     }
 
-    /* ---- Legend badges ---- */
-    .legend {
-      display: flex;
-      gap: var(--sp-2);
-      flex-wrap: wrap;
-    }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 2px 8px;
-      border-radius: 3px;
+    .ubo-identity { min-width: 0; }
+    .ubo-name {
       font-family: var(--font-ui);
-      font-size: var(--text-caption);
+      font-size: var(--text-ui);
       font-weight: 600;
-      letter-spacing: 0.02em;
-      border: 1px solid var(--wheat);
-      gap: 5px;
+      color: var(--slate);
+      line-height: 1.3;
+    }
+    .ubo-name-first { font-weight: 400; color: rgba(38,42,51,0.6); }
+    .ubo-holdings {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-top: 3px;
+    }
+    .ubo-holding-pill {
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-size: 0.56rem;
+      font-weight: 600;
+      color: var(--oxford);
+      background: rgba(13,118,128,0.06);
+      border: 1px solid rgba(13,118,128,0.12);
+      border-radius: 3px;
+      padding: 1px 5px;
+      white-space: nowrap;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ubo-flag {
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-size: 0.52rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 1px 5px;
+      border-radius: 2px;
       white-space: nowrap;
     }
-    .badge::before {
-      content: '';
-      display: block;
-      width: 8px;
-      height: 8px;
-      border-radius: 2px;
-      flex-shrink: 0;
+    .ubo-flag--red {
+      background: rgba(204,0,51,0.08);
+      color: #CC0033;
+      border: 1px solid rgba(204,0,51,0.15);
     }
-    .badge-target        { border-color: var(--claret); color: var(--claret); }
-    .badge-target::before { background: var(--claret); }
-    .badge-org           { border-color: var(--oxford); color: var(--oxford); }
-    .badge-org::before   { background: var(--oxford); }
-    .badge-person        { border-color: #0f5499; color: #0f5499; }
-    .badge-person::before { background: #0f5499; }
-    .badge-edge-current  { border-color: var(--oxford); color: var(--oxford); }
-    .badge-edge-current::before { background: var(--oxford); border-radius: 50%; }
-    .badge-edge-former   { border-color: rgba(38,42,51,0.35); color: rgba(38,42,51,0.45); }
-    .badge-edge-former::before  { background: rgba(38,42,51,0.35); border-radius: 50%; }
-    .badge-edge-unknown  { border-color: rgba(38,42,51,0.2); color: rgba(38,42,51,0.35); }
-    .badge-edge-unknown::before { background: rgba(38,42,51,0.2); border-radius: 50%; }
+    .ubo-flag--claret {
+      background: rgba(153,15,61,0.06);
+      color: var(--claret);
+      border: 1px solid rgba(153,15,61,0.12);
+    }
 
-    /* ---- Source note ---- */
+    .ubo-shares {
+      font-family: var(--font-ui);
+      font-size: var(--text-small);
+      font-variant-numeric: tabular-nums;
+      color: rgba(38,42,51,0.45);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .ubo-pct-cell { text-align: right; }
+    .ubo-pct-num {
+      font-family: var(--font-ui);
+      font-size: var(--text-ui);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--slate);
+    }
+    .ubo-row--top3 .ubo-pct-num { color: var(--claret); }
+    .ubo-pct-bar {
+      height: 3px;
+      background: rgba(38,42,51,0.06);
+      border-radius: 2px;
+      margin-top: 3px;
+      overflow: hidden;
+    }
+    .ubo-pct-fill {
+      height: 100%;
+      background: var(--oxford);
+      border-radius: 2px;
+      transition: width 0.6s ease;
+    }
+    .ubo-row--top3 .ubo-pct-fill { background: var(--claret); }
+
+    .ubo-event {
+      font-family: var(--font-ui);
+      font-size: var(--text-small);
+      color: rgba(38,42,51,0.5);
+      white-space: nowrap;
+      text-align: right;
+    }
+    .ubo-event-date { font-weight: 600; color: rgba(38,42,51,0.6); }
+    .ubo-event-price { font-weight: 700; color: var(--oxford); }
+    .ubo-event-price--anomaly { color: #CC0033; }
+
     .sh-source {
       margin-top: var(--sp-6);
       padding: var(--sp-3) var(--sp-4);
@@ -292,437 +233,190 @@
       color: rgba(38,42,51,0.55);
     }
     .sh-source strong { font-weight: 600; color: var(--slate); }
-    .sh-source code {
-      font-size: var(--text-caption);
-      background: rgba(242,223,206,0.5);
-      padding: 1px 4px;
-      border-radius: 2px;
-    }
 
-    .note {
-      font-family: var(--font-ui);
-      font-size: var(--text-caption);
-      color: rgba(38,42,51,0.45);
-      font-style: italic;
-    }
-
-    /* ---- UBO tooltip ---- */
-    .ubo-tip {
-      position: absolute;
-      z-index: 50;
-      background: var(--slate);
-      color: var(--paper);
-      font-family: var(--font-ui);
-      font-size: var(--text-small);
-      line-height: 1.45;
-      padding: 6px 10px;
-      border-radius: 4px;
-      pointer-events: none;
-      max-width: 280px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-      opacity: 0;
-      transition: opacity 0.12s;
-    }
-    .ubo-tip.visible { opacity: 1; }
-    .ubo-tip-label {
-      font-size: var(--text-caption);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: rgba(255,241,229,0.5);
-      margin-bottom: 3px;
-    }
-    .ubo-tip-name {
-      font-weight: 600;
-      color: var(--paper);
-    }
-    .ubo-tip-name + .ubo-tip-name { margin-top: 1px; }
-
-    /* ---- vis-timeline overrides ---- */
-    .vis-timeline {
-      font-family: var(--font-ui) !important;
-      border-color: var(--wheat) !important;
-    }
-    .vis-panel.vis-center,
-    .vis-panel.vis-left,
-    .vis-panel.vis-right,
-    .vis-panel.vis-top,
-    .vis-panel.vis-bottom { border-color: var(--wheat) !important; }
-    .vis-grid.vis-vertical,
-    .vis-grid.vis-minor,
-    .vis-grid.vis-major { border-color: rgba(242,223,206,0.5) !important; }
-    .vis-time-axis .vis-text {
-      font-family: var(--font-ui) !important;
-      font-size: var(--text-caption) !important;
-      color: rgba(38,42,51,0.45) !important;
-    }
-    .vis-labelset .vis-label {
-      font-family: var(--font-ui) !important;
-      font-size: var(--text-small) !important;
-      color: var(--slate) !important;
-    }
-    .vis-item {
-      font-family: var(--font-ui) !important;
-      font-size: var(--text-small) !important;
-      color: var(--slate) !important;
-      border-radius: 4px !important;
-    }
-    .vis-item.tl-current {
-      background: var(--wheat) !important;
-      border-color: var(--oxford) !important;
-    }
-    .vis-item.tl-former {
-      background: #fff !important;
-      border-color: rgba(38,42,51,0.3) !important;
-      color: rgba(38,42,51,0.45) !important;
-    }
-    .vis-item.tl-unknown {
-      background: #fff !important;
-      border-color: rgba(38,42,51,0.15) !important;
-      color: rgba(38,42,51,0.35) !important;
-    }
-    .vis-item.tl-uncertain { border-style: dashed !important; }
-    .vis-item.vis-selected {
-      border-color: var(--mango) !important;
-      box-shadow: none !important;
-    }
-    .vis-item .vis-item-content { padding: 3px 6px !important; }
-
-    /* ---- Responsive ---- */
     @media (max-width: 860px) {
-      .viz-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: clamp(300px, 40vh, 440px) auto;
+      .ubo-header { display: none; }
+      .ubo-row {
+        grid-template-columns: 28px 42px 1fr auto;
+        grid-template-rows: auto auto;
+        gap: 2px var(--sp-2);
+        padding: var(--sp-3);
       }
-      .viz-grid .panel-graph  { grid-column: 1; grid-row: 1; }
-      .viz-grid .panel-detail { grid-column: 1; grid-row: 2; }
+      .ubo-rank { grid-row: 1 / 3; align-self: center; }
+      .ubo-avatar { grid-row: 1 / 3; align-self: center; width: 36px; height: 36px; }
+      .ubo-identity { grid-column: 3; grid-row: 1; }
+      .ubo-shares { display: none; }
+      .ubo-pct-cell { grid-column: 4; grid-row: 1 / 3; align-self: center; }
+      .ubo-event { grid-column: 3 / 5; grid-row: 2; text-align: left; }
     }
-    @media (max-width: 640px) {
+    @media (max-width: 480px) {
+      .ubo-event { display: none; }
       .sh-bluf-stats { gap: var(--sp-2) var(--sp-4); }
       .sh-stat strong { font-size: 1.15rem; }
-      .controls { flex-direction: column; align-items: stretch; }
-      .control input,
-      .control select { min-width: 0; }
     }
   </style>
-
-  <!-- Cytoscape.js + vis-timeline (pinned CDN) -->
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.33.1/cytoscape.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/vis-timeline@8.5.0/standalone/umd/vis-timeline-graph2d.min.js"></script>
-  <script defer src="app.js"></script>
 </head>
 
 <body data-page="shareholders">
-<!-- ====== CONTENT ====== -->
   <article class="content-area" style="max-width: var(--max-width);">
 
-    <h1>
-      Shareholders
-      
-    </h1>
+    <h1>Aktionäre</h1>
 
-    <!-- ── BLUF ── -->
     <div class="sh-bluf">
-      <div class="sh-bluf-label">
-        Zusammenfassung
-        
-      </div>
+      <div class="sh-bluf-label">Das Wichtigste vorweg</div>
       <p>
-        Eine aus der Ordnerstruktur abgeleitete Beteiligungsanalyse of SyncPilot's corporate filings reveals a web of
-        <strong>65&nbsp;distinct entities</strong> connected by <strong>92&nbsp;ownership edges</strong>.
-        Of these, <strong>19&nbsp;entities hold or held direct stakes</strong> in SyncPilot itself —
-        <strong>14&nbsp;current</strong> shareholders and <strong>5&nbsp;former</strong>.
-        Die untenstehende Grafik zeigt mehrstufige Holdingstrukturen; mehrere natürliche Personen erscheinen
-        auf verschiedenen Ebenen der Kette, was Fragen zur tatsächlichen Kontrolle gegenüber nomineller Beteiligung aufwirft.
-        Aus der Ordnerstruktur konnten keine Beteiligungsquoten abgeleitet werden; lediglich das Bestehen und
-        der zeitliche Rahmen jeder Beziehung sind dokumentiert.
+       <strong>31 letztendliche wirtschaftliche Eigentümer</strong> halten SyncPilot SE über
+ <strong>       26 Beteiligungsgesellschaften</strong> in <strong>6 Ländern</strong>.
+        Keine Aktie wurde jemals an einer öffentlichen Börse gehandelt oder unabhängig bewertet.
+        Der alleinige Geschäftsführer Franz-Xaver Bleicher hält mit 16,48 % den größten Anteil
+        — vollständig über die von ihm kontrollierte BOSYNC Beteiligungs UG. Die drei größten
+        Einzelpersonen halten zusammen 33,71 %.
       </p>
       <div class="sh-bluf-stats">
-        <span class="sh-stat">
-          Entitäten
-          <strong>65</strong>
-        </span>
-        <span class="sh-stat">
-          Beteiligungskanten
-          <strong>92</strong>
-        </span>
-        <span class="sh-stat">
-          Direkte Gesellschafter
-          <strong>19</strong>
-        </span>
-        <span class="sh-stat sh-stat--current">
-          Aktuell
-          <strong>14</strong>
-        </span>
-        <span class="sh-stat sh-stat--former">
-          Ehemalig
-          <strong>5</strong>
-        </span>
+        <span class="sh-stat sh-stat--claret">UBOs<strong>31</strong></span>
+        <span class="sh-stat">Beteiligungen<strong>26</strong></span>
+        <span class="sh-stat">Länder<strong>6</strong></span>
+        <span class="sh-stat sh-stat--claret">Top 3:<strong>33,71 %</strong></span>
+        <span class="sh-stat sh-stat--oxford">Gesamtaktien<strong>5.576.031</strong></span>
       </div>
     </div>
 
-    <!-- ── VIZ CONTROLS ── -->
-    <div class="sh-controls-bar">
-      <h2>
-        Beteiligungsgrafik &amp; timeline
-        
-      </h2>
-      <div class="controls">
-        <label class="control">
-          <span>
-            Ansicht
-            
-          </span>
-          <select id="viewMode">
-            <option value="direct" selected>Direkte Gesellschafter only</option>
-            <option value="full">Vollständige Beteiligungsgrafik (ordnerbasiert)</option>
-          </select>
-        </label>
-        <label class="control">
-          <span>
-            Entität suchen
-            
-          </span>
-          <input id="searchInput" type="search" placeholder="Type a name…" autocomplete="off" />
-        </label>
-        <button id="resetBtn" class="btn" type="button">
-          Zurücksetzen
-          
-        </button>
-      </div>
+    <div class="ubo-header">
+      <span>#</span>
+      <span></span>
+      <span>Name &amp; Beteiligungen</span>
+      <span>Aktien</span>
+      <span>Anteil an SE</span>
+      <span>Letztes Ereignis</span>
     </div>
 
-    <!-- ── CYTOSCAPE + DETAILS GRID ── -->
-    <div class="viz-grid">
+    <div class="ubo-list" id="uboList"></div>
 
-      <!-- Graph panel — explicit grid-column: 1 via .panel-graph -->
-      <div class="panel panel-graph">
-        <div class="panel-header">
-          <h2>
-            Beteiligungsgrafik
-            
-          </h2>
-          <div class="legend">
-            <span class="badge badge-target">SyncPilot</span>
-            <span class="badge badge-org">
-              Juristische Person
-              
-            </span>
-            <span class="badge badge-person">
-              Natürliche Person
-              
-            </span>
-            <span class="badge badge-edge-current">
-              Aktuell
-              
-            </span>
-            <span class="badge badge-edge-former">
-              Ehemalig
-              
-            </span>
-            <span class="badge badge-edge-unknown">
-              Unbekannter Zeitraum
-              
-            </span>
-          </div>
-        </div>
-        <div id="cy" class="viz"></div>
-        <div class="panel-footer">
-          <span id="asOf">As of: —</span>
-          <span class="meta-sep">·</span>
-          <span id="counts">—</span>
-        </div>
-      </div>
-
-      <!-- Details panel — explicit grid-column: 2 via .panel-detail -->
-      <div class="panel panel-detail">
-        <div class="panel-header">
-          <h2>
-            Auswahl
-            
-          </h2>
-        </div>
-        <div id="details" class="details">
-          <div class="hint">
-            Knoten oder Kante anklicken für Details.
-            
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ── TIMELINE ── -->
-    <div class="panel timeline">
-      <div class="panel-header">
-        <h2>
-          Zeitleiste der direkten Gesellschafter
-          
-        </h2>
-        <div class="note" id="timelineNote"></div>
-      </div>
-      <div id="tl" class="timeline-canvas"></div>
-    </div>
-
-    <!-- ── SOURCE NOTE ── -->
     <div class="sh-source">
       <p>
-        <strong>Datenquelle.</strong> <code>data/graph.min.json</code> — aus der Ordnerstruktur abgeleitete Beteiligungsstruktur.
-        Keine Beteiligungsquoten werden abgeleitet. Einige Zeiträume verwenden Jahresbereiche
-        (e.g.&nbsp;"2022-23"); diese werden ab dem frühestmöglichen Datum dargestellt
-        und mit gestricheltem Rand markiert. Built&nbsp;2026-02-18.
-        <strong>Mit der Maus</strong> über einen Firmenknoten fahren, um die natürlichen Personen (UBOs) zu sehen.
+       <strong>Datenquelle.</strong> Beteiligungsanteile abgeleitet aus Handelsregistereinträgen
+        und Hauptversammlungsprotokollen. Kapitalmaßnahmen stammen aus
+        Handelsregistereinträgen. Vollständige Dokumentation im <a href="the-evidence-room.html">Evidence Room</a>.
+        Stand: 18.02.2026. Siehe auch: <a href="network.html">Netzwerkanalyse</a> (kraftgesteuerter Graph aller 127 Knoten).
       </p>
     </div>
 
-    <!-- ── CHAPTER NAV ── -->
   </article>
 
-  <!-- UBO tooltip element (positioned absolutely over graph) -->
-  <div class="ubo-tip" id="uboTip"></div>
-<!-- ====== MENU TOGGLE ====== -->
-
-  <!-- ====== UBO HOVER FEATURE ======
-       Waits for app.js to expose window._shareviz, then adds
-       mouseover/mouseout on org nodes showing natural person owners. -->
   <script>
   (function() {
     'use strict';
 
-    var tip = document.getElementById('uboTip');
-    var cyContainer = document.getElementById('cy');
-    var pollCount = 0;
+    fetch('../data/shareholders.json')
+      .then(function(r) { return r.json(); })
+      .then(function(d) { render(d); })
+      .catch(function(e) {
+        document.getElementById('uboList').innerHTML =
+          '<p style="padding:var(--sp-4);color:rgba(38,42,51,0.5);font-style:italic;">Failed to load shareholder data.</p>';
+        console.error(e);
+      });
 
-    function init() {
-      if (!window._shareviz || !window._shareviz.getCy()) {
-        if (++pollCount < 60) return setTimeout(init, 200);
-        return; // give up after 12s
-      }
-      attach(window._shareviz.getCy());
+    function render(data) {
+      var el = document.getElementById('uboList');
+      var max = data.ubos[0].pct;
 
-      // Re-attach after view mode changes (cy gets destroyed/recreated)
-      var viewSelect = document.getElementById('viewMode');
-      if (viewSelect) {
-        viewSelect.addEventListener('change', function() {
-          // Wait for app.js to rebuild cy
-          setTimeout(function() {
-            var newCy = window._shareviz.getCy();
-            if (newCy) attach(newCy);
-          }, 150);
-        });
-      }
-    }
+      data.ubos.forEach(function(u, i) {
+        var row = document.createElement('div');
+        row.className = 'ubo-row' + (i < 3 ? ' ubo-row--top3' : '');
 
-    function attach(cy) {
-      var dataset = window._shareviz.getDataset();
-      var nodesById = window._shareviz.getNodesById();
-      if (!dataset || !nodesById) return;
+        // Rank
+        var rank = document.createElement('div');
+        rank.className = 'ubo-rank';
+        rank.textContent = u.rank;
 
-      // Pre-build lookup: for each org node, find natural person owners
-      // (persons whose edges point TO this org, at any depth in current view)
-      var orgPersons = {};
-      dataset.links.forEach(function(link) {
-        var srcNode = nodesById.get(link.source);
-        if (!srcNode) return;
-        if (srcNode.kind === 'person') {
-          if (!orgPersons[link.target]) orgPersons[link.target] = [];
-          orgPersons[link.target].push({
-            name: srcNode.label,
-            status: link.status || 'unknown'
-          });
+        // Avatar
+        var av = document.createElement('div');
+        av.className = 'ubo-avatar';
+        if (u.photo) {
+          av.innerHTML = '<img src="../assets/' + esc(u.photo) + '" alt="' + esc(u.familyName) + '">';
+        } else {
+          av.classList.add('ubo-avatar--placeholder');
+          var ini = (u.firstName ? u.firstName.charAt(0) : '') + (u.familyName ? u.familyName.charAt(0) : '');
+          av.textContent = ini.toUpperCase() || '?';
         }
-      });
 
-      // Also walk one level deeper: if an org owns another org, inherit persons
-      dataset.links.forEach(function(link) {
-        var srcNode = nodesById.get(link.source);
-        if (!srcNode || srcNode.kind !== 'org') return;
-        var srcPersons = orgPersons[link.source];
-        if (!srcPersons) return;
-        if (!orgPersons[link.target]) orgPersons[link.target] = [];
-        srcPersons.forEach(function(p) {
-          // Avoid duplicates
-          var exists = orgPersons[link.target].some(function(x) { return x.name === p.name; });
-          if (!exists) {
-            orgPersons[link.target].push({ name: p.name, status: p.status, indirect: true });
-          }
+        // Identity
+        var id = document.createElement('div');
+        id.className = 'ubo-identity';
+        var nm = document.createElement('div');
+        nm.className = 'ubo-name';
+        nm.innerHTML = '<span class="ubo-name-family">' + esc(u.familyName) + '</span>, <span class="ubo-name-first">' + esc(u.firstName) + '</span>';
+        var hl = document.createElement('div');
+        hl.className = 'ubo-holdings';
+        u.holdings.forEach(function(h) {
+          var p = document.createElement('span');
+          p.className = 'ubo-holding-pill';
+          p.textContent = h;
+          p.title = h;
+          hl.appendChild(p);
         });
-      });
-
-      // Mouseover on org nodes
-      cy.on('mouseover', 'node[kind = "org"]', function(evt) {
-        var nodeId = evt.target.id();
-        var persons = orgPersons[nodeId];
-        if (!persons || persons.length === 0) return;
-
-        var html = '<div class="ubo-tip-label">Natürliche Person owners</div>';
-        persons.forEach(function(p) {
-          var suffix = p.indirect ? ' <span style="opacity:0.5">(indirect)</span>' : '';
-          var statusDot = p.status === 'current' ? '●' : (p.status === 'former' ? '○' : '◌');
-          html += '<div class="ubo-tip-name">' + statusDot + ' ' + escHtml(p.name) + suffix + '</div>';
+        (u.flags || []).forEach(function(f) {
+          var fl = document.createElement('span');
+          fl.className = 'ubo-flag ' + (f.indexOf('Goldfinger') >= 0 ? 'ubo-flag--red' : 'ubo-flag--claret');
+          fl.textContent = f;
+          hl.appendChild(fl);
         });
-        tip.innerHTML = html;
+        id.appendChild(nm);
+        id.appendChild(hl);
 
-        // Position near the node
-        var pos = evt.target.renderedPosition();
-        var rect = cyContainer.getBoundingClientRect();
-        tip.style.left = (rect.left + pos.x + 12) + 'px';
-        tip.style.top  = (rect.top  + pos.y - 10 + window.scrollY) + 'px';
-        tip.classList.add('visible');
-      });
+        // Shares
+        var sh = document.createElement('div');
+        sh.className = 'ubo-shares';
+        sh.textContent = u.shares.toLocaleString();
 
-      cy.on('mouseout', 'node', function() {
-        tip.classList.remove('visible');
-      });
-
-      // Also show UBO info in the details panel on click
-      cy.on('tap', 'node[kind = "org"]', function(evt) {
-        var nodeId = evt.target.id();
-        var persons = orgPersons[nodeId];
-        if (!persons || persons.length === 0) return;
-
-        // Wait for app.js to render its details first, then append
+        // Pct
+        var pc = document.createElement('div');
+        pc.className = 'ubo-pct-cell';
+        pc.innerHTML = '<div class="ubo-pct-num">' + u.pct.toFixed(2) + '%</div>' +
+          '<div class="ubo-pct-bar"><div class="ubo-pct-fill" style="width:0%"></div></div>';
         setTimeout(function() {
-          var detailsEl = document.getElementById('details');
-          if (!detailsEl) return;
+          pc.querySelector('.ubo-pct-fill').style.width = ((u.pct / max) * 100).toFixed(1) + '%';
+        }, 60 + i * 25);
 
-          var section = document.createElement('div');
-          section.style.marginTop = 'var(--sp-3)';
-          section.style.paddingTop = 'var(--sp-3)';
-          section.style.borderTop = '1px solid var(--wheat)';
+        // Event
+        var ev = document.createElement('div');
+        ev.className = 'ubo-event';
+        if (u.latestEvent && u.latestEvent.date) {
+          var d = u.latestEvent.date;
+          var ds = d.length > 7 ? fmtDate(d) : d;
+          var ps = '';
+          if (u.latestEvent.price) {
+            var anom = u.latestEvent.price === 1.0;
+            ps = ' <span class="ubo-event-price' + (anom ? ' ubo-event-price--anomaly' : '') + '">€' + u.latestEvent.price + '</span>';
+          }
+          ev.innerHTML = '<span class="ubo-event-date">' + ds + '</span>' + ps;
+        } else {
+          ev.textContent = '—';
+        }
 
-          var label = document.createElement('div');
-          label.className = 'k';
-          label.style.marginBottom = '4px';
-          label.style.color = 'var(--claret)';
-          label.style.fontWeight = '700';
-          label.textContent = 'Natürliche Person owners (UBOs)';
-          section.appendChild(label);
-
-          var list = document.createElement('ul');
-          list.className = 'list';
-          persons.forEach(function(p) {
-            var li = document.createElement('li');
-            var prefix = p.indirect ? '↳ ' : '';
-            var statusLabel = p.status === 'current' ? 'Aktuell' :
-                              (p.status === 'former' ? 'Ehemalig' : 'Unbekannter Zeitraum');
-            li.innerHTML = '<strong>' + prefix + escHtml(p.name) + '</strong>' +
-              '<div style="color:rgba(38,42,51,0.5);font-size:var(--text-caption);">' + statusLabel +
-              (p.indirect ? ' · indirect' : ' · direct') + '</div>';
-            list.appendChild(li);
-          });
-          section.appendChild(list);
-          detailsEl.appendChild(section);
-        }, 50);
+        row.appendChild(rank);
+        row.appendChild(av);
+        row.appendChild(id);
+        row.appendChild(sh);
+        row.appendChild(pc);
+        row.appendChild(ev);
+        el.appendChild(row);
       });
     }
 
-    function escHtml(s) {
+    function fmtDate(iso) {
+      if (!iso || iso.length < 10) return iso || '';
+      var p = iso.split('-');
+      var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return p[2] + ' ' + m[parseInt(p[1],10)-1] + ' ' + p[0];
+    }
+
+    function esc(s) {
+      if (!s) return '';
       var d = document.createElement('div');
       d.textContent = s;
       return d.innerHTML;
     }
-
-    init();
   })();
   </script>
 
