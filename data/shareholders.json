@@ -1,0 +1,625 @@
+{
+  "totalShares": 5576031,
+  "asOfDate": "2026-02-18",
+  "ubos": [
+    {
+      "rank": 1,
+      "familyName": "Bleicher",
+      "firstName": "Franz-Xaver",
+      "pct": 16.48,
+      "shares": 918947,
+      "holdings": [
+        "BOSYNC Beteiligungs UG"
+      ],
+      "photo": "Bleicher, FXB b.jpg",
+      "flags": [
+        "Subject of investigation",
+        "Sole MD"
+      ],
+      "status": "current",
+      "latestEvent": {
+        "date": "2020-12-07",
+        "price": 4.7,
+        "entity": "BOSYNC Beteiligungs UG",
+        "desc": "Capital increase (contribution in kind)"
+      }
+    },
+    {
+      "rank": 2,
+      "familyName": "Krocke",
+      "firstName": "Dr. Ingo",
+      "pct": 8.65,
+      "shares": 482113,
+      "holdings": [
+        "Attegia Holding Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2022-23",
+        "price": null,
+        "entity": "Attegia Holding Ltd.",
+        "desc": "Entry via Attegia Holding Ltd."
+      }
+    },
+    {
+      "rank": 3,
+      "familyName": "Steiner",
+      "firstName": "Harald",
+      "pct": 8.58,
+      "shares": 478431,
+      "holdings": [
+        "AURIGA Capital AG",
+        "BOSYNC Beteiligungs UG"
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2021-12-31",
+        "price": null,
+        "entity": "AURIGA Capital AG",
+        "desc": "DSI dissolution → AURIGA transfer"
+      }
+    },
+    {
+      "rank": 4,
+      "familyName": "Jakisch",
+      "firstName": "Bernd",
+      "pct": 4.7,
+      "shares": 262100,
+      "holdings": [
+        "Augusta Software GmbH"
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2020-09-23",
+        "price": null,
+        "entity": "Augusta Software GmbH",
+        "desc": "Entry as direct shareholder"
+      }
+    },
+    {
+      "rank": 5,
+      "familyName": "Funk",
+      "firstName": "Dirk",
+      "pct": 4.7,
+      "shares": 262100,
+      "holdings": [
+        "Augusta Software GmbH"
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2020-09-23",
+        "price": null,
+        "entity": "Augusta Software GmbH",
+        "desc": "Entry as direct shareholder"
+      }
+    },
+    {
+      "rank": 6,
+      "familyName": "Schaeff",
+      "firstName": "Alexander",
+      "pct": 4.67,
+      "shares": 260160,
+      "holdings": [
+        "Schaeff Group Holding AG",
+        "Schaeff Maschinen Verwaltung GmbH",
+        "Schaeff Pulp & Paper Holding Gmbh",
+        "A. Schaeff Vermögensanlagen GbR",
+        "ZKP Innovations Holding Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2022-23",
+        "price": null,
+        "entity": "Schaeff Group Holding AG",
+        "desc": "Entry via Schaeff Group Holding AG"
+      }
+    },
+    {
+      "rank": 7,
+      "familyName": "Purkert",
+      "firstName": "Gert",
+      "pct": 4.38,
+      "shares": 244445,
+      "holdings": [
+        "Tiven S.à r.l."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2025-01-01",
+        "price": null,
+        "entity": "Tiven S.à r.l.",
+        "desc": "Entry via Tiven S.à r.l. (current)"
+      }
+    },
+    {
+      "rank": 8,
+      "familyName": "Steiner",
+      "firstName": "Christiane",
+      "pct": 4.29,
+      "shares": 239215,
+      "holdings": [
+        "AURIGA Capital AG",
+        "BOSYNC Beteiligungs UG"
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2021-12-31",
+        "price": null,
+        "entity": "AURIGA Capital AG",
+        "desc": "DSI dissolution → AURIGA transfer"
+      }
+    },
+    {
+      "rank": 9,
+      "familyName": "Kurth",
+      "firstName": "Cornelius Vincent",
+      "pct": 4.0,
+      "shares": 222802,
+      "holdings": [
+        "Lapis Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2022-23",
+        "price": null,
+        "entity": "Lapis Ltd.",
+        "desc": "Entry via Lapis Ltd."
+      }
+    },
+    {
+      "rank": 10,
+      "familyName": "Kurth",
+      "firstName": "Lauritz Corvin Paul",
+      "pct": 4.0,
+      "shares": 222802,
+      "holdings": [
+        "Lapis Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2022-23",
+        "price": null,
+        "entity": "Lapis Ltd.",
+        "desc": "Entry via Lapis Ltd."
+      }
+    },
+    {
+      "rank": 11,
+      "familyName": "Kurth",
+      "firstName": "Dr. Hans-Rudolf",
+      "pct": 4.0,
+      "shares": 222802,
+      "holdings": [
+        "Lapis Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2022-23",
+        "price": null,
+        "entity": "Lapis Ltd.",
+        "desc": "Entry via Lapis Ltd."
+      }
+    },
+    {
+      "rank": 12,
+      "familyName": "Unbekannt",
+      "firstName": "",
+      "pct": 3.7,
+      "shares": 206040,
+      "holdings": [
+        "ZAR Group AG"
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2022-23",
+        "price": null,
+        "entity": "ZKP Innovations Holding Ltd.",
+        "desc": "Entry via ZKP Innovations Holding Ltd."
+      }
+    },
+    {
+      "rank": 13,
+      "familyName": "Kimmich",
+      "firstName": "Marc F.",
+      "pct": 3.7,
+      "shares": 206040,
+      "holdings": [
+        "ZKP Innovations Holding Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2022-23",
+        "price": null,
+        "entity": "ZKP Innovations Holding Ltd.",
+        "desc": "Entry via ZKP Innovations Holding Ltd."
+      }
+    },
+    {
+      "rank": 14,
+      "familyName": "Hunstein",
+      "firstName": "Martin",
+      "pct": 3.51,
+      "shares": 195843,
+      "holdings": [
+        "Perseus Innovations and Services Holding Ltd.",
+        "ZKP Innovations Holding Ltd."
+      ],
+      "photo": "Hunstein, Martin.png",
+      "flags": [
+        "Goldfinger defendant"
+      ],
+      "status": "current",
+      "latestEvent": {
+        "date": "2022-23",
+        "price": null,
+        "entity": "Perseus Innovations and Services Holding Ltd.",
+        "desc": "Entry via Perseus Innovations and Services Holding Ltd."
+      }
+    },
+    {
+      "rank": 15,
+      "familyName": "Goerg",
+      "firstName": "Diethard Erik",
+      "pct": 3.51,
+      "shares": 195843,
+      "holdings": [
+        "Perseus Innovations and Services Holding Ltd.",
+        "ZKP Innovations Holding Ltd."
+      ],
+      "photo": "Diethard, Goerg.png",
+      "flags": [
+        "Goldfinger defendant"
+      ],
+      "status": "current",
+      "latestEvent": {
+        "date": "2022-23",
+        "price": null,
+        "entity": "Perseus Innovations and Services Holding Ltd.",
+        "desc": "Entry via Perseus Innovations and Services Holding Ltd."
+      }
+    },
+    {
+      "rank": 16,
+      "familyName": "Hansen",
+      "firstName": "Bernd Gerhard",
+      "pct": 2.14,
+      "shares": 119363,
+      "holdings": [
+        "bgh Vermögensverwaltung GmbH",
+        "ZKP Innovations Holding Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2023-05-25",
+        "price": 20.56,
+        "entity": "bgh Vermögensverwaltung GmbH",
+        "desc": "Auth. capital II — bgh entry"
+      }
+    },
+    {
+      "rank": 17,
+      "familyName": "Hansen",
+      "firstName": "Friedrich Bernd",
+      "pct": 2.14,
+      "shares": 119363,
+      "holdings": [
+        "bgh Vermögensverwaltung GmbH",
+        "ZKP Innovations Holding Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2023-05-25",
+        "price": 20.56,
+        "entity": "bgh Vermögensverwaltung GmbH",
+        "desc": "Auth. capital II — bgh entry"
+      }
+    },
+    {
+      "rank": 18,
+      "familyName": "Hansen",
+      "firstName": "Jakob Gerhard",
+      "pct": 2.14,
+      "shares": 119363,
+      "holdings": [
+        "bgh Vermögensverwaltung GmbH",
+        "ZKP Innovations Holding Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2023-05-25",
+        "price": 20.56,
+        "entity": "bgh Vermögensverwaltung GmbH",
+        "desc": "Auth. capital II — bgh entry"
+      }
+    },
+    {
+      "rank": 19,
+      "familyName": "Hansen",
+      "firstName": "Wilhelm Reinhold",
+      "pct": 2.14,
+      "shares": 119363,
+      "holdings": [
+        "bgh Vermögensverwaltung GmbH",
+        "ZKP Innovations Holding Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2023-05-25",
+        "price": 20.56,
+        "entity": "bgh Vermögensverwaltung GmbH",
+        "desc": "Auth. capital II — bgh entry"
+      }
+    },
+    {
+      "rank": 20,
+      "familyName": "Hansen",
+      "firstName": "Paul Maria",
+      "pct": 2.14,
+      "shares": 119363,
+      "holdings": [
+        "bgh Vermögensverwaltung GmbH",
+        "ZKP Innovations Holding Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2023-05-25",
+        "price": 20.56,
+        "entity": "bgh Vermögensverwaltung GmbH",
+        "desc": "Auth. capital II — bgh entry"
+      }
+    },
+    {
+      "rank": 21,
+      "familyName": "Steiner",
+      "firstName": "Daniel",
+      "pct": 1.43,
+      "shares": 79738,
+      "holdings": [
+        "AURIGA Capital AG",
+        "BOSYNC Beteiligungs UG"
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2021-12-31",
+        "price": null,
+        "entity": "AURIGA Capital AG",
+        "desc": "DSI dissolution → AURIGA transfer"
+      }
+    },
+    {
+      "rank": 22,
+      "familyName": "Schaeff",
+      "firstName": "Karl",
+      "pct": 0.92,
+      "shares": 51259,
+      "holdings": [
+        "Schaeff Group Holding AG",
+        "Schaeff Maschinen Verwaltung GmbH",
+        "Schaeff Pulp & Paper Holding Gmbh",
+        "ZKP Innovations Holding Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2022-23",
+        "price": null,
+        "entity": "Schaeff Group Holding AG",
+        "desc": "Entry via Schaeff Group Holding AG"
+      }
+    },
+    {
+      "rank": 23,
+      "familyName": "Saupe",
+      "firstName": "Christiane",
+      "pct": 0.91,
+      "shares": 50962,
+      "holdings": [
+        "Direct"
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2021-12-03",
+        "price": 13.0,
+        "entity": "Direct (personal)",
+        "desc": "Auth. capital II — direct entry"
+      }
+    },
+    {
+      "rank": 24,
+      "familyName": "Gerstner",
+      "firstName": "Thomas",
+      "pct": 0.72,
+      "shares": 40134,
+      "holdings": [
+        "ATLASI GROUP GmbH"
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2025-08-05",
+        "price": 23.0,
+        "entity": "ATLASI GROUP GmbH / Callidus Ventures GmbH",
+        "desc": "Capital increase 2025"
+      }
+    },
+    {
+      "rank": 25,
+      "familyName": "Schorr",
+      "firstName": "Rainer",
+      "pct": 0.61,
+      "shares": 33885,
+      "holdings": [
+        "5th. Dimension Investment GmbH"
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2024-05-17",
+        "price": 23.64,
+        "entity": "5th. Dimension Investment GmbH",
+        "desc": "Capital increase 2024"
+      }
+    },
+    {
+      "rank": 26,
+      "familyName": "Schorr",
+      "firstName": "Petra",
+      "pct": 0.39,
+      "shares": 21664,
+      "holdings": [
+        "5th. Dimension Investment GmbH"
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2024-05-17",
+        "price": 23.64,
+        "entity": "5th. Dimension Investment GmbH",
+        "desc": "Capital increase 2024"
+      }
+    },
+    {
+      "rank": 27,
+      "familyName": "Schaeff",
+      "firstName": "Leonie",
+      "pct": 0.37,
+      "shares": 20604,
+      "holdings": [
+        "Schaeff Pulp & Paper Holding Gmbh",
+        "A. Schaeff Vermögensanlagen GbR",
+        "ZKP Innovations Holding Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2022-23",
+        "price": null,
+        "entity": "ZKP Innovations Holding Ltd.",
+        "desc": "Entry via ZKP Innovations Holding Ltd."
+      }
+    },
+    {
+      "rank": 28,
+      "familyName": "Schaeff",
+      "firstName": "Antonia",
+      "pct": 0.37,
+      "shares": 20604,
+      "holdings": [
+        "Schaeff Pulp & Paper Holding Gmbh",
+        "A. Schaeff Vermögensanlagen GbR",
+        "ZKP Innovations Holding Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2022-23",
+        "price": null,
+        "entity": "ZKP Innovations Holding Ltd.",
+        "desc": "Entry via ZKP Innovations Holding Ltd."
+      }
+    },
+    {
+      "rank": 29,
+      "familyName": "Schaeff",
+      "firstName": "Kilian",
+      "pct": 0.37,
+      "shares": 20604,
+      "holdings": [
+        "Schaeff Pulp & Paper Holding Gmbh",
+        "A. Schaeff Vermögensanlagen GbR",
+        "ZKP Innovations Holding Ltd."
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2022-23",
+        "price": null,
+        "entity": "ZKP Innovations Holding Ltd.",
+        "desc": "Entry via ZKP Innovations Holding Ltd."
+      }
+    },
+    {
+      "rank": 30,
+      "familyName": "Brinkmann",
+      "firstName": "Johann",
+      "pct": 0.18,
+      "shares": 10033,
+      "holdings": [
+        "Callidus Ventures GmbH"
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2025-08-05",
+        "price": 23.0,
+        "entity": "ATLASI GROUP GmbH / Callidus Ventures GmbH",
+        "desc": "Capital increase 2025"
+      }
+    },
+    {
+      "rank": 31,
+      "familyName": "Brinkmann",
+      "firstName": "Marisa",
+      "pct": 0.18,
+      "shares": 10033,
+      "holdings": [
+        "Callidus Ventures GmbH"
+      ],
+      "photo": null,
+      "flags": [],
+      "status": "current",
+      "latestEvent": {
+        "date": "2025-08-05",
+        "price": 23.0,
+        "entity": "ATLASI GROUP GmbH / Callidus Ventures GmbH",
+        "desc": "Capital increase 2025"
+      }
+    }
+  ]
+}
