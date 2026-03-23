@@ -237,7 +237,7 @@ hr {
   gap: var(--sp-3);
 }
 
-/* Hamburger button */
+/* Hamburger button — min 44×44px touch target (WCAG 2.5.5) */
 .hamburger {
   background: none;
   border: none;
@@ -245,7 +245,11 @@ hr {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 6px;
+  padding: 11px 10px;  /* 22px icon + 22px padding = 44px total height */
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
 }
 .hamburger span {
   display: block;
@@ -269,34 +273,22 @@ hr {
 }
 .nav-title:hover { color: var(--wheat); }
 
-/* Language toggle */
-.lang-toggle {
-  font-family: var(--font-ui);
-  font-size: 0.8rem;
-  font-weight: 600;
-  background: transparent;
-  color: var(--paper);
-  border: 1px solid rgba(255,241,229,0.4);
-  border-radius: 3px;
-  padding: 4px 10px;
-  cursor: pointer;
-  letter-spacing: 0.04em;
-  transition: background 0.15s, border-color 0.15s;
-}
-.lang-toggle:hover {
-  background: rgba(255,241,229,0.15);
-  border-color: var(--paper);
-}
+/* Language toggle — canonical styles defined later in the "Dossier Shell Components" section */
 
-/* Search icon button */
+/* Search icon — min 44×44px touch target */
 .search-btn {
   background: none;
   border: none;
   color: var(--paper);
   cursor: pointer;
   font-size: 1.1rem;
-  padding: 6px;
+  padding: 11px 12px;
   line-height: 1;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .search-btn:hover { color: var(--wheat); }
 
@@ -925,12 +917,17 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
   background: none;
   border: none;
   cursor: pointer;
-  padding: 2px 1px;
+  padding: 12px 6px;  /* large padding; flag icon stays 20×14px visually */
   line-height: 0;
   opacity: 0.38;
   border-bottom: 2px solid transparent;
   transition: opacity 0.15s, border-color 0.15s;
   border-radius: 0;
+  min-width: 32px;    /* slightly relaxed — constrained by pill container width */
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .lang-btn:hover {
   opacity: 0.7;
@@ -1003,10 +1000,10 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px var(--container-padding);
+  padding: 0 var(--container-padding);  /* vertical space now comes from link padding */
   font-family: var(--font-ui);
   font-size: var(--text-small);
-  min-height: 32px;
+  min-height: 44px;  /* WCAG 2.5.5 min touch target height */
 }
 
 .fixed-bar-prev,
@@ -1016,6 +1013,7 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
   font-weight: 600;
   transition: color 0.15s;
   white-space: nowrap;
+  padding-block: 12px;  /* ensures 44px min hit height inside the bar */
 }
 .fixed-bar-prev:hover,
 .fixed-bar-next:hover {
@@ -1196,4 +1194,144 @@ body[data-page]:not([data-page="index"]) .site-footer {
 
 .vis-item .vis-item-content {
   padding: 3px 6px !important;
+}
+
+/* ============================================================
+   P2 — Reduced Motion
+   Respects user OS preference (vestibular disorders, WCAG 2.3.3).
+   Disables all transitions and transform-based animations.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Side menu: instant show/hide instead of slide */
+  .side-menu {
+    transition: none !important;
+  }
+
+  /* Overlay: instant opacity */
+  .side-menu-overlay {
+    transition: none !important;
+  }
+
+  /* Chapter bar: skip fade-in animation */
+  .fixed-chapter-bar {
+    transition: none !important;
+  }
+
+  /* Dossier cards: no lift on hover */
+  .dossier-card:hover {
+    transform: none !important;
+  }
+
+  /* Client chips: no lift */
+  .client-chip:hover {
+    transform: none !important;
+  }
+
+  /* Hamburger icon: no rotation animation */
+  .hamburger span {
+    transition: none !important;
+  }
+
+  /* Accordion arrow: no rotation */
+  .accordion-header::after {
+    transition: none !important;
+  }
+
+  /* ubo-pct-fill width animation */
+  .ubo-pct-fill {
+    transition: none !important;
+  }
+}
+
+
+/* ============================================================
+   P4 — Focus-Visible Styles
+   Provides clear keyboard-navigation outlines without affecting
+   mouse users (uses :focus-visible, not :focus).
+   WCAG 2.4.7 — Focus Visible.
+   ============================================================ */
+
+/* Default focus ring for all interactive elements */
+:focus-visible {
+  outline: 2px solid var(--oxford);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Nav buttons — lighter ring against dark background */
+.site-nav :focus-visible,
+.side-menu :focus-visible {
+  outline-color: var(--wheat);
+  outline-offset: 3px;
+}
+
+/* Links in content — claret ring matches the accent */
+.content-area a:focus-visible,
+.toc-item a:focus-visible {
+  outline-color: var(--claret);
+  border-radius: 1px;
+}
+
+/* Dossier cards — visible card-level focus */
+.dossier-card:focus-visible {
+  outline: 2px solid var(--oxford);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(13,118,128,0.15);
+}
+
+/* Hamburger — large clear ring */
+.hamburger:focus-visible {
+  outline: 2px solid var(--wheat);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Search btn */
+.search-btn:focus-visible {
+  outline: 2px solid var(--wheat);
+  border-radius: 4px;
+}
+
+/* Accordion headers */
+.accordion-header:focus-visible {
+  outline: 2px solid var(--oxford);
+  outline-offset: -2px;
+}
+
+/* Chapter nav links */
+.chapter-nav a:focus-visible,
+.fixed-bar-prev:focus-visible,
+.fixed-bar-next:focus-visible {
+  outline: 2px solid var(--oxford);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Menu links */
+.menu-link:focus-visible {
+  outline: 2px solid var(--wheat);
+  outline-offset: -2px;
+}
+
+/* Search result items */
+.search-result-item:focus-visible {
+  outline: 2px solid var(--oxford);
+  outline-offset: 1px;
+}
+
+/* Lang toggle buttons */
+.lang-btn:focus-visible {
+  outline: 2px solid var(--wheat);
+  outline-offset: 2px;
+  border-radius: 2px;
+  opacity: 1;
 }
