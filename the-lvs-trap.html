@@ -318,6 +318,125 @@
     }
 
     [id] { scroll-margin-top: calc(var(--nav-height) + var(--sp-4)); }
+
+    /* ---- Conflict-of-interest profile card ---- */
+    .conflict-block {
+      margin: var(--sp-6) 0;
+      border: 1px solid rgba(204,0,51,0.18);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .conflict-alert {
+      background: rgba(204,0,51,0.08);
+      border-bottom: 1px solid rgba(204,0,51,0.18);
+      padding: var(--sp-2) var(--sp-4);
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #CC0033;
+    }
+    .conflict-person {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: var(--sp-5) var(--sp-4) var(--sp-4);
+      gap: var(--sp-2);
+      background: var(--card-bg);
+    }
+    .conflict-photo {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(15%);
+      border: 3px solid var(--slate);
+    }
+    .conflict-name {
+      font-family: var(--font-ui);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--slate);
+      letter-spacing: 0.02em;
+    }
+    .conflict-subtitle {
+      font-family: var(--font-ui);
+      font-size: var(--text-small);
+      color: rgba(38,42,51,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .conflict-roles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid rgba(38,42,51,0.08);
+    }
+    .conflict-role {
+      padding: var(--sp-4) var(--sp-5);
+      font-family: var(--font-ui);
+    }
+    .conflict-role:first-child {
+      border-right: 1px solid rgba(38,42,51,0.08);
+      background: rgba(13,118,128,0.04);
+    }
+    .conflict-role:last-child {
+      background: rgba(204,0,51,0.04);
+    }
+    .role-num {
+      font-size: 1.6rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: var(--sp-1);
+    }
+    .conflict-role:first-child .role-num { color: var(--oxford); }
+    .conflict-role:last-child  .role-num { color: #CC0033; }
+    .role-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: var(--sp-2);
+    }
+    .conflict-role:first-child .role-title { color: var(--oxford); }
+    .conflict-role:last-child  .role-title { color: #CC0033; }
+    .role-desc {
+      font-size: var(--text-small);
+      color: rgba(38,42,51,0.65);
+      line-height: 1.5;
+    }
+    @media (max-width: 480px) {
+      .conflict-roles { grid-template-columns: 1fr; }
+      .conflict-role:first-child { border-right: none; border-bottom: 1px solid rgba(38,42,51,0.08); }
+    }
+
+    /* ---- Property evidence block ---- */
+    .property-evidence {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-4);
+      margin-top: var(--sp-4);
+    }
+    .property-aerial-fig {
+      margin: 0;
+    }
+    .property-aerial-img {
+      width: 100%;
+      border-radius: 4px;
+      display: block;
+      filter: grayscale(20%);
+    }
+    .property-aerial-fig figcaption {
+      font-family: var(--font-ui);
+      font-size: var(--text-small);
+      color: rgba(38,42,51,0.55);
+      margin-top: var(--sp-2);
+      line-height: 1.5;
+    }
+    @media (max-width: 640px) {
+      .property-evidence { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 
@@ -519,33 +638,25 @@
 
     <p>Martin Hunstein occupied three roles simultaneously in this transaction:</p>
 
-    <div class="triptych">
-      <!-- Left panel: Lawyer -->
-      <div class="tri-panel tri-panel--left">
-        <div class="tri-role tri-role--teal">Role 1: Legal Advisor</div>
-        <div class="tri-desc">Drafted the LVS Cooperation & Call Option Agreement. Prepared the modification agreement.</div>
+    <div class="conflict-block">
+      <div class="conflict-alert">⚠ Three concurrent roles — one transaction — one beneficiary</div>
+      <div class="conflict-person">
+        <img class="conflict-photo" src="assets/Hunstein, Martin.png" alt="Martin Hunstein">
+        <div class="conflict-name">Martin Hunstein</div>
+        <div class="conflict-subtitle">Rechtsanwalt · H.G. Perseus GmbH StBG</div>
       </div>
-
-      <!-- Left connector -->
-      <div class="tri-connector tri-connector--left"><hr></div>
-
-      <!-- Center hub -->
-      <div class="tri-center">
-        <div class="tri-hub">
-          <span class="tri-hub-initials">MH</span>
-          <span class="tri-hub-name">Hunstein</span>
+      <div class="conflict-roles">
+        <div class="conflict-role">
+          <div class="role-num">①</div>
+          <div class="role-title">Legal Advisor</div>
+          <div class="role-desc">Drafted the LVS Cooperation &amp; Call Option Agreement. Prepared the modification agreement. His client paid €6.15 million on that basis.</div>
+        </div>
+        <div class="conflict-role">
+          <div class="role-num">②</div>
+          <div class="role-title">Perseus Principal</div>
+          <div class="role-desc">Managing Director and 50% owner of H.G. Perseus GmbH StBG. Acquired 127,885 SyncPilot shares at €1.00 — a 95% discount to implied market price.</div>
         </div>
       </div>
-
-      <!-- Right connector -->
-      <div class="tri-connector tri-connector--right"><hr></div>
-
-      <!-- Right panel: Perseus -->
-      <div class="tri-panel tri-panel--right">
-        <div class="tri-role tri-role--red">Role 2: Perseus Principal</div>
-        <div class="tri-desc">Managing Director and 50% owner of H.G. Perseus GmbH StBG. Acquired 127,885 SyncPilot shares at €1.00 — a 95% discount.</div>
-      </div>
-
     </div>
 
     <p>The conflict: the lawyer who collected €6.15 million through a contract he drafted is the same person whose company acquired shares at one-twentieth of market price — in the same company, twenty-two months later.</p>
@@ -565,7 +676,33 @@
 
       <p><strong>2. No shares were issued.</strong> The Handelsregister shows no capital event corresponding to the LVS investment. Zero shares were allocated to LVS or any entity connected to LVS.</p>
 
-      <p style="margin-bottom:0;"><strong>3. Bleicher acquired personal assets during this period.</strong> Evidence indicates Bleicher purchased residential property and bought out a co-owner's stake in the BOSYNC holding structure during the same months that LVS funds were flowing into SyncPilot. The source of capital for these personal acquisitions — and whether it included investor funds designated for corporate purposes — is the central question a forensic audit must answer.</p>
+      <div>
+        <p style="margin-bottom:0;"><strong>3. Bleicher acquired personal assets during this period.</strong> Evidence indicates Bleicher purchased residential property and bought out a co-owner's stake in the BOSYNC holding structure during the same months that LVS funds were flowing into SyncPilot. The source of capital for these personal acquisitions — and whether it included investor funds designated for corporate purposes — is the central question a forensic audit must answer.</p>
+
+        <div class="property-evidence">
+          <figure class="property-aerial-fig">
+            <img class="property-aerial-img"
+                 src="assets/james-cook-strasse-25.jpg"
+                 alt="Aerial view of James-Cook-Straße 25, 86156 Augsburg">
+            <figcaption>
+              <strong>James-Cook-Straße 25, 86156 Augsburg</strong> —
+              residential property acquired during the period under review.
+              <a href="https://maps.google.com/maps?q=48.3697161,10.8587561"
+                 target="_blank" rel="noopener" class="src-link" style="margin-left:6px;">
+                Google Maps ↗
+              </a>
+            </figcaption>
+          </figure>
+          <div class="property-map-embed">
+            <iframe
+              src="https://maps.google.com/maps?q=48.3697161,10.8587561&hl=en&z=17&output=embed"
+              width="100%" height="260"
+              style="border:0; border-radius:4px; display:block;"
+              loading="lazy" allowfullscreen
+              title="James-Cook-Straße 25, Augsburg"></iframe>
+          </div>
+        </div>
+      </div>
 
     </div>
 
