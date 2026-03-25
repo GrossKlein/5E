@@ -318,6 +318,76 @@
     }
 
     [id] { scroll-margin-top: calc(var(--nav-height) + var(--sp-4)); }
+
+    /* ---- Payment timeline (horizontal) ---- */
+    .payment-timeline {
+      display: flex;
+      position: relative;
+      margin: var(--sp-6) 0;
+    }
+    .payment-timeline::before {
+      content: '';
+      position: absolute;
+      top: 7px;
+      left: 12.5%;
+      right: 12.5%;
+      height: 2px;
+      background: var(--wheat);
+      z-index: 0;
+    }
+    .payment-node {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 4px;
+    }
+    .payment-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #0A7D3F;
+      border: 2px solid var(--paper);
+      box-shadow: 0 0 0 2px #0A7D3F;
+      position: relative;
+      z-index: 1;
+      margin-bottom: var(--sp-2);
+    }
+    .payment-num {
+      font-family: var(--font-ui);
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: rgba(38,42,51,0.4);
+    }
+    .payment-amount {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #0A7D3F;
+      line-height: 1;
+    }
+    .payment-date {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      color: rgba(38,42,51,0.5);
+      line-height: 1.3;
+    }
+    @media (max-width: 480px) {
+      .payment-timeline {
+        flex-direction: column;
+        gap: var(--sp-3);
+        padding-left: var(--sp-6);
+      }
+      .payment-timeline::before {
+        top: 7px; left: 7px; right: auto; bottom: 7px;
+        width: 2px; height: auto;
+      }
+      .payment-node { flex-direction: row; text-align: left; gap: var(--sp-3); }
+      .payment-dot  { margin-bottom: 0; flex-shrink: 0; }
+    }
   </style>
 </head>
 
@@ -361,38 +431,31 @@
 
     <p>LVS zahlte zwischen April und August 2021 vier Tranchen:</p>
 
-    <div style="overflow-x: auto;">
-    <table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th style="text-align:right;">Betrag</th>
-          <th>Zahlungsdatum</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td style="text-align:right;">650.000 €</td>
-          <td>7. April 2021</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td style="text-align:right;">1.500.000 €</td>
-          <td>29. April 2021</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td style="text-align:right;">1.000.000 €</td>
-          <td>7. Juni 2021</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td style="text-align:right;">3.000.000 €</td>
-          <td>31. August 2021</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="payment-timeline">
+      <div class="payment-node">
+        <div class="payment-dot"></div>
+        <div class="payment-num">Tranche 1</div>
+        <div class="payment-amount">650.000 €</div>
+        <div class="payment-date">7. April 2021</div>
+      </div>
+      <div class="payment-node">
+        <div class="payment-dot"></div>
+        <div class="payment-num">Tranche 2</div>
+        <div class="payment-amount">1.500.000 €</div>
+        <div class="payment-date">29. April 2021</div>
+      </div>
+      <div class="payment-node">
+        <div class="payment-dot"></div>
+        <div class="payment-num">Tranche 3</div>
+        <div class="payment-amount">1.000.000 €</div>
+        <div class="payment-date">7. Juni 2021</div>
+      </div>
+      <div class="payment-node">
+        <div class="payment-dot"></div>
+        <div class="payment-num">Tranche 4</div>
+        <div class="payment-amount">3.000.000 €</div>
+        <div class="payment-date">31. August 2021</div>
+      </div>
     </div>
 
     <div class="lvs-stats">
@@ -406,7 +469,7 @@
       </div>
     </div>
 
-    <p>Alle vier Zahlungen sind durch Quelldokumente belegt. Die verbleibenden Tranchen – 12,6 Millionen Euro – wurden nie gezahlt. Es wurden nie Aktien geliefert.</p>
+    <p>SyncPilot und Bleicher haben die Anteile jedoch nie geliefert und verstoßen damit seit 2021 gegen den Vertrag.</p>
 
     <!-- ================================= -->
     <!-- SECTION 4: THE TIMELINE  -->
@@ -508,14 +571,11 @@
 
     </div>
 
-    <div class="question-block">
-      Der Anwalt Hunstein entwarf die Änderungsvereinbarung. Sein Mandant zahlte 6,15 Millionen Euro auf der Grundlage dieser Vereinbarung. Hunstein behauptet nun, die Änderungsvereinbarung sei nichtig.
-    </div>
 
     <!-- =============================== -->
     <!-- SECTION 5: Hunstein's THREE ROLES          -->
     <!-- =============================== -->
-    <h2 id="roles">Ein Anwalt, drei Rollen</h2>
+    <h2 id="roles">Der offensichtliche Betrug</h2>
 
     <p>Martin Hunstein hatte bei dieser Transaktion drei Rollen gleichzeitig inne:</p>
 
@@ -569,7 +629,7 @@
 
     </div>
 
-    <p>Nach deutschem Recht begeht ein Geschäftsführer, der Unternehmensgelder für persönliche Zwecke veruntreut, <em>Untreue</em> (§ 266 StGB) – strafbar mit bis zu fünf Jahren Freiheitsstrafe. Wurden die Gelder unter falschen Angaben erwirbt, liegt zusätzlich <em>Betrug</em> (§ 263 StGB) vor.</p>
+    <p>Nach deutschem Recht begeht ein Geschäftsführer, der Unternehmensgelder für persönliche Zwecke veruntreut, <a href="https://www.gesetze-im-internet.de/stgb/__266.html" target="_blank" rel="noopener"><em>Untreue</em> (§ 266 StGB)</a> – strafbar mit bis zu fünf Jahren Freiheitsstrafe. Wurden die Gelder unter falschen Angaben erwirbt, liegt zusätzlich <a href="https://www.gesetze-im-internet.de/stgb/__263.html" target="_blank" rel="noopener"><em>Betrug</em> (§ 263 StGB)</a> vor.</p>
 
     <div class="closing-ledger">
       <div class="closing-ledger-line">
