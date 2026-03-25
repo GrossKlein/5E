@@ -45,13 +45,13 @@
       flex-direction: column;
       gap: 1px;
       font-family: var(--font-ui);
-      font-size: var(--text-caption);
+      font-size: 1.36rem;
       color: rgba(38,42,51,0.55);
       line-height: 1.2;
     }
     .sh-stat strong {
       font-family: var(--font-body);
-      font-size: 1.4rem;
+      font-size: 2.8rem;
       font-weight: 700;
       line-height: 1;
     }
@@ -83,8 +83,9 @@
       display: grid;
       grid-template-columns: 32px 84px 1fr 80px 86px 120px;
       gap: 0 var(--sp-3);
-      align-items: center;
+      align-items: start;
       padding: var(--sp-3) var(--sp-4);
+      min-height: 92px;
       border-bottom: 1px solid rgba(242,223,206,0.6);
       transition: background 0.12s;
     }
@@ -104,7 +105,7 @@
     .ubo-avatar {
       width: 84px;
       height: 84px;
-      border-radius: 6px;
+      border-radius: 0;
       overflow: hidden;
       flex-shrink: 0;
       display: flex;
@@ -243,7 +244,7 @@
         padding: var(--sp-3);
       }
       .ubo-rank { grid-row: 1 / 3; align-self: center; }
-      .ubo-avatar { grid-row: 1 / 3; align-self: center; width: 84px; height: 84px; }
+      .ubo-avatar { grid-row: 1 / 3; align-self: start; width: 84px; height: 84px; }
       .ubo-identity { grid-column: 3; grid-row: 1; }
       .ubo-shares { display: none; }
       .ubo-pct-cell { grid-column: 4; grid-row: 1 / 3; align-self: center; }
@@ -252,7 +253,7 @@
     @media (max-width: 480px) {
       .ubo-event { display: none; }
       .sh-bluf-stats { gap: var(--sp-2) var(--sp-4); }
-      .sh-stat strong { font-size: 1.15rem; }
+      .sh-stat strong { font-size: 2.3rem; }
     }
   </style>
 </head>
@@ -263,7 +264,7 @@
     <h1>Shareholders</h1>
 
     <div class="sh-bluf">
-      <div class="sh-bluf-label">Bottom Line Up Front</div>
+
       <p>
         <strong>31 ultimate beneficial owners</strong> hold SyncPilot SE through
         <strong>26 holding entities</strong> across <strong>6 jurisdictions</strong>.

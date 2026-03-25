@@ -12,8 +12,8 @@
     .er-hook-sub { font-family:var(--font-ui); font-size:var(--text-ui); color:rgba(38,42,51,0.5); max-width:600px; margin:0 auto var(--sp-6); }
     .er-stats { display:flex; justify-content:center; gap:var(--sp-6); flex-wrap:wrap; margin-bottom:var(--sp-8); }
     .er-stat { text-align:center; }
-    .er-stat-num { font-family:var(--font-ui); font-size:1.6rem; font-weight:700; color:var(--claret); }
-    .er-stat-label { font-family:var(--font-ui); font-size:var(--text-caption); color:rgba(38,42,51,0.45); text-transform:uppercase; letter-spacing:0.08em; }
+    .er-stat-num { font-family:var(--font-ui); font-size:2.8rem; font-weight:700; color:var(--claret); }
+    .er-stat-label { font-family:var(--font-ui); font-size:1.36rem; color:rgba(38,42,51,0.45); text-transform:uppercase; letter-spacing:0.08em; }
     .er-section { max-width:960px; margin:0 auto var(--sp-2); padding:0 var(--container-padding); }
     .accordion { border:1px solid var(--wheat); border-radius:6px; overflow:hidden; margin-bottom:var(--sp-3); }
     .accordion-trigger { display:flex; align-items:center; justify-content:space-between; width:100%; padding:var(--sp-4); background:var(--card-bg); border:none; cursor:pointer; font-family:var(--font-ui); font-size:0.95rem; font-weight:700; color:var(--slate); text-align:left; transition:background 0.15s; }
@@ -46,6 +46,25 @@
     .ev-search input { width:100%; padding:6px 12px; border:1px solid var(--wheat); border-radius:4px; font-family:var(--font-ui); font-size:var(--text-small); background:var(--bg); color:var(--slate); outline:none; }
     .ev-search input:focus { border-color:var(--oxford); }
     .ev-search input::placeholder { color:rgba(38,42,51,0.3); }
+    /* Deep-URL section headings */
+    .er-section-heading {
+      font-family: var(--font-ui);
+      font-size: var(--text-ui);
+      font-weight: 700;
+      color: var(--slate);
+      margin: var(--sp-6) 0 var(--sp-2);
+      scroll-margin-top: 80px;
+    }
+    .er-anchor {
+      opacity: 0.25;
+      text-decoration: none;
+      margin-left: 0.4em;
+      font-weight: 400;
+      font-size: 0.9em;
+    }
+    .er-section-heading:hover .er-anchor { opacity: 0.7; }
+    :target .er-anchor { opacity: 0.7; }
+
     @media (max-width:640px) {
       /* Don't shrink below readable threshold — scroll horizontally instead */
       .ev-table { font-size: var(--text-small); }  /* 0.72rem ≈ 11.5px — minimum legible */
@@ -70,6 +89,7 @@
 
   <div class="er-section">
 
+    <h2 id="capital-events" class="er-section-heading">Capital Events <a href="#capital-events" class="er-anchor">¶</a></h2>
     <div class="accordion" id="acc-capital">
       <button class="accordion-trigger" onclick="toggleAcc('acc-capital')">
         <span>&#x1F4CA; Capital Events<span class="acc-count">91 share issuances &middot; Sep 2020 &ndash; Aug 2025</span></span>
@@ -178,6 +198,7 @@
       </div>
     </div>
 
+    <h2 id="beneficial-owners" class="er-section-heading">Beneficial Owners <a href="#beneficial-owners" class="er-anchor">¶</a></h2>
     <div class="accordion" id="acc-ubo">
       <button class="accordion-trigger" onclick="toggleAcc('acc-ubo')">
         <span>&#x1F464; Ultimate Beneficial Owners<span class="acc-count">31 individuals &middot; 6 jurisdictions</span></span>
@@ -226,6 +247,7 @@
       </div>
     </div>
 
+    <h2 id="payment-ledger" class="er-section-heading">LVS Payment Ledger <a href="#payment-ledger" class="er-anchor">¶</a></h2>
     <div class="accordion" id="acc-payments">
       <button class="accordion-trigger" onclick="toggleAcc('acc-payments')">
         <span>&#x1F4B0; LVS Payment Ledger<span class="acc-count">&euro;6.15M paid &middot; 0 shares delivered</span></span>
@@ -258,6 +280,7 @@
       </div>
     </div>
 
+    <h2 id="correspondence-timeline" class="er-section-heading">Correspondence Timeline <a href="#correspondence-timeline" class="er-anchor">¶</a></h2>
     <div class="accordion" id="acc-timeline">
       <button class="accordion-trigger" onclick="toggleAcc('acc-timeline')">
         <span>&#x1F4E7; Correspondence Timeline<span class="acc-count">30 entries &middot; Feb 2021 &ndash; Aug 2025</span></span>
@@ -305,6 +328,7 @@
       </div>
     </div>
 
+    <h2 id="entity-register" class="er-section-heading">Entity Register <a href="#entity-register" class="er-anchor">¶</a></h2>
     <div class="accordion" id="acc-entities">
       <button class="accordion-trigger" onclick="toggleAcc('acc-entities')">
         <span>&#x1F3E2; Entity Register<span class="acc-count">26 holding entities &middot; ownership chains</span></span>
@@ -378,6 +402,30 @@
     });
     rows.forEach(function(r) { tbody.appendChild(r); });
   }
+  // Deep-URL hash navigation: auto-open accordion when page loads with a hash
+  (function() {
+    var map = {
+      'capital-events': 'acc-capital',
+      'beneficial-owners': 'acc-ubo',
+      'payment-ledger': 'acc-payments',
+      'correspondence-timeline': 'acc-timeline',
+      'entity-register': 'acc-entities'
+    };
+    function openFromHash() {
+      var h = location.hash.slice(1);
+      var accId = map[h] || h;
+      var el = document.getElementById(accId);
+      if (el && el.classList.contains('accordion') && !el.classList.contains('open')) {
+        el.classList.add('open');
+      }
+      // Scroll to the heading if it has an id
+      var heading = document.getElementById(h);
+      if (heading) { setTimeout(function() { heading.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50); }
+    }
+    document.addEventListener('DOMContentLoaded', openFromHash);
+    window.addEventListener('hashchange', openFromHash);
+  })();
+
   // Auto-bind sortable headers
   document.querySelectorAll('.ev-table').forEach(function(tbl) {
     tbl.querySelectorAll('thead th:not(.no-sort)').forEach(function(th) {
