@@ -62,6 +62,18 @@
           }
         },
         {
+          "id": "the-pictet-pitch",
+          "file": "the-pictet-pitch.html",
+          "short": {
+            "en": "Pictet",
+            "de": "Pictet"
+          },
+          "title": {
+            "en": "The Pictet Pitch",
+            "de": "Der Pictet-Pitch"
+          }
+        },
+        {
           "id": "the-evidence-room",
           "file": "the-evidence-room.html",
           "short": {
