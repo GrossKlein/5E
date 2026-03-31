@@ -35,7 +35,7 @@
     .ev-table td.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
     .ev-table td.name-cell { font-family:var(--font-body); font-weight:600; }
     .ev-table tbody tr:nth-child(even) td { background:rgba(242,223,206,0.15); }
-    .ev-table tr.row-anomaly td { background:rgba(204,0,51,0.04); border-left:3px solid #CC0033; }
+    .ev-table tr.row-anomaly td { background:rgba(204,0,51,0.04); border-left:3px solid var(--risk-high); }
     .ev-table tr.row-top3 td { background:rgba(153,15,61,0.03); }
     .ev-table tr.row-highlight td { background:rgba(153,15,61,0.06); border-left:3px solid var(--claret); }
     .ev-table tbody tr:nth-child(even).row-highlight td { background:rgba(153,15,61,0.08); }
@@ -269,13 +269,13 @@
 <tr><td>2022-01-30</td><td class="num">€11,250,000</td><td class="num">€0</td><td></td><td><span class="src-onfile">On file</span></td></tr>
           </tbody>
           <tfoot><tr style="font-weight:700;border-top:2px solid var(--claret);">
-            <td>Total</td><td class="num">&euro;18,750,000</td><td class="num" style="color:#CC0033;">&euro;6,150,000</td><td></td><td></td>
+            <td>Total</td><td class="num">&euro;18,750,000</td><td class="num" style="color:var(--risk-high);">&euro;6,150,000</td><td></td><td></td>
           </tr></tfoot>
         </table>
         </div>
         <div style="display:flex;gap:var(--sp-6);margin-top:var(--sp-4);font-family:var(--font-ui);font-size:var(--text-ui);">
-          <div><strong style="color:#CC0033;">&euro;6,150,000</strong> paid</div>
-          <div><strong style="color:#CC0033;">0</strong> shares delivered</div>
+          <div><strong style="color:var(--risk-high);">&euro;6,150,000</strong> paid</div>
+          <div><strong style="color:var(--risk-high);">0</strong> shares delivered</div>
         </div>
       </div>
     </div>

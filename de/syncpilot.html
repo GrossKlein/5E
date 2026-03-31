@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SyncPilot — SyncPilot</title>
+  <meta name="description" content="Unternehmensprofil der SyncPilot SE: €128 Mio. Papierbewertung, 31 wirtschaftlich Berechtigte, 26 Holdinggesellschaften in 6 Rechtsgebieten. 84 % des Umsatzes von steuerfinanzierten deutschen Behörden.">
   <link rel="stylesheet" href="../styles.css">
   <style>
     /* === PROFILE PAGE STYLES === */
@@ -146,7 +147,7 @@
     }
     #capital-chart .event-line {
       fill: none;
-      stroke: #0D7680;
+      stroke: var(--teal);
       stroke-width: 2;
       stroke-linejoin: round;
       stroke-linecap: round;
@@ -187,8 +188,8 @@
     .d3-tooltip {
       position: absolute;
       pointer-events: none;
-      background: #262A33;
-      color: #FFF1E5;
+      background: var(--slate);
+      color: var(--paper);
       font-family: 'Source Sans 3', sans-serif;
       font-size: 0.75rem;
       padding: 8px 12px;
@@ -742,13 +743,13 @@
         .attr('y1', y(ptDec22.price) + 4)
         .attr('x2', x(ptMar23.dateObj) - 4)
         .attr('y2', y(ptMar23.price) - 4)
-        .attr('stroke', '#CC0033');
+        .attr('stroke', 'var(--risk-high)');
 
       g.append('text')
         .attr('class', 'annotation-text')
         .attr('x', midDropX + 4)
         .attr('y', midDropY - 6)
-        .attr('fill', '#CC0033')
+        .attr('fill', 'var(--risk-high)')
         .attr('text-anchor', 'middle')
         .text('−94.7% in 95 days');
 
@@ -761,13 +762,13 @@
         .attr('y1', y(ptMar23.price) - 4)
         .attr('x2', x(ptMay23.dateObj) - 4)
         .attr('y2', y(ptMay23.price) + 4)
-        .attr('stroke', '#0A7D3F');
+        .attr('stroke', 'var(--risk-low)');
 
       g.append('text')
         .attr('class', 'annotation-text')
         .attr('x', midRiseX - 4)
         .attr('y', midRiseY + 16)
-        .attr('fill', '#0A7D3F')
+        .attr('fill', 'var(--risk-low)')
         .attr('text-anchor', 'middle')
         .text('+1,956%');
 
@@ -784,7 +785,7 @@
         .attr('x', x(ptMar23.dateObj))
         .attr('y', y(ptMar23.price) + 20)
         .attr('text-anchor', 'middle')
-        .attr('fill', '#CC0033')
+        .attr('fill', 'var(--risk-high)')
         .attr('font-weight', '600')
         .text('val. €5.4M');
 
@@ -800,7 +801,7 @@
           .attr('cx', function(d) { return x(d.dateObj); })
           .attr('cy', function(d) { return y(d.price); })
           .attr('r', 0)
-          .attr('fill', function(d) { return d.anomaly ? '#CC0033' : '#0D7680'; })
+          .attr('fill', function(d) { return d.anomaly ? 'var(--risk-high)' : 'var(--teal)'; })
           .attr('stroke', '#fff')
           .attr('stroke-width', function(d) { return d.anomaly ? 3 : 2; });
 

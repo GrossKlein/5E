@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The LVS Trap — SyncPilot</title>
+  <meta name="description" content="LVS GmbH paid €6.15M into SyncPilot. Zero shares were delivered. The contract was drafted by a lawyer who simultaneously acquired shares at a 95% discount.">
   <link rel="stylesheet" href="styles.css">
   <style>
     /* === LVS PAGE STYLES === */
@@ -23,7 +24,7 @@
       line-height: 1.7;
     }
     .hook-lines .hook-em {
-      color: #CC0033;
+      color: var(--risk-high);
       font-style: normal;
     }
     .hook-kicker {
@@ -32,7 +33,7 @@
       font-size: 0.92rem;
       color: rgba(38,42,51,0.55);
       line-height: 1.55;
-      border-left: 3px solid #CC0033;
+      border-left: 3px solid var(--risk-high);
       padding-left: var(--sp-4);
     }
 
@@ -57,8 +58,8 @@
       font-weight: 700;
       color: var(--slate);
     }
-    .lvs-stat-value--red { color: #CC0033; }
-    .lvs-stat-value--green { color: #0A7D3F; }
+    .lvs-stat-value--red { color: var(--risk-high); }
+    .lvs-stat-value--green { color: var(--risk-low); }
     .lvs-stat-label {
       font-family: var(--font-ui);
       font-size: 0.68rem;
@@ -99,8 +100,8 @@
       border: 2px solid var(--paper);
     }
     .evt-dot--email  { background: rgba(38,42,51,0.3); box-shadow: 0 0 0 1px rgba(38,42,51,0.3); }
-    .evt-dot--pay    { background: #0A7D3F; box-shadow: 0 0 0 1px #0A7D3F; }
-    .evt-dot--warn   { background: #CC0033; box-shadow: 0 0 0 1px #CC0033; }
+    .evt-dot--pay    { background: var(--risk-low); box-shadow: 0 0 0 1px var(--risk-low); }
+    .evt-dot--warn   { background: var(--risk-high); box-shadow: 0 0 0 1px var(--risk-high); }
     .evt-dot--gap    { background: transparent; border: 2px dashed rgba(38,42,51,0.2); box-shadow: none; }
     .evt-date {
       font-family: var(--font-ui);
@@ -118,7 +119,7 @@
       margin-top: 2px;
     }
     .evt-body em {
-      color: #CC0033;
+      color: var(--risk-high);
       font-style: normal;
       font-weight: 600;
     }
@@ -228,7 +229,7 @@
       margin-bottom: 2px;
     }
     .tri-role--teal { color: var(--oxford); }
-    .tri-role--red { color: #CC0033; }
+    .tri-role--red { color: var(--risk-high); }
     .tri-role--mango { color: var(--mango); }
     .tri-desc {
       font-size: 0.8rem;
@@ -272,7 +273,7 @@
       font-weight: 700;
       color: var(--slate);
     }
-    .closing-ledger-line--red span:last-child { color: #CC0033; }
+    .closing-ledger-line--red span:last-child { color: var(--risk-high); }
 
     /* ---- CTA (shared pattern) ---- */
     .cta-next {
@@ -308,7 +309,7 @@
 
     /* ---- Question block ---- */
     .question-block {
-      border-left: 4px solid #CC0033;
+      border-left: 4px solid var(--risk-high);
       background: rgba(204,0,51,0.04);
       padding: var(--sp-4) var(--sp-6);
       margin: var(--sp-6) 0;
@@ -335,7 +336,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: #CC0033;
+      color: var(--risk-high);
     }
     .conflict-person {
       display: flex;
@@ -391,7 +392,7 @@
       margin-bottom: var(--sp-1);
     }
     .conflict-role:first-child .role-num { color: var(--oxford); }
-    .conflict-role:last-child  .role-num { color: #CC0033; }
+    .conflict-role:last-child  .role-num { color: var(--risk-high); }
     .role-title {
       font-size: 0.72rem;
       font-weight: 700;
@@ -400,7 +401,7 @@
       margin-bottom: var(--sp-2);
     }
     .conflict-role:first-child .role-title { color: var(--oxford); }
-    .conflict-role:last-child  .role-title { color: #CC0033; }
+    .conflict-role:last-child  .role-title { color: var(--risk-high); }
     .role-desc {
       font-size: var(--text-small);
       color: rgba(38,42,51,0.65);
@@ -466,9 +467,9 @@
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      background: #0A7D3F;
+      background: var(--risk-low);
       border: 2px solid var(--paper);
-      box-shadow: 0 0 0 2px #0A7D3F;
+      box-shadow: 0 0 0 2px var(--risk-low);
       position: relative;
       z-index: 1;
       margin-bottom: var(--sp-2);
@@ -485,7 +486,7 @@
       font-family: var(--font-body);
       font-size: 1.05rem;
       font-weight: 700;
-      color: #0A7D3F;
+      color: var(--risk-low);
       line-height: 1;
     }
     .payment-date {

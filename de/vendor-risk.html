@@ -48,12 +48,12 @@
     table.client-table td { font-family:var(--font-ui); font-size:var(--text-ui); padding:var(--sp-2) var(--sp-3); border-bottom:1px solid rgba(242,223,206,0.5); }
     table.client-table td.col-rev { text-align:right; font-variant-numeric:tabular-nums; font-weight:600; white-space:nowrap; }
     table.client-table tr.cat-public td { border-left:3px solid var(--claret); }
-    table.client-table tr.cat-social td { border-left:3px solid #CC0033; }
+    table.client-table tr.cat-social td { border-left:3px solid var(--risk-high); }
     table.client-table tr.cat-health td { border-left:3px solid var(--mango); }
     table.client-table tr.cat-other td { border-left:3px solid var(--oxford); }
     .cat-badge { display:inline-block; font-size:0.58rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; padding:1px 6px; border-radius:3px; margin-left:6px; vertical-align:middle; }
     .cat-badge--public { background:rgba(153,15,61,0.08); color:var(--claret); }
-    .cat-badge--social { background:rgba(204,0,51,0.08); color:#CC0033; }
+    .cat-badge--social { background:rgba(204,0,51,0.08); color:var(--risk-high); }
     .cat-badge--health { background:rgba(255,136,51,0.1); color:#cc6600; }
 
     .procurement-questions { max-width:780px; margin:var(--sp-8) auto; padding:var(--sp-6); background:rgba(153,15,61,0.03); border:1px solid rgba(153,15,61,0.12); border-radius:6px; }
@@ -113,7 +113,7 @@
             <!-- Public Admin: 42.3% → 212.6 of 502.65 -->
             <circle cx="100" cy="100" r="80" fill="none" stroke="#990F3D" stroke-width="32" stroke-dasharray="212.6 290.05" stroke-dashoffset="125.66" transform="rotate(-90 100 100)"></circle>
             <!-- Social Insurance: 21.3% → 107.1 -->
-            <circle cx="100" cy="100" r="80" fill="none" stroke="#CC0033" stroke-width="32" stroke-dasharray="107.1 395.55" stroke-dashoffset="-86.94" transform="rotate(-90 100 100)"></circle>
+            <circle cx="100" cy="100" r="80" fill="none" stroke="var(--risk-high)" stroke-width="32" stroke-dasharray="107.1 395.55" stroke-dashoffset="-86.94" transform="rotate(-90 100 100)"></circle>
             <!-- Health Insurance: 20.7% → 104.0 -->
             <circle cx="100" cy="100" r="80" fill="none" stroke="#FF8833" stroke-width="32" stroke-dasharray="104.0 398.65" stroke-dashoffset="-194.04" transform="rotate(-90 100 100)"></circle>
             <!-- Automotive: 5.0% → 25.1 -->
@@ -134,7 +134,7 @@
         <!-- Legend with icons -->
         <div style="flex:1; min-width:240px;">
           <div class="legend-row"><span class="legend-swatch" style="background:#990F3D;"></span><span class="legend-icon ico-public"></span><span class="legend-name">Öffentliche Verwaltung</span><span class="legend-val"><strong>18,7 Mio. €</strong> · 42,3 %</span></div>
-          <div class="legend-row"><span class="legend-swatch" style="background:#CC0033;"></span><span class="legend-icon ico-social"></span><span class="legend-name">Sozialversicherung</span><span class="legend-val"><strong>9,4 Mio. €</strong> · 21,3 %</span></div>
+          <div class="legend-row"><span class="legend-swatch" style="background:var(--risk-high);"></span><span class="legend-icon ico-social"></span><span class="legend-name">Sozialversicherung</span><span class="legend-val"><strong>9,4 Mio. €</strong> · 21,3 %</span></div>
           <div class="legend-row"><span class="legend-swatch" style="background:#FF8833;"></span><span class="legend-icon ico-health"></span><span class="legend-name">Krankenversicherung</span><span class="legend-val"><strong>9,1 Mio. €</strong> · 20,7 %</span></div>
           <div class="legend-row legend-row--minor"><span class="legend-swatch" style="background:#0D7680;"></span><span class="legend-icon ico-auto"></span><span class="legend-name">Automobil</span><span class="legend-val"><strong>2,2 Mio. €</strong> · 5,0 %</span></div>
           <div class="legend-row legend-row--minor"><span class="legend-swatch" style="background:#4A8C94;"></span><span class="legend-icon ico-energy"></span><span class="legend-name">Energie</span><span class="legend-val"><strong>2,2 Mio. €</strong> · 4,9 %</span></div>

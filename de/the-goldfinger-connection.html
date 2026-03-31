@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Die Goldfinger-Verbindung – SyncPilot</title>
+  <meta name="description" content="Zwei Goldfinger-Steuerbetrugsangeklagte — Martin Hunstein und Diethard Erik Goerg — erwarben SyncPilot-Anteile mit einem 95%-Rabatt über die H.G. Perseus GmbH.">
   <link rel="stylesheet" href="../styles.css" />
   <style>
     /* === GOLDFINGER PAGE STYLES === */
@@ -24,7 +25,7 @@
       margin-bottom: var(--sp-4);
     }
     .gf-hook-main em {
-      color: #CC0033;
+      color: var(--risk-high);
       font-style: normal;
     }
     .gf-hook-sub {
@@ -45,7 +46,7 @@
       background: var(--card-bg);
       border-radius: 6px;
       padding: var(--sp-6);
-      border-top: 3px solid #CC0033;
+      border-top: 3px solid var(--risk-high);
       text-align: center;
     }
     .profile-avatar {
@@ -88,7 +89,7 @@
     }
     .badge-defendant {
       background: rgba(204,0,51,0.08);
-      color: #CC0033;
+      color: var(--risk-high);
       border: 1px solid rgba(204,0,51,0.2);
     }
     .profile-meta-list {
@@ -175,12 +176,12 @@
       z-index: 2;
     }
     .pt-dot--ok {
-      background: #0A7D3F;
-      box-shadow: 0 0 0 2px #0A7D3F;
+      background: var(--risk-low);
+      box-shadow: 0 0 0 2px var(--risk-low);
     }
     .pt-dot--anomaly {
-      background: #CC0033;
-      box-shadow: 0 0 0 2px #CC0033;
+      background: var(--risk-high);
+      box-shadow: 0 0 0 2px var(--risk-high);
     }
     .pt-body {
       margin-top: var(--sp-3);
@@ -193,7 +194,7 @@
       font-weight: 700;
       color: var(--slate);
     }
-    .pt-node--anomaly .pt-price { color: #CC0033; }
+    .pt-node--anomaly .pt-price { color: var(--risk-high); }
     .pt-date {
       font-size: 0.72rem;
       color: rgba(38,42,51,0.45);
@@ -213,11 +214,11 @@
     }
     .pt-status--ok {
       background: rgba(10,125,63,0.08);
-      color: #0A7D3F;
+      color: var(--risk-low);
     }
     .pt-status--anomaly {
       background: rgba(204,0,51,0.08);
-      color: #CC0033;
+      color: var(--risk-high);
     }
 
     /* Context node (non-Perseus, for reference) */
@@ -269,7 +270,7 @@
     }
     .dispute-header--filing {
       background: rgba(204,0,51,0.06);
-      color: #CC0033;
+      color: var(--risk-high);
       text-align: center;
     }
     .dispute-header--attorney {
@@ -290,7 +291,7 @@
     }
     .dispute-cell--filing {
       text-align: center;
-      color: #CC0033;
+      color: var(--risk-high);
       font-weight: 600;
       font-variant-numeric: tabular-nums;
     }
@@ -336,7 +337,7 @@
       font-family: var(--font-body);
       font-size: 1.15rem;
       font-weight: 700;
-      color: #CC0033;
+      color: var(--risk-high);
       margin-top: var(--sp-1);
     }
 

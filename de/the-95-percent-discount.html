@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Der 95%-Rabatt — SyncPilot</title>
+  <meta name="description" content="Wie H.G. Perseus SyncPilot-Anteile für €1 erwarb, während externe Investoren €18,96 zahlten — ein 95%-Rabatt, vom selben Vorstand genehmigt, 95 Tage auseinander.">
   <link rel="stylesheet" href="../styles.css">
   <style>
     /* === PERSEUS PAGE STYLES === */
@@ -44,7 +45,7 @@
       color: var(--slate);
     }
     .hook-amount--anomaly {
-      color: #CC0033;
+      color: var(--risk-high);
     }
     .hook-buyer {
       font-family: var(--font-ui);
@@ -63,7 +64,7 @@
     }
 
     /* ---- Accent color override: risk-high throughout ---- */
-    .perseus-accent { color: #CC0033; }
+    .perseus-accent { color: var(--risk-high); }
 
     /* ---- Price bars visual ---- */
     .price-bars-wrap {
@@ -91,7 +92,7 @@
 
     /* ---- Question block (standalone) ---- */
     .question-block {
-      border-left: 4px solid #CC0033;
+      border-left: 4px solid var(--risk-high);
       background: rgba(204,0,51,0.04);
       padding: var(--sp-4) var(--sp-6);
       margin: var(--sp-6) 0;
@@ -114,7 +115,7 @@
       margin: var(--sp-4) 0;
     }
     .val-table td.val-anomaly {
-      color: #CC0033;
+      color: var(--risk-high);
       font-weight: 700;
     }
 
@@ -146,7 +147,7 @@
       font-family: var(--font-body);
       font-size: 1.15rem;
       font-weight: 700;
-      color: #CC0033;
+      color: var(--risk-high);
       margin-top: var(--sp-1);
     }
 
@@ -235,8 +236,8 @@
           <text x="150" y="53" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="14" font-weight="700" fill="#262A33">€18.96</text>
 
           <!-- Bar 2: €1.00 — height (1/21 * 210 ≈ 10) -->
-          <rect x="230" y="240" width="80" height="10" rx="3" fill="#CC0033"/>
-          <text x="270" y="234" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="14" font-weight="700" fill="#CC0033">€1.00</text>
+          <rect x="230" y="240" width="80" height="10" rx="3" fill="var(--risk-high)"/>
+          <text x="270" y="234" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="14" font-weight="700" fill="var(--risk-high)">€1.00</text>
 
           <!-- Bar 3: €20.56 — height (20.56/21 * 210 ≈ 205) -->
           <rect x="350" y="45" width="80" height="205" rx="3" fill="#0D7680"/>
@@ -246,7 +247,7 @@
           <line x1="150" y1="20" x2="150" y2="28" stroke="rgba(38,42,51,0.2)" stroke-width="4"/>
           <line x1="270" y1="20" x2="270" y2="28" stroke="rgba(38,42,51,0.2)" stroke-width="4"/>
           <line x1="150" y1="22" x2="270" y2="22" stroke="rgba(38,42,51,0.2)" stroke-width="1.5" stroke-dasharray="4,3"/>
-          <text x="210" y="16" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" font-weight="700" fill="#CC0033">95% DISCOUNT</text>
+          <text x="210" y="16" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="11" font-weight="700" fill="var(--risk-high)">95% DISCOUNT</text>
 
           <!-- Date labels -->
           <text x="150" y="268" text-anchor="middle" font-family="Source Sans 3, sans-serif" font-size="10" fill="rgba(38,42,51,0.45)">Dec 2022</text>
