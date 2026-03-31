@@ -12,7 +12,7 @@
 
     /* ---- Hero ---- */
     .index-hero {
-      padding: calc(var(--nav-height) + var(--sp-12)) var(--container-padding) var(--sp-8);
+      padding: calc(var(--nav-height) + var(--sp-8)) var(--container-padding) var(--sp-4);
       max-width: 800px;
       margin: 0 auto;
       text-align: center;
@@ -52,31 +52,31 @@
     .charge-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: var(--sp-4);
+      gap: var(--sp-2);
       max-width: var(--max-width);
-      margin: 0 auto var(--sp-8);
+      margin: 0 auto var(--sp-4);
       padding: 0 var(--container-padding);
     }
     .charge-card {
       text-align: center;
-      padding: var(--sp-6) var(--sp-4);
+      padding: var(--sp-3) var(--sp-3);
       background: var(--card-bg);
       border-radius: 6px;
       border-top: 3px solid var(--claret);
     }
     .charge-number {
       font-family: var(--font-ui);
-      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-size: clamp(1.3rem, 3vw, 1.7rem);
       font-weight: 700;
       color: var(--claret);
       line-height: 1.1;
-      margin-bottom: var(--sp-2);
+      margin-bottom: 2px;
     }
     .charge-label {
       font-family: var(--font-ui);
-      font-size: var(--text-small);
+      font-size: 0.7rem;
       color: rgba(38,42,51,0.55);
-      line-height: 1.4;
+      line-height: 1.35;
     }
 
     /* ---- Client exposure panel ---- */
@@ -134,7 +134,7 @@
     /* ---- Cast of characters ---- */
     .cast-section {
       max-width: var(--max-width);
-      margin: 0 auto var(--sp-8);
+      margin: 0 auto var(--sp-4);
       padding: 0 var(--container-padding);
     }
     .cast-title {
@@ -218,10 +218,10 @@
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: var(--oxford);
-      padding-bottom: var(--sp-2);
+      padding-bottom: var(--sp-1);
       border-bottom: 2px solid var(--oxford);
-      margin-bottom: var(--sp-4);
-      margin-top: var(--sp-8);
+      margin-bottom: var(--sp-2);
+      margin-top: var(--sp-4);
     }
     .section-divider:first-of-type { margin-top: 0; }
 
@@ -229,14 +229,14 @@
     .dossier-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: var(--sp-4);
-      margin-bottom: var(--sp-6);
+      gap: var(--sp-2);
+      margin-bottom: var(--sp-3);
     }
     .dossier-card {
       display: block;
       background: var(--card-bg);
       border-radius: 6px;
-      padding: var(--sp-6);
+      padding: var(--sp-3) var(--sp-4);
       text-decoration: none;
       color: var(--text);
       position: relative;
@@ -261,7 +261,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      margin-bottom: var(--sp-2);
+      margin-bottom: 2px;
     }
     .dossier-card--neutral  .card-label { color: var(--oxford); }
     .dossier-card--warning  .card-label { color: var(--claret); }
@@ -269,11 +269,11 @@
 
     .card-title {
       font-family: var(--font-body);
-      font-size: 1.15rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--slate);
       line-height: 1.25;
-      margin-bottom: var(--sp-2);
+      margin-bottom: 2px;
     }
     .card-desc {
       font-family: var(--font-ui);
@@ -301,8 +301,8 @@
     /* ---- CTA for procurement ---- */
     .procurement-cta {
       max-width: 780px;
-      margin: var(--sp-8) auto;
-      padding: var(--sp-6);
+      margin: var(--sp-4) auto;
+      padding: var(--sp-4);
       text-align: center;
       border: 2px solid var(--claret);
       border-radius: 6px;
@@ -338,11 +338,11 @@
       .dossier-grid--two,
       .dossier-grid--three { grid-template-columns: 1fr; }
       .charge-grid { grid-template-columns: 1fr; }
-      .index-hero { padding-top: calc(var(--nav-height) + var(--sp-8)); }
+      .index-hero { padding-top: calc(var(--nav-height) + var(--sp-6)); }
       .card-arrow { display: none; }
     }
     @media (min-width: 769px) {
-      .dossier-card { padding-right: calc(var(--sp-6) + 28px); }
+      .dossier-card { padding-right: calc(var(--sp-4) + 28px); }
     }
   </style>
 </head>
@@ -352,23 +352,13 @@
   <header class="index-hero">
     <h1>SyncPilot</h1>
     <hr class="hero-rule">
-    <p style="font-family: var(--font-ui); font-size: 1.05rem; color: rgba(38,42,51,0.55); line-height: 1.55; max-width: 600px; margin: 0 auto;">
+    <p style="font-family: var(--font-ui); font-size: 1.05rem; color: rgba(38,42,51,0.55); line-height: 1.55; max-width: 640px; margin: 0 auto var(--sp-4);">
       An investigative dossier into the company that handles digital consultations for German federal agencies — and the people who control it.
     </p>
+    <p style="font-family: var(--font-ui); font-size: 0.88rem; color: rgba(38,42,51,0.7); line-height: 1.6; max-width: 640px; margin: 0 auto;">
+      <strong style="color:var(--claret);">€6.15M</strong> paid by an investor — zero shares delivered. The lawyer behind the contract acquired shares at a <strong style="color:var(--claret);">95% discount</strong>. That same lawyer was a <a href="https://www.lto.de/recht/justiz/j/goldfinger-prozess-staatsanwaltschaft-augsburg-eingestellt-entschaedigung-strafanzeigen-kanzleidaten" target="_blank" rel="noopener" style="color:var(--claret);">Goldfinger tax fraud defendant</a>. The sole managing director acquired personal property while investor money flowed in. <strong style="color:var(--claret);">84% of revenue comes from German taxpayers.</strong>
+    </p>
   </header>
-
-  <!-- ====== PROSECUTION HOOK ====== -->
-  <div class="prosecution-hook">
-    <p><strong>€6.15&nbsp;million</strong> paid by an investor. <em>Zero shares delivered.</em></p>
-    <p>That same lawyer's company acquired shares in SyncPilot at <strong>a 95% discount</strong> — paying €1.00 per share when every other investor paid €18–21.</p>
-    <p>That same lawyer was <strong>a defendant in the <a href="https://www.lto.de/recht/justiz/j/goldfinger-prozess-staatsanwaltschaft-augsburg-eingestellt-entschaedigung-strafanzeigen-kanzleidaten" target="_blank" rel="noopener">Goldfinger tax fraud prosecution</a></strong>, one of the largest in German history.</p>
-    <p>The company's sole managing director — who controlled all incoming funds — <strong>acquired personal property during the period investor money was flowing in.</strong></p>
-  </div>
-
-  <!-- ====== WHY THIS MATTERS ====== -->
-  <div style="max-width:720px; margin:0 auto var(--sp-6); text-align:center; font-family:var(--font-ui); font-size:var(--text-ui); color:rgba(38,42,51,0.55); line-height:1.6;">
-    This is the company that provides digital consultation software to the <a href="https://www.arbeitsagentur.de" target="_blank" rel="noopener">Bundesagentur für Arbeit</a>, the <a href="https://www.aok.de" target="_blank" rel="noopener">AOK (Allgemeine Ortskrankenkasse)</a>, and the <a href="https://www.berlin.de/rbmskzl/" target="_blank" rel="noopener">Senatskanzlei Berlin</a>. <strong style="color:var(--claret);">84% of its revenue comes from German taxpayers.</strong>
-  </div>
 
   <!-- ====== CHARGE CARDS ====== -->
   <div class="charge-grid">
@@ -386,81 +376,25 @@
     </div>
   </div>
 
-  <!-- ====== CLIENT EXPOSURE ====== -->
-  <div class="client-exposure">
-    <div class="client-exposure-title">Public Sector Exposure</div>
-
-    <!-- Stat header -->
-    <div style="display:flex; align-items:baseline; gap:var(--sp-3); margin-bottom:var(--sp-4); flex-wrap:wrap;">
-      <span style="font-family:var(--font-ui); font-size:clamp(1.8rem,4vw,2.2rem); font-weight:700; color:var(--claret); line-height:1;">84.3%</span>
-      <span style="font-family:var(--font-ui); font-size:var(--text-ui); color:rgba(38,42,51,0.55);">of €44.2M projected revenue comes from taxpayer-funded organisations</span>
+  <!-- ====== CLIENT EXPOSURE (compact) ====== -->
+  <div class="client-exposure" style="padding:var(--sp-4) var(--sp-5);">
+    <div style="display:flex; align-items:baseline; gap:var(--sp-3); flex-wrap:wrap; margin-bottom:var(--sp-2);">
+      <span class="client-exposure-title" style="margin-bottom:0;">Public Sector Exposure</span>
+      <span style="font-family:var(--font-ui); font-size:clamp(1.1rem,2.5vw,1.4rem); font-weight:700; color:var(--claret); line-height:1;">84.3%</span>
+      <span style="font-family:var(--font-ui); font-size:0.78rem; color:rgba(38,42,51,0.55);">of €44.2M revenue from taxpayer-funded organisations</span>
     </div>
-
-    <!-- Client card grid -->
-    <div class="client-card-grid">
-      <!-- Top public sector clients -->
-      <a href="https://www.arbeitsagentur.de" target="_blank" rel="noopener" class="client-chip client-chip--public">
-        <span class="chip-name">Bundesagentur für Arbeit</span>
-        <span class="chip-rev">€4.6M</span>
-      </a>
-      <a href="https://www.ekom21.de" target="_blank" rel="noopener" class="client-chip client-chip--public">
-        <span class="chip-name">ekom21</span>
-        <span class="chip-rev">€3.9M</span>
-      </a>
-      <a href="https://www.berlin.de/rbmskzl/" target="_blank" rel="noopener" class="client-chip client-chip--public">
-        <span class="chip-name">Senatskanzlei Berlin</span>
-        <span class="chip-rev">€3.8M</span>
-      </a>
-      <a href="https://www.akdb.de" target="_blank" rel="noopener" class="client-chip client-chip--public">
-        <span class="chip-name">AKDB Bayern</span>
-        <span class="chip-rev">€3.0M</span>
-      </a>
-      <a href="https://www.itsg.de" target="_blank" rel="noopener" class="client-chip client-chip--social">
-        <span class="chip-name">ITSG</span>
-        <span class="chip-rev">€3.0M</span>
-      </a>
-      <a href="https://www.aok.de" target="_blank" rel="noopener" class="client-chip client-chip--health">
-        <span class="chip-name">AOK</span>
-        <span class="chip-detail">11 regional offices</span>
-        <span class="chip-rev">€9.1M</span>
-      </a>
-      <a href="https://www.deutsche-rentenversicherung.de" target="_blank" rel="noopener" class="client-chip client-chip--social">
-        <span class="chip-name">Deutsche Rentenversicherung</span>
-      </a>
-      <a href="https://www.svlfg.de" target="_blank" rel="noopener" class="client-chip client-chip--social">
-        <span class="chip-name">SVLFG</span>
-        <span class="chip-rev">€1.1M</span>
-      </a>
-
-      <!-- Enterprise clients -->
-      <a href="https://www.volkswagen.de" target="_blank" rel="noopener" class="client-chip client-chip--enterprise">
-        <span class="chip-name">Volkswagen</span>
-        <span class="chip-rev">€2.2M</span>
-      </a>
-      <a href="https://www.eon.de" target="_blank" rel="noopener" class="client-chip client-chip--enterprise">
-        <span class="chip-name">E.ON</span>
-        <span class="chip-rev">€2.0M</span>
-      </a>
-      <a href="https://www.vodafone.de" target="_blank" rel="noopener" class="client-chip client-chip--enterprise">
-        <span class="chip-name">Vodafone</span>
-      </a>
-      <a href="https://www.axa.de" target="_blank" rel="noopener" class="client-chip client-chip--enterprise">
-        <span class="chip-name">AXA</span>
-      </a>
-
-      <!-- SAP card -->
-      <a href="https://partnerfinder.sap.com/partnerNavigator?q=SYNCPILOT" target="_blank" rel="noopener" class="client-chip client-chip--sap">
-        <span class="chip-name">SAP Partner</span>
-        <span class="chip-detail">Silver (↓ from Gold)</span>
-      </a>
+    <div class="client-card-grid" style="gap:5px;">
+      <a href="https://www.arbeitsagentur.de" target="_blank" rel="noopener" class="client-chip client-chip--public" style="padding:4px 10px;"><span class="chip-name">Bundesagentur f. Arbeit</span></a>
+      <a href="https://www.aok.de" target="_blank" rel="noopener" class="client-chip client-chip--health" style="padding:4px 10px;"><span class="chip-name">AOK</span></a>
+      <a href="https://www.ekom21.de" target="_blank" rel="noopener" class="client-chip client-chip--public" style="padding:4px 10px;"><span class="chip-name">ekom21</span></a>
+      <a href="https://www.berlin.de/rbmskzl/" target="_blank" rel="noopener" class="client-chip client-chip--public" style="padding:4px 10px;"><span class="chip-name">Senatskanzlei Berlin</span></a>
+      <a href="https://www.akdb.de" target="_blank" rel="noopener" class="client-chip client-chip--public" style="padding:4px 10px;"><span class="chip-name">AKDB</span></a>
+      <a href="https://www.itsg.de" target="_blank" rel="noopener" class="client-chip client-chip--social" style="padding:4px 10px;"><span class="chip-name">ITSG</span></a>
+      <a href="https://www.volkswagen.de" target="_blank" rel="noopener" class="client-chip client-chip--enterprise" style="padding:4px 10px;"><span class="chip-name">VW</span></a>
+      <a href="https://www.eon.de" target="_blank" rel="noopener" class="client-chip client-chip--enterprise" style="padding:4px 10px;"><span class="chip-name">E.ON</span></a>
+      <a href="https://partnerfinder.sap.com/partnerNavigator?q=SYNCPILOT" target="_blank" rel="noopener" class="client-chip client-chip--sap" style="padding:4px 10px;"><span class="chip-name">SAP Partner</span></a>
+      <a href="vendor-risk.html" style="font-family:var(--font-ui); font-size:var(--text-small); font-weight:600; color:var(--oxford); padding:4px 10px; text-decoration:none; border-bottom:1px solid var(--oxford);">+46 more clients →</a>
     </div>
-
-    <p style="font-family:var(--font-ui); font-size:var(--text-caption); color:rgba(38,42,51,0.35); margin-top:var(--sp-3); margin-bottom:0;">
-      <span style="display:inline-block; width:8px; height:8px; background:var(--claret); border-radius:2px; margin-right:4px; vertical-align:middle;"></span>Public admin
-      <span style="display:inline-block; width:8px; height:8px; background:#CC0033; border-radius:2px; margin:0 4px 0 12px; vertical-align:middle;"></span>Social insurance
-      <span style="display:inline-block; width:8px; height:8px; background:var(--mango); border-radius:2px; margin:0 4px 0 12px; vertical-align:middle;"></span>Health insurance
-      <span style="display:inline-block; width:8px; height:8px; background:var(--oxford); border-radius:2px; margin:0 4px 0 12px; vertical-align:middle;"></span>Enterprise
-    </p>
   </div>
 
   <!-- ====== CAST OF CHARACTERS ====== -->
@@ -501,16 +435,19 @@
   <!-- ====== CHAPTER CARDS ====== -->
   <main class="section-group">
 
-    <!-- Section 1: The Company (standalone, neutral) -->
-    <div class="section-divider">SyncPilot</div>
+    <!-- Section 1: The Subject -->
+    <div class="section-divider">The Subject</div>
 
     <div class="dossier-grid">
-      <a href="syncpilot.html" class="dossier-card dossier-card--neutral">
-        <div class="card-label">Profile</div>
-        <div class="card-title">SyncPilot</div>
-        <p class="card-desc">
-          €128M paper valuation. 31 beneficial owners. 26 holding entities across 6 jurisdictions. 84% of revenue from taxpayer-funded agencies. One man from Augsburg at the center.
-        </p>
+      <a href="syncpilot.html" class="dossier-card dossier-card--neutral" style="display:grid; grid-template-columns:80px 1fr; gap:var(--sp-4); align-items:center;">
+        <img src="assets/SPb.webp" alt="SyncPilot logo" style="width:80px; filter:grayscale(30%) opacity(0.8); border-radius:4px;">
+        <div>
+          <div class="card-label">Profile</div>
+          <div class="card-title">SyncPilot</div>
+          <p class="card-desc">
+            €128M paper valuation. 31 beneficial owners. 26 holding entities across 6 jurisdictions. 84% of revenue from taxpayer-funded agencies. One man from Augsburg at the center.
+          </p>
+        </div>
         <span class="card-arrow">→</span>
       </a>
     </div>
@@ -522,50 +459,40 @@
       <a href="the-95-percent-discount.html" class="dossier-card dossier-card--warning">
         <div class="card-label">Investigation</div>
         <div class="card-title">The 95% Discount</div>
-        <p class="card-desc">
-          €18.96 per share. Then €1.00. Then €20.56. Same company. Same board. 95 days apart.
-        </p>
+        <p class="card-desc">€18.96 → €1.00 → €20.56. Same board. 95 days apart.</p>
         <span class="card-arrow">→</span>
       </a>
 
       <a href="the-goldfinger-connection.html" class="dossier-card dossier-card--warning">
         <div class="card-label">Investigation</div>
         <div class="card-title">The Goldfinger Connection</div>
-        <p class="card-desc">
-          The buyers: two defendants from a €1 billion tax fraud prosecution. Arrested. Jailed. Then granted a 95% discount.
-        </p>
+        <p class="card-desc">Two tax fraud defendants. Arrested. Jailed. Then granted a 95% discount.</p>
         <span class="card-arrow">→</span>
       </a>
 
       <a href="the-lvs-trap.html" class="dossier-card dossier-card--warning">
         <div class="card-label">Investigation</div>
         <div class="card-title">The LVS Trap</div>
-        <p class="card-desc">
-          €6.15M paid. Zero shares. The lawyer who drafted the contract — his company bought shares at a 95% discount.
-        </p>
+        <p class="card-desc">€6.15M paid. Zero shares delivered.</p>
         <span class="card-arrow">→</span>
       </a>
     </div>
 
     <!-- Section 3: Evidence & Analysis (data layer) -->
-    <div class="section-divider">Evidence &amp; Analysis</div>
+    <div class="section-divider">Accountability &amp; Evidence</div>
 
     <div class="dossier-grid dossier-grid--two">
       <a href="sap-syncpilot-vendor-risk.html" class="dossier-card dossier-card--warning">
         <div class="card-label">Open Letter</div>
         <div class="card-title">Open Letter to SAP</div>
-        <p class="card-desc">
-          SAP's Silver partnership lends procurement credibility to a company with tax fraud defendants among its shareholders. We are asking SAP to enforce its own Code of Conduct.
-        </p>
+        <p class="card-desc">Asking SAP to enforce its own Partner Code of Conduct.</p>
         <span class="card-arrow">→</span>
       </a>
 
       <a href="vendor-risk.html" class="dossier-card dossier-card--reference">
         <div class="card-label">Analysis</div>
         <div class="card-title">Vendor Risk</div>
-        <p class="card-desc">
-          55 clients. €44.2M revenue. 84.3% from taxpayer-funded agencies. Is your organisation on this list?
-        </p>
+        <p class="card-desc">55 clients. €44.2M revenue. Is your organisation on this list?</p>
         <span class="card-arrow">→</span>
       </a>
     </div>
@@ -589,9 +516,7 @@
       <a href="network.html" class="dossier-card dossier-card--neutral">
         <div class="card-label">Visualisation</div>
         <div class="card-title">Network Analysis</div>
-        <p class="card-desc">
-          67 persons, 60 entities, 150 connections. Interactive force-directed graph mapping all ownership chains, control links, and family ties.
-        </p>
+        <p class="card-desc">67 persons, 60 entities, 150 connections.</p>
         <span class="card-arrow">→</span>
       </a>
      </div>

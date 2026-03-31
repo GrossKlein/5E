@@ -2,12 +2,6 @@
    SyncPilot Investigative Dossier — Shared Stylesheet
    FT Colour Palette · Source Serif / Source Sans Typography
    ──────────────────────────────────────────────────────────
-   v2.0 — Fluid Spacing & Adaptive Layout
-   • Spacing tokens sp-6+ use clamp() for viewport-adaptive rhythm
-   • Container padding is fluid — no more breakpoint overrides
-   • Typography scale includes fluid body/UI sizes
-   • Language toggle condensed from 30 lines to 6
-   • Responsive section reduced — clamp() handles the heavy lifting
    ============================================================ */
 
 /* --- Google Fonts --- */
