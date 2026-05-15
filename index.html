@@ -20,6 +20,26 @@
   <meta name="twitter:title" content="SyncPilot — An Investigative Dossier">
   <meta name="twitter:description" content="Investigative dossier on SyncPilot: court-ordered repayment of €6.15M, Goldfinger tax fraud defendants among shareholders, insider share pricing. Sourced from Handelsregister filings and primary documents.">
   <meta name="twitter:image" content="https://www.syncpilot.news/assets/SPb.webp">
+  <script>
+    (function () {
+      try {
+        var preferred = localStorage.getItem('syncpilotLang');
+        if (preferred === 'de') {
+          window.location.replace('de/');
+          return;
+        }
+        if (preferred) return;
+        var languages = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+        var wantsGerman = languages.some(function (language) {
+          return String(language || '').toLowerCase().indexOf('de') === 0;
+        });
+        if (wantsGerman) {
+          sessionStorage.setItem('syncpilotAutoLang', '1');
+          window.location.replace('de/');
+        }
+      } catch (err) {}
+    }());
+  </script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",

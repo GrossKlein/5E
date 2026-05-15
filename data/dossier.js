@@ -65,6 +65,9 @@
     enBtn.href = isDE ? '../' + currentFile : currentFile;
     enBtn.setAttribute('aria-label', 'English');
     enBtn.innerHTML = FLAG_US;
+    enBtn.addEventListener('click', function () {
+      try { localStorage.setItem('syncpilotLang', 'en'); } catch (err) {}
+    });
 
     var sep = document.createElement('span'); sep.className = 'lang-sep'; sep.textContent = '\u00b7';
 
@@ -73,6 +76,9 @@
     deBtn.href = isDE ? currentFile : 'de/' + currentFile;
     deBtn.setAttribute('aria-label', 'Deutsch');
     deBtn.innerHTML = FLAG_DE;
+    deBtn.addEventListener('click', function () {
+      try { localStorage.setItem('syncpilotLang', 'de'); } catch (err) {}
+    });
 
     tog.appendChild(enBtn); tog.appendChild(sep); tog.appendChild(deBtn);
     right.appendChild(tog);
