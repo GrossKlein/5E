@@ -105,7 +105,7 @@
     .accordion-body { display:none; padding:var(--sp-4); background:var(--bg); overflow-x:auto; }
     .accordion.open .accordion-body { display:block; }
     .ev-table { width:100%; border-collapse:collapse; font-family:var(--font-ui); font-size:var(--text-small); }
-    .ev-table th { text-align:left; padding:var(--sp-2); font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:rgba(38,42,51,0.4); border-bottom:2px solid var(--wheat); white-space:nowrap; cursor:pointer; user-select:none; }
+    .ev-table th { text-align:left; padding:var(--sp-3) var(--sp-2); font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:rgba(38,42,51,0.4); border-bottom:2px solid var(--wheat); white-space:nowrap; cursor:pointer; user-select:none; }
     .ev-table th:hover { color:var(--oxford); }
     .ev-table th::after { content:'\21C5'; margin-left:4px; font-size:0.55rem; opacity:0.3; }
     .ev-table th.sort-asc::after { content:'\2191'; opacity:0.8; color:var(--oxford); }
@@ -120,11 +120,11 @@
     .ev-table tr.row-top3 td { background:rgba(153,15,61,0.03); }
     .ev-table tr.row-highlight td { background:rgba(153,15,61,0.06); border-left:3px solid var(--claret); }
     .ev-table tbody tr:nth-child(even).row-highlight td { background:rgba(153,15,61,0.08); }
-    .src-link { font-family:var(--font-ui); font-size:0.6rem; font-weight:600; color:var(--oxford); text-decoration:none; padding:1px 5px; border:1px solid rgba(13,118,128,0.2); border-radius:3px; white-space:nowrap; }
+    .src-link { display:inline-flex; align-items:center; min-height:44px; font-family:var(--font-ui); font-size:0.68rem; font-weight:600; color:var(--oxford); text-decoration:none; padding:0 10px; border:1px solid rgba(13,118,128,0.2); border-radius:3px; white-space:nowrap; }
     .src-link:hover { background:rgba(13,118,128,0.06); }
     .src-onfile { font-family:var(--font-ui); font-size:0.6rem; color:rgba(38,42,51,0.3); font-style:italic; }
     .ev-search { margin-bottom:var(--sp-3); }
-    .ev-search input { width:100%; padding:6px 12px; border:1px solid var(--wheat); border-radius:4px; font-family:var(--font-ui); font-size:var(--text-small); background:var(--bg); color:var(--slate); }
+    .ev-search input { width:100%; min-height:44px; padding:9px 12px; border:1px solid var(--wheat); border-radius:4px; font-family:var(--font-ui); font-size:var(--text-small); background:var(--bg); color:var(--slate); }
     .ev-search input:focus-visible { border-color:var(--oxford); }
     .ev-search input::placeholder { color:rgba(38,42,51,0.3); }
     /* Deep-URL section headings */

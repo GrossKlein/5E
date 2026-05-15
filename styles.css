@@ -949,8 +949,8 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
   border-bottom: 2px solid transparent;
   transition: opacity 0.15s, border-color 0.15s;
   border-radius: 0;
-  min-width: 32px;    /* slightly relaxed — constrained by pill container width */
-  min-height: 38px;
+  min-width: 44px;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1055,6 +1055,12 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
 
 @media (max-width: 480px) {
   .fixed-bar-center { display: none; }
+  .fixed-bar-prev,
+  .fixed-bar-next {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
 }
 
 /* --- Footer Sections --- */

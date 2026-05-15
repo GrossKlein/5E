@@ -161,7 +161,8 @@
     .net-control select {
       font-family: var(--font-ui);
       font-size: var(--text-small);
-      padding: 5px 8px;
+      min-height: 44px;
+      padding: 9px 12px;
       border: 1px solid var(--wheat);
       border-radius: 4px;
       background: #fff;
@@ -173,7 +174,8 @@
       font-family: var(--font-ui);
       font-size: var(--text-small);
       font-weight: 600;
-      padding: 5px 14px;
+      min-height: 44px;
+      padding: 9px 16px;
       background: transparent;
       color: var(--oxford);
       border: 1px solid var(--oxford);
@@ -239,7 +241,9 @@
 
     @media (max-width: 768px) {
       #graph-svg { height: 400px; }
-      .net-controls { gap: var(--sp-2); }
+      .net-controls { gap: var(--sp-2); align-items: stretch; }
+      .net-control select,
+      .net-btn { width: 100%; }
       .net-controls-bar { flex-direction: column; align-items: stretch; }
     }
   </style>

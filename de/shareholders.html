@@ -323,6 +323,16 @@
       .ubo-event { grid-column: 3 / 5; grid-row: 2; text-align: left; }
     }
     @media (max-width: 480px) {
+      .ubo-row {
+        grid-template-columns: 24px 64px 1fr;
+        grid-template-rows: auto auto auto;
+      }
+      .ubo-avatar { width: 64px; height: 64px; }
+      .ubo-pct-cell {
+        grid-column: 3;
+        grid-row: 2;
+        text-align: left;
+      }
       .ubo-event { display: none; }
       .sh-bluf-stats { gap: var(--sp-2) var(--sp-4); }
       .sh-stat strong { font-size: 2.05rem; }
