@@ -33,6 +33,7 @@
 
     injectNav(m);
     injectSideMenu(m);
+    if (!isIndex) injectRelatedLinks(flat);
     if (!isIndex) injectChapterNav(flat);
     if (!isIndex) injectShareTools(m, flat);
     injectFooter(m);
@@ -176,6 +177,169 @@
   /* ═══════════════════════════════════════════════════════════
      FOOTER
      ═══════════════════════════════════════════════════════════ */
+  function injectRelatedLinks(flat) {
+    var target = document.querySelector('article') || document.querySelector('main') || document.querySelector('.content-area');
+    if (!target || target.querySelector('.related-links')) return;
+
+    var related = getRelatedPages();
+    if (!related.length) return;
+
+    var flatById = {};
+    flat.forEach(function (p) { flatById[p.id] = p; });
+
+    var section = document.createElement('section');
+    section.className = 'related-links';
+    section.setAttribute('aria-labelledby', 'related-links-title');
+
+    var title = document.createElement('h2');
+    title.id = 'related-links-title';
+    title.className = 'related-links-title';
+    title.textContent = lang === 'de' ? 'Weiter im Dossier' : 'Continue the dossier';
+    section.appendChild(title);
+
+    var list = document.createElement('div');
+    list.className = 'related-links-list';
+
+    related.forEach(function (item) {
+      var page = flatById[item.id];
+      if (!page) return;
+      var a = document.createElement('a');
+      a.className = 'related-link-card';
+      a.href = page.file;
+      a.innerHTML = '<span class="related-link-kicker">' + esc(item.kicker) + '</span>' +
+        '<span class="related-link-title">' + esc(item.title) + '</span>' +
+        '<span class="related-link-desc">' + esc(item.desc) + '</span>';
+      list.appendChild(a);
+    });
+
+    if (!list.children.length) return;
+    section.appendChild(list);
+    target.appendChild(section);
+  }
+
+  function getRelatedPages() {
+    var en = {
+      'syncpilot': [
+        ['the-95-percent-discount', 'Investigation', 'The 95% Discount', 'How insiders bought SyncPilot shares at EUR 1 after an EUR 18.96 valuation.'],
+        ['shareholders', 'Ownership', 'Shareholder structure', 'Trace the 31 beneficial owners and 26 holding entities.'],
+        ['network', 'Map', 'Network analysis', 'See how the persons, holding companies, and legal entities connect.']
+      ],
+      'the-95-percent-discount': [
+        ['the-goldfinger-connection', 'Context', 'The Goldfinger Connection', 'Why the Perseus buyers matter to the SyncPilot share pricing.'],
+        ['syncpilot', 'Company profile', 'SyncPilot ownership and capital', 'The capital structure behind the discounted share transfers.'],
+        ['shareholders', 'Ownership', 'Shareholder structure', 'View the ownership table behind the transactions.']
+      ],
+      'the-goldfinger-connection': [
+        ['the-95-percent-discount', 'Pricing', 'The 95% Discount', 'The share-price sequence that brought the Goldfinger defendants in.'],
+        ['the-lvs-trap', 'Investor dispute', 'The LVS Trap', 'The EUR 6.15M transaction that later became a court case.'],
+        ['network', 'Map', 'Network analysis', 'Follow the people and entities around the Perseus purchase.']
+      ],
+      'the-lvs-trap': [
+        ['the-verdict', 'Court ruling', 'The Verdict', 'Read what the Augsburg court ordered on 13 May 2026.'],
+        ['the-evidence-room', 'Primary source', 'Evidence Room', 'Open the documents and court materials behind the case.'],
+        ['vendor-risk', 'Risk analysis', 'Vendor Risk', 'Why the dispute matters to public-sector and enterprise customers.']
+      ],
+      'the-verdict': [
+        ['the-lvs-trap', 'Background', 'The LVS Trap', 'The transaction history behind the court order.'],
+        ['the-evidence-room', 'Primary source', 'Evidence Room', 'Find the judgment and supporting source documents.'],
+        ['vendor-risk', 'Risk analysis', 'Vendor Risk', 'Translate the ruling into procurement risk signals.']
+      ],
+      'the-pictet-pitch': [
+        ['the-95-percent-discount', 'Pricing', 'The 95% Discount', 'Compare the EUR 1 share sale with later valuation claims.'],
+        ['the-goldfinger-connection', 'Counterparty risk', 'The Goldfinger Connection', 'Review the buyer background behind the share transfers.'],
+        ['the-evidence-room', 'Primary source', 'Evidence Room', 'Check the transaction coverage and supporting documents.']
+      ],
+      'the-evidence-room': [
+        ['the-verdict', 'Court ruling', 'The Verdict', 'Read the court outcome in narrative form.'],
+        ['shareholders', 'Ownership', 'Shareholder structure', 'Use the ownership visualisation alongside the source documents.'],
+        ['network', 'Map', 'Network analysis', 'Explore the relationship graph for the documented entities.']
+      ],
+      'sap-syncpilot-vendor-risk': [
+        ['vendor-risk', 'Procurement', 'Vendor Risk', 'Review the broader customer and procurement exposure.'],
+        ['the-goldfinger-connection', 'Shareholder risk', 'The Goldfinger Connection', 'Understand the criminal-proceeding context.'],
+        ['the-evidence-room', 'Evidence', 'Evidence Room', 'Check the public documents behind the SAP letter.']
+      ],
+      'vendor-risk': [
+        ['sap-syncpilot-vendor-risk', 'SAP letter', 'Open Letter to SAP', 'Why partner status matters for procurement trust.'],
+        ['the-verdict', 'Court ruling', 'The Verdict', 'The court decision behind the investor-risk signal.'],
+        ['syncpilot', 'Company profile', 'SyncPilot profile', 'Review the company, ownership, and revenue concentration.']
+      ],
+      'shareholders': [
+        ['syncpilot', 'Company profile', 'SyncPilot profile', 'Read the company context behind the ownership table.'],
+        ['the-95-percent-discount', 'Pricing', 'The 95% Discount', 'See how selected shareholders entered at discounted pricing.'],
+        ['network', 'Map', 'Network analysis', 'Move from ownership table to relationship graph.']
+      ],
+      'network': [
+        ['shareholders', 'Ownership', 'Shareholder structure', 'Pair the graph with the shareholder table.'],
+        ['the-goldfinger-connection', 'Context', 'The Goldfinger Connection', 'Review the people behind one key ownership path.'],
+        ['the-evidence-room', 'Evidence', 'Evidence Room', 'Check the documents behind the mapped relationships.']
+      ]
+    };
+
+    var de = {
+      'syncpilot': [
+        ['the-95-percent-discount', 'Untersuchung', 'Der 95%-Rabatt', 'Wie Insider SyncPilot-Aktien nach einer Bewertung von 18,96 EUR fuer 1 EUR kauften.'],
+        ['shareholders', 'Eigentum', 'Gesellschafterstruktur', 'Die wirtschaftlichen Eigentuemer und Holdinggesellschaften nachverfolgen.'],
+        ['network', 'Karte', 'Netzwerkanalyse', 'Personen, Holdinggesellschaften und Rechtstraeger im Zusammenhang sehen.']
+      ],
+      'the-95-percent-discount': [
+        ['the-goldfinger-connection', 'Kontext', 'Die Goldfinger-Verbindung', 'Warum die Perseus-Kaeufer fuer die SyncPilot-Preisbildung wichtig sind.'],
+        ['syncpilot', 'Unternehmensprofil', 'SyncPilot Eigentum und Kapital', 'Die Kapitalstruktur hinter den rabattierten Aktienuebertragungen.'],
+        ['shareholders', 'Eigentum', 'Gesellschafterstruktur', 'Die Eigentumstabelle hinter den Transaktionen ansehen.']
+      ],
+      'the-goldfinger-connection': [
+        ['the-95-percent-discount', 'Preisbildung', 'Der 95%-Rabatt', 'Die Aktienpreisfolge, durch die die Goldfinger-Angeklagten einstiegen.'],
+        ['the-lvs-trap', 'Investorstreit', 'Die LVS-Falle', 'Die 6,15-Mio.-EUR-Transaktion, aus der ein Gerichtsfall wurde.'],
+        ['network', 'Karte', 'Netzwerkanalyse', 'Personen und Gesellschaften rund um den Perseus-Kauf verfolgen.']
+      ],
+      'the-lvs-trap': [
+        ['the-verdict', 'Urteil', 'Das Urteil', 'Was das Landgericht Augsburg am 13. Mai 2026 angeordnet hat.'],
+        ['the-evidence-room', 'Quelle', 'Der Beweisraum', 'Dokumente und Gerichtsunterlagen zum Fall oeffnen.'],
+        ['vendor-risk', 'Risikoanalyse', 'Lieferantenrisiko', 'Warum der Streit fuer oeffentliche und Enterprise-Kunden relevant ist.']
+      ],
+      'the-verdict': [
+        ['the-lvs-trap', 'Hintergrund', 'Die LVS-Falle', 'Die Transaktionsgeschichte hinter dem Urteil.'],
+        ['the-evidence-room', 'Quelle', 'Der Beweisraum', 'Urteil und unterstuetzende Quelldokumente finden.'],
+        ['vendor-risk', 'Risikoanalyse', 'Lieferantenrisiko', 'Das Urteil in Beschaffungsrisiken uebersetzen.']
+      ],
+      'the-pictet-pitch': [
+        ['the-95-percent-discount', 'Preisbildung', 'Der 95%-Rabatt', 'Den 1-EUR-Aktienverkauf mit spaeteren Bewertungsangaben vergleichen.'],
+        ['the-goldfinger-connection', 'Gegenparteirisiko', 'Die Goldfinger-Verbindung', 'Den Hintergrund der Kaeufer hinter den Aktienuebertragungen pruefen.'],
+        ['the-evidence-room', 'Quelle', 'Der Beweisraum', 'Transaktionsberichte und unterstuetzende Dokumente pruefen.']
+      ],
+      'the-evidence-room': [
+        ['the-verdict', 'Urteil', 'Das Urteil', 'Den Gerichtsausgang als Einordnung lesen.'],
+        ['shareholders', 'Eigentum', 'Gesellschafterstruktur', 'Die Eigentumsvisualisierung neben den Quelldokumenten nutzen.'],
+        ['network', 'Karte', 'Netzwerkanalyse', 'Den Beziehungsgraphen zu den dokumentierten Rechtstraegern erkunden.']
+      ],
+      'sap-syncpilot-vendor-risk': [
+        ['vendor-risk', 'Beschaffung', 'Lieferantenrisiko', 'Die breitere Kunden- und Beschaffungsexposition pruefen.'],
+        ['the-goldfinger-connection', 'Gesellschafterrisiko', 'Die Goldfinger-Verbindung', 'Den Kontext der Strafverfahren verstehen.'],
+        ['the-evidence-room', 'Belege', 'Der Beweisraum', 'Die oeffentlichen Dokumente hinter dem SAP-Brief pruefen.']
+      ],
+      'vendor-risk': [
+        ['sap-syncpilot-vendor-risk', 'SAP-Brief', 'Offener Brief an SAP', 'Warum Partnerstatus fuer Beschaffungsvertrauen relevant ist.'],
+        ['the-verdict', 'Urteil', 'Das Urteil', 'Die Gerichtsentscheidung hinter dem Investorenrisiko.'],
+        ['syncpilot', 'Unternehmensprofil', 'SyncPilot-Profil', 'Unternehmen, Eigentum und Umsatzkonzentration pruefen.']
+      ],
+      'shareholders': [
+        ['syncpilot', 'Unternehmensprofil', 'SyncPilot-Profil', 'Den Unternehmenskontext hinter der Eigentumstabelle lesen.'],
+        ['the-95-percent-discount', 'Preisbildung', 'Der 95%-Rabatt', 'Wie ausgewaehlte Gesellschafter zu Rabattpreisen einstiegen.'],
+        ['network', 'Karte', 'Netzwerkanalyse', 'Von der Eigentumstabelle zum Beziehungsgraphen wechseln.']
+      ],
+      'network': [
+        ['shareholders', 'Eigentum', 'Gesellschafterstruktur', 'Den Graphen mit der Gesellschaftertabelle abgleichen.'],
+        ['the-goldfinger-connection', 'Kontext', 'Die Goldfinger-Verbindung', 'Die Personen hinter einem zentralen Eigentumspfad pruefen.'],
+        ['the-evidence-room', 'Belege', 'Der Beweisraum', 'Die Dokumente hinter den dargestellten Beziehungen pruefen.']
+      ]
+    };
+
+    var source = lang === 'de' ? de : en;
+    return (source[pageId] || []).map(function (item) {
+      return { id: item[0], kicker: item[1], title: item[2], desc: item[3] };
+    });
+  }
+
   function injectFooter(m) {
     var existing = document.querySelector('.site-footer'); if (existing) existing.remove();
     var disc = (m.footer && m.footer.disclaimer) || {};

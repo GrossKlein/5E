@@ -774,6 +774,78 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
 .chapter-nav .prev::before { content: '← '; }
 .chapter-nav .next::after  { content: ' →'; }
 
+/* --- Related Links --- */
+.related-links {
+  margin-top: var(--sp-10, 2.5rem);
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--wheat);
+}
+
+.related-links-title {
+  margin: 0 0 var(--sp-3);
+  padding: 0;
+  border: 0;
+  color: var(--slate);
+  font-family: var(--font-ui);
+  font-size: var(--text-caption);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.related-links-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-3);
+}
+
+.related-link-card {
+  display: block;
+  min-height: 100%;
+  padding: var(--sp-3);
+  border: 1px solid rgba(38,42,51,0.14);
+  border-left: 3px solid var(--oxford);
+  border-radius: 4px;
+  background: rgba(242,223,206,0.28);
+  color: var(--slate);
+  text-decoration: none;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.related-link-card:hover {
+  background: rgba(242,223,206,0.5);
+  border-left-color: var(--claret);
+  color: var(--slate);
+}
+
+.related-link-kicker,
+.related-link-title,
+.related-link-desc {
+  display: block;
+}
+
+.related-link-kicker {
+  margin-bottom: var(--sp-1);
+  color: var(--oxford);
+  font-family: var(--font-ui);
+  font-size: var(--text-caption);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.related-link-title {
+  margin-bottom: var(--sp-1);
+  font-weight: 700;
+}
+
+.related-link-desc {
+  color: rgba(38,42,51,0.72);
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  line-height: 1.45;
+}
+
 /* --- Social Share --- */
 .social-share {
   display: flex;
@@ -1188,6 +1260,10 @@ body[data-page]:not([data-page="index"]) .site-footer {
     grid-template-columns: 1fr;
   }
 
+  .related-links-list {
+    grid-template-columns: 1fr;
+  }
+
   .chapter-nav {
     flex-direction: column;
     text-align: center;
@@ -1397,6 +1473,7 @@ body[data-page]:not([data-page="index"]) .site-footer {
 .chapter-nav a:focus-visible,
 .fixed-bar-prev:focus-visible,
 .fixed-bar-next:focus-visible,
+.related-link-card:focus-visible,
 .social-share-btn:focus-visible {
   outline: 2px solid var(--oxford);
   outline-offset: 3px;
