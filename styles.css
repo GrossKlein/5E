@@ -777,6 +777,63 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
 .chapter-nav .prev::before { content: '← '; }
 .chapter-nav .next::after  { content: ' →'; }
 
+/* --- Social Share --- */
+.social-share {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin: var(--sp-6) 0;
+  padding: var(--sp-3) 0;
+  border-top: 1px solid var(--wheat);
+  border-bottom: 1px solid var(--wheat);
+  font-family: var(--font-ui);
+}
+
+.social-share-title {
+  font-size: var(--text-caption);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(38,42,51,0.62);
+}
+
+.social-share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.social-share-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 var(--sp-3);
+  border: 1px solid rgba(38,42,51,0.22);
+  border-radius: 4px;
+  background: rgba(255,241,229,0.5);
+  color: var(--slate);
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.social-share-btn:hover {
+  background: var(--slate);
+  border-color: var(--slate);
+  color: var(--paper);
+}
+
+.social-share-btn[hidden] {
+  display: none;
+}
+
 /* --- Footer --- */
 .site-footer {
   background: var(--slate);
@@ -1342,7 +1399,8 @@ body[data-page]:not([data-page="index"]) .site-footer {
 /* Chapter nav links */
 .chapter-nav a:focus-visible,
 .fixed-bar-prev:focus-visible,
-.fixed-bar-next:focus-visible {
+.fixed-bar-next:focus-visible,
+.social-share-btn:focus-visible {
   outline: 2px solid var(--oxford);
   outline-offset: 3px;
   border-radius: 2px;

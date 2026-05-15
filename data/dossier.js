@@ -32,6 +32,7 @@
     injectNav(m);
     injectSideMenu(m);
     if (!isIndex) injectChapterNav(flat);
+    if (!isIndex) injectShareTools(m, flat);
     injectFooter(m);
 
     document.documentElement.lang = lang;
@@ -200,6 +201,103 @@
         '<span>' + cookieText + '</span>' +
       '</div></div>';
     document.body.appendChild(f);
+  }
+
+  function injectShareTools(m, flat) {
+    var target = document.querySelector('article') || document.querySelector('main') || document.querySelector('.content-area');
+    if (!target || target.querySelector('.social-share')) return;
+
+    var pageTitle = getShareTitle(m, flat);
+    var pageUrl = getShareUrl();
+    var encodedUrl = encodeURIComponent(pageUrl);
+    var encodedTitle = encodeURIComponent(pageTitle);
+    var labels = lang === 'de'
+      ? {
+          title: 'Diese Seite teilen',
+          native: 'Teilen',
+          nativeAria: 'Diese Seite teilen',
+          linkedin: 'Auf LinkedIn teilen',
+          x: 'Auf X teilen',
+          whatsapp: 'Auf WhatsApp teilen',
+          email: 'Per E-Mail teilen',
+          emailSubject: 'SyncPilot: ' + pageTitle,
+          emailText: 'E-Mail'
+        }
+      : {
+          title: 'Share this page',
+          native: 'Share',
+          nativeAria: 'Share this page',
+          linkedin: 'Share on LinkedIn',
+          x: 'Share on X',
+          whatsapp: 'Share on WhatsApp',
+          email: 'Share by email',
+          emailSubject: 'SyncPilot: ' + pageTitle,
+          emailText: 'Email'
+        };
+
+    var share = document.createElement('aside');
+    share.className = 'social-share';
+    share.setAttribute('aria-label', labels.title);
+
+    var heading = document.createElement('div');
+    heading.className = 'social-share-title';
+    heading.textContent = labels.title;
+    share.appendChild(heading);
+
+    var actions = document.createElement('div');
+    actions.className = 'social-share-actions';
+
+    var nativeBtn = document.createElement('button');
+    nativeBtn.type = 'button';
+    nativeBtn.className = 'social-share-btn social-share-native';
+    nativeBtn.setAttribute('aria-label', labels.nativeAria);
+    nativeBtn.textContent = labels.native;
+    nativeBtn.addEventListener('click', function () {
+      if (navigator.share) {
+        navigator.share({ title: pageTitle, text: pageTitle, url: pageUrl }).catch(function () {});
+      }
+    });
+    actions.appendChild(nativeBtn);
+
+    actions.appendChild(makeShareLink('LinkedIn', labels.linkedin, 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodedUrl));
+    actions.appendChild(makeShareLink('X', labels.x, 'https://twitter.com/intent/tweet?url=' + encodedUrl + '&text=' + encodedTitle));
+    actions.appendChild(makeShareLink('WhatsApp', labels.whatsapp, 'https://wa.me/?text=' + encodedUrl + '%20' + encodedTitle));
+    actions.appendChild(makeShareLink(labels.emailText, labels.email, 'mailto:?subject=' + encodeURIComponent(labels.emailSubject) + '&body=' + encodedTitle + '%0A%0A' + encodedUrl));
+
+    share.appendChild(actions);
+
+    var firstParagraph = target.querySelector('p');
+    if (firstParagraph && firstParagraph.parentNode) {
+      firstParagraph.parentNode.insertBefore(share, firstParagraph.nextSibling);
+    } else {
+      target.insertBefore(share, target.firstChild);
+    }
+
+    if (!navigator.share) nativeBtn.hidden = true;
+  }
+
+  function makeShareLink(text, label, href) {
+    var a = document.createElement('a');
+    a.className = 'social-share-btn';
+    a.href = href;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.setAttribute('aria-label', label);
+    a.textContent = text;
+    return a;
+  }
+
+  function getShareTitle(m, flat) {
+    var lk = lang === 'de' ? 'de' : 'en';
+    for (var i = 0; i < flat.length; i++) {
+      if (flat[i].id === pageId) return flat[i].title[lk] || flat[i].title.en || document.title;
+    }
+    return document.title.replace(/\s+[—-]\s+SyncPilot.*$/, '');
+  }
+
+  function getShareUrl() {
+    var canonical = document.querySelector('link[rel="canonical"]');
+    return canonical && canonical.href ? canonical.href : window.location.href.split('#')[0];
   }
 
   function esc(s) { var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
