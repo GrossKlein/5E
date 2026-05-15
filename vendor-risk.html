@@ -7,9 +7,9 @@
   <meta name="description" content="SyncPilot client list: 55 organisations, €44.2M projected revenue, 84% from German taxpayer-funded agencies.">
   <link rel="stylesheet" href="styles.css">
   <style>
-    .ce-hook { max-width:780px; margin:0 auto; padding:var(--sp-8) var(--container-padding) var(--sp-6); text-align:center; }
-    .ce-hook-stat { font-family:var(--font-ui); font-size:clamp(3rem,8vw,5rem); font-weight:700; color:var(--claret); line-height:1; margin-bottom:var(--sp-2); }
-    .ce-hook-label { font-family:var(--font-ui); font-size:clamp(1rem,2vw,1.2rem); color:rgba(38,42,51,0.6); line-height:1.4; }
+    .ce-hook { max-width:980px; margin:0 auto; padding:var(--sp-8) var(--container-padding) var(--sp-6); text-align:center; }
+    .ce-hook-stat { font-family:var(--font-ui); font-size:clamp(5rem,14vw,10rem); font-weight:700; color:var(--claret); line-height:0.95; margin-bottom:var(--sp-3); }
+    .ce-hook-label { font-family:var(--font-ui); font-size:clamp(1.45rem,3vw,2.4rem); color:rgba(38,42,51,0.68); line-height:1.25; }
 
     .sector-section { max-width:780px; margin:var(--sp-6) auto var(--sp-8); padding:0 var(--container-padding); }
     .legend-row { display:flex; align-items:center; gap:var(--sp-2); padding:6px 0; border-bottom:1px solid rgba(242,223,206,0.4); font-family:var(--font-ui); font-size:var(--text-ui); }
@@ -32,25 +32,25 @@
 
     .sector-label { display:inline-flex; align-items:center; gap:4px; }
     .sector-label .sec-ico { width:13px; height:13px; display:inline-block; background-size:contain; background-repeat:no-repeat; vertical-align:middle; opacity:0.5; }
-    .taxpayer-total { margin-top:var(--sp-4); padding-top:var(--sp-4); border-top:2px solid var(--claret); display:flex; justify-content:space-between; align-items:baseline; font-family:var(--font-ui); }
-    .taxpayer-total-label { font-size:var(--text-ui); font-weight:700; color:var(--claret); }
-    .taxpayer-total-value { font-size:1.1rem; font-weight:700; color:var(--claret); }
+    .taxpayer-total { margin-top:var(--sp-5); padding-top:var(--sp-5); border-top:4px solid var(--claret); display:flex; justify-content:space-between; align-items:baseline; gap:var(--sp-4); font-family:var(--font-ui); }
+    .taxpayer-total-label { font-size:clamp(1.2rem,2.2vw,1.9rem); font-weight:700; color:var(--claret); }
+    .taxpayer-total-value { font-size:clamp(1.5rem,3vw,2.4rem); font-weight:700; color:var(--claret); white-space:nowrap; }
 
-    .client-table-section { max-width:900px; margin:0 auto var(--sp-8); padding:0 var(--container-padding); }
+    .client-table-section { max-width:1200px; margin:0 auto var(--sp-8); padding:0 var(--container-padding); }
     .client-filter { display:flex; gap:var(--sp-2); flex-wrap:wrap; margin-bottom:var(--sp-4); }
     .filter-btn { font-family:var(--font-ui); font-size:var(--text-small); font-weight:600; padding:4px 12px; border:1px solid var(--wheat); border-radius:20px; background:transparent; color:rgba(38,42,51,0.55); cursor:pointer; transition:all 0.15s; }
     .filter-btn:hover { border-color:var(--oxford); color:var(--oxford); }
     .filter-btn.active { background:var(--claret); border-color:var(--claret); color:#fff; }
 
     table.client-table { width:100%; border-collapse:collapse; }
-    table.client-table th { font-family:var(--font-ui); font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:rgba(38,42,51,0.45); text-align:left; padding:var(--sp-2) var(--sp-3); border-bottom:2px solid var(--wheat); }
+    table.client-table th { font-family:var(--font-ui); font-size:1.1rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:rgba(38,42,51,0.5); text-align:left; padding:var(--sp-4) var(--sp-4); border-bottom:4px solid var(--wheat); }
     table.client-table th.col-rev { text-align:right; }
-    table.client-table td { font-family:var(--font-ui); font-size:var(--text-ui); padding:var(--sp-2) var(--sp-3); border-bottom:1px solid rgba(242,223,206,0.5); }
-    table.client-table td.col-rev { text-align:right; font-variant-numeric:tabular-nums; font-weight:600; white-space:nowrap; }
-    table.client-table tr.cat-public td { border-left:3px solid var(--claret); }
-    table.client-table tr.cat-social td { border-left:3px solid var(--risk-high); }
-    table.client-table tr.cat-health td { border-left:3px solid var(--mango); }
-    table.client-table tr.cat-other td { border-left:3px solid var(--oxford); }
+    table.client-table td { font-family:var(--font-ui); font-size:clamp(1.05rem,1.8vw,1.75rem); padding:var(--sp-4) var(--sp-4); border-bottom:1px solid rgba(242,223,206,0.7); line-height:1.25; }
+    table.client-table td.col-rev { text-align:right; font-variant-numeric:tabular-nums; font-size:clamp(1.15rem,2vw,1.9rem); font-weight:700; white-space:nowrap; }
+    table.client-table tr.cat-public td { border-left:6px solid var(--claret); }
+    table.client-table tr.cat-social td { border-left:6px solid var(--risk-high); }
+    table.client-table tr.cat-health td { border-left:6px solid var(--mango); }
+    table.client-table tr.cat-other td { border-left:6px solid var(--oxford); }
     .cat-badge { display:inline-block; font-size:0.58rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; padding:1px 6px; border-radius:3px; margin-left:6px; vertical-align:middle; }
     .cat-badge--public { background:rgba(153,15,61,0.08); color:var(--claret); }
     .cat-badge--social { background:rgba(204,0,51,0.08); color:var(--risk-high); }
@@ -69,10 +69,14 @@
 
     @media (max-width:640px) {
       .legend-row { font-size:var(--text-small); }
+      .taxpayer-total { flex-direction:column; align-items:flex-start; }
+      table.client-table th { font-size:0.85rem; padding:var(--sp-3); }
+      table.client-table td { font-size:1rem; padding:var(--sp-3); }
+      table.client-table td.col-rev { font-size:1rem; }
     }
     /* Client logo in name cell */
-    td.td-client { display:flex; align-items:center; gap:8px; }
-    .client-logo { width:24px; height:24px; object-fit:contain; flex-shrink:0; filter:grayscale(85%); opacity:0.70; border-radius:2px; }
+    td.td-client { display:flex; align-items:center; gap:16px; }
+    .client-logo { width:48px; height:48px; object-fit:contain; flex-shrink:0; filter:none; opacity:1; border-radius:2px; }
   </style>
 </head>
 <body data-page="vendor-risk">
