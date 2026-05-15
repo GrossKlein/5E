@@ -248,11 +248,11 @@
     <div class="client-table-section">
       <h2>All 55 Clients</h2>
       <div class="client-filter">
-        <button class="filter-btn active" data-filter="all">All (55)</button>
-        <button class="filter-btn" data-filter="public">Public Admin (18)</button>
-        <button class="filter-btn" data-filter="social">Social Insurance (6)</button>
-        <button class="filter-btn" data-filter="health">Health Insurance (14)</button>
-        <button class="filter-btn" data-filter="other">Private Sector (17)</button>
+        <button class="filter-btn active" type="button" data-filter="all" aria-pressed="true">All (55)</button>
+        <button class="filter-btn" type="button" data-filter="public" aria-pressed="false">Public Admin (18)</button>
+        <button class="filter-btn" type="button" data-filter="social" aria-pressed="false">Social Insurance (6)</button>
+        <button class="filter-btn" type="button" data-filter="health" aria-pressed="false">Health Insurance (14)</button>
+        <button class="filter-btn" type="button" data-filter="other" aria-pressed="false">Private Sector (17)</button>
       </div>
       <div style="overflow-x:auto;">
       <table class="client-table" id="clientTable">
@@ -323,6 +323,27 @@
       <p>If your organisation appears on this list, this dossier concerns you.</p>
     </div>
   </article>
+  <script>
+  (function () {
+    var buttons = Array.prototype.slice.call(document.querySelectorAll('.filter-btn'));
+    var rows = Array.prototype.slice.call(document.querySelectorAll('#clientTable tbody tr'));
+    function applyFilter(filter) {
+      buttons.forEach(function (button) {
+        var active = button.getAttribute('data-filter') === filter;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+      rows.forEach(function (row) {
+        row.style.display = filter === 'all' || row.getAttribute('data-cat') === filter ? '' : 'none';
+      });
+    }
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        applyFilter(button.getAttribute('data-filter'));
+      });
+    });
+  })();
+  </script>
   <script defer src="data/dossier.js"></script>
 </body>
 </html>

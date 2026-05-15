@@ -168,7 +168,7 @@
       color: var(--slate);
       cursor: pointer;
     }
-    .net-control select:focus { outline: 2px solid var(--oxford); outline-offset: 1px; }
+    .net-control select:focus-visible { outline: 2px solid var(--oxford); outline-offset: 1px; }
     .net-btn {
       font-family: var(--font-ui);
       font-size: var(--text-small);
@@ -192,6 +192,7 @@
       background: var(--paper);
       cursor: grab;
       display: block;
+      touch-action: manipulation;
     }
     #graph-svg:active { cursor: grabbing; }
 
@@ -366,7 +367,7 @@
       </div>
     </div>
 
-    <svg id="graph-svg"></svg>
+    <svg id="graph-svg" role="img" aria-label="Interaktiver Eigentumsnetzwerk-Graph"></svg>
 
     <div class="net-info" id="infoPanel">
       <span class="info-lbl">Klicken Sie auf einen beliebigen Knoten, um ihn zu untersuchen · Ziehen Sie, um die Position zu ändern · Scrollen Sie, um zu zoomen · Bewegen Sie den Mauszeiger darüber, um Nachbarn hervorzuheben</span>
@@ -395,7 +396,7 @@
     var CC={syncpilot:'#0D7680',bleicher_holdings:'#990F3D',auriga:'#FF8833',auctus:'#CC0033',tiven:'#0A7D3F',schaeff:'#6B5B3E',legal_services:'#7F77DD',schorr:'#534AB7',lindner_concha:'#D85A30',kurth_lapis:'#5DCAA5',hansen:'#97C459'};
     var LC={role:'#7F77DD',entity:'#0D7680',family:'#990F3D'};
     function nc(d){if(d.type==='person')return d.tier<=1?'#990F3D':d.tier<=2?'#0D7680':'rgba(38,42,51,0.4)';return CC[d.cluster]||'#B4A98A';}
-    function nr(d){if(d.id==='bleicher_franz_xaver')return 16;if(d.id==='syncpilot_se')return 14;if(d.id==='neumann_damerau_arnulf')return 13;return d.tier<=1?10:d.tier<=2?7:d.tier<=3?5.5:4;}
+    function nr(d){if(d.id==='bleicher_franz_xaver')return 16;if(d.id==='syncpilot_se')return 14;return d.tier<=1?10:d.tier<=2?7:d.tier<=3?5.5:4;}
     var DATA,allN,nMap,sim,svg,g,linkG,nodeG,labelG,zm,_lk,_nd;
     fetch('../data/network.json').then(function(r){if(!r.ok)throw r;return r.json();}).then(function(d){DATA=d;go();}).catch(function(){fetch('network.json').then(function(r){return r.json();}).then(function(d){DATA=d;go();});});
     function go(){
@@ -406,7 +407,7 @@
       g=svg.append('g');linkG=g.append('g');nodeG=g.append('g');labelG=g.append('g');
       zm=d3.zoom().scaleExtent([0.15,6]).on('zoom',function(e){g.attr('transform',e.transform);});
       svg.call(zm);
-      document.getElementById('resetBtn').onclick=function(){svg.transition().duration(400).call(zm.transform,d3.zoomIdentity);};
+      document.getElementById('resetBtn').onclick=function(){svg.interrupt().transition().duration(400).call(zm.transform,d3.zoomIdentity);};
       document.getElementById('tierF').onchange=build;
       document.getElementById('clusterF').onchange=build;
       document.getElementById('linkF').onchange=build;
@@ -415,7 +416,7 @@
     function build(){
       var tV=+document.getElementById('tierF').value,cV=document.getElementById('clusterF').value,lV=document.getElementById('linkF').value,mT=tV||5;
       var nodes=allN.filter(function(n){return n.tier<=mT;});
-      if(cV){var ci=new Set(nodes.filter(function(n){return n.cluster===cV;}).map(function(n){return n.id;}));if(cV==='syncpilot'||cV==='bleicher_holdings'){ci.add('bleicher_franz_xaver');ci.add('neumann_damerau_arnulf');}nodes=nodes.filter(function(n){return ci.has(n.id);});}
+      if(cV){var ci=new Set(nodes.filter(function(n){return n.cluster===cV;}).map(function(n){return n.id;}));if(cV==='syncpilot'||cV==='bleicher_holdings'){ci.add('bleicher_franz_xaver');}nodes=nodes.filter(function(n){return ci.has(n.id);});}
       var ni=new Set(nodes.map(function(n){return n.id;})),links=[];
       function al(a,t){a.forEach(function(l){if(ni.has(l.source)&&ni.has(l.target))links.push(Object.assign({},l,{ltype:t}));});}
       if(lV==='all'||lV==='role')al(DATA.roleLinks,'role');
@@ -429,7 +430,7 @@
       var ls=linkG.selectAll('line').data(links,function(d){return(d.source.id||d.source)+'-'+(d.target.id||d.target)+'-'+d.ltype;});ls.exit().remove();
       _lk=ls.enter().append('line').merge(ls).attr('class',function(d){return'lk-'+d.ltype;}).attr('stroke',function(d){return LC[d.ltype];});
       var ns=nodeG.selectAll('.nn').data(nodes,function(d){return d.id;});ns.exit().remove();
-      var ne=ns.enter().append('g').attr('class','nn').attr('cursor','pointer').call(d3.drag().on('start',function(e,d){if(!e.active)sim.alphaTarget(0.3).restart();d.fx=d.x;d.fy=d.y;}).on('drag',function(e,d){d.fx=e.x;d.fy=e.y;}).on('end',function(e,d){if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null;})).on('click',function(e,d){showInfo(d);}).on('mouseenter',function(e,d){hl(d,true);}).on('mouseleave',function(e,d){hl(d,false);});
+      var ne=ns.enter().append('g').attr('class','nn').attr('cursor','pointer').attr('tabindex','0').attr('role','button').attr('aria-label',function(d){return 'Eintrag anzeigen: '+d.name;}).call(d3.drag().on('start',function(e,d){if(!e.active)sim.alphaTarget(0.3).restart();d.fx=d.x;d.fy=d.y;}).on('drag',function(e,d){d.fx=e.x;d.fy=e.y;}).on('end',function(e,d){if(!e.active)sim.alphaTarget(0);d.fx=null;d.fy=null;})).on('click',function(e,d){showInfo(d);}).on('keydown',function(e,d){if(e.key==='Enter'||e.key===' '){e.preventDefault();showInfo(d);}}).on('mouseenter',function(e,d){hl(d,true);}).on('mouseleave',function(e,d){hl(d,false);}).on('focus',function(e,d){hl(d,true);}).on('blur',function(e,d){hl(d,false);});
       ne.each(function(d){var el=d3.select(this);if(d.type==='entity'){var r=nr(d);el.append('rect').attr('width',r*2).attr('height',r*1.5).attr('x',-r).attr('y',-r*0.75).attr('rx',3).attr('fill',nc(d)).attr('stroke','rgba(38,42,51,0.12)').attr('stroke-width',0.5);}else{el.append('circle').attr('r',nr(d)).attr('fill',nc(d)).attr('stroke',d.tier<=1?'#FFF1E5':'none').attr('stroke-width',d.tier<=1?2:0);}});
       _nd=ne.merge(ns);
       var lbs=labelG.selectAll('text').data(nodes.filter(function(n){return n.tier<=3||nr(n)>4;}),function(d){return d.id;});lbs.exit().remove();

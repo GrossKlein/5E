@@ -119,12 +119,21 @@ body {
   padding-top: var(--nav-height);
 }
 
+button,
+[role="button"],
+select,
+input,
+a {
+  touch-action: manipulation;
+}
+
 /* --- Typography --- */
 h1, h2, h3, h4 {
   font-family: var(--font-body);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 
 h1 {

@@ -174,11 +174,11 @@
 
     <h2 id="capital-events" class="er-section-heading">Wichtige Ereignisse <a href="#capital-events" class="er-anchor">¶</a></h2>
     <div class="accordion" id="acc-capital">
-      <button class="accordion-trigger" onclick="toggleAcc('acc-capital')">
+      <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="acc-capital-body" onclick="toggleAcc('acc-capital')">
         <span>&amp;##x1F4CA;<span class="acc-count">Kapitalereignisse 91 Aktienemissionen · Sep. 2020 – Aug. 2025</span></span>
         <span class="acc-icon">▶</span>
       </button>
-      <div class="accordion-body">
+      <div class="accordion-body" id="acc-capital-body">
         <div class="ev-search"><input type="text" name="capital-events-search" aria-label="Search capital events" autocomplete="off" placeholder="Search capital events&hellip;" oninput="filterTable(this,'tbl-capital')" /></div>
         <div class="ev-table-wrap">
         <table class="ev-table" id="tbl-capital">
@@ -283,11 +283,11 @@
 
     <h2 id="beneficial-owners" class="er-section-heading">Wirtschaftliche Eigentümer <a href="#beneficial-owners" class="er-anchor">¶</a></h2>
     <div class="accordion" id="acc-ubo">
-      <button class="accordion-trigger" onclick="toggleAcc('acc-ubo')">
+      <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="acc-ubo-body" onclick="toggleAcc('acc-ubo')">
         <span>&amp;##x1F464; Letztendliche wirtschaftliche<span class="acc-count">Eigentümer31 Personen · 6 Rechtsordnungen</span></span>
         <span class="acc-icon">▶</span>
       </button>
-      <div class="accordion-body">
+      <div class="accordion-body" id="acc-ubo-body">
         <div class="ev-search"><input type="text" name="ubos-search" aria-label="Search UBOs" autocomplete="off" placeholder="Search UBOs&hellip;" oninput="filterTable(this,'tbl-ubo')" /></div>
         <div class="ev-table-wrap">
         <table class="ev-table" id="tbl-ubo">
@@ -332,11 +332,11 @@
 
     <h2 id="payment-ledger" class="er-section-heading">LVS-Zahlungsbuch <a href="#payment-ledger" class="er-anchor">¶</a></h2>
     <div class="accordion" id="acc-payments">
-      <button class="accordion-trigger" onclick="toggleAcc('acc-payments')">
+      <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="acc-payments-body" onclick="toggleAcc('acc-payments')">
         <span>&amp;##x1F4B0;<span class="acc-count">LVS-Zahlungsregister 6,15 Mio. € gezahlt · 0 Aktien geliefert · Rückzahlung angeordnet LG Augsburg 13.05.2026</span></span>
         <span class="acc-icon">▶</span>
       </button>
-      <div class="accordion-body">
+      <div class="accordion-body" id="acc-payments-body">
         <p style="font-family:var(--font-ui);font-size:var(--text-small);color:rgba(38,42,51,0.55);margin-bottom:var(--sp-3);">
           Kooperations- und Call-Optionsvereinbarung vom 21. Mai 2021. Vertragsvolumen: 18.750.000 € für 750.000 Aktien. Änderungsvereinbarung (7.500.000 € / 375.000 Aktien).
         </p>
@@ -366,11 +366,11 @@
 
     <h2 id="court-proceedings" class="er-section-heading">Gerichtsverfahren <a href="#court-proceedings" class="er-anchor">¶</a></h2>
     <div class="accordion" id="acc-court">
-      <button class="accordion-trigger" onclick="toggleAcc('acc-court')">
+      <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="acc-court-body" onclick="toggleAcc('acc-court')">
         <span>⚖<span class="acc-count">Gerichtsverfahren 1 Urteil · LG Augsburg, 13. Mai 2026</span></span>
         <span class="acc-icon">▶</span>
       </button>
-      <div class="accordion-body">
+      <div class="accordion-body" id="acc-court-body">
         <div class="ev-table-wrap">
         <table class="ev-table" id="tbl-court">
           <thead><tr><th>Datum</th><th>Gericht</th><th>Aktenzeichen</th><th>Parteien</th><th>Entscheidung</th><th class="no-sort">Quelle</th></tr></thead>
@@ -387,11 +387,11 @@
 
     <h2 id="correspondence-timeline" class="er-section-heading">Zeitleiste der Korrespondenz <a href="#correspondence-timeline" class="er-anchor">¶</a></h2>
     <div class="accordion" id="acc-timeline">
-      <button class="accordion-trigger" onclick="toggleAcc('acc-timeline')">
+      <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="acc-timeline-body" onclick="toggleAcc('acc-timeline')">
         <span>&amp;##x1F4E7; Korrespondenz<span class="acc-count">-Zeitleiste 30 Einträge · Feb. 2021 – Aug. 2025</span></span>
         <span class="acc-icon">▶</span>
       </button>
-      <div class="accordion-body">
+      <div class="accordion-body" id="acc-timeline-body">
         <div class="ev-search"><input type="text" name="correspondence-search" aria-label="Search correspondence" autocomplete="off" placeholder="Search correspondence&hellip;" oninput="filterTable(this,'tbl-timeline')" /></div>
         <div class="ev-table-wrap">
         <table class="ev-table" id="tbl-timeline">
@@ -439,11 +439,11 @@
 
     <h2 id="entity-register" class="er-section-heading">Unternehmensregister <a href="#entity-register" class="er-anchor">¶</a></h2>
     <div class="accordion" id="acc-entities">
-      <button class="accordion-trigger" onclick="toggleAcc('acc-entities')">
+      <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="acc-entities-body" onclick="toggleAcc('acc-entities')">
         <span>&amp;##x1F3E2;<span class="acc-count">Unternehmensregister26 Holdinggesellschaften · Eigentumsverhältnisse</span></span>
         <span class="acc-icon">▶</span>
       </button>
-      <div class="accordion-body">
+      <div class="accordion-body" id="acc-entities-body">
         <div class="ev-search"><input type="text" name="entities-search" aria-label="Search entities" autocomplete="off" placeholder="Search entities&hellip;" oninput="filterTable(this,'tbl-entities')" /></div>
         <div class="ev-table-wrap">
         <table class="ev-table" id="tbl-entities">
@@ -485,7 +485,10 @@
   <script>
   function toggleAcc(id) {
     var el = document.getElementById(id);
-    if (el) el.classList.toggle('open');
+    if (!el) return;
+    var isOpen = el.classList.toggle('open');
+    var trigger = el.querySelector('.accordion-trigger');
+    if (trigger) trigger.setAttribute('aria-expanded', String(isOpen));
   }
   function filterTable(input, tableId) {
     var q = input.value.toLowerCase();
