@@ -250,6 +250,7 @@
 </head>
 
 <body data-page="shareholders">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <section class="ownership-shift" aria-labelledby="ownership-shift-title">
       <div class="ownership-shift-head">
@@ -305,7 +306,7 @@
       <p class="ownership-shift-source">Source: <a href="docs/Vorbehaltsurteil-LG-Augsburg-2026-05-13.pdf" target="_blank" rel="noopener">LG Augsburg, Case 112 O 2848/25, judgment rendered 13 May 2026</a>, p. 4.</p>
     </section>
 
-  <article class="content-area" style="max-width: var(--max-width);">
+  <article id="main-content" class="content-area" style="max-width: var(--max-width);">
 
     <h1>Shareholders</h1>
 
@@ -380,7 +381,7 @@
         var av = document.createElement('div');
         av.className = 'ubo-avatar';
         if (u.photo) {
-          av.innerHTML = '<img src="assets/' + esc(u.photo) + '" alt="' + esc(u.familyName) + '">';
+          av.innerHTML = '<img src="assets/' + esc(u.photo) + '" alt="' + esc(u.familyName) + '" width="96" height="96" loading="lazy">';
         } else {
           av.classList.add('ubo-avatar--placeholder');
           var ini = (u.firstName ? u.firstName.charAt(0) : '') + (u.familyName ? u.familyName.charAt(0) : '');

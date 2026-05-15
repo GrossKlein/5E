@@ -43,8 +43,8 @@
     .src-link:hover { background:rgba(13,118,128,0.06); }
     .src-onfile { font-family:var(--font-ui); font-size:0.6rem; color:rgba(38,42,51,0.3); font-style:italic; }
     .ev-search { margin-bottom:var(--sp-3); }
-    .ev-search input { width:100%; padding:6px 12px; border:1px solid var(--wheat); border-radius:4px; font-family:var(--font-ui); font-size:var(--text-small); background:var(--bg); color:var(--slate); outline:none; }
-    .ev-search input:focus { border-color:var(--oxford); }
+    .ev-search input { width:100%; padding:6px 12px; border:1px solid var(--wheat); border-radius:4px; font-family:var(--font-ui); font-size:var(--text-small); background:var(--bg); color:var(--slate); }
+    .ev-search input:focus-visible { border-color:var(--oxford); }
     .ev-search input::placeholder { color:rgba(38,42,51,0.3); }
     /* Deep-URL section headings */
     .er-section-heading {
@@ -74,7 +74,8 @@
   </style>
 </head>
 <body data-page="the-evidence-room">
-<div class="er-hook">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+<div id="main-content" class="er-hook">
     <h1>The Evidence Room</h1>
     <p class="er-hook-sub">Every claim in this dossier traced to its source document. Click any section to expand. Click column headers to sort. All tables are searchable.</p>
   </div>
@@ -97,7 +98,7 @@
         <span class="acc-icon">&#x25B6;</span>
       </button>
       <div class="accordion-body">
-        <div class="ev-search"><input type="text" placeholder="Search capital events&hellip;" oninput="filterTable(this,'tbl-capital')"></div>
+        <div class="ev-search"><input type="text" name="capital-events-search" aria-label="Search capital events" autocomplete="off" placeholder="Search capital events&hellip;" oninput="filterTable(this,'tbl-capital')"></div>
         <div class="ev-table-wrap">
         <table class="ev-table" id="tbl-capital">
           <thead><tr><th>Date</th><th>Shareholder</th><th>Shares</th><th>Nom.</th><th>Issue &euro;</th><th>Event</th><th class="no-sort">Source</th></tr></thead>
@@ -206,7 +207,7 @@
         <span class="acc-icon">&#x25B6;</span>
       </button>
       <div class="accordion-body">
-        <div class="ev-search"><input type="text" placeholder="Search UBOs&hellip;" oninput="filterTable(this,'tbl-ubo')"></div>
+        <div class="ev-search"><input type="text" name="ubos-search" aria-label="Search UBOs" autocomplete="off" placeholder="Search UBOs&hellip;" oninput="filterTable(this,'tbl-ubo')"></div>
         <div class="ev-table-wrap">
         <table class="ev-table" id="tbl-ubo">
           <thead><tr><th>#</th><th>Name</th><th>% of SE</th><th>Shares</th><th>Via (Holding Entity)</th></tr></thead>
@@ -310,7 +311,7 @@
         <span class="acc-icon">&#x25B6;</span>
       </button>
       <div class="accordion-body">
-        <div class="ev-search"><input type="text" placeholder="Search correspondence&hellip;" oninput="filterTable(this,'tbl-timeline')"></div>
+        <div class="ev-search"><input type="text" name="correspondence-search" aria-label="Search correspondence" autocomplete="off" placeholder="Search correspondence&hellip;" oninput="filterTable(this,'tbl-timeline')"></div>
         <div class="ev-table-wrap">
         <table class="ev-table" id="tbl-timeline">
           <thead><tr><th>Date</th><th>Type</th><th>From</th><th>To</th><th>Summary</th><th class="no-sort">Source</th></tr></thead>
@@ -362,7 +363,7 @@
         <span class="acc-icon">&#x25B6;</span>
       </button>
       <div class="accordion-body">
-        <div class="ev-search"><input type="text" placeholder="Search entities&hellip;" oninput="filterTable(this,'tbl-entities')"></div>
+        <div class="ev-search"><input type="text" name="entities-search" aria-label="Search entities" autocomplete="off" placeholder="Search entities&hellip;" oninput="filterTable(this,'tbl-entities')"></div>
         <div class="ev-table-wrap">
         <table class="ev-table" id="tbl-entities">
           <thead><tr><th>Entity</th><th class="no-sort">Owners / Shareholders</th></tr></thead>

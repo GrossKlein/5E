@@ -301,8 +301,9 @@
 </head>
 
 <body data-page="syncpilot">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 <!-- ====== CONTENT ====== -->
-  <article class="content-area">
+  <article id="main-content" class="content-area">
 
     <div style="margin-bottom: var(--sp-4);">
       <a href="index.html" style="font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600; text-decoration: none;">← Dossier-Startseite</a>
@@ -322,7 +323,7 @@
     <h2 id="identity">Unternehmensidentität</h2>
 
     <div class="company-card">
-      <img src="../assets/SPb.webp" alt="SyncPilot logo" class="company-card-logo" />
+      <img src="../assets/SPb.webp" alt="SyncPilot logo" class="company-card-logo" / width="1604" height="418" loading="lazy">
       <div class="company-meta-grid">
         <div class="meta-row">
           <span class="meta-label">Offizieller Name</span>
@@ -488,7 +489,7 @@
     <h2 id="bleicher">Der Mann im Mittelpunkt: Franz-Xaver Bleicher</h2>
 
     <div class="company-card" style="grid-template-columns: 120px 1fr; border-left: 3px solid var(--claret);">
-      <img src="../assets/f-x_bleicher_zukunftskongress.webp" alt="Franz-Xaver Bleicher" style="width:100%; max-width:200px; border-radius:6px; align-self:start; filter:grayscale(40%);" />
+      <img src="../assets/f-x_bleicher_zukunftskongress.webp" alt="Franz-Xaver Bleicher" style="width:100%; max-width:200px; border-radius:6px; align-self:start; filter:grayscale(40%);" / width="520" height="700" loading="lazy">
       <div>
         <div class="company-meta-grid" style="grid-template-columns: 1fr 1fr;">
           <div class="meta-row"><span class="meta-label">Vollständiger Name</span><span class="meta-value">Franz-Xaver Bleicher</span></div>
@@ -859,7 +860,6 @@
 
       /* Mobile: click to show, click elsewhere to hide */
       dots.on('touchstart', function(event, d) {
-        event.preventDefault();
         showTip(event, d);
         var touch = event.touches[0];
         tooltip.style.left = (touch.pageX + 14) + 'px';
