@@ -132,7 +132,7 @@ h1, h2, h3, h4 {
   font-family: var(--font-body);
   font-weight: 700;
   line-height: 1.2;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   text-wrap: balance;
 }
 
@@ -247,7 +247,7 @@ hr {
   justify-content: space-between;
   padding-inline: var(--container-padding);
   z-index: 1000;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  border-bottom: 1px solid rgba(255,241,229,0.14);
 }
 
 .nav-left {
@@ -520,13 +520,14 @@ hr {
 
 .card {
   background: var(--card-bg);
-  border-radius: 6px;
+  border-radius: 0;
   padding: var(--sp-6);
   position: relative;
-  transition: box-shadow 0.15s;
+  border: 1px solid rgba(38,42,51,0.12);
+  transition: border-color 0.15s, background 0.15s;
 }
 .card:hover {
-  box-shadow: 0 4px 16px rgba(38,42,51,0.1);
+  border-color: rgba(38,42,51,0.18);
 }
 
 .card-header {
@@ -624,7 +625,7 @@ hr {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   padding: 2px 8px;
-  border-radius: 3px;
+  border-radius: 0;
   margin-right: 4px;
   margin-bottom: 4px;
 }
@@ -660,10 +661,11 @@ hr {
   position: relative;
   width: 100%;
   margin-block: var(--sp-6);
-  background: #fff;
-  border-radius: 6px;
+  background: rgba(255,241,229,0.55);
+  border-radius: 0;
   padding: var(--sp-4);
-  box-shadow: 0 1px 4px rgba(38,42,51,0.06);
+  border: 1px solid rgba(38,42,51,0.12);
+  box-shadow: none;
 }
 
 .chart-title {
@@ -930,7 +932,7 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
   padding: 3px 8px;
   background: rgba(255,241,229,0.08);
   border: 1px solid rgba(255,241,229,0.18);
-  border-radius: 20px;
+  border-radius: 0;
   transition: background 0.15s;
 }
 .lang-toggle:hover {
@@ -1379,10 +1381,10 @@ body[data-page="index"] { padding-top: 0; }
   font-size: clamp(2rem, 5vw, 2.8rem);
   color: var(--heading-primary);
   margin-bottom: var(--sp-3);
-  letter-spacing: -0.015em;
+  letter-spacing: 0;
 }
 .hero-rule {
-  width: 56px; height: 3px;
+  width: 72px; height: 1px;
   background: var(--claret);
   margin: 0 auto var(--sp-4);
   border: none;
@@ -1413,7 +1415,7 @@ body[data-page="index"] { padding-top: 0; }
   padding: var(--sp-6);
   background: rgba(153,15,61,0.04);
   border-left: 4px solid var(--claret);
-  border-radius: 0 6px 6px 0;
+  border-radius: 0;
 }
 .prosecution-hook p {
   font-size: clamp(1rem, 0.9rem + 0.3vw, 1.12rem);
@@ -1437,7 +1439,7 @@ body[data-page="index"] { padding-top: 0; }
   text-align: center;
   padding: var(--sp-3);
   background: var(--card-bg);
-  border-radius: 6px;
+  border-radius: 0;
   border-top: 3px solid var(--claret);
 }
 .charge-number {
@@ -1462,7 +1464,7 @@ body[data-page="index"] { padding-top: 0; }
   padding: var(--sp-4) var(--sp-5);
   background: rgba(204,230,255,0.2);
   border: 1px solid rgba(204,230,255,0.5);
-  border-radius: 6px;
+  border-radius: 0;
 }
 .client-exposure-title {
   font-family: var(--font-ui);
@@ -1501,15 +1503,14 @@ body[data-page="index"] { padding-top: 0; }
   display: inline-flex;
   flex-direction: column;
   padding: 4px 10px;
-  border-radius: 6px;
+  border-radius: 0;
   text-decoration: none;
   border: 1px solid rgba(0,0,0,0.06);
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: background 0.15s, border-color 0.15s;
   min-width: 0;
 }
 .client-chip:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 3px 12px rgba(38,42,51,0.1);
+  background: rgba(242,223,206,0.55);
 }
 .chip-name { font-family: var(--font-ui); font-size: var(--text-small); font-weight: 700; white-space: nowrap; }
 .chip-rev  { font-family: var(--font-ui); font-size: 0.6rem; font-weight: 600; opacity: 0.6; }
@@ -1565,7 +1566,8 @@ body[data-page="index"] { padding-top: 0; }
   text-align: center;
   padding: var(--sp-6) var(--sp-4);
   background: var(--card-bg);
-  border-radius: 6px;
+  border-radius: 0;
+  border-top: 1px solid rgba(38,42,51,0.16);
 }
 .cast-photo {
   width: 128px;
@@ -1640,17 +1642,17 @@ body[data-page="index"] { padding-top: 0; }
 .dossier-card {
   display: block;
   background: var(--card-bg);
-  border-radius: 6px;
+  border-radius: 0;
   padding: var(--sp-3) var(--sp-4);
   text-decoration: none;
   color: var(--text);
   position: relative;
+  border: 1px solid rgba(38,42,51,0.12);
   border-left: 4px solid transparent;
-  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+  transition: background 0.2s, border-color 0.2s;
 }
 .dossier-card:hover {
-  box-shadow: 0 6px 24px rgba(38,42,51,0.1);
-  transform: translateY(-2px);
+  background: rgba(242,223,206,0.78);
   color: var(--text);
 }
 .dossier-card--neutral   { border-left-color: var(--oxford); }
@@ -1669,7 +1671,7 @@ body[data-page="index"] { padding-top: 0; }
 .profile-logo {
   width: 80px;
   filter: grayscale(30%) opacity(0.8);
-  border-radius: 4px;
+  border-radius: 0;
 }
 
 .card-label {
@@ -1722,7 +1724,7 @@ body[data-page="index"] { padding-top: 0; }
   padding: var(--sp-4);
   text-align: center;
   border: 2px solid var(--claret);
-  border-radius: 6px;
+  border-radius: 0;
   background: rgba(153,15,61,0.02);
 }
 .procurement-cta p {
@@ -1846,7 +1848,7 @@ body[data-page="index"] { padding-top: 0; }
   padding: var(--sp-4) var(--sp-6);
   background: rgba(204,0,51,0.03);
   border: 1px solid rgba(204,0,51,0.1);
-  border-radius: 6px;
+  border-radius: 0;
 }
 .pitch-stat {
   text-align: center;
@@ -1992,7 +1994,7 @@ body[data-page="index"] { padding-top: 0; }
 .disclosure-card {
   padding: var(--sp-5) var(--sp-4);
   background: var(--card-bg);
-  border-radius: 6px;
+  border-radius: 0;
   border-top: 3px solid var(--claret);
   position: relative;
 }
@@ -2047,7 +2049,7 @@ body[data-page="index"] { padding-top: 0; }
   padding: var(--sp-5) var(--sp-6);
   background: rgba(153,15,61,0.04);
   border-left: 4px solid var(--claret);
-  border-radius: 0 6px 6px 0;
+  border-radius: 0;
 }
 .legal-box p {
   font-size: var(--text-body);
@@ -2077,7 +2079,7 @@ body[data-page="index"] { padding-top: 0; }
   margin: var(--sp-8) 0 var(--sp-4);
   background: rgba(38,42,51,0.03);
   border: 1px solid rgba(38,42,51,0.12);
-  border-radius: 6px;
+  border-radius: 0;
   text-decoration: none;
   transition: background 0.2s, border-color 0.2s;
 }
@@ -2162,7 +2164,7 @@ body[data-page="index"] { padding-top: 0; }
   opacity: 0.68;
   background: var(--wheat);
   border: 1px solid rgba(38,42,51,0.1);
-  border-radius: 6px;
+  border-radius: 0;
   padding: var(--sp-3) var(--sp-4);
   margin-bottom: var(--sp-5);
 }
@@ -2178,7 +2180,7 @@ body[data-page="index"] { padding-top: 0; }
 .ownership-panel {
   background: var(--card-bg);
   border: 1px solid var(--wheat);
-  border-radius: 8px;
+  border-radius: 0;
   padding: var(--sp-5);
 }
 
