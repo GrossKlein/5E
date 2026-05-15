@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Netzwerkanalyse — SyncPilot-Dossier</title>
-  <meta name="description" content="Interactive force-directed network graph: 67 persons, 60 entities, 150 connections across the SyncPilot corporate web. Forensic litigation database visualisation.">
-  <link rel="stylesheet" href="../styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Netzwerkanalyse – SyncPilot-Dossier</title>
+  <meta name="description" content="Interactive force-directed network graph: 67 persons, 60 entities, 150 connections across the SyncPilot corporate web. Forensic litigation database visualisation." />
+  <link rel="stylesheet" href="../styles.css" />
 
   <style>
     /* === NETWORK PAGE STYLES === */
@@ -15,15 +15,6 @@
       background: rgba(242,223,206,0.35);
       padding: var(--sp-4) var(--sp-6);
       margin-block: var(--sp-6);
-    }
-    .net-bluf-label {
-      font-family: var(--font-ui);
-      font-size: var(--text-caption);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--oxford);
-      margin-bottom: var(--sp-2);
     }
     .net-bluf p {
       font-size: var(--text-body);
@@ -173,65 +164,120 @@
 </head>
 
 <body data-page="network">
+
+    <section class="ownership-shift" aria-labelledby="ownership-shift-title">
+      <div class="ownership-shift-head">
+        <div>
+          <div class="ownership-shift-kicker">Gerichtlich bestätigter Eigentümerwechsel</div>
+          <h2 id="ownership-shift-title">Vor / Nach dem Zusammenbruch von Quintus</h2>
+        </div>
+        <p class="ownership-shift-note">Das Landgericht Augsburg stellte fest, dass sich die vertraglichen Eigentumsverhältnisse, die der LVS-Vereinbarung von 2021 zugrunde lagen, bis zum 5. August 2025 wesentlich geändert hatten. Die Quintus Beteiligungs GmbH hielt keine Anteile mehr an der SyncPilot SE.</p>
+      </div>
+
+      <div class="ownership-shift-caveat">
+        Die Angaben zu wirtschaftlichen Eigentümern auf dieser Website basieren weiterhin auf den aktuellsten verfügbaren Handelsregistereinträgen. Aktualisierte Handelsregisterdaten für den Zeitraum nach 2025 liegen noch nicht vor.
+      </div>
+
+      <div class="ownership-shift-grid">
+        <article class="ownership-panel ownership-panel--before">
+          <div class="ownership-panel-label">Vor</div>
+          <div class="ownership-panel-date">Gemäß Kooperationsvereinbarung vom 21. Mai 2021</div>
+          <div class="ownership-bar-group">
+            <div class="ownership-bar-row">
+              <div class="ownership-bar-meta"><span>BOSYNC + Quintus</span><strong>41,0 %</strong></div>
+              <div class="ownership-bar ownership-bar--combined"><span style="width:41%"></span></div>
+            </div>
+            <div class="ownership-bar-row ownership-bar-row--muted">
+              <div class="ownership-bar-meta"><span>Alle anderen Aktionäre</span><strong>59,0 %</strong></div>
+              <div class="ownership-bar ownership-bar--other"><span style="width:59%"></span></div>
+            </div>
+          </div>
+          <p class="ownership-panel-caption">In Abschnitt 1.8 der Kooperations- und Call-Optionsvereinbarung von 2021 wurde ein gemeinsamer Anteil von 41 % an der SyncPilot SE für die BOSYNC Beteiligungs UG und die Quintus Beteiligungs GmbH festgehalten.</p>
+        </article>
+
+        <article class="ownership-panel ownership-panel--after">
+          <div class="ownership-panel-label">Nach</div>
+          <div class="ownership-panel-date">Gemäß Anwesenheitsliste der außerordentlichen Hauptversammlung vom 5. August 2025</div>
+          <div class="ownership-bar-group">
+            <div class="ownership-bar-row">
+              <div class="ownership-bar-meta"><span>BOSYNC</span><strong>24,1 %</strong></div>
+              <div class="ownership-bar ownership-bar--bosync"><span style="width:24.1%"></span></div>
+            </div>
+            <div class="ownership-bar-row ownership-bar-row--zero">
+              <div class="ownership-bar-meta"><span>Quintus</span><strong>0,0 %</strong></div>
+              <div class="ownership-bar ownership-bar--quintus"><span style="width:0%"></span></div>
+            </div>
+            <div class="ownership-bar-row ownership-bar-row--muted">
+              <div class="ownership-bar-meta"><span>Alle übrigen Aktionäre</span><strong>75,9 %</strong></div>
+              <div class="ownership-bar ownership-bar--other"><span style="width:75.9%"></span></div>
+            </div>
+          </div>
+          <p class="ownership-panel-caption">Wie vom Landgericht Augsburg in der Rechtssache 112 O 2848/25 festgehalten, hielt BOSYNC am 5. August 2025 weiterhin 24,1 % an der SyncPilot SE. Quintus hielt keinerlei Anteile.</p>
+        </article>
+      </div>
+
+      <p class="ownership-shift-source">Quelle: <a href="../docs/Vorbehaltsurteil-LG-Augsburg-2026-05-13.pdf" target="_blank" rel="noopener">LG Augsburg, Az. 112 O 2848/25, Urteil vom 13. Mai 2026</a>, S. 4.</p>
+    </section>
+
   <article class="content-area" style="max-width: var(--max-width);">
 
     <h1>Netzwerkanalyse</h1>
 
     <div class="net-bluf">
-      <div class="net-bluf-label">Zusammenfassung</div>
+
       <p>
-        The forensic litigation database maps <strong>67&nbsp;natural persons</strong> and
-        <strong>60&nbsp;legal entities</strong> connected by <strong>150&nbsp;edges</strong> —
-        100 person-entity roles, 33 entity-to-entity ownership chains, and 17 family links.
-        The network reveals Franz-Xaver Bleicher's direct control over 11 entities (€5.7M combined
-        share capital), the DSI investor syndicate where 6 holding companies each hold 16.7%,
-        cross-border layering through Malta and Luxembourg, and the Krocke/Auctus three-tier
-        structure.
+        Die forensische Prozessdatenbank verzeichnet <strong>67 natürliche Personen</strong> und
+ <strong>       60 juristische Personen</strong>, die durch <strong>150 Kanten</strong> verbunden sind –
+        100 Personen-Entitäts-Beziehungen, 33 Eigentumsverhältnisse zwischen Entitäten und 17 Familienbeziehungen.
+        Das Netzwerk offenbart die direkte Kontrolle von Franz-Xaver Bleicher über 11 Unternehmen (insgesamt 5,7 Mio. €
+        Grundkapital), das DSI-Investorenkonsortium, in dem jeweils 6 Holdinggesellschaften 16,7 % halten,
+        grenzüberschreitende Verschachtelungen über Malta und Luxemburg sowie die dreistufige
+        Krocke/Auctus-Struktur.
       </p>
       <div class="net-bluf-stats">
-        <span class="net-stat">Persons<strong>67</strong></span>
-        <span class="net-stat">Entities<strong>60</strong></span>
-        <span class="net-stat">Role links<strong>100</strong></span>
-        <span class="net-stat">Ownership chains<strong>33</strong></span>
-        <span class="net-stat">Family links<strong>17</strong></span>
-        <span class="net-stat">Entity clusters<strong>11</strong></span>
+        <span class="net-stat"><strong>Personen67</strong></span>
+        <span class="net-stat"><strong>Unternehmen60</strong></span>
+        <span class="net-stat">Rollenver<strong>kn</strong>üpfungen100</span>
+        <span class="net-stat">Eigentumsverflecht<strong>ungen</strong>33</span>
+        <span class="net-stat">Familienverbindungen<strong>1</strong>7</span>
+        <span class="net-stat">Entitätscluster1<strong>1</strong></span>
       </div>
     </div>
 
     <div class="net-controls-bar">
-      <h2>Kräftegesteuerter Beteiligungsgraph</h2>
+      <h2>Kraftgesteuerter Eigentumsgraph</h2>
       <div class="net-controls">
         <label class="net-control">
-          <span>Relevanzstufe</span>
+          <span>Relevanzebene</span>
           <select id="tierF">
-            <option value="0">Alle Stufen</option>
-            <option value="1">T1 — nur Hauptpersonen</option>
-            <option value="2">T1–T2 Kern</option>
-            <option value="3" selected>T1–T3 verbunden</option>
+            <option value="0">Alle Ebenen</option>
+            <option value="1">T1 – nur Hauptakteure</option>
+            <option value="2">T1–T2-Kern</option>
+            <option value="3" selected="">T1–T3 verbunden</option>
             <option value="4">T1–T4 erweitert</option>
-            <option value="5">T1–T5 vollständig</option>
+            <option value="5">T1–T5 Vollständiges Netzwerk</option>
           </select>
         </label>
         <label class="net-control">
-          <span>Entitäts-Cluster</span>
+          <span>Entitätscluster</span>
           <select id="clusterF">
             <option value="">Alle Cluster</option>
-            <option value="syncpilot">SyncPilot group</option>
-            <option value="bleicher_holdings">Bleicher holdings</option>
+            <option value="syncpilot">SyncPilot-Gruppe</option>
+            <option value="bleicher_holdings">Bleicher-Bestände</option>
             <option value="auriga">Auriga (Steiner)</option>
             <option value="auctus">Auctus (Krocke)</option>
             <option value="tiven">Tiven (Purkert)</option>
             <option value="schaeff">Schaeff</option>
-            <option value="legal_services">Legal services</option>
+            <option value="legal_services">Rechtsdienstleistungen</option>
           </select>
         </label>
         <label class="net-control">
-          <span>Verbindungstyp</span>
+          <span>Link-Typ</span>
           <select id="linkF">
-            <option value="all">Alle Verbindungstypen</option>
-            <option value="role">Person → entity roles</option>
-            <option value="entity">Entity → entity ownership</option>
-            <option value="family">Nur Familienverbindungen</option>
+            <option value="all">Alle Verknüpfungstypen</option>
+            <option value="role">Person → Entitätsrollen</option>
+            <option value="entity">Entität → Eigentumsverhältnisse</option>
+            <option value="family">Nur Familienbeziehungen</option>
           </select>
         </label>
         <button id="resetBtn" class="net-btn" type="button">Ansicht zurücksetzen</button>
@@ -241,26 +287,26 @@
     <svg id="graph-svg"></svg>
 
     <div class="net-info" id="infoPanel">
-      <span class="info-lbl">Knoten anklicken · Ziehen zum Verschieben · Scrollen zum Zoomen · Hover zeigt Nachbarn</span>
+      <span class="info-lbl">Klicken Sie auf einen beliebigen Knoten, um ihn zu untersuchen · Ziehen Sie, um die Position zu ändern · Scrollen Sie, um zu zoomen · Bewegen Sie den Mauszeiger darüber, um Nachbarn hervorzuheben</span>
     </div>
 
     <div class="net-legend">
-      <span><span class="leg-dot" style="background:#990F3D"></span> T1 principal</span>
-      <span><span class="leg-dot" style="background:#0D7680"></span> T2 core person</span>
-      <span><span class="leg-dot" style="background:rgba(38,42,51,0.4)"></span> T3+ person</span>
-      <span><span class="leg-rect" style="background:#0D7680"></span> Entity (colour = cluster)</span>
-      <span><span class="leg-line" style="border-color:#7F77DD"></span> Person–entity role</span>
-      <span><span class="leg-line" style="border-color:#0D7680"></span> Entity–entity ownership</span>
-      <span><span class="leg-dash" style="border-color:#990F3D"></span> Family link</span>
+      <span><span class="leg-dot" style="background:#990F3D"></span> T1 Hauptperson</span>
+      <span><span class="leg-dot" style="background:#0D7680"></span> T2 Kernperson</span>
+      <span><span class="leg-dot" style="background:rgba(38,42,51,0.4)"></span> T3+ Person</span>
+      <span><span class="leg-rect" style="background:#0D7680"></span> Entität (Farbe = Cluster)</span>
+      <span><span class="leg-line" style="border-color:#7F77DD"></span> Person–Entitäts-Rolle</span>
+      <span><span class="leg-line" style="border-color:#0D7680"></span> Entität–Entität-Zugehörigkeit</span>
+      <span><span class="leg-dash" style="border-color:#990F3D"></span> Familiäre Verbindung</span>
     </div>
 
     <p style="font-family:var(--font-ui); font-size:var(--text-caption); color:rgba(38,42,51,0.35); margin-top:var(--sp-6); text-align:center;">
-      Quelle: forensische Prozessdatenbank v3 · Erstellungsdatum 15.03.2026
+      Quelle: Forensische Prozessdatenbank v3 · Erstellungsdatum 15.03.2026
     </p>
 
   </article>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <script src="../assets/vendor/d3.v7.8.5.min.js"></script>
   <script>
   (function(){
     "use strict";
@@ -269,7 +315,7 @@
     function nc(d){if(d.type==='person')return d.tier<=1?'#990F3D':d.tier<=2?'#0D7680':'rgba(38,42,51,0.4)';return CC[d.cluster]||'#B4A98A';}
     function nr(d){if(d.id==='bleicher_franz_xaver')return 16;if(d.id==='syncpilot_se')return 14;if(d.id==='neumann_damerau_arnulf')return 13;return d.tier<=1?10:d.tier<=2?7:d.tier<=3?5.5:4;}
     var DATA,allN,nMap,sim,svg,g,linkG,nodeG,labelG,zm,_lk,_nd;
-    fetch('../data/network.json').then(function(r){if(!r.ok)throw r;return r.json();}).then(function(d){DATA=d;go();}).catch(function(){fetch('../network.json').then(function(r){return r.json();}).then(function(d){DATA=d;go();});});
+    fetch('../data/network.json').then(function(r){if(!r.ok)throw r;return r.json();}).then(function(d){DATA=d;go();}).catch(function(){fetch('network.json').then(function(r){return r.json();}).then(function(d){DATA=d;go();});});
     function go(){
       allN=DATA.persons.map(function(p){return Object.assign({},p,{type:'person'});}).concat(DATA.entities.map(function(e){return Object.assign({},e,{type:'entity'});}));
       nMap=new Map(allN.map(function(n){return[n.id,n];}));
