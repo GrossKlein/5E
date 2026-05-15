@@ -20,6 +20,8 @@
   var pageId = document.body.getAttribute('data-page') || '';
   var isIndex = pageId === 'index';
 
+  if (!isIndex) injectShareTools(null, []);
+
   fetch(prefix + 'manifest.json')
     .then(function (r) { return r.json(); })
     .then(function (m) { build(m); })
