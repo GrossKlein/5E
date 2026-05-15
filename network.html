@@ -164,6 +164,61 @@
 </head>
 
 <body data-page="network">
+
+    <section class="ownership-shift" aria-labelledby="ownership-shift-title">
+      <div class="ownership-shift-head">
+        <div>
+          <div class="ownership-shift-kicker">Court-confirmed ownership change</div>
+          <h2 id="ownership-shift-title">Before / After the Quintus collapse</h2>
+        </div>
+        <p class="ownership-shift-note">The Augsburg Regional Court recorded that the contractual ownership picture underpinning the 2021 LVS agreement had materially changed by 5&nbsp;August&nbsp;2025. Quintus Beteiligungs GmbH no longer held any SyncPilot SE shares.</p>
+      </div>
+
+      <div class="ownership-shift-caveat">
+        Beneficial ownership data on this site continues to rely on the most recent available Handelsregister filings. Updated Handelsregister data for the post-2025 period has not yet been obtained.
+      </div>
+
+      <div class="ownership-shift-grid">
+        <article class="ownership-panel ownership-panel--before">
+          <div class="ownership-panel-label">Before</div>
+          <div class="ownership-panel-date">Per Cooperation Agreement, 21 May 2021</div>
+          <div class="ownership-bar-group">
+            <div class="ownership-bar-row">
+              <div class="ownership-bar-meta"><span>BOSYNC + Quintus</span><strong>41.0%</strong></div>
+              <div class="ownership-bar ownership-bar--combined"><span style="width:41%"></span></div>
+            </div>
+            <div class="ownership-bar-row ownership-bar-row--muted">
+              <div class="ownership-bar-meta"><span>All other shareholders</span><strong>59.0%</strong></div>
+              <div class="ownership-bar ownership-bar--other"><span style="width:59%"></span></div>
+            </div>
+          </div>
+          <p class="ownership-panel-caption">Section 1.8 of the 2021 Cooperation and Call Option Agreement recorded a combined 41% stake in SyncPilot SE for BOSYNC Beteiligungs UG and Quintus Beteiligungs GmbH.</p>
+        </article>
+
+        <article class="ownership-panel ownership-panel--after">
+          <div class="ownership-panel-label">After</div>
+          <div class="ownership-panel-date">Per EGM attendance record, 5 August 2025</div>
+          <div class="ownership-bar-group">
+            <div class="ownership-bar-row">
+              <div class="ownership-bar-meta"><span>BOSYNC</span><strong>24.1%</strong></div>
+              <div class="ownership-bar ownership-bar--bosync"><span style="width:24.1%"></span></div>
+            </div>
+            <div class="ownership-bar-row ownership-bar-row--zero">
+              <div class="ownership-bar-meta"><span>Quintus</span><strong>0.0%</strong></div>
+              <div class="ownership-bar ownership-bar--quintus"><span style="width:0%"></span></div>
+            </div>
+            <div class="ownership-bar-row ownership-bar-row--muted">
+              <div class="ownership-bar-meta"><span>All other shareholders</span><strong>75.9%</strong></div>
+              <div class="ownership-bar ownership-bar--other"><span style="width:75.9%"></span></div>
+            </div>
+          </div>
+          <p class="ownership-panel-caption">As recorded by LG Augsburg in Case 112 O 2848/25, BOSYNC still held 24.1% of SyncPilot SE on 5 August 2025. Quintus held no shares at all.</p>
+        </article>
+      </div>
+
+      <p class="ownership-shift-source">Source: <a href="docs/Vorbehaltsurteil-LG-Augsburg-2026-05-13.pdf" target="_blank" rel="noopener">LG Augsburg, Case 112 O 2848/25, judgment rendered 13 May 2026</a>, p. 4.</p>
+    </section>
+
   <article class="content-area" style="max-width: var(--max-width);">
 
     <h1>Network Analysis</h1>
@@ -251,7 +306,7 @@
 
   </article>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <script src="assets/vendor/d3.v7.8.5.min.js"></script>
   <script>
   (function(){
     "use strict";

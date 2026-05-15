@@ -2042,3 +2042,207 @@ body[data-page="index"] { padding-top: 0; }
 }
 
 [id] { scroll-margin-top: calc(var(--nav-height) + var(--sp-4)); }
+
+/* =================================================================
+   STYLES PATCH — append to end of styles.css
+   Verdict integration: Before/After ownership diagram
+   Tokens: all reference existing :root variables from styles.css
+   ================================================================= */
+
+/* --- Section wrapper --- */
+.ownership-shift {
+  max-width: 960px;
+  margin: var(--sp-8) auto;
+  padding: 0 var(--container-padding);
+}
+
+/* --- Section header row --- */
+.ownership-shift-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 400px);
+  gap: var(--sp-6);
+  align-items: end;
+  margin-bottom: var(--sp-4);
+}
+
+.ownership-shift-kicker {
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--claret);
+  margin-bottom: var(--sp-2);
+}
+
+.ownership-shift-head h2 {
+  font-family: var(--font-body);
+  font-size: clamp(1.2rem, 2.4vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--slate);
+  margin: 0;
+}
+
+.ownership-shift-note {
+  font-family: var(--font-ui);
+  font-size: var(--text-ui);
+  line-height: 1.65;
+  color: var(--slate);
+  opacity: 0.62;
+  margin: 0;
+}
+
+/* --- Caveat banner --- */
+.ownership-shift-caveat {
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  line-height: 1.55;
+  color: var(--slate);
+  opacity: 0.68;
+  background: var(--wheat);
+  border: 1px solid rgba(38,42,51,0.1);
+  border-radius: 6px;
+  padding: var(--sp-3) var(--sp-4);
+  margin-bottom: var(--sp-5);
+}
+
+/* --- Two-column panel grid --- */
+.ownership-shift-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-5);
+}
+
+/* --- Individual panel --- */
+.ownership-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--wheat);
+  border-radius: 8px;
+  padding: var(--sp-5);
+}
+
+.ownership-panel--before {
+  border-top: 3px solid var(--oxford);
+}
+
+.ownership-panel--after {
+  border-top: 3px solid var(--claret);
+}
+
+.ownership-panel-label {
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--slate);
+  opacity: 0.45;
+  margin-bottom: var(--sp-1);
+}
+
+.ownership-panel--before .ownership-panel-label { color: var(--oxford); opacity: 1; }
+.ownership-panel--after  .ownership-panel-label { color: var(--claret); opacity: 1; }
+
+.ownership-panel-date {
+  font-family: var(--font-ui);
+  font-size: var(--text-ui);
+  font-weight: 700;
+  color: var(--slate);
+  margin-bottom: var(--sp-5);
+  line-height: 1.4;
+}
+
+/* --- Bar rows --- */
+.ownership-bar-group {
+  display: grid;
+  gap: var(--sp-4);
+}
+
+.ownership-bar-row {
+  display: grid;
+  gap: 6px;
+}
+
+.ownership-bar-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-ui);
+  font-size: var(--text-ui);
+  color: var(--slate);
+}
+
+.ownership-bar-meta span { opacity: 0.72; }
+
+.ownership-bar-meta strong {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--slate);
+}
+
+/* Track */
+.ownership-bar {
+  height: 14px;
+  border-radius: 999px;
+  background: var(--wheat);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Fill — sized via inline style="width:X%" */
+.ownership-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Fill colours mapped to site palette */
+.ownership-bar--combined span { background: var(--oxford); }
+.ownership-bar--bosync   span { background: var(--oxford); }
+.ownership-bar--quintus  span { background: var(--claret); }
+.ownership-bar--other    span { background: rgba(38,42,51,0.18); }
+
+/* Dim the 0% quintus row */
+.ownership-bar-row--zero .ownership-bar-meta span,
+.ownership-bar-row--zero .ownership-bar-meta strong {
+  opacity: 0.4;
+}
+
+/* --- Panel caption --- */
+.ownership-panel-caption {
+  margin: var(--sp-4) 0 0;
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  line-height: 1.6;
+  color: var(--slate);
+  opacity: 0.6;
+}
+
+/* --- Source line --- */
+.ownership-shift-source {
+  margin: var(--sp-4) 0 0;
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  color: var(--slate);
+  opacity: 0.5;
+}
+
+.ownership-shift-source a {
+  color: var(--oxford);
+  text-decoration: none;
+}
+
+.ownership-shift-source a:hover {
+  text-decoration: underline;
+  color: var(--claret);
+}
+
+/* --- Responsive: stack panels on narrow viewports --- */
+@media (max-width: 820px) {
+  .ownership-shift-head,
+  .ownership-shift-grid {
+    grid-template-columns: 1fr;
+  }
+}
