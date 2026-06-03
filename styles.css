@@ -938,6 +938,36 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
   color: rgba(255,241,229,0.45);
 }
 
+/* Share tools, relocated into the footer (dark surface) */
+.site-footer .social-share {
+  margin: var(--sp-4) 0 0;
+  padding-top: var(--sp-4);
+  border-top: 1px solid rgba(255,241,229,0.15);
+  border-bottom: none;
+  justify-content: flex-start;
+}
+.site-footer .social-share-title {
+  color: rgba(255,241,229,0.55);
+}
+.site-footer .social-share-btn {
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0 var(--sp-2);
+  border: 1px solid rgba(255,241,229,0.22);
+  background: transparent;
+  color: rgba(255,241,229,0.8);
+}
+.site-footer .social-share-btn:hover {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--slate);
+}
+.site-footer .social-share-native {
+  font-size: var(--text-small);
+  font-weight: 700;
+  padding: 0 var(--sp-3);
+}
+
 .footer-contact {
   padding-bottom: var(--sp-4);
   margin-bottom: var(--sp-2);
@@ -1645,13 +1675,21 @@ body[data-page="index"] { padding-top: 0; }
 }
 .client-chip {
   display: inline-flex;
-  flex-direction: column;
-  padding: 4px 10px;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px;
   border-radius: 0;
   text-decoration: none;
   border: 1px solid rgba(0,0,0,0.06);
   transition: background 0.15s, border-color 0.15s;
   min-width: 0;
+}
+.chip-logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 .client-chip:hover {
   background: rgba(242,223,206,0.55);
