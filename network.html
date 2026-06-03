@@ -128,7 +128,7 @@
       gap: 1px;
       font-family: var(--font-ui);
       font-size: var(--text-caption);
-      color: rgba(38,42,51,0.55);
+      color: rgba(38,42,51,0.72);
       line-height: 1.2;
     }
     .net-stat strong {
@@ -165,7 +165,7 @@
       gap: 3px;
       font-family: var(--font-ui);
       font-size: var(--text-caption);
-      color: rgba(38,42,51,0.55);
+      color: rgba(38,42,51,0.72);
     }
     .net-control select {
       font-family: var(--font-ui);
@@ -224,9 +224,9 @@
       color: var(--slate);
       margin-bottom: 4px;
     }
-    .net-info .info-lbl { color: rgba(38,42,51,0.45); font-size: var(--text-small); }
+    .net-info .info-lbl { color: rgba(38,42,51,0.66); font-size: var(--text-small); }
     .net-info .info-val { font-weight: 600; color: var(--slate); }
-    .net-info .info-roles { margin-top: 4px; font-size: var(--text-small); color: rgba(38,42,51,0.6); }
+    .net-info .info-roles { margin-top: 4px; font-size: var(--text-small); color: rgba(38,42,51,0.76); }
 
     .net-legend {
       display: flex;
@@ -235,7 +235,7 @@
       margin-top: var(--sp-4);
       font-family: var(--font-ui);
       font-size: var(--text-caption);
-      color: rgba(38,42,51,0.5);
+      color: rgba(38,42,51,0.7);
     }
     .net-legend span { display: inline-flex; align-items: center; gap: 5px; }
     .leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
@@ -271,7 +271,7 @@
       </div>
 
       <div class="ownership-shift-caveat">
-        Beneficial ownership data on this site continues to rely on the most recent available Handelsregister filings. Updated Handelsregister data for the post-2025 period has not yet been obtained.
+        The 5 August 2025 ownership shift is now documented at source: the notarised minutes of the extraordinary general meeting of that date (Anlage S&amp;P 10) record the share transfers approved — including a further movement of shares out of the Malta vehicle into two newly admitted acquirers in Switzerland and Munich. Earlier beneficial-ownership percentages continue to rely on the most recent Handelsregister filings.
       </div>
 
       <div class="ownership-shift-grid">
@@ -323,12 +323,15 @@
 
       <p>
         The forensic litigation database maps <strong>67&nbsp;natural persons</strong> and
-        <strong>60&nbsp;legal entities</strong> connected by <strong>150&nbsp;edges</strong> —
-        100 person-entity roles, 33 entity-to-entity ownership chains, and 17 family links.
+        <strong>60&nbsp;legal entities</strong> connected by <strong>154&nbsp;edges</strong> —
+        100 person-entity roles, 37 entity-to-entity ownership chains, and 17 family links.
         The network reveals Franz-Xaver Bleicher's direct control over 11 entities (€5.7M combined
         share capital), the DSI investor syndicate where 6 holding companies each hold 16.7%,
-        cross-border layering through Malta and Luxembourg, and the Krocke/Auctus three-tier
-        structure.
+        and cross-border layering that runs from Malta and Luxembourg onward into Switzerland:
+        at the 5 August 2025 EGM, the Malta vehicle Perseus and BOSYNC together transferred
+        <strong>38,462&nbsp;SyncPilot shares</strong> to <strong>ATLASI GROUP GmbH</strong> (Zug-Baar, CH)
+        and <strong>Callidus Ventures GmbH</strong> (Munich) — a fresh hop in the offshore chain,
+        documented in the notarised HV minutes (Anlage S&amp;P 10).
       </p>
       <div class="net-bluf-stats">
         <span class="net-stat">Persons<strong>67</strong></span>
@@ -453,7 +456,7 @@
       sim.alpha(1).restart();
     }
     function hl(d,on){if(!_lk||!_nd)return;if(!on){_lk.style('stroke-opacity',null);_nd.style('opacity',null);return;}var nb=new Set([d.id]);_lk.each(function(l){var s=l.source.id||l.source,t=l.target.id||l.target;if(s===d.id)nb.add(t);if(t===d.id)nb.add(s);});_lk.style('stroke-opacity',function(l){var s=l.source.id||l.source,t=l.target.id||l.target;return(s===d.id||t===d.id)?0.7:0.03;});_nd.style('opacity',function(n){return nb.has(n.id)?1:0.1;});}
-    function showInfo(d){var p=document.getElementById('infoPanel'),isE=d.type==='entity';var h='<div class="info-name">'+d.name+'</div>';h+='<span class="info-lbl">Type:</span> <span class="info-val">'+(isE?'Legal entity':'Natural person')+'</span>';h+=' &nbsp; <span class="info-lbl">Tier:</span> <span class="info-val">T'+d.tier+'</span>';if(isE){if(d.cluster)h+=' &nbsp; <span class="info-lbl">Cluster:</span> <span class="info-val">'+d.cluster+'</span>';if(d.form)h+=' &nbsp; <span class="info-lbl">Form:</span> <span class="info-val">'+d.form+'</span>';if(d.capital)h+=' &nbsp; <span class="info-lbl">Capital:</span> <span class="info-val">€'+Number(d.capital).toLocaleString()+'</span>';if(d.jurisdiction)h+=' &nbsp; <span class="info-lbl">Jur:</span> <span class="info-val">'+d.jurisdiction+'</span>';}else{if(d.city)h+=' &nbsp; <span class="info-lbl">City:</span> <span class="info-val">'+d.city+'</span>';if(d.country)h+=' &nbsp; <span class="info-lbl">Country:</span> <span class="info-val">'+d.country+'</span>';}var rl=DATA.roleLinks.filter(function(l){return l.source===d.id||l.target===d.id;}),el=DATA.entityLinks.filter(function(l){return l.source===d.id||l.target===d.id;}),fl=DATA.familyLinks.filter(function(l){return l.source===d.id||l.target===d.id;});h+='<div class="info-roles">'+rl.length+' role links · '+el.length+' entity links · '+fl.length+' family links';if(rl.length>0){var top=rl.slice(0,8).map(function(l){var o=l.source===d.id?l.target:l.source,n=nMap.get(o),pc=l.pct?' ('+l.pct+'%)':'';return l.type+pc+' → '+(n?n.name:o);});h+='<br>'+top.join(' · ');}h+='</div>';p.innerHTML=h;}
+    function showInfo(d){var p=document.getElementById('infoPanel'),isE=d.type==='entity';var h='<div class="info-name">'+d.name+'</div>';h+='<span class="info-lbl">Type:</span> <span class="info-val">'+(isE?'Legal entity':'Natural person')+'</span>';h+=' &nbsp; <span class="info-lbl">Tier:</span> <span class="info-val">T'+d.tier+'</span>';if(isE){if(d.cluster)h+=' &nbsp; <span class="info-lbl">Cluster:</span> <span class="info-val">'+d.cluster+'</span>';if(d.form)h+=' &nbsp; <span class="info-lbl">Form:</span> <span class="info-val">'+d.form+'</span>';if(d.capital)h+=' &nbsp; <span class="info-lbl">Capital:</span> <span class="info-val">€'+Number(d.capital).toLocaleString()+'</span>';if(d.jurisdiction)h+=' &nbsp; <span class="info-lbl">Jur:</span> <span class="info-val">'+d.jurisdiction+'</span>';}else{if(d.city)h+=' &nbsp; <span class="info-lbl">City:</span> <span class="info-val">'+d.city+'</span>';if(d.country)h+=' &nbsp; <span class="info-lbl">Country:</span> <span class="info-val">'+d.country+'</span>';}if(d.note)h+='<div class="info-note" style="margin-top:8px;font-size:0.85rem;line-height:1.5;color:rgba(38,42,51,0.75);">'+d.note+'</div>';var rl=DATA.roleLinks.filter(function(l){return l.source===d.id||l.target===d.id;}),el=DATA.entityLinks.filter(function(l){return l.source===d.id||l.target===d.id;}),fl=DATA.familyLinks.filter(function(l){return l.source===d.id||l.target===d.id;});h+='<div class="info-roles">'+rl.length+' role links · '+el.length+' entity links · '+fl.length+' family links';if(rl.length>0){var top=rl.slice(0,8).map(function(l){var o=l.source===d.id?l.target:l.source,n=nMap.get(o),pc=l.pct?' ('+l.pct+'%)':'';return l.type+pc+' → '+(n?n.name:o);});h+='<br>'+top.join(' · ');}h+='</div>';p.innerHTML=h;}
   })();
   </script>
 

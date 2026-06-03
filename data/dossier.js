@@ -240,9 +240,14 @@
         ['vendor-risk', 'Risk analysis', 'Vendor Risk', 'Why the dispute matters to public-sector and enterprise customers.']
       ],
       'the-verdict': [
+        ['the-enforcement', 'What happened next', 'The Enforcement', 'Eight asset-freeze orders went out the same day the court ruled.'],
         ['the-lvs-trap', 'Background', 'The LVS Trap', 'The transaction history behind the court order.'],
-        ['the-evidence-room', 'Primary source', 'Evidence Room', 'Find the judgment and supporting source documents.'],
-        ['vendor-risk', 'Risk analysis', 'Vendor Risk', 'Translate the ruling into procurement risk signals.']
+        ['the-evidence-room', 'Primary source', 'Evidence Room', 'Find the judgment and supporting source documents.']
+      ],
+      'the-enforcement': [
+        ['the-verdict', 'Court ruling', 'The Verdict', 'The judgment the enforcement orders are built on.'],
+        ['network', 'Map', 'Network analysis', 'See the entities the freeze orders reach across.'],
+        ['the-evidence-room', 'Primary source', 'Evidence Room', 'Open the eight payment-prohibition orders and exhibits.']
       ],
       'the-pictet-pitch': [
         ['the-95-percent-discount', 'Pricing', 'The 95% Discount', 'Compare the EUR 1 share sale with later valuation claims.'],
@@ -298,9 +303,14 @@
         ['vendor-risk', 'Risikoanalyse', 'Lieferantenrisiko', 'Warum der Streit fuer oeffentliche und Enterprise-Kunden relevant ist.']
       ],
       'the-verdict': [
+        ['the-enforcement', 'Was danach geschah', 'Die Vollstreckung', 'Acht Pfaendungsbescheide gingen am Tag des Urteils hinaus.'],
         ['the-lvs-trap', 'Hintergrund', 'Die LVS-Falle', 'Die Transaktionsgeschichte hinter dem Urteil.'],
-        ['the-evidence-room', 'Quelle', 'Der Beweisraum', 'Urteil und unterstuetzende Quelldokumente finden.'],
-        ['vendor-risk', 'Risikoanalyse', 'Lieferantenrisiko', 'Das Urteil in Beschaffungsrisiken uebersetzen.']
+        ['the-evidence-room', 'Quelle', 'Der Beweisraum', 'Urteil und unterstuetzende Quelldokumente finden.']
+      ],
+      'the-enforcement': [
+        ['the-verdict', 'Urteil', 'Das Urteil', 'Das Urteil, auf dem die Vollstreckung aufbaut.'],
+        ['network', 'Karte', 'Netzwerkanalyse', 'Die Rechtstraeger sehen, die die Pfaendungen erreichen.'],
+        ['the-evidence-room', 'Quelle', 'Der Beweisraum', 'Die acht Zahlungsverbote und Anlagen oeffnen.']
       ],
       'the-pictet-pitch': [
         ['the-95-percent-discount', 'Preisbildung', 'Der 95%-Rabatt', 'Den 1-EUR-Aktienverkauf mit spaeteren Bewertungsangaben vergleichen.'],
