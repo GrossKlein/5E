@@ -99,22 +99,21 @@
   <style>
     .er-hook { max-width:780px; margin:0 auto; padding:var(--sp-8) var(--container-padding) var(--sp-4); text-align:center; }
     .er-hook h1 { margin-bottom:var(--sp-2); }
-    .er-hook-sub { font-family:var(--font-ui); font-size:var(--text-ui); color:rgba(38,42,51,0.7); max-width:600px; margin:0 auto var(--sp-6); }
     .er-stats { display:flex; justify-content:center; gap:var(--sp-6); flex-wrap:wrap; margin-bottom:var(--sp-8); }
     .er-stat { text-align:center; }
     .er-stat-num { font-family:var(--font-ui); font-size:2.05rem; font-weight:700; color:var(--claret); }
-    .er-stat-label { font-family:var(--font-ui); font-size:var(--text-caption); color:rgba(38,42,51,0.66); text-transform:uppercase; letter-spacing:0.08em; }
+    .er-stat-label { font-family:var(--font-ui); font-size:var(--text-caption); color:var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; }
     .er-section { max-width:960px; margin:0 auto var(--sp-2); padding:0 var(--container-padding); }
     .accordion { border:1px solid var(--wheat); border-radius:6px; overflow:hidden; margin-bottom:var(--sp-3); }
     .accordion-trigger { display:flex; align-items:center; justify-content:space-between; width:100%; padding:var(--sp-4); background:var(--card-bg); border:none; cursor:pointer; font-family:var(--font-ui); font-size:0.95rem; font-weight:700; color:var(--slate); text-align:left; transition:background 0.15s; }
     .accordion-trigger:hover { background:var(--wheat); }
-    .accordion-trigger .acc-icon { font-size:0.7rem; color:rgba(38,42,51,0.3); transition:transform 0.2s; }
+    .accordion-trigger .acc-icon { font-size:0.7rem; color:var(--text-ghost); transition:transform 0.2s; }
     .accordion.open .accordion-trigger .acc-icon { transform:rotate(90deg); }
-    .accordion-trigger .acc-count { font-weight:400; font-size:var(--text-small); color:rgba(38,42,51,0.62); margin-left:var(--sp-2); }
+    .accordion-trigger .acc-count { font-weight:400; font-size:var(--text-small); color:var(--text-faint); margin-left:var(--sp-2); }
     .accordion-body { display:none; padding:var(--sp-4); background:var(--bg); overflow-x:auto; }
     .accordion.open .accordion-body { display:block; }
     .ev-table { width:100%; border-collapse:collapse; font-family:var(--font-ui); font-size:var(--text-small); }
-    .ev-table th { text-align:left; padding:var(--sp-3) var(--sp-2); font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:rgba(38,42,51,0.62); border-bottom:2px solid var(--wheat); white-space:nowrap; cursor:pointer; user-select:none; }
+    .ev-table th { text-align:left; padding:var(--sp-3) var(--sp-2); font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-faint); border-bottom:2px solid var(--wheat); white-space:nowrap; cursor:pointer; user-select:none; }
     .ev-table th:hover { color:var(--oxford); }
     .ev-table th::after { content:'\21C5'; margin-left:4px; font-size:0.55rem; opacity:0.3; }
     .ev-table th.sort-asc::after { content:'\2191'; opacity:0.8; color:var(--oxford); }
@@ -131,11 +130,11 @@
     .ev-table tbody tr:nth-child(even).row-highlight td { background:rgba(153,15,61,0.08); }
     .src-link { display:inline-flex; align-items:center; min-height:44px; font-family:var(--font-ui); font-size:0.68rem; font-weight:600; color:var(--oxford); text-decoration:none; padding:0 10px; border:1px solid rgba(13,118,128,0.2); border-radius:3px; white-space:nowrap; }
     .src-link:hover { background:rgba(13,118,128,0.06); }
-    .src-onfile { font-family:var(--font-ui); font-size:0.6rem; color:rgba(38,42,51,0.3); font-style:italic; }
+    .src-onfile { font-family:var(--font-ui); font-size:0.6rem; color:var(--text-ghost); font-style:italic; }
     .ev-search { margin-bottom:var(--sp-3); }
     .ev-search input { width:100%; min-height:44px; padding:9px 12px; border:1px solid var(--wheat); border-radius:4px; font-family:var(--font-ui); font-size:var(--text-small); background:var(--bg); color:var(--slate); }
     .ev-search input:focus-visible { border-color:var(--oxford); }
-    .ev-search input::placeholder { color:rgba(38,42,51,0.3); }
+    .ev-search input::placeholder { color:var(--text-ghost); }
     /* Deep-URL section headings */
     .er-section-heading {
       font-family: var(--font-ui);
@@ -167,7 +166,7 @@
   <a class="skip-link" href="#main-content">Skip to main content</a>
 <div id="main-content" class="er-hook">
     <h1>The Evidence Room</h1>
-    <p class="er-hook-sub dossier-abstract">Every claim in this dossier traced to its source document. Click any section to expand. Click column headers to sort. All tables are searchable.</p>
+    <p class="chapter-lede">Every claim in this dossier traced to its source document. Click any section to expand. Click column headers to sort. All tables are searchable.</p>
   </div>
 
   <div class="er-stats">
@@ -346,7 +345,7 @@
         <span class="acc-icon">&#x25B6;</span>
       </button>
       <div class="accordion-body" id="acc-payments-body">
-        <p style="font-family:var(--font-ui);font-size:var(--text-small);color:rgba(38,42,51,0.72);margin-bottom:var(--sp-3);">
+        <p style="font-family:var(--font-ui);font-size:var(--text-small);color:var(--text-subtle);margin-bottom:var(--sp-3);">
           Cooperation and Call Option Agreement of 21 May 2021. Contract total: &euro;18,750,000 for 750,000 shares. Modification agreement (&euro;7,500,000 / 375,000 shares).
         </p>
         <div class="ev-table-wrap">
@@ -392,7 +391,7 @@
           </tbody>
         </table>
         </div>
-        <p style="font-family:var(--font-ui);font-size:var(--text-small);color:rgba(38,42,51,0.72);margin-top:var(--sp-3);line-height:1.55;">
+        <p style="font-family:var(--font-ui);font-size:var(--text-small);color:var(--text-subtle);margin-top:var(--sp-3);line-height:1.55;">
           See also: <a href="the-verdict.html">The Verdict</a> &middot; <a href="the-enforcement.html">The Enforcement</a> &middot; Composite Cooperation and Call Option Agreement of 21 May 2021 (Exhibit K1 in the proceedings) &middot; Articles of Association of Quintus Beteiligungs GmbH amended 12 Jan 2026.
         </p>
       </div>

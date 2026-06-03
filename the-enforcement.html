@@ -77,13 +77,12 @@
     .enf-court-line {
       font-family: var(--font-ui); font-size: 0.72rem; font-weight: 700;
       text-transform: uppercase; letter-spacing: 0.12em;
-      color: rgba(38,42,51,0.7); margin-bottom: var(--sp-3);
+      color: var(--text-subtle); margin-bottom: var(--sp-3);
     }
     .enf-headline {
       font-family: var(--font-body); font-size: clamp(1.5rem, 3.8vw, 2.1rem);
       font-weight: 700; color: var(--slate); line-height: 1.25; margin-bottom: var(--sp-4);
     }
-    .enf-lede { font-family: var(--font-body); font-size: 1.05rem; line-height: 1.65; color: var(--slate); }
 
     /* KPI strip */
     .enf-kpis {
@@ -101,7 +100,7 @@
     .enf-kpi-label {
       font-family: var(--font-ui); font-size: 0.66rem; font-weight: 600;
       text-transform: uppercase; letter-spacing: 0.08em;
-      color: rgba(38,42,51,0.72); margin-top: var(--sp-2); line-height: 1.4;
+      color: var(--text-subtle); margin-top: var(--sp-2); line-height: 1.4;
     }
     @media (max-width: 640px) { .enf-kpis { grid-template-columns: repeat(2, 1fr); } }
 
@@ -119,7 +118,7 @@
       font-family: var(--font-ui); font-variant-numeric: tabular-nums;
       font-size: 2.1rem; font-weight: 700; color: var(--slate); margin: 0.3rem 0;
     }
-    .enf-meter-sub { font-family: var(--font-ui); font-size: 0.8rem; color: rgba(38,42,51,0.76); }
+    .enf-meter-sub { font-family: var(--font-ui); font-size: 0.8rem; color: var(--text-muted); }
 
     /* Reach table */
     .enf-table-wrap { max-width: 860px; margin: var(--sp-6) auto; overflow-x: auto; }
@@ -130,7 +129,7 @@
     }
     table.enf-table th {
       font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.08em; color: rgba(38,42,51,0.72); border-bottom: 2px solid var(--claret);
+      letter-spacing: 0.08em; color: var(--text-subtle); border-bottom: 2px solid var(--claret);
     }
     table.enf-table td:first-child { font-weight: 600; color: var(--slate); white-space: nowrap; }
     .enf-reach-tag {
@@ -151,7 +150,7 @@
     }
     .enf-charge-sub {
       font-family: var(--font-ui); font-size: 0.68rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.08em; color: rgba(38,42,51,0.7);
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-subtle);
       margin: var(--sp-1) 0 var(--sp-3);
     }
 
@@ -169,7 +168,7 @@
       text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--sp-2);
     }
     .enf-calib-col--shows .enf-calib-label { color: var(--slate); }
-    .enf-calib-col--unproven .enf-calib-label { color: rgba(38,42,51,0.72); }
+    .enf-calib-col--unproven .enf-calib-label { color: var(--text-subtle); }
     .enf-calib ul { margin: 0; padding-left: var(--sp-4); font-family: var(--font-ui); font-size: 0.9rem; line-height: 1.6; color: var(--slate); }
     .enf-calib li { margin-bottom: var(--sp-2); }
 
@@ -182,18 +181,18 @@
       font-family: var(--font-ui); font-size: 0.95rem; font-weight: 700;
       color: var(--slate); margin: 0 0 var(--sp-2);
     }
-    .enf-sidebar p { font-family: var(--font-ui); font-size: 0.9rem; line-height: 1.6; color: rgba(38,42,51,0.8); margin: 0 0 var(--sp-2); }
+    .enf-sidebar p { font-family: var(--font-ui); font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin: 0 0 var(--sp-2); }
 
     .enf-source-note {
       max-width: 720px; margin: var(--sp-4) auto 0;
       font-family: var(--font-ui); font-size: 0.72rem; font-style: italic;
-      color: rgba(38,42,51,0.66); line-height: 1.5;
+      color: var(--text-faint); line-height: 1.5;
     }
     .enf-footer-stamp {
       max-width: 720px; margin: var(--sp-8) auto var(--sp-4); padding: var(--sp-4) 0;
       border-top: 1px solid var(--wheat); text-align: center;
       font-family: var(--font-ui); font-size: 0.78rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.1em; color: rgba(38,42,51,0.7);
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-subtle);
     }
   </style>
 </head>
@@ -206,7 +205,7 @@
     <h1 class="enf-headline">
       Eight letters in one morning.
     </h1>
-    <p class="enf-lede dossier-abstract">
+    <p class="chapter-lede">
       On 13 May 2026, the 11th Civil Chamber of the Augsburg Regional Court ordered Franz-Xaver Bleicher to repay the loan — by then, with interest, <strong>€6,706,610.38</strong>. The judgment was not the end of the matter. It was the starting gun. The same day, the plaintiff sent eight provisional payment-prohibition orders — <em>vorläufige Zahlungsverbote</em> under §§&nbsp;845 and 930 of the German Code of Civil Procedure — reaching from Bleicher's bank to the tax office to six companies in the SyncPilot sphere. In a single coordinated move, the creditor put a hold on every place his money was likely to be.
     </p>
   </div>

@@ -137,7 +137,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: rgba(38,42,51,0.66);
+      color: var(--text-faint);
     }
     .meta-value {
       font-family: var(--font-ui);
@@ -177,7 +177,7 @@
     .ubo-rank {
       font-family: var(--font-ui);
       font-weight: 700;
-      color: rgba(38,42,51,0.35);
+      color: var(--text-ghost);
       font-size: 0.78rem;
     }
     .ubo-pct {
@@ -187,7 +187,7 @@
     }
     .ubo-via {
       font-size: 0.8rem;
-      color: rgba(38,42,51,0.72);
+      color: var(--text-subtle);
     }
     .ubo-summary {
       background: rgba(153,15,61,0.06);
@@ -205,7 +205,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: rgba(38,42,51,0.66);
+      color: var(--text-faint);
     }
     .ubo-stat-value {
       font-size: 2.2rem;
@@ -236,7 +236,7 @@
     #capital-chart .axis-label {
       font-family: 'Source Sans 3', sans-serif;
       font-size: 11px;
-      fill: rgba(38,42,51,0.66);
+      fill: var(--text-faint);
     }
     #capital-chart .event-line {
       fill: none;
@@ -271,12 +271,12 @@
       font-family: 'Source Serif 4', serif;
       font-size: 10px;
       font-style: italic;
-      fill: rgba(38,42,51,0.35);
+      fill: var(--text-ghost);
     }
     #capital-chart .val-label {
       font-family: 'Source Sans 3', sans-serif;
       font-size: 10px;
-      fill: rgba(38,42,51,0.7);
+      fill: var(--text-subtle);
     }
     .d3-tooltip {
       position: absolute;
@@ -348,12 +348,12 @@
     .rev-bar-amount {
       font-variant-numeric: tabular-nums;
       font-size: 0.78rem;
-      color: rgba(38,42,51,0.76);
+      color: var(--text-muted);
       text-align: right;
       white-space: nowrap;
     }
     .rev-pct {
-      color: rgba(38,42,51,0.35);
+      color: var(--text-ghost);
     }
     .rev-concentration {
       background: rgba(204,230,255,0.35);
@@ -361,7 +361,7 @@
       border-radius: 4px;
       font-family: var(--font-ui);
       font-size: 0.82rem;
-      color: rgba(38,42,51,0.8);
+      color: var(--text-muted);
       margin-top: var(--sp-4);
       line-height: 1.5;
     }
@@ -375,7 +375,7 @@
       margin: var(--sp-8) 0 0;
       font-family: var(--font-ui);
       font-size: 0.82rem;
-      color: rgba(38,42,51,0.72);
+      color: var(--text-subtle);
       line-height: 1.5;
     }
     .source-panel a { font-weight: 600; }
@@ -617,7 +617,7 @@
     <!-- Fallback: old evenly-spaced timeline (shown only if D3 fails to load) -->
     <div id="capital-fallback" style="display:none">
       <noscript>
-        <p style="font-family:var(--font-ui);color:rgba(38,42,51,0.7);font-size:0.85rem;">
+        <p style="font-family:var(--font-ui);color:var(--text-subtle);font-size:0.85rem;">
           Enable JavaScript to view the interactive capital-event chart.
         </p>
       </noscript>
