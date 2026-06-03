@@ -74,6 +74,18 @@
           }
         },
         {
+          "id": "the-enforcement",
+          "file": "the-enforcement.html",
+          "short": {
+            "en": "Enforcement",
+            "de": "Vollstreckung"
+          },
+          "title": {
+            "en": "The Enforcement",
+            "de": "Die Vollstreckung"
+          }
+        },
+        {
           "id": "the-pictet-pitch",
           "file": "the-pictet-pitch.html",
           "short": {

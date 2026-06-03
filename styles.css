@@ -413,7 +413,7 @@ hr {
   color: var(--slate);
 }
 .search-input:focus-visible { border-color: var(--oxford); }
-.search-input::placeholder { color: rgba(38,42,51,0.4); }
+.search-input::placeholder { color: rgba(38,42,51,0.62); }
 
 .search-results {
   margin-top: var(--sp-4);
@@ -567,14 +567,14 @@ hr {
 .card-subtitle {
   font-family: var(--font-ui);
   font-size: 0.8rem;
-  color: rgba(38,42,51,0.6);
+  color: rgba(38,42,51,0.76);
   margin-top: 2px;
 }
 
 .card-meta {
   font-family: var(--font-ui);
   font-size: var(--text-ui);
-  color: rgba(38,42,51,0.65);
+  color: rgba(38,42,51,0.8);
   line-height: 1.5;
   margin-bottom: var(--sp-3);
 }
@@ -610,7 +610,7 @@ hr {
   font-size: var(--text-caption);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: rgba(38,42,51,0.5);
+  color: rgba(38,42,51,0.7);
 }
 
 /* --- Role Badge Pills --- */
@@ -676,7 +676,7 @@ hr {
 .chart-subtitle {
   font-family: var(--font-ui);
   font-size: var(--text-small);
-  color: rgba(38,42,51,0.55);
+  color: rgba(38,42,51,0.72);
   margin-top: -8px;
   margin-bottom: var(--sp-3);
 }
@@ -689,7 +689,7 @@ hr {
 .chart-source {
   font-family: var(--font-ui);
   font-size: var(--text-caption);
-  color: rgba(38,42,51,0.45);
+  color: rgba(38,42,51,0.66);
   margin-top: var(--sp-2);
   text-align: right;
 }
@@ -864,7 +864,7 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgba(38,42,51,0.62);
+  color: rgba(38,42,51,0.78);
 }
 
 .social-share-actions {
@@ -1012,7 +1012,7 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
 .toc-ch-desc {
   font-family: var(--font-ui);
   font-size: var(--text-ui);
-  color: rgba(38,42,51,0.55);
+  color: rgba(38,42,51,0.72);
   margin-top: 2px;
 }
 
@@ -1037,7 +1037,7 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
 .hero-subtitle {
   font-family: var(--font-ui);
   font-size: var(--text-body);
-  color: rgba(38,42,51,0.6);
+  color: rgba(38,42,51,0.76);
   line-height: 1.5;
 }
 /* ============================================================
@@ -1173,7 +1173,7 @@ tbody tr:hover { background: rgba(242,223,206,0.3); }
 }
 
 .fixed-bar-center {
-  color: rgba(38,42,51,0.45);
+  color: rgba(38,42,51,0.66);
   font-weight: 400;
   font-size: var(--text-caption);
   letter-spacing: 0.04em;
@@ -1312,7 +1312,7 @@ body[data-page]:not([data-page="index"]) .site-footer {
 .vis-time-axis .vis-text {
   font-family: var(--font-ui) !important;
   font-size: var(--text-caption) !important;
-  color: rgba(38,42,51,0.45) !important;
+  color: rgba(38,42,51,0.66) !important;
 }
 
 .vis-labelset .vis-label {
@@ -1336,7 +1336,7 @@ body[data-page]:not([data-page="index"]) .site-footer {
 .vis-item.tl-former {
   background: #fff !important;
   border-color: rgba(38,42,51,0.3) !important;
-  color: rgba(38,42,51,0.45) !important;
+  color: rgba(38,42,51,0.66) !important;
 }
 
 .vis-item.tl-unknown {
@@ -1530,7 +1530,7 @@ body[data-page="index"] { padding-top: 0; }
 .hero-subtitle {
   font-family: var(--font-ui);
   font-size: 1.05rem;
-  color: rgba(38,42,51,0.55);
+  color: rgba(38,42,51,0.72);
   line-height: 1.55;
   max-width: 640px;
   margin: 0 auto var(--sp-4);
@@ -1591,7 +1591,7 @@ body[data-page="index"] { padding-top: 0; }
 .charge-label {
   font-family: var(--font-ui);
   font-size: 0.7rem;
-  color: rgba(38,42,51,0.55);
+  color: rgba(38,42,51,0.72);
   line-height: 1.35;
 }
 
@@ -1630,7 +1630,7 @@ body[data-page="index"] { padding-top: 0; }
 .exposure-desc {
   font-family: var(--font-ui);
   font-size: 0.78rem;
-  color: rgba(38,42,51,0.55);
+  color: rgba(38,42,51,0.72);
 }
 .client-card-grid {
   display: flex;
@@ -1727,7 +1727,7 @@ body[data-page="index"] { padding-top: 0; }
 .cast-role {
   font-family: var(--font-ui);
   font-size: var(--text-ui);
-  color: rgba(38,42,51,0.5);
+  color: rgba(38,42,51,0.7);
   line-height: 1.5;
 }
 .cast-badge {
@@ -1798,7 +1798,7 @@ body[data-page="index"] { padding-top: 0; }
 .dossier-card--reference { border-left-color: rgba(38,42,51,0.25); }
 .dossier-card:hover.dossier-card--neutral   { border-left-color: var(--teal); }
 .dossier-card:hover.dossier-card--warning   { border-left-color: #CC0033; }
-.dossier-card:hover.dossier-card--reference { border-left-color: rgba(38,42,51,0.45); }
+.dossier-card:hover.dossier-card--reference { border-left-color: rgba(38,42,51,0.66); }
 
 .dossier-card--profile {
   display: grid;
@@ -1822,7 +1822,7 @@ body[data-page="index"] { padding-top: 0; }
 }
 .dossier-card--neutral   .card-label { color: var(--oxford); }
 .dossier-card--warning   .card-label { color: var(--claret); }
-.dossier-card--reference .card-label { color: rgba(38,42,51,0.45); }
+.dossier-card--reference .card-label { color: rgba(38,42,51,0.66); }
 
 .card-title {
   font-family: var(--font-body);
@@ -1835,7 +1835,7 @@ body[data-page="index"] { padding-top: 0; }
 .card-desc {
   font-family: var(--font-ui);
   font-size: 0.85rem;
-  color: rgba(38,42,51,0.6);
+  color: rgba(38,42,51,0.76);
   line-height: 1.5;
   margin: 0;
 }
@@ -1886,7 +1886,7 @@ body[data-page="index"] { padding-top: 0; }
   padding: var(--sp-4) var(--container-padding);
   font-family: var(--font-ui);
   font-size: 0.75rem;
-  color: rgba(38,42,51,0.4);
+  color: rgba(38,42,51,0.62);
   text-align: center;
   line-height: 1.5;
   border-top: 1px solid var(--wheat);
@@ -1953,7 +1953,7 @@ body[data-page="index"] { padding-top: 0; }
   margin-top: var(--sp-6);
   font-family: var(--font-ui);
   font-size: 0.92rem;
-  color: rgba(38,42,51,0.55);
+  color: rgba(38,42,51,0.72);
   line-height: 1.55;
   border-left: 3px solid var(--risk-high);
   padding-left: var(--sp-4);
@@ -2004,7 +2004,7 @@ body[data-page="index"] { padding-top: 0; }
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgba(38,42,51,0.45);
+  color: rgba(38,42,51,0.66);
   margin-top: 2px;
 }
 
@@ -2044,7 +2044,7 @@ body[data-page="index"] { padding-top: 0; }
   font-family: var(--font-ui);
   font-size: 0.72rem;
   font-weight: 600;
-  color: rgba(38,42,51,0.4);
+  color: rgba(38,42,51,0.62);
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
@@ -2067,7 +2067,7 @@ body[data-page="index"] { padding-top: 0; }
   font-family: var(--font-ui);
   font-size: 0.9rem;
   line-height: 1.55;
-  color: rgba(38,42,51,0.62);
+  color: rgba(38,42,51,0.78);
   margin: var(--sp-3) 0 var(--sp-5);
 }
 .source-links a {
@@ -2085,7 +2085,7 @@ body[data-page="index"] { padding-top: 0; }
 }
 .arithmetic-table thead th {
   background: var(--wheat);
-  color: rgba(38,42,51,0.6);
+  color: rgba(38,42,51,0.76);
   font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -2116,7 +2116,7 @@ body[data-page="index"] { padding-top: 0; }
 }
 .col--multiple {
   white-space: nowrap;
-  color: rgba(38,42,51,0.55);
+  color: rgba(38,42,51,0.72);
 }
 
 /* ---- Disclosure cards ---- */
@@ -2231,7 +2231,7 @@ body[data-page="index"] { padding-top: 0; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: rgba(38,42,51,0.4);
+  color: rgba(38,42,51,0.62);
 }
 .cta-next-title {
   font-family: var(--font-body);
@@ -2445,4 +2445,25 @@ body[data-page="index"] { padding-top: 0; }
   .ownership-shift-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* ── Shared chapter top-abstract: indented, accent-bulleted lede ───────── */
+.dossier-abstract {
+  position: relative;
+  padding-left: var(--sp-5);
+  border-left: 3px solid var(--claret);
+  margin-left: 2px;
+}
+.dossier-abstract::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 0.55em;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--claret);
+}
+@media (max-width: 640px) {
+  .dossier-abstract { padding-left: var(--sp-4); }
 }

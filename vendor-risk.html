@@ -99,7 +99,7 @@
   <style>
     .ce-hook { max-width:980px; margin:0 auto; padding:var(--sp-8) var(--container-padding) var(--sp-6); text-align:center; }
     .ce-hook-stat { font-family:var(--font-ui); font-size:clamp(3rem,8vw,5.8rem); font-weight:700; color:var(--claret); line-height:0.95; margin-bottom:var(--sp-3); }
-    .ce-hook-label { font-family:var(--font-ui); font-size:clamp(1.1rem,2vw,1.55rem); color:rgba(38,42,51,0.68); line-height:1.25; }
+    .ce-hook-label { font-family:var(--font-ui); font-size:clamp(1.1rem,2vw,1.55rem); color:rgba(38,42,51,0.82); line-height:1.25; }
 
     .sector-section { max-width:780px; margin:var(--sp-6) auto var(--sp-8); padding:0 var(--container-padding); }
     .legend-row { display:flex; align-items:center; gap:var(--sp-2); padding:6px 0; border-bottom:1px solid rgba(242,223,206,0.4); font-family:var(--font-ui); font-size:var(--text-ui); }
@@ -108,7 +108,7 @@
     .legend-swatch { width:12px; height:12px; border-radius:2px; flex-shrink:0; }
     .legend-icon { width:16px; height:16px; flex-shrink:0; display:inline-block; background-size:contain; background-repeat:no-repeat; background-position:center; }
     .legend-name { flex:1; font-weight:600; color:var(--slate); }
-    .legend-val { text-align:right; color:rgba(38,42,51,0.55); font-size:var(--text-small); white-space:nowrap; }
+    .legend-val { text-align:right; color:rgba(38,42,51,0.72); font-size:var(--text-small); white-space:nowrap; }
     .legend-val strong { color:var(--slate); }
 
     /* B/W outline sector icons — inline SVG data URIs */
@@ -128,12 +128,12 @@
 
     .client-table-section { max-width:1200px; margin:0 auto var(--sp-8); padding:0 var(--container-padding); }
     .client-filter { display:flex; gap:var(--sp-2); flex-wrap:wrap; margin-bottom:var(--sp-4); }
-    .filter-btn { font-family:var(--font-ui); font-size:var(--text-small); font-weight:600; min-height:44px; padding:9px 14px; border:1px solid var(--wheat); border-radius:0; background:transparent; color:rgba(38,42,51,0.55); cursor:pointer; transition:background 0.15s, border-color 0.15s, color 0.15s; }
+    .filter-btn { font-family:var(--font-ui); font-size:var(--text-small); font-weight:600; min-height:44px; padding:9px 14px; border:1px solid var(--wheat); border-radius:0; background:transparent; color:rgba(38,42,51,0.72); cursor:pointer; transition:background 0.15s, border-color 0.15s, color 0.15s; }
     .filter-btn:hover { border-color:var(--oxford); color:var(--oxford); }
     .filter-btn.active { background:var(--claret); border-color:var(--claret); color:#fff; }
 
     table.client-table { width:100%; border-collapse:collapse; }
-    table.client-table th { font-family:var(--font-ui); font-size:var(--text-small); font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:rgba(38,42,51,0.5); text-align:left; padding:var(--sp-4) var(--sp-4); border-bottom:4px solid var(--wheat); }
+    table.client-table th { font-family:var(--font-ui); font-size:var(--text-small); font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:rgba(38,42,51,0.7); text-align:left; padding:var(--sp-4) var(--sp-4); border-bottom:4px solid var(--wheat); }
     table.client-table th.col-rev { text-align:right; }
     table.client-table td { font-family:var(--font-ui); font-size:var(--text-ui); padding:var(--sp-4) var(--sp-4); border-bottom:1px solid rgba(242,223,206,0.7); line-height:1.25; }
     table.client-table td.col-rev { text-align:right; font-variant-numeric:tabular-nums; font-size:var(--text-ui); font-weight:700; white-space:nowrap; }
@@ -176,11 +176,12 @@
 <div id="main-content" class="ce-hook">
     <div class="ce-hook-stat">84.3%</div>
     <div class="ce-hook-label">of SyncPilot's €44.2M projected revenue comes from<br>German taxpayer-funded organisations</div>
+    <p class="ce-hook-concern" style="text-align:center; font-family:var(--font-ui); font-weight:700; font-size:1.05rem; color:var(--risk-high); max-width:620px; margin:var(--sp-4) auto 0;">If your organisation contracts with SyncPilot, this dossier concerns you.</p>
   </div>
 
   <article>
     <h1 style="text-align:center; margin-bottom:var(--sp-2);">Vendor Risk</h1>
-    <p style="text-align:center; font-family:var(--font-ui); font-size:var(--text-ui); color:rgba(38,42,51,0.5); max-width:600px; margin:0 auto var(--sp-8);">
+    <p style="text-align:center; font-family:var(--font-ui); font-size:var(--text-ui); color:rgba(38,42,51,0.7); max-width:600px; margin:0 auto var(--sp-8);">
       Every organisation that contracts with SyncPilot. Revenue data from internal company forecasts, March 2024.
     </p>
 
@@ -192,8 +193,9 @@
         <li>Is your organisation aware that two SyncPilot shareholders were <a href="the-goldfinger-connection.html">arrested and detained</a> in a €1&nbsp;billion tax fraud prosecution — then received company shares at a <a href="the-95-percent-discount.html">95% discount</a>?</li>
         <li>Does your vendor due diligence process cover the <a href="the-goldfinger-connection.html#buyers">personal criminal history</a> of the people who ultimately own your supplier?</li>
         <li>Has SyncPilot ever been required to provide an <a href="syncpilot.html#capital">independent third-party share valuation</a>? Every price in the company's history was set by its own board.</li>
-        <li>Are you aware that the founders <a href="the-lvs-trap.html">collected €6.15M from an investor and delivered zero shares</a>? The investor is suing.</li>
-        <li>Does your contract include audit rights over SyncPilot's use of funds — given that the sole managing director <a href="the-lvs-trap.html#money">acquired personal property</a> during the period investor money was flowing in?</li>
+        <li>Are you aware that the founders <a href="the-lvs-trap.html">collected €6.15M from an investor and delivered zero shares</a> — and that on <a href="the-verdict.html">13 May 2026 a German court ordered repayment of €6,706,610.38</a>, with interest still accruing?</li>
+        <li>Is your organisation aware that the same day, the creditor <a href="the-enforcement.html">froze the sole managing director's assets across eight targets</a> — his bank, his tax refunds, his shareholdings, and a €1.75M land charge — under §§&nbsp;845/930 ZPO?</li>
+        <li>Does your contract include audit rights over SyncPilot's use of funds — given that the company's sole managing director is now the subject of active enforcement proceedings over an unpaid seven-figure judgment?</li>
         <li>If this dossier appeared in <a href="https://www.handelsblatt.com" target="_blank" rel="noopener">Handelsblatt</a> or <a href="https://www.spiegel.de" target="_blank" rel="noopener">Der Spiegel</a> tomorrow, how would your agency explain the vendor relationship to taxpayers?</li>
       </ol>
     </div>
