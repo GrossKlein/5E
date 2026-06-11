@@ -1,0 +1,381 @@
+/* ============================================================
+   SyncPilot — Modern UX Layer
+   Pass 1: View Transitions · Scroll Animations · Container
+   Queries · Popover API · Dialog · content-visibility
+   ============================================================ */
+
+/* ── 0. CSS Layer order (declared first, respected everywhere) ── */
+@layer reset, tokens, base, layout, components, utilities;
+
+/* ── 1. Cross-document View Transitions ── */
+@view-transition {
+  navigation: auto;
+}
+
+/* Assign stable names so matched elements morph across pages */
+.index-hero          { view-transition-name: site-hero; }
+.charge-grid         { view-transition-name: charge-grid; }
+.site-nav            { view-transition-name: site-nav; }
+.site-footer         { view-transition-name: site-footer; }
+
+/* Transition pseudos — fade hero text, slide cards */
+@layer utilities {
+  ::view-transition-old(site-hero) {
+    animation: 200ms ease-out both fade-out;
+  }
+  ::view-transition-new(site-hero) {
+    animation: 300ms ease-in both fade-in;
+  }
+  ::view-transition-old(charge-grid) {
+    animation: 180ms ease-out both slide-out-left;
+  }
+  ::view-transition-new(charge-grid) {
+    animation: 300ms ease-out both slide-in-right;
+  }
+}
+
+/* ── 2. Scroll-driven entrance animations ── */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes card-enter {
+    from {
+      opacity: 0;
+      translate: 0 2rem;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  @keyframes fade-in-scale {
+    from {
+      opacity: 0;
+      scale: 0.97;
+    }
+    to {
+      opacity: 1;
+      scale: 1;
+    }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes fade-out {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+  @keyframes slide-out-left {
+    to { translate: -2rem 0; opacity: 0; }
+  }
+
+  @keyframes slide-in-right {
+    from { translate: 2rem 0; opacity: 0; }
+  }
+
+  .charge-card {
+    animation: card-enter linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+
+  .dossier-card {
+    animation: card-enter linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+
+  .cast-card {
+    animation: fade-in-scale linear both;
+    animation-timeline: view();
+    animation-range: entry 5% entry 40%;
+  }
+
+  .client-chip {
+    animation: fade-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 50%;
+  }
+}
+
+/* ── 3. Container queries ── */
+
+/* Dossier grid: switch to single column in narrow containers */
+.dossier-grid {
+  container-type: inline-size;
+  container-name: dossier;
+}
+
+@container dossier (max-width: 480px) {
+  .dossier-card {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Cast grid: stack vertically in narrow containers */
+.cast-grid {
+  container-type: inline-size;
+  container-name: cast;
+}
+
+@container cast (max-width: 560px) {
+  .cast-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  .cast-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto;
+  }
+}
+
+/* Charge grid: single column on very narrow containers */
+.charge-grid {
+  container-type: inline-size;
+  container-name: charges;
+}
+
+@container charges (max-width: 400px) {
+  .charge-card {
+    padding: var(--sp-4, 1rem);
+  }
+  .charge-number {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+}
+
+/* ── 4. :has() — state-driven styling without JS ── */
+
+/* Highlight a section when any child card is hovered */
+.dossier-grid:has(.dossier-card:hover) .dossier-card:not(:hover) {
+  opacity: 0.7;
+  transition: opacity 200ms ease;
+}
+
+/* Cast section: dim siblings when one card is focused */
+.cast-grid:has(.cast-card:focus-within) .cast-card:not(:focus-within) {
+  opacity: 0.6;
+  transition: opacity 200ms ease;
+}
+
+/* Nav: mark parent link active when a sub-item is focused */
+.site-nav:has(a:focus-visible) {
+  outline-offset: 2px;
+}
+
+/* ── 5. content-visibility: auto on below-fold sections ── */
+@layer layout {
+  .cast-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
+  }
+
+  .section-group {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1200px;
+  }
+
+  .client-exposure {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 300px;
+  }
+}
+
+/* ── 6. Native <dialog> — Document preview lightbox ── */
+@layer components {
+  dialog.doc-preview {
+    border: none;
+    border-radius: 4px;
+    padding: 0;
+    max-width: min(90vw, 760px);
+    max-height: 85dvh;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(38, 42, 51, 0.35);
+    background: var(--paper, #FFF1E5);
+  }
+
+  dialog.doc-preview::backdrop {
+    background: rgba(38, 42, 51, 0.6);
+    backdrop-filter: blur(3px);
+  }
+
+  /* Entry animation */
+  @starting-style {
+    dialog.doc-preview[open] {
+      opacity: 0;
+      translate: 0 1.5rem;
+    }
+  }
+
+  dialog.doc-preview[open] {
+    opacity: 1;
+    translate: 0 0;
+    transition:
+      opacity 250ms ease,
+      translate 250ms ease,
+      display 250ms allow-discrete,
+      overlay 250ms allow-discrete;
+  }
+
+  .doc-preview__inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 85dvh;
+  }
+
+  .doc-preview__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sp-4, 1rem) var(--sp-6, 1.5rem);
+    border-bottom: 1px solid var(--wheat, #F2DFCE);
+    flex-shrink: 0;
+  }
+
+  .doc-preview__title {
+    font-family: var(--font-ui, 'Source Sans 3', sans-serif);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--slate, #262A33);
+    margin: 0;
+  }
+
+  .doc-preview__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: var(--text-muted, rgba(38,42,51,0.76));
+    border-radius: 2px;
+  }
+
+  .doc-preview__close:hover {
+    background: var(--wheat, #F2DFCE);
+    color: var(--slate, #262A33);
+  }
+
+  .doc-preview__body {
+    padding: var(--sp-6, 1.5rem);
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    dialog.doc-preview {
+      transition:
+        opacity 250ms ease,
+        translate 250ms ease,
+        display 250ms allow-discrete,
+        overlay 250ms allow-discrete;
+    }
+  }
+}
+
+/* ── 7. Popover API — Quick-facts panel ── */
+@layer components {
+  [popover].quick-facts {
+    border: none;
+    border-radius: 4px;
+    padding: var(--sp-6, 1.5rem);
+    max-width: min(90vw, 480px);
+    background: var(--slate, #262A33);
+    color: var(--paper, #FFF1E5);
+    box-shadow: 0 16px 48px rgba(38,42,51,0.4);
+    /* Anchor to triggering button when anchor positioning is supported */
+    position-anchor: --facts-btn;
+    top: calc(anchor(bottom) + 8px);
+    left: anchor(center);
+    translate: -50% 0;
+  }
+
+  /* @starting-style for popover entry */
+  @starting-style {
+    [popover].quick-facts:popover-open {
+      opacity: 0;
+      translate: -50% -0.5rem;
+    }
+  }
+
+  [popover].quick-facts:popover-open {
+    opacity: 1;
+    translate: -50% 0;
+    transition:
+      opacity 200ms ease,
+      translate 200ms ease,
+      display 200ms allow-discrete,
+      overlay 200ms allow-discrete;
+  }
+
+  .quick-facts__stat {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-3, 0.75rem);
+    padding: var(--sp-2, 0.5rem) 0;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+
+  .quick-facts__stat:last-child {
+    border-bottom: none;
+  }
+
+  .quick-facts__num {
+    font-family: var(--font-ui, 'Source Sans 3', sans-serif);
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: var(--wheat, #F2DFCE);
+    min-width: 7ch;
+  }
+
+  .quick-facts__label {
+    font-family: var(--font-body, 'Source Serif 4', serif);
+    font-size: 0.9rem;
+    color: rgba(255,241,229,0.8);
+    line-height: 1.4;
+  }
+
+  .quick-facts__close {
+    display: block;
+    margin-top: var(--sp-4, 1rem);
+    font-family: var(--font-ui, 'Source Sans 3', sans-serif);
+    font-size: 0.85rem;
+    color: rgba(255,241,229,0.6);
+    text-align: right;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  /* Trigger button in hero */
+  .hero-facts-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    margin-top: var(--sp-4, 1rem);
+    padding: 0.45em 1em;
+    font-family: var(--font-ui, 'Source Sans 3', sans-serif);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--oxford, #0D7680);
+    background: transparent;
+    border: 1.5px solid var(--oxford, #0D7680);
+    border-radius: 2px;
+    cursor: pointer;
+    anchor-name: --facts-btn;
+    transition: background 150ms ease, color 150ms ease;
+  }
+
+  .hero-facts-btn:hover {
+    background: var(--oxford, #0D7680);
+    color: var(--paper, #FFF1E5);
+  }
+}

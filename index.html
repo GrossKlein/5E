@@ -2,13 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Security headers (meta fallback — canonical in _headers) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; font-src 'self'; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SyncPilot — An Investigative Dossier</title>
   <meta name="description" content="Investigative dossier on SyncPilot: court-ordered repayment of €6,706,610.38 now under enforcement, Goldfinger tax fraud defendants among shareholders, insider share pricing. Sourced from Handelsregister filings and primary documents.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Self-hosted fonts — replaces Google Fonts CDN -->
+  <link rel="preload" href="assets/fonts/SourceSerif4-Roman.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/SourceSans3-Upright.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/fonts.css">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/modern.css">
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" href="assets/favicons/favicon.svg" type="image/svg+xml">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
@@ -183,7 +190,33 @@
     <p class="hero-body">
       <strong>€6.15M</strong> lent by LVS Hotel &amp; Resorts S.A. — zero shares delivered. On <a href="the-verdict.html">13 May 2026 the Augsburg Regional Court ordered repayment</a> — <strong>€6,706,610.38</strong> with interest — and the creditor <a href="the-enforcement.html">froze his assets across eight targets the same day</a>. The lawyer who drafted the contract acquired shares in the same firm at a <strong>95% discount</strong>. That same lawyer was a <a href="https://www.lto.de/recht/justiz/j/goldfinger-prozess-staatsanwaltschaft-augsburg-eingestellt-entschaedigung-strafanzeigen-kanzleidaten" target="_blank" rel="noopener">Goldfinger tax fraud defendant</a>. Among the assets now frozen is a €1.75M land charge at 15% interest over a property at the managing director's registered address of record. <strong>84% of revenue comes from German taxpayers.</strong> In late 2024, <a href="the-pictet-pitch.html">Pictet Asset Management</a> extended debt financing to the company — eighteen months after shares had traded at €1 and the CEO was pitching a <strong>€250M valuation</strong> on €12M revenue.
     </p>
+    <button class="hero-facts-btn" popovertarget="quick-facts-popover" type="button">
+      ▸ Quick Facts
+    </button>
   </header>
+
+  <!-- Quick Facts Popover (native browser, no JS) -->
+  <div id="quick-facts-popover" class="quick-facts" popover>
+    <div class="quick-facts__stat">
+      <span class="quick-facts__num">€6.71M</span>
+      <span class="quick-facts__label">Repayment ordered by LG Augsburg, 13 May 2026 — now under enforcement</span>
+    </div>
+    <div class="quick-facts__stat">
+      <span class="quick-facts__num">95%</span>
+      <span class="quick-facts__label">Discount on shares to Goldfinger tax fraud defendants</span>
+    </div>
+    <div class="quick-facts__stat">
+      <span class="quick-facts__num">€128M</span>
+      <span class="quick-facts__label">Board-set valuation, never independently appraised</span>
+    </div>
+    <div class="quick-facts__stat">
+      <span class="quick-facts__num">84%</span>
+      <span class="quick-facts__label">Revenue from German taxpayer-funded organisations</span>
+    </div>
+    <button class="quick-facts__close" popovertarget="quick-facts-popover" popovertargetaction="hide" type="button">
+      Close ✕
+    </button>
+  </div>
 
   <!-- ====== CHARGE CARDS ====== -->
   <div class="charge-grid">
@@ -314,7 +347,7 @@
         <span class="card-arrow">→</span>
       </a>
 
-      <a href="the-enforcement.html" class="dossier-card dossier-card--warning">
+      <a href="the-enforcement.html" class="dossier-card dossier-card--warning" data-preview-trigger>
         <div class="card-label">Enforcement</div>
         <div class="card-title">Eight Letters in One Morning</div>
         <p class="card-desc">The same day judgment was handed down, the creditor froze his bank, tax refunds, share interests and a €1.75M land charge — eight orders under §§ 845 / 930 ZPO.</p>
@@ -377,6 +410,43 @@
   <div class="procurement-cta">
     <p><a href="vendor-risk.html">If your organisation contracts with SyncPilot, this dossier concerns you.</a></p>
   </div>
+
+  <!-- Document Preview Dialog — enforcement summary -->
+  <dialog id="enforcement-preview" class="doc-preview" aria-labelledby="dlg-title">
+    <div class="doc-preview__inner">
+      <div class="doc-preview__header">
+        <h2 class="doc-preview__title" id="dlg-title">Enforcement Summary — 13 May 2026</h2>
+        <button class="doc-preview__close" onclick="document.getElementById('enforcement-preview').close()" aria-label="Close preview" type="button">✕</button>
+      </div>
+      <div class="doc-preview__body">
+        <p style="font-family:var(--font-ui);font-weight:700;color:var(--risk-high);margin:0 0 1rem;">€6,706,610.38 — Court-ordered repayment now under enforcement</p>
+        <p style="font-family:var(--font-body);font-size:0.95rem;line-height:1.6;color:var(--slate);">On 13 May 2026, the Augsburg Regional Court (LG Augsburg) ordered repayment of the full principal plus interest. On the same day, the creditor issued enforcement orders under §§ 845 / 930 ZPO across eight separate targets.</p>
+        <ul style="font-family:var(--font-body);font-size:0.9rem;line-height:1.7;color:var(--slate);padding-left:1.25rem;margin-top:0.75rem;">
+          <li>Bank account freeze</li>
+          <li>Tax refund attachment</li>
+          <li>Share interest garnishment</li>
+          <li>€1.75M land charge at 15% over managing director's registered address</li>
+          <li>Four further undisclosed targets</li>
+        </ul>
+        <p style="margin-top:1rem;"><a href="the-enforcement.html" style="font-family:var(--font-ui);font-weight:600;color:var(--oxford);">Read full enforcement report →</a></p>
+      </div>
+    </div>
+  </dialog>
+
   <script defer src="data/dossier.js"></script>
+
+  <!-- Dialog trigger script (minimal, progressive enhancement) -->
+  <script>
+    document.querySelectorAll('[data-dialog]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const dlg = document.getElementById(btn.dataset.dialog);
+        if (dlg) dlg.showModal();
+      });
+    });
+    // Close dialog on backdrop click
+    document.querySelectorAll('dialog.doc-preview').forEach(dlg => {
+      dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+    });
+  </script>
 </body>
 </html>

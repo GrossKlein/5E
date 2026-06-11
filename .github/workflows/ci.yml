@@ -1,0 +1,47 @@
+name: CI — Lint & Audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  html-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install html-validate
+        run: npm install -g html-validate
+      - name: Validate HTML
+        run: |
+          html-validate "*.html" "de/*.html" \
+            --rule '{"void-style": "off", "attribute-allowed-values": "warn"}' \
+            || true
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install serve + Lighthouse CI
+        run: npm install -g @lhci/cli@0.14 serve
+      - name: Serve & run Lighthouse CI
+        run: |
+          serve -l 8080 . &
+          sleep 3
+          lhci autorun \
+            --collect.url=http://localhost:8080 \
+            --collect.numberOfRuns=1 \
+            --assert.preset=lighthouse:no-pwa \
+            --assert.assertions.categories:performance=off \
+            --assert.assertions.categories:accessibility='["warn",{"minScore":0.9}]' \
+            --assert.assertions.categories:best-practices='["warn",{"minScore":0.9}]' \
+            --assert.assertions.categories:seo='["warn",{"minScore":0.9}]' \
+            --upload.target=temporary-public-storage \
+            || true
