@@ -448,5 +448,12 @@
       dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
     });
   </script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/5E/sw.js', {scope: '/5E/'}).catch(function(){});
+  });
+}
+</script>
 </body>
 </html>

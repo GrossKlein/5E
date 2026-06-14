@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Offline — SyncPilot News</title>
+  <meta name="theme-color" content="#0D7680">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0}
+    body{font-family:system-ui,sans-serif;display:grid;place-items:center;min-block-size:100svh;background:#FFF1E5;color:#262A33;padding:1.5rem}
+    .card{max-inline-size:26rem;text-align:center;padding:2.5rem 2rem;border-radius:.75rem;box-shadow:0 2px 16px rgba(0,0,0,.1)}
+    .icon{font-size:3rem;display:block;margin-block-end:1rem}
+    h1{font-size:1.375rem;font-weight:700;margin-block-end:.5rem}
+    p{font-size:.9375rem;opacity:.7;line-height:1.6;margin-block-end:1.5rem}
+    button{padding:.5rem 1.75rem;font-size:.9375rem;font-weight:600;border:none;border-radius:.375rem;cursor:pointer;background:#0D7680;color:#fff}
+    button:hover{opacity:.85}
+  </style>
+<link rel="manifest" href="/5E/manifest.json">
+<meta name="theme-color" content="#0D7680">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="SyncPilot News">
+<link rel="apple-touch-icon" href="/5E/assets/icons/icon-192.png">
+</head>
+<body>
+  <div class="card">
+    <span class="icon" aria-hidden="true">📡</span>
+    <h1>You're offline</h1>
+    <p>No internet connection. The requested page is not in your local cache.</p>
+    <button onclick="location.reload()">Try again</button>
+  </div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/5E/sw.js', {scope: '/5E/'}).catch(function(){});
+  });
+}
+</script>
+</body>
+</html>

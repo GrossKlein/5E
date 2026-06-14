@@ -1,178 +1,31 @@
 {
-  "site": {
-    "title": {
-      "en": "SyncPilot — Investigative Dossier",
-      "de": "SyncPilot — Investigatives Dossier"
-    },
-    "updated": "March 2026"
-  },
-  "sections": [
+  "name": "SyncPilot News — Investigative Dossier",
+  "short_name": "SyncPilot News",
+  "description": "Court-ordered repayment of €6,706,610.38 now under enforcement. Investigative dossier sourced from primary documents.",
+  "start_url": "/5E/",
+  "scope": "/5E/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#0D7680",
+  "background_color": "#FFF1E5",
+  "lang": "en",
+  "icons": [
     {
-      "label": {
-        "en": "The Company",
-        "de": "Das Unternehmen"
-      },
-      "pages": [
-        {
-          "id": "syncpilot",
-          "file": "syncpilot.html",
-          "short": {
-            "en": "Profile",
-            "de": "Profil"
-          },
-          "title": {
-            "en": "SyncPilot",
-            "de": "SyncPilot"
-          }
-        },
-        {
-          "id": "the-95-percent-discount",
-          "file": "the-95-percent-discount.html",
-          "short": {
-            "en": "Discount",
-            "de": "Rabatt"
-          },
-          "title": {
-            "en": "The 95% Discount",
-            "de": "Der 95%-Rabatt"
-          }
-        },
-        {
-          "id": "the-goldfinger-connection",
-          "file": "the-goldfinger-connection.html",
-          "short": {
-            "en": "Goldfinger",
-            "de": "Goldfinger"
-          },
-          "title": {
-            "en": "The Goldfinger Connection",
-            "de": "Die Goldfinger-Verbindung"
-          }
-        },
-        {
-          "id": "the-lvs-trap",
-          "file": "the-lvs-trap.html",
-          "short": {
-            "en": "LVS",
-            "de": "LVS"
-          },
-          "title": {
-            "en": "The LVS Trap",
-            "de": "Die LVS-Falle"
-          }
-        },
-        {
-          "id": "the-verdict",
-          "file": "the-verdict.html",
-          "short": {
-            "en": "Verdict",
-            "de": "Urteil"
-          },
-          "title": {
-            "en": "The Verdict",
-            "de": "Das Urteil"
-          }
-        },
-        {
-          "id": "the-enforcement",
-          "file": "the-enforcement.html",
-          "short": {
-            "en": "Enforcement",
-            "de": "Vollstreckung"
-          },
-          "title": {
-            "en": "The Enforcement",
-            "de": "Die Vollstreckung"
-          }
-        },
-        {
-          "id": "the-pictet-pitch",
-          "file": "the-pictet-pitch.html",
-          "short": {
-            "en": "Pictet",
-            "de": "Pictet"
-          },
-          "title": {
-            "en": "The Pictet Pitch",
-            "de": "Der Pictet-Pitch"
-          }
-        },
-        {
-          "id": "the-evidence-room",
-          "file": "the-evidence-room.html",
-          "short": {
-            "en": "Evidence",
-            "de": "Beweise"
-          },
-          "title": {
-            "en": "The Evidence Room",
-            "de": "Der Beweisraum"
-          }
-        }
-      ]
+      "src": "assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     },
     {
-      "label": {
-        "en": "The Case",
-        "de": "Der Fall"
-      },
-      "pages": [
-        {
-          "id": "sap-syncpilot-vendor-risk",
-          "file": "sap-syncpilot-vendor-risk.html",
-          "short": {
-            "en": "SAP",
-            "de": "SAP"
-          },
-          "title": {
-            "en": "Open Letter to SAP",
-            "de": "Offener Brief an SAP"
-          }
-        },
-        {
-          "id": "vendor-risk",
-          "file": "vendor-risk.html",
-          "short": {
-            "en": "Risk",
-            "de": "Risiko"
-          },
-          "title": {
-            "en": "Vendor Risk",
-            "de": "Lieferantenrisiko"
-          }
-        },
-        {
-          "id": "shareholders",
-          "file": "shareholders.html",
-          "short": {
-            "en": "Shares",
-            "de": "Anteile"
-          },
-          "title": {
-            "en": "Shareholders",
-            "de": "Gesellschafter"
-          }
-        },
-        {
-          "id": "network",
-          "file": "network.html",
-          "short": {
-            "en": "Network",
-            "de": "Netzwerk"
-          },
-          "title": {
-            "en": "Network Analysis",
-            "de": "Netzwerkanalyse"
-          }
-        }
-      ]
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ],
-  "footer": {
-    "disclaimer": {
-      "en": "All facts sourced from Handelsregister filings and public information. We stand behind every claim on this site.",
-      "de": "Alle Fakten stammen aus Handelsregister-Einträgen und öffentlichen Informationen. Wir stehen hinter jeder Aussage auf dieser Seite."
-    },
-    "contact_email": "syncpilot-dossier@proton.me"
-  }
+  ]
 }
