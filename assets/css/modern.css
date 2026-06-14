@@ -503,3 +503,20 @@
     opacity: 1;
   }
 }
+
+/* ============================================================
+   PASS 3 — PERFORMANCE / CORE WEB VITALS
+   ============================================================ */
+@layer base {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Compositor layer hints for scroll-animated cards */
+    .charge-card, .dossier-card, .cast-card, .client-chip { will-change: transform, opacity; }
+  }
+}
+
+@layer layout {
+  /* Explicit size containment on grid containers */
+  .charge-grid, .dossier-grid, .cast-grid {
+    contain: layout style;
+  }
+}

@@ -349,6 +349,27 @@
       .sh-stat strong { font-size: 2.05rem; }
     }
   </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "SyncPilot News",
+      "item": "https://grossklein.github.io/5E/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Aktionäre – SyncPilot",
+      "item": "https://grossklein.github.io/5E/de/shareholders.html"
+    }
+  ]
+}
+</script>
 </head>
 
 <body data-page="shareholders">
@@ -483,7 +504,7 @@
         var av = document.createElement('div');
         av.className = 'ubo-avatar';
         if (u.photo) {
-          av.innerHTML = '<img src="../assets/' + esc(u.photo) + '" alt="' + esc(u.familyName) + '" width="96" height="96" loading="lazy">';
+          av.innerHTML = '<img src="../assets/' + esc(u.photo) + '" alt="' + esc(u.familyName) + '" width="96" height="96" loading="lazy" decoding="async">';
         } else {
           av.classList.add('ubo-avatar--placeholder');
           var ini = (u.firstName ? u.firstName.charAt(0) : '') + (u.familyName ? u.familyName.charAt(0) : '');

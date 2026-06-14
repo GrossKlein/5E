@@ -1,4 +1,4 @@
-name: CI — Lint, A11y & CSS
+name: CI — Lint, A11y & Performance
 on:
   push:
     branches: [main]
@@ -12,7 +12,7 @@ jobs:
         with:
           node-version: '20'
       - name: Install quality tools
-        run: npm install -g html-validate pa11y stylelint stylelint-config-standard serve
+        run: npm install -g html-validate pa11y stylelint stylelint-config-standard serve @lhci/cli
       - name: HTML validate
         run: html-validate "*.html" "de/*.html" --rule '{"void-style":"off"}'
       - name: CSS lint
@@ -20,7 +20,11 @@ jobs:
       - name: Start static server
         run: serve . -l 8080 &
       - run: sleep 3
-      - name: Accessibility — WCAG 2.1 AA (index)
+      - name: Accessibility — WCAG 2.1 AA (root)
         run: pa11y http://localhost:8080 --standard WCAG2AA --reporter cli || true
       - name: Accessibility — WCAG 2.1 AA (de)
         run: pa11y http://localhost:8080/de/ --standard WCAG2AA --reporter cli || true
+      - name: Lighthouse CI
+        run: lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
