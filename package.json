@@ -1,0 +1,16 @@
+{
+  "name": "5e-website-qa",
+  "private": true,
+  "scripts": {
+    "lint:html": "html-validate \"**/*.html\" --ignore \"node_modules\"",
+    "lint:css":  "stylelint \"assets/css/*.css\"",
+    "check:a11y": "pa11y http://localhost:8080 --standard WCAG2AA",
+    "check": "npm run lint:html && npm run lint:css"
+  },
+  "devDependencies": {
+    "html-validate": "^9",
+    "pa11y": "^8",
+    "stylelint": "^16",
+    "stylelint-config-standard": "^36"
+  }
+}

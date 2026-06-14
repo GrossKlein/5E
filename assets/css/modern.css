@@ -379,3 +379,127 @@
     color: var(--paper, #FFF1E5);
   }
 }
+
+/* ============================================================
+   PASS 4 — ACCESSIBILITY (WCAG 2.1 AA)
+   ============================================================ */
+
+/* Skip link */
+@layer components {
+  .skip-link {
+    position: absolute;
+    inset-block-start: -100%;
+    inset-inline-start: 1rem;
+    z-index: 9999;
+    padding: .375rem 1rem;
+    border-radius: 0 0 .25rem .25rem;
+    background: var(--oxford, #0D7680);
+    color: #fff;
+    font-size: .875rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: inset-block-start .15s;
+  }
+  .skip-link:focus-visible {
+    inset-block-start: 0;
+    outline: 3px solid #fff;
+    outline-offset: -3px;
+  }
+}
+
+/* Focus visible — clear teal ring */
+@layer base {
+  :focus-visible {
+    outline: 3px solid var(--oxford, #0D7680);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  :focus:not(:focus-visible) { outline: none; }
+}
+
+/* High contrast + forced-colors */
+@layer utilities {
+  @media (prefers-contrast: more) {
+    :root {
+      --slate: #000;
+      --paper: #fff;
+      --oxford: #005060;
+    }
+    .charge-card, .dossier-card, .cast-card { border: 2px solid currentColor; }
+  }
+
+  @media (forced-colors: active) {
+    .site-nav  { border-block-end: 1px solid ButtonText; }
+    .site-footer { border-block-start: 1px solid ButtonText; }
+    .charge-card, .dossier-card, .cast-card { border: 1px solid ButtonText; }
+    .skip-link { background: Highlight; color: HighlightText; forced-color-adjust: none; }
+    dialog::backdrop { background: rgba(0 0 0 / .7); }
+  }
+}
+
+/* ============================================================
+   PASS 5 — MODERN CSS LEVEL 4 / 5
+   ============================================================ */
+
+/* Typed custom properties */
+@property --accent-l {
+  syntax: '<percentage>';
+  inherits: true;
+  initial-value: 47%;
+}
+@property --surface-alpha {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+
+/* oklch design tokens — teal #0D7680 ≈ oklch(47% .07 195) */
+@layer tokens {
+  :root {
+    --color-accent:       oklch(var(--accent-l) .07 195);
+    --color-accent-hover: color-mix(in oklch, var(--color-accent) 75%, black);
+    --color-accent-muted: color-mix(in oklch, var(--color-accent) 20%, white);
+    --color-selection-bg: color-mix(in oklch, var(--color-accent) 30%, white);
+  }
+  ::selection { background: var(--color-selection-bg); }
+  ::-moz-selection { background: var(--color-selection-bg); }
+}
+
+/* text-wrap */
+@layer base {
+  h1, h2, h3, h4, h5, h6, figcaption, caption { text-wrap: balance; }
+  p, li, dd, blockquote { text-wrap: pretty; }
+}
+
+/* Viewport — svh for mobile-safe hero */
+@layer layout {
+  .index-hero { min-block-size: 100svh; }
+}
+
+/* lh unit — prose rhythm */
+@layer base {
+  .prose > * + * { margin-block-start: 1lh; }
+}
+
+/* light-dark() — neutral pairs only */
+@layer tokens {
+  :root { color-scheme: light dark; }
+  ::selection { color: light-dark(var(--slate, #262A33), var(--paper, #FFF1E5)); }
+  code, kbd { background: light-dark(#f0f0f0, #2a2a2a); color: light-dark(#c00, #f88); }
+  ::-webkit-scrollbar-thumb { background: light-dark(#ccc, #444); border-radius: 4px; }
+}
+
+/* interpolate-size — smooth <details> expand */
+@supports (interpolate-size: allow-keywords) {
+  :root { interpolate-size: allow-keywords; }
+  details > *:not(summary) {
+    block-size: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: block-size .3s ease, opacity .25s ease;
+  }
+  details[open] > *:not(summary) {
+    block-size: auto;
+    opacity: 1;
+  }
+}
