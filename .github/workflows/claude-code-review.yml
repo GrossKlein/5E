@@ -1,0 +1,314 @@
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: write
+  contents: write
+  statuses: write
+
+jobs:
+  code-review:
+    runs-on: ubuntu-latest
+    name: Analyze with Claude
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get PR details
+        id: pr
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "pr_title=${{ github.event.pull_request.title }}" >> $GITHUB_OUTPUT
+          echo "pr_author=${{ github.event.pull_request.user.login }}" >> $GITHUB_OUTPUT
+
+      - name: Fetch changed files
+        id: files
+        run: |
+          git diff --name-only origin/main...HEAD > changed_files.txt
+          cat changed_files.txt
+
+      - name: Filter analyzable files
+        id: filtered
+        run: |
+          echo "Filtering files..."
+          cat changed_files.txt | grep -v -E '\.(lock|json\.lock|yarn\.lock|package-lock\.json|node_modules|dist|build|\.min\.|__pycache__|\.pyc)$' > analyzable_files.txt || true
+          echo "Analyzable files:"
+          cat analyzable_files.txt
+          echo "file_count=$(wc -l < analyzable_files.txt)" >> $GITHUB_OUTPUT
+
+      - name: Fetch file contents
+        id: content
+        run: |
+          {
+            echo "FILES_CONTENT<<EOF"
+            while IFS= read -r file; do
+              if [ -f "$file" ]; then
+                echo "### File: $file"
+                echo "\`\`\`"
+                head -200 "$file"  # First 200 lines to limit context
+                echo "\`\`\`"
+              fi
+            done < analyzable_files.txt
+            echo "EOF"
+          } >> $GITHUB_ENV
+
+      - name: Call Claude API for code review
+        id: claude
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python3 << 'PYTHON_SCRIPT'
+          import os
+          import json
+          import subprocess
+          from pathlib import Path
+
+          # Read environment
+          api_key = os.getenv("ANTHROPIC_API_KEY")
+          files_content = os.getenv("FILES_CONTENT", "No files to analyze")
+          pr_number = "${{ steps.pr.outputs.pr_number }}"
+          pr_title = "${{ steps.pr.outputs.pr_title }}"
+          pr_author = "${{ steps.pr.outputs.pr_author }}"
+
+          # System prompt (embedded)
+          system_prompt = """You are a strict, formal code reviewer analyzing a JavaScript/CSS/HTML Pull Request.
+
+TASK:
+Analyze the provided code changes in this PR. Check for:
+1. Security vulnerabilities (injection, XSS, auth bypass, CSRF, etc.)
+2. Performance issues (N+1 queries, memory leaks, inefficient loops, unoptimized DOM, etc.)
+3. Linting violations (ESLint, Stylelint, HTMLHint rules)
+4. Formatting issues (Prettier, indentation, spacing)
+5. Logic issues and potential bugs
+
+ANALYSIS SCOPE:
+✓ JavaScript: Security, performance, linting, formatting
+✓ CSS: Performance (unused selectors), formatting
+✓ HTML: Security (injection), accessibility, formatting
+
+FILE EXCLUSIONS:
+✗ .lock files (package-lock.json, yarn.lock, etc.)
+✗ node_modules
+✗ .min.js, .min.css (minified)
+✗ Generated/compiled code
+✗ __pycache__, .pyc
+
+AUTO-FIX RULES:
+For linting and formatting violations ONLY:
+- List exact fixes as JSON array
+- Include file path and line numbers
+- Example: {"file": "src/index.js", "line": 42, "fix_type": "formatting", "description": "Add semicolon"}
+
+COMMENT RULES (Include code snippets):
+For security, performance, and logic issues:
+- Include the problematic code snippet
+- Explain the issue formally
+- Provide recommendation
+- Format: "**Issue:** [type]\n\n**Code:**\n\`\`\`\n[snippet]\n\`\`\`\n\n**Problem:** [explanation]\n\n**Fix:** [recommendation]"
+
+APPROVAL DECISION:
+Return JSON with:
+{
+  "should_approve": boolean,
+  "should_auto_merge": boolean,
+  "auto_fixes": [array of fix objects],
+  "comments": [array of comment objects],
+  "summary": "Brief summary of findings"
+}
+
+APPROVAL CONDITIONS:
+Approve + Auto-merge ONLY if:
+✓ No security vulnerabilities found
+✓ No performance issues found
+✓ Only linting/formatting issues (which can be auto-fixed)
+✓ No logic flaws or design concerns
+✓ All auto-fixes can be applied cleanly
+
+REJECT (do not approve/merge) if:
+✗ Security vulnerabilities exist
+✗ Performance issues exist
+✗ Logic flaws detected
+✗ Code quality concerns found
+
+Tone: Strict, formal, professional. No pleasantries or encouragement.
+"""
+
+          # User message with PR context
+          user_message = f"""Review this pull request:
+
+PR #{pr_number}: "{pr_title}"
+Author: {pr_author}
+
+Changed files:
+{files_content}
+
+Provide your analysis as JSON following the schema specified."""
+
+          # Call Claude API via curl
+          import subprocess
+          import json
+
+          payload = {
+              "model": "claude-opus-4-6",
+              "max_tokens": 4096,
+              "system": system_prompt,
+              "messages": [
+                  {"role": "user", "content": user_message}
+              ]
+          }
+
+          result = subprocess.run([
+              "curl", "-X", "POST",
+              "https://api.anthropic.com/v1/messages",
+              "-H", f"x-api-key: {api_key}",
+              "-H", "anthropic-version: 2023-06-01",
+              "-H", "content-type: application/json",
+              "-d", json.dumps(payload)
+          ], capture_output=True, text=True)
+
+          response = json.loads(result.stdout)
+          
+          if "error" in response:
+              print(f"::error::Claude API error: {response['error']['message']}")
+              exit(1)
+
+          # Extract Claude's response
+          claude_response = response["content"][0]["text"]
+          
+          # Try to parse as JSON
+          try:
+              review_data = json.loads(claude_response)
+          except:
+              # If not JSON, extract JSON from response
+              import re
+              json_match = re.search(r'\{.*\}', claude_response, re.DOTALL)
+              if json_match:
+                  review_data = json.loads(json_match.group())
+              else:
+                  review_data = {
+                      "should_approve": False,
+                      "should_auto_merge": False,
+                      "auto_fixes": [],
+                      "comments": [{"body": claude_response}],
+                      "summary": "Review completed with findings"
+                  }
+
+          # Save to output
+          with open("review_result.json", "w") as f:
+              json.dump(review_data, f)
+
+          print(f"Review complete. Should approve: {review_data.get('should_approve', False)}")
+          print(f"Should auto-merge: {review_data.get('should_auto_merge', False)}")
+          print(f"Auto-fixes found: {len(review_data.get('auto_fixes', []))}")
+          print(f"Comments: {len(review_data.get('comments', []))}")
+          
+          PYTHON_SCRIPT
+
+      - name: Apply auto-fixes
+        id: fixes
+        run: |
+          python3 << 'PYTHON_SCRIPT'
+          import json
+          
+          with open("review_result.json", "r") as f:
+              review = json.load(f)
+          
+          auto_fixes = review.get("auto_fixes", [])
+          
+          if auto_fixes:
+              print(f"Applying {len(auto_fixes)} auto-fixes...")
+              # TODO: Implement auto-fix application logic
+              # This would involve:
+              # 1. Parsing each fix object
+              # 2. Reading the file
+              # 3. Applying the fix at the specified line
+              # 4. Writing back
+              # For now, just log them
+              for fix in auto_fixes:
+                  print(f"Fix: {fix['file']} line {fix['line']} - {fix['description']}")
+              echo "fixes_applied=true" >> $GITHUB_ENV
+          else:
+              echo "fixes_applied=false" >> $GITHUB_ENV
+          
+          PYTHON_SCRIPT
+
+      - name: Commit fixes if any
+        if: env.fixes_applied == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Claude Code Review Bot"
+          git add -A
+          git commit -m "chore: apply linting and formatting fixes" || echo "No changes to commit"
+          git push
+
+      - name: Post review comments
+        run: |
+          python3 << 'PYTHON_SCRIPT'
+          import json
+          import subprocess
+          
+          with open("review_result.json", "r") as f:
+              review = json.load(f)
+          
+          comments = review.get("comments", [])
+          
+          for comment in comments:
+              # Post comment to PR
+              curl_cmd = [
+                  "curl", "-X", "POST",
+                  "https://api.github.com/repos/${{ github.repository }}/issues/${{ steps.pr.outputs.pr_number }}/comments",
+                  "-H", "Authorization: token ${{ secrets.GH_PAT }}",
+                  "-H", "Content-Type: application/json",
+                  "-d", json.dumps({"body": comment["body"]})
+              ]
+              subprocess.run(curl_cmd)
+          
+          PYTHON_SCRIPT
+
+      - name: Approve and merge if conditions met
+        if: success()
+        run: |
+          python3 << 'PYTHON_SCRIPT'
+          import json
+          
+          with open("review_result.json", "r") as f:
+              review = json.load(f)
+          
+          should_approve = review.get("should_approve", False)
+          should_merge = review.get("should_auto_merge", False)
+          
+          if should_approve:
+              # Approve PR
+              curl_cmd = [
+                  "curl", "-X", "POST",
+                  "https://api.github.com/repos/${{ github.repository }}/pulls/${{ steps.pr.outputs.pr_number }}/reviews",
+                  "-H", "Authorization: token ${{ secrets.GH_PAT }}",
+                  "-H", "Content-Type: application/json",
+                  "-d", json.dumps({"event": "APPROVE", "body": "✅ Approved by Claude Code Review Bot"})
+              ]
+              import subprocess
+              subprocess.run(curl_cmd)
+              
+              if should_merge:
+                  # Auto-merge
+                  merge_cmd = [
+                      "curl", "-X", "PUT",
+                      "https://api.github.com/repos/${{ github.repository }}/pulls/${{ steps.pr.outputs.pr_number }}/merge",
+                      "-H", "Authorization: token ${{ secrets.GH_PAT }}",
+                      "-H", "Content-Type: application/json",
+                      "-d", json.dumps({
+                          "commit_title": "Merge PR #${{ steps.pr.outputs.pr_number }}",
+                          "commit_message": "Auto-merged by Claude Code Review Bot",
+                          "merge_method": "squash"
+                      })
+                  ]
+                  subprocess.run(merge_cmd)
+          
+          PYTHON_SCRIPT
